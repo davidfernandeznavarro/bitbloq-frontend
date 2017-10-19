@@ -109,4 +109,16 @@
         width: 50%;
       }
     }
+
+    // clone from account panel design
+    .switch--chromeApp {
+      color: #8c919b;
+      font-size: 12px;
+      font-weight: 400;
+      padding-bottom: 15px;
+      border: 1px solid #eee;
+      input {
+        margin-bottom: -2.8px;
+      }
+    }
 }

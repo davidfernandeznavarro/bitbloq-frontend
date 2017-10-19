@@ -8,7 +8,7 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('SupportCtrl', function($translate, $scope, $location, $routeParams, common, _) {
+    .controller('SupportCtrl', function($translate, $scope, $location, $routeParams, common, _, userApi) {
 
         $scope.translate = $translate;
 
@@ -84,7 +84,7 @@ angular.module('bitbloqApp')
                 'icon': '',
                 'response': 'No me detecta la placa',
             }, {
-                '_id': 'doesntCompile',
+                '_id': 'error3020',
                 'class': 'btn--secondary',
                 'icon': '',
                 'response': 'Recibo el error "3020 RecieveData timeout 400ms"',
@@ -285,15 +285,58 @@ angular.module('bitbloqApp')
                 'response': 'No',
             }]
         }, {
+            '_id': 'w2bCrash',
+            'title': 'web2board se abre y se cierra rápidamente, incluso mosntrando un error',
+            'extData': 'w2bCrashForm.html',
+            'next': []
+        }, {
             '_id': 'doesntCompile',
-            'title': '',
+            'title': 'web2board no compila',
+            'data': '<p></p>',
+            'next': [{
+                '_id': 'codeError',
+                'class': 'btn--secondary',
+                'response': 'Puede haber erratas en el código',
+            }, {
+                '_id': 'compileStuck',
+                'class': 'btn--secondary',
+                'response': 'Nunca termina de compilar',
+            }, {
+                '_id': 'compileASCIIdecode',
+                'class': 'btn--secondary',
+                'response': 'Recibo un error sobre la codificación ASCII',
+            }, {
+                '_id': 'compileOther',
+                'class': 'btn--secondary',
+                'response': 'Tengo un error diferente a los expuestos',
+            }]
+        }, {
+            '_id': 'codeError',
+            'title': '¿El mensaje de error avisa de erratas en el código?',
+            'data': 'Por ejemplo:<ul><li class="common--text-term-fx">expected \'(\' before \';\'\'</li><li class="common--text-term-fx">variable example not declared</li></ul></p><p>Si este es el caso, probablemente tenga errores de programación.<br>Le recomendamos que pregunte al respecto en el <a href="/forum" target="_blank">foro de Bitbloq</a>, incluyendo en el mensaje el programa donde recibe el error.</p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Fin del proceso de soporte',
+            }]
+        }, {
+            '_id': 'compileStuck',
+            'title': '¿Nunca termina de compilar?',
+            'extData': 'compileStuckForm.html',
+            'next': []
+        }, {
+            '_id': 'compileASCIIdecode',
+            'title': '¿Nunca termina de compilar?',
+            'extData': 'compileASCIIdecode.html',
+            'next': []
+        }, {
+            '_id': 'compileOther',
+            'title': '¿Nunca termina de compilar?',
+            'extData': 'compileStuckForm.html',
             'next': []
         }, {
             '_id': 'noBoard',
-            'title': '',
-            'next': []
-        }, {
-            '_id': 'doesntCompile',
             'title': '',
             'next': []
         }, {
@@ -308,16 +351,16 @@ angular.module('bitbloqApp')
                 'response': 'Fin del proceso de soporte',
             }]
         }, {
-          '_id': 'linux',
-          'permalink': 'linux',
-          'title': 'Problemas comunes con Linux no certificados',
-          'extData': 'linux.html',
-          'next': [{
-              '_id': 'end',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'Fin del proceso de soporte',
-          }]
+            '_id': 'linux',
+            'permalink': 'linux',
+            'title': 'Problemas comunes con Linux no certificados',
+            'extData': 'linux.html',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Fin del proceso de soporte',
+            }]
         }, {
             '_id': 'hardware',
             'title': '',
@@ -325,9 +368,9 @@ angular.module('bitbloqApp')
         }];
 
         var getCard = function(id, isPermalink) {
-          return db.filter(function(card) {
-              return id === ((isPermalink) ? card.permalink : card._id)
-          }).pop()
+            return db.filter(function(card) {
+                return id === ((isPermalink) ? card.permalink : card._id)
+            }).pop()
         }
 
         var currentId = ($routeParams.id !== undefined) ? $routeParams.id : getCard('index', true)._id
@@ -338,22 +381,29 @@ angular.module('bitbloqApp')
         }
         // if f5 -> at least it will save current state
         if (_.last(common.supportSteps) !== currentId) {
-          common.supportSteps.push(currentId)
+            common.supportSteps.push(currentId)
         }
 
         $scope.go = function(childId, isPermalink) {
-          if (childId && isPermalink) {
-            var child = getCard(childId, true)
-            common.supportSteps.push(child._id)
-            $location.path('/support/' + child._id)
-          } else {
-            if (childId && childId !== getCard('index', true)._id) {
-                common.supportSteps.push(childId)
-                $location.path('/support/' + childId)
+            if (childId && isPermalink) {
+                var child = getCard(childId, true)
+                common.supportSteps.push(child._id)
+                $location.path('/support/' + child._id)
             } else {
-                common.supportSteps = []
-                $location.path('/support')
+                if (childId && childId !== getCard('index', true)._id) {
+                    common.supportSteps.push(childId)
+                    $location.path('/support/' + childId)
+                } else {
+                    common.supportSteps = []
+                    $location.path('/support')
+                }
             }
-          }
         }
+
+        // switches
+        $scope.switchUserChromeAppMode = function() {
+            common.user.chromeapp = !common.user.chromeapp
+            userApi.update({chromeapp: common.user.chromeapp})
+        }
+
     });
