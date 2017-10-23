@@ -1,62 +1,30 @@
+*[class^="icon"]:before { font-family: FontAwesome;  }
+
+// custom config
+li[class^="icon"]:before { margin-right: 3px; }
+
+// fx
 .icon--big:before {
   font-size: 24px;
   padding-right: 5px;
   float: left;
   font-weight: 300;
+  font-family: FontAwesome;
 }
 
-.icon--url:before {
-    font-family: FontAwesome;
-    content: "\f0c1";
-}
-
-.icon--cloud:before {
-    font-family: FontAwesome;
-    content: "\f0c2";
-}
-
-.icon--desktop:before {
-    font-family: FontAwesome;
-    content: "\f108";
-}
-
-.icon--home:before {
-    font-family: FontAwesome;
-    content: "\f015";
-}
-
-.icon--windows:before {
-    font-family: FontAwesome;
-    content:
-     "\f17a";
-}
-
-.icon--mac:before {
-    font-family: FontAwesome;
-    content: "\f179";
-}
-
-.icon--linux:before {
-    font-family: FontAwesome;
-    content: "\f17c";
-}
-
-.icon--ok:before {
-    font-family: FontAwesome;
-    content: "\f058";
-}
-
-.icon--no:before {
-    font-family: FontAwesome;
-    content: "\f057";
-}
-
-.icon--check:before {
-    font-family: FontAwesome;
-    content: "\f00c";
-}
-
-.icon--chrome:before {
-    font-family: FontAwesome;
-    content: "\f268";
-}
+// icons
+.icon--arrow-right:before { content: "\f061"; }
+.icon--caret-right:before { content: "\f0da"; }
+.icon--check:before { content: "\f00c"; }
+.icon--chrome:before { content: "\f268"; }
+.icon--circle-thin:before { content: "\f1db"; }
+.icon--cloud:before { content: "\f0c2"; }
+.icon--desktop:before { content: "\f108"; }
+.icon--exclamation:before { content: "\f12a"; }
+.icon--home:before { content: "\f015"; }
+.icon--linux:before { content: "\f17c"; }
+.icon--mac:before { content: "\f179"; }
+.icon--no:before { content: "\f057"; }
+.icon--ok:before { content: "\f058"; }
+.icon--url:before { content: "\f0c1"; }
+.icon--windows:before { content: "\f17a"; }

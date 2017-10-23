@@ -635,7 +635,7 @@ textarea:disabled {
     font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
     display: inline-block;
     margin-left: 10px;
-    width: 100%;
+    width: calc(100% - 20px);
 
     &:before {
         font-family: FontAwesome;

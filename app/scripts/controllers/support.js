@@ -8,7 +8,7 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('SupportCtrl', function($translate, $scope, $location, $routeParams, common, _, userApi) {
+    .controller('SupportCtrl', function($translate, $scope, $location, $routeParams, common, _, userApi, feedbackApi, alertsService) {
 
         $scope.translate = $translate;
 
@@ -17,7 +17,7 @@ angular.module('bitbloqApp')
             'permalink': 'index',
             'dontShowHomeButton': true,
             'title': '¡Bienvenido a la página de soporte de Bitbloq!',
-            'data': '<p>Ayudanos a diagnosticar tu caso para que podamos ayudarte.</p><p>¿Usas la <strong>versión Online</strong> de Bitbloq, o la versión <a href="http://bitbloq.bq.com/#/offline" class="icon--url">Offline</a></p>',
+            'data': '<p>Ayudanos a diagnosticar tu caso para que podamos ayudarte.</p><p>¿Usas la <strong>versión Online</strong> de Bitbloq, o la versión <a href="http://bitbloq.bq.com/#/offline" class="icon--url">Offline</a>?</p>',
             'next': [{
                 '_id': 'online',
                 'class': 'btn--secondary',
@@ -56,8 +56,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'form',
             'permalink': 'form',
-            'dontShowHomeButton': true,
-            'title': 'Contacta con nuestro servicio técnico',
+            'title': 'Contacta con nuestro soporte técnico',
             'extData': 'contactForm.html',
             'next': []
         }, {
@@ -87,7 +86,7 @@ angular.module('bitbloqApp')
                 '_id': 'error3020',
                 'class': 'btn--secondary',
                 'icon': '',
-                'response': 'Recibo el error "3020 RecieveData timeout 400ms"',
+                'response': 'Recibo el error "3020 RecieveData timeout 400ms"'
             }]
         }, {
             '_id': 'offline',
@@ -107,7 +106,7 @@ angular.module('bitbloqApp')
                 '_id': 'dontLoadSchool',
                 'class': 'btn--primary btn--no',
                 'icon': 'icon--no icon--big',
-                'response': 'No',
+                'response': 'No'
             }]
         }, {
             '_id': 'dontLoadSchool',
@@ -122,7 +121,7 @@ angular.module('bitbloqApp')
                 '_id': 'tetering',
                 'class': 'btn--primary btn--no',
                 'icon': 'icon--no icon--big',
-                'response': 'No',
+                'response': 'No'
             }]
         }, {
             '_id': 'tetering',
@@ -137,7 +136,7 @@ angular.module('bitbloqApp')
                 '_id': 'form',
                 'class': 'btn--primary btn--no',
                 'icon': 'icon--no icon--big',
-                'response': 'No',
+                'response': 'No'
             }]
         }, {
             '_id': 'w2b',
@@ -161,7 +160,7 @@ angular.module('bitbloqApp')
                 '_id': 'doesntCompile',
                 'class': 'btn--secondary',
                 'icon': '',
-                'response': 'web2board no compila',
+                'response': 'web2board no compila'
             }]
         }, {
             '_id': 'doesntInstall',
@@ -232,7 +231,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'w2bUndetectedLinux',
             'title': 'Bitbloq no detecta web2board bajo Linux',
-            'data': '<p>¿<strong>Existe</strong> el fichero <i class="text-secondary">mimeapps.list</i> <strong>y contiene lineas de web2board</strong>?</p><p>El fichero <i class="text-secondary">mimeapps.list</i> ubicado en <span class="common--text-term-fx little">~/.local/share/applications/mimeapps.list</span> tiene que incluir estas líneas:</p><ol class="common--text-editor-fx"><li>[Default Applications]</li><li>#custom handler for bitbloqs web2board:</li><li>x-scheme-handler/web2board=web2board-handler.desktop</li></ol><p>Si no encuentra las líneas en el archivo, añadalas a mano.</p><p><strong>¿Se ha solucionado su consulta?</strong></p>',
+            'data': '<p>¿<strong>Existe</strong> el fichero <i class="text--secondary">mimeapps.list</i> <strong>y contiene lineas de web2board</strong>?</p><p>El fichero <i class="text--secondary">mimeapps.list</i> ubicado en <span class="common--text-term-fx little">~/.local/share/applications/mimeapps.list</span> tiene que incluir estas líneas:</p><ol class="common--text-editor-fx"><li>[Default Applications]</li><li>#custom handler for bitbloqs web2board:</li><li>x-scheme-handler/web2board=web2board-handler.desktop</li></ol><p>Si no encuentra las líneas en el archivo, añadalas a mano.</p><p><strong>¿Se ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -272,7 +271,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'w2bUndetectedWindowsLocal2Proxy',
             'title': '¿Tiene configurado que pasen las llamadas locales por el proxy?',
-            'data': '<p>Si lo tiene configurado para que pasen las llamas locales por el proxy, necesitará deshabilitarlo<ul><li class="icon--check">Presione en el teclado <span class="common--icon-keycap-fx">ctrl</span> + <span class="common--icon-keycap-fx">R</span> para abrir la ventana de ejecución de comandos</li><li class="icon--check">Escriba <span class="common--text-term-fx little">inetcpl.cpl</span> y de al botón de <span class="common--icon-keycap-fx">intro</span></li><li class="icon--check">Haga click en <i class="text-secondary">"Configuración de LAN"</i>, y seleccione <i class="text-secondary">"No usar el servidor proxy para direcciones locales"</i></li></ul></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>Si lo tiene configurado para que pasen las llamas locales por el proxy, necesitará deshabilitarlo<ul><li class="icon--check">Presione en el teclado <span class="common--icon-keycap-fx">ctrl</span> + <span class="common--icon-keycap-fx">R</span> para abrir la ventana de ejecución de comandos</li><li class="icon--check">Escriba <span class="common--text-term-fx little">inetcpl.cpl</span> y de al botón de <span class="common--icon-keycap-fx">intro</span></li><li class="icon--check">Haga click en <i class="text--secondary">"Configuración de LAN"</i>, y seleccione <i class="text--secondary">"No usar el servidor proxy para direcciones locales"</i></li></ul></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -329,16 +328,258 @@ angular.module('bitbloqApp')
             '_id': 'compileASCIIdecode',
             'title': '¿Nunca termina de compilar?',
             'extData': 'compileASCIIdecode.html',
-            'next': []
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Fin del proceso de soporte',
+            }]
         }, {
             '_id': 'compileOther',
-            'title': '¿Nunca termina de compilar?',
-            'extData': 'compileStuckForm.html',
-            'next': []
+            'title': '¿Tiene un problema diferente a los expuestos?',
+            'data': '<p>Para poder darle una respuesta mas concreta <strong>necesitamos</strong> que nos envie mediante el formulario de contacto el <i class="text--secondary">código del programa</i> y el <i class="text--secondary">mensaje de error</i> que recibe</p>',
+            'next': [{
+                '_id': 'form',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'Formulario de contacto',
+            }]
         }, {
             '_id': 'noBoard',
-            'title': '',
-            'next': []
+            'title': '¿Bitbloq no detecta la placa?',
+            'data': '<p><strong>¿Está intentando programar Zowi?</strong></p><p>Asegurese que Zowi está <strong>encendido</strong> <i class="text--secondary">(primer botón)</i>, ya que de lo contrario Bitbloq no detectará la placa.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'isChromebook',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'isChromebook',
+            'title': '¿Utiliza un Chromebook?',
+            'data': '',
+            'next': [{
+                '_id': 'error3020',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'reinstallDrivers',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+          '_id': 'error3020',
+          'title': '¿Recibo el error "3020 RecieveData timeout 400ms"?',
+          'data': '<p>Pruebe a <strong>reinicar el ordenador.</strong></p><p>Si <span class="icon--chrome"> Chrome</span> está muy saturado, el proceso de carga puede ralentizarse, causando que la placa deje de responder.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+          'next': [{
+              '_id': 'end',
+              'class': 'btn--primary',
+              'icon': 'icon--ok icon--big',
+              'response': 'Si',
+          }, {
+              '_id': 'bootloader',
+              'class': 'btn--primary btn--no',
+              'icon': 'icon--no icon--big',
+              'response': 'No',
+          }]
+        }, {
+          '_id': 'bootloader',
+          'title': 'Comprueba que tu placa tiene bootloader',
+          'data': '<p>¿Qué es un <strong>bootloader</strong>?</p><p>El <i class="text--secondary">bootloader</i> es un programa que se lanza cuando inicias la placa o la reseteas, cuya función es preparar la carga de los nuevos programas. Normalmente se necesita una herramienta especial para cargar los programas; el bootloader simplifica el proceso permitiendo cargarlos mediante el puerto USB.</p><p>¡Asegurese que el bootloader de su placa está instalado <strong>correctamente</strong>!</p><p><strong>¿Cómo compruebo si tengo instalado el Bootloader?:</strong><br>Presiona el botón de <span class="common--icon-keycap-fx">reset</span>, y si bootloader está instalado <strong>debería parpadear el led numero 13</strong></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+          'next': [{
+              '_id': 'bootloaderZumBT328',
+              'class': 'btn--secondary',
+              'icon': '',
+              'response': '¿Cómo cargo el bootloader en la placa Zum BT-328?'
+          }, {
+              '_id': 'end',
+              'class': 'btn--primary',
+              'icon': 'icon--ok icon--big',
+              'response': 'Si'
+          }, {
+              '_id': '3020changeUsb',
+              'class': 'btn--primary btn--no',
+              'icon': 'icon--no icon--big',
+              'response': 'No'
+          }]
+        }, {
+          '_id': 'bootloaderZumBT328',
+          'title': '¿Cómo cargo el bootloader en la placa Zum BT-328?',
+          'extData': 'bootloaderZumBT328.html',
+          'next': [{
+              '_id': 'end',
+              'class': 'btn--primary',
+              'icon': 'icon--ok icon--big',
+              'response': 'Si'
+          }, {
+              '_id': '3020changeUsb',
+              'class': 'btn--primary btn--no',
+              'icon': 'icon--no icon--big',
+              'response': 'No'
+          }]
+        }, {
+          '_id': '3020changeUsb',
+          'title': 'Cambie de puerto USB y pruebe con otro cable',
+          'data': '<p>Aunque poco probable, tanto el puerto USB donde conecta la placa a su sistema como el propio cable de comunicación pueden deteriorarse.</p><p>Para <strong>descartar</strong> esta posibilidad, pruebe a cambiar de puerto y utilice un cable diferente.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+          'next': [{
+              '_id': 'end',
+              'class': 'btn--primary',
+              'icon': 'icon--ok icon--big',
+              'response': 'Si',
+          }, {
+              '_id': '3020pin01',
+              'class': 'btn--primary btn--no',
+              'icon': 'icon--no icon--big',
+              'response': 'No',
+          }]
+        }, {
+          '_id': '3020pin01',
+          'title': '¿Tiene algún componente conectado en los pines 0 y 1?',
+          'data': '<p>Los pines <i class="text--secondary">0</i> y <i class="text--secondary">1</i> se utilizan para digital i/o y para comunicación en serie <i class="text--secondary">(de la que depende el puerto USB y la conexión por Bluetooth)</i>, por lo que si están en uso se deshabilitará la comunicación con su sistema.</p><p>Para volver a habilitar el puerto USB, libere los pines.<p><strong>¿Ha solucionado su consulta?</strong></p>',
+          'next': [{
+              '_id': 'end',
+              'class': 'btn--primary',
+              'icon': 'icon--ok icon--big',
+              'response': 'Si',
+          }, {
+              '_id': '3020aLotOfPower',
+              'class': 'btn--primary btn--no',
+              'icon': 'icon--no icon--big',
+              'response': 'No',
+          }]
+        }, {
+          '_id': '3020aLotOfPower',
+          'title': '¿Tiene muchos componentes conectados o un componente con un consumo alto?',
+          'data': '<p>Si conecta <strong>muchos componentes</strong> al mismo tiempo, o tiene componentes con un consumo elevado <i class="text--secondary">(como por ejemplo un servomotor)</i>, puede ocurrir que el ordenador no pueda suminsitrar suficiente por el puerto USB.<br><div class="support--icon--giga"><img src="images/support/zum-power.png" /></div><br>Pruebe <strong>apagando la placa</strong> <i class="text--secondary">(botón rojo en posición off)</i> o conectado una fuente de alimentación</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+          'next': [{
+              '_id': 'end',
+              'class': 'btn--primary',
+              'icon': 'icon--ok icon--big',
+              'response': 'Si',
+          }, {
+              '_id': '3020btConnected',
+              'class': 'btn--primary btn--no',
+              'icon': 'icon--no icon--big',
+              'response': 'No',
+          }]
+        }, {
+          '_id': '3020btConnected',
+          'title': '¿Tiene algún dispositivo conectado por Bluetooth?',
+          'data': '<p>El puerto de comunicación de la placa es el mismo para la conexión por USB que para conexión por BT, por lo que <strong>no puede conectar al mismo tiempo una placa por ambos sistemas</strong></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+          'next': [{
+              '_id': 'end',
+              'class': 'btn--primary',
+              'icon': 'icon--ok icon--big',
+              'response': 'Si',
+          }, {
+              '_id': '3020SO',
+              'class': 'btn--primary btn--no',
+              'icon': 'icon--no icon--big',
+              'response': 'No',
+          }]
+        }, {
+          '_id': '3020SO',
+          'title': '¿Que sistema utiliza?',
+          'data': '',
+          'next': [{
+              '_id': '3020Windows',
+              'class': 'btn--secondary',
+              'icon': 'icon--windows icon--big',
+              'response': 'Windows',
+          }, {
+              '_id': '3020isModeChromeApp',
+              'class': 'btn--secondary',
+              'icon': 'icon--linux icon--big',
+              'response': 'Linux',
+          }, {
+              '_id': '3020isModeChromeApp',
+              'class': 'btn--secondary',
+              'icon': 'icon--mac icon--big',
+              'response': 'Mac',
+          }, {
+              '_id': 'form',
+              'class': 'btn--secondary',
+              'icon': 'icon--chrome icon--big',
+              'response': 'Chromebook',
+          }]
+        }, {
+          '_id': '3020isModeChromeApp',
+          'title': '¿Tiene Bitbloq configurado en modo ChromeApp?',
+          'extData': '3020isModeChromeApp.html',
+          'next': [{
+              '_id': 'form',
+              'class': 'btn--primary',
+              'icon': 'icon--ok icon--big',
+              'response': 'Si tengo activado el modo Chromeapp',
+          }, {
+              '_id': '3020logPorts',
+              'class': 'btn--primary btn--no',
+              'icon': 'icon--no icon--big',
+              'response': 'No tengo activado el modo Chromeapp',
+          }]
+        }, {
+          '_id': '3020Windows',
+          'title': '¿Ha probado a cambiar el puerto COM al que se conecta?',
+          'data': '<p>Los puertos COM son un tipo de puerto cada vez menos frecuente, pero que en ocasiones aún se puede encontrar en ordenadores antiguos.<br>Es común encontrar estos puertos siendo aprovechados mediante un adaptador conversor a USB.</p><p>Es posible que la configuración del puerto pueda estar dando problemas al estar ya en uso, por lo que <strong>aconsejamos que pruebe a cambiar su numero de puerto COM</strong><ol><li class="icon--check">Presione las teclas <span class="common--icon-keycap-fx">Win</span> + <span class="common--icon-keycap-fx">X</span> para abrir el panel de administración de dispositivos</li>' +
+                '<li class="icon--check">Ve a la sección <i class="text-secondary">"Puertos (COM y LPT)"</i></li><li class="icon--check">Busca el puerto, y en el menú contextual <i class="text-secondary">(botón derecho en el ratón)</i> seleciona "Propiedades"</li><li class="icon--check">Ve a la pestaña de configuración de puerto, y seleciona "Opciones avanzadas"</li><li class="icon--check">En el panel de configuración avanzada, busca la sección de número de puerto COM, y <strong>cambia el numero del puerto a uno que no esté en uso</strong>"</li></ol></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+          'next': [{
+              '_id': 'end',
+              'class': 'btn--primary',
+              'icon': 'icon--ok icon--big',
+              'response': 'Si',
+          }, {
+              '_id': '3020isModeChromeApp',
+              'class': 'btn--primary btn--no',
+              'icon': 'icon--no icon--big',
+              'response': 'No',
+          }]
+        }, {
+          '_id': '3020logPorts',
+          'title': '¿Muestra algún error respecto a los puertos en el fichero de log?',
+          'extData': '3020logPorts.html',
+          'next': [{
+              '_id': 'form',
+              'class': 'btn--primary',
+              'icon': 'icon--ok icon--big',
+              'response': 'He encontrado errores',
+          }, {
+              '_id': '3020ideArduino',
+              'class': 'btn--primary btn--no',
+              'icon': 'icon--no icon--big',
+              'response': 'No hay errores',
+          }]
+        }, {
+          '_id': '3020ideArduino',
+          'title': '¿Ha probado a cargar la placa en otro entorno de desarollo?',
+          'data': '<p>Por ejemplo, puedes descargar el IDE de Arduino de la <a href="https://www.arduino.cc/en/Main/Software" target="_blank" class="icon--url">web oficial</a></p><p><strong>¿Le detecta la placa el otro entorno de desarrollo?</strong></p>',
+          'next': [{
+              '_id': 'form',
+              'class': 'btn--primary',
+              'icon': 'icon--ok icon--big',
+              'response': 'Si detecta la placa',
+          }, {
+              '_id': '3020DeadBoard',
+              'class': 'btn--primary btn--no',
+              'icon': 'icon--no icon--big',
+              'response': 'No detecta la placa',
+          }]
+        }, {
+          '_id': '3020DeadBoard',
+          'title': 'Es probable que la placa esté defectuosa',
+          'data': '<span class="support--icon--giga support--icon--rojo"><i class="fa fa-medkit" aria-hidden="true"></i><span><p>Una vez descartadas otras posibilidades, <i class="text-secondary">es probable que su placa esté defectuosa</i>.</p><p>Si no es la placa <a href="https://www.bq.com/es/mundo-maker" target="_blank" class="icon--url">BQ ZUM BT-328</a> <strong>contacte con su fabricante</strong></p>',
+          'next': [{
+              '_id': 'form',
+              'class': 'btn--secondary',
+              'icon': '',
+              'response': 'Es la placa BQ ZUM BT-328',
+          }]
         }, {
             '_id': 'xp',
             'permalink': 'xp',
@@ -380,30 +621,74 @@ angular.module('bitbloqApp')
             currentId = $scope.card._id
         }
         // if f5 -> at least it will save current state
-        if (_.last(common.supportSteps) !== currentId) {
-            common.supportSteps.push(currentId)
+        if (_.last(common.supportSteps) !== $scope.card.title && $scope.card.permalink !== 'index') {
+            common.supportSteps.push($scope.card.title)
         }
 
         $scope.go = function(childId, isPermalink) {
-            if (childId && isPermalink) {
-                var child = getCard(childId, true)
-                common.supportSteps.push(child._id)
+          if (childId) {
+            var child = (isPermalink) ? getCard(childId, true) : getCard(childId, false)
+            if (child && !isPermalink) {
+                common.supportSteps.push(child.title)
                 $location.path('/support/' + child._id)
             } else {
-                if (childId && childId !== getCard('index', true)._id) {
-                    common.supportSteps.push(childId)
-                    $location.path('/support/' + childId)
+                var childIndex = getCard('index', true)
+                if (childId === childIndex._id) {
+                  common.supportSteps = []
+                  $location.path('/support')
                 } else {
-                    common.supportSteps = []
-                    $location.path('/support')
+                  common.supportSteps.push(child.title)
+                  $location.path('/support/' + childId)
                 }
             }
+          } else {
+            console.warn('Se está intentando acceder a un botón sin childId', childId, isPermalink);
+          }
         }
 
         // switches
-        $scope.switchUserChromeAppMode = function() {
-            common.user.chromeapp = !common.user.chromeapp
-            userApi.update({chromeapp: common.user.chromeapp})
+        common.itsUserLoaded()
+          .then(function() {
+            $scope.user = common.user
+            $scope.switchUserChromeAppMode = function() {
+                userApi.update({chromeapp: common.user.chromeapp})
+            }
+        })
+
+        // form
+        $scope.response = { 'message': '' }
+        // sometimes the user go back and forth...
+        // lets clean the steps!
+        $scope.getSteps = function() {
+          common.supportSteps = _.uniqBy(common.supportSteps.reverse()).reverse()
+          return common.supportSteps.join(' ->\r\n')
+        }
+        $scope.send = function(msg) {
+          var res = {
+            'creator': common.user,
+            'feedback': {
+              'message': (msg +
+                '\r\n\r\n_____\r\nCamino:\r\n' +
+                $scope.getSteps()),
+              'userAgent':  window.navigator.userAgent
+            }
+          }
+
+          feedbackApi.send(res)
+            .success(function () {
+                alertsService.add({
+                    text: 'modal-comments-done',
+                    id: 'modal-comments',
+                    type: 'ok',
+                    time: 5000
+                });
+            }).error(function () {
+                alertsService.add({
+                    text: 'modal-comments-error',
+                    id: 'modal-comments',
+                    type: 'warning'
+                });
+            });
         }
 
     });

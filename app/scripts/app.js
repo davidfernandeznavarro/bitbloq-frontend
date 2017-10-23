@@ -300,6 +300,7 @@ angular
 
         if (envData.config.env === 'local') {
             AnalyticsProvider.setDomainName('none');
+            AnalyticsProvider.useAnalytics(false);
         }
 
     })

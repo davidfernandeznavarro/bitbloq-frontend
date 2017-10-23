@@ -5,7 +5,6 @@
     section {
         background: #eee;
         min-height: calc(100% - 93px);
-        height: calc(100% - 93px);
 
         .support--block {
             max-width: 1200px;
@@ -31,16 +30,28 @@
                 }
             }
 
-            .support--icon--ok {
-                color: rgb(59, 145, 173);
-            }
-
-            .support--icon--no {
-                color: #114698;
+            .support--icon--mid {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: center;
+                font-size: 90px;
 
                 svg {
-                    fill: #114698;
+                    width: 90px;
+                    height: auto;
                 }
+
+                &:before { margin:-25px -25px 0px calc(25px - 90px); }
+            }
+
+            .support--icon--si { color: $green; }
+            .support--icon--naranja { color: $toolbox-software-functions; }
+            .support--icon--rojo { color: $alert-error-icon; }
+            .support--icon--ok { color: rgb(59, 145, 173); }
+            .support--icon--no {
+                color: #114698;
+                svg { fill: #114698; }
             }
 
             .support--content {
@@ -110,15 +121,42 @@
       }
     }
 
+    .support--center {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .support--text-right {
+      text-align: right;
+    }
+
     // clone from account panel design
     .switch--chromeApp {
       color: #8c919b;
       font-size: 12px;
       font-weight: 400;
       padding-bottom: 15px;
-      border: 1px solid #eee;
       input {
         margin-bottom: -2.8px;
       }
+    }
+
+    // form
+    .support--form {
+      form {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: -15px;
+        margin-bottom: -15px;
+        padding: 5px;
+      }
+      fieldset { width: 100%; }
+      legend { text-align: left; }
+      button, input { margin: 2px; }
     }
 }

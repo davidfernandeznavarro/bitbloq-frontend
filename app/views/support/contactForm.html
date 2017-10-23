@@ -1,4 +1,22 @@
-<span>FORM</span>
-<p>
-    <strong>Camino</strong>: {{common.supportSteps}}
-</p>
+<div class="support--form" data-ng-if="common.user">
+    <p>Para poder proporcionarle un soporte mas personalizado, <strong>necesitamos que se ponga en contacto</strong> con nuestros técnicos rellenando el siguiente formulario.</p>
+    <form name="form">
+        <fieldset>
+            <!-- Message -->
+            <div class="form-control">
+                <legend class="icon--check">Explique detalladamente su problema.</legend>
+                <span class="form--input  common--textarea" data-ng-class="{'input--focused':focus === 'message'}">
+                    <textarea ng-model="response.message" rows="5" class="msd-elastic" ng-model="response.message" placeholder="{{ 'modal-inform-error-textarea-placeholder' | translate }}" data-ng-focus="focus = 'message'" data-ng-blur="focus = false" data-element="modal-send-comments-textarea-placeholder" />
+                </span>
+            </div>
+        </fieldset>
+    </form>
+    <div class="form-control submit support--next">
+        <input type="submit" data-ng-disabled="!response.message" data-ng-click="send(response.message)" name="submitform" class="btn btn--primary btn__login--submit" value="{{'send' | translate}}">
+    </div>
+</div>
+
+<div class="support--form" data-ng-if="!common.user">
+    <p>Para poder proporcionarle un soporte mas personalizado, <strong>necesitamos que se ponga en contacto</strong> con nuestros técnicos enviando un mail a <a href="mailto:soporte.bitbloq@bq.com" target="_blank" class="icon--url">soporte.bitbloq@bq.com</a></p>
+    <p class="icon--check"><strong>Recuerde explicar detalladamente su consulta.</strong></p>
+</div>

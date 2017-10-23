@@ -1,0 +1,147 @@
+<p>Vamos a utilizar una placa ZUM BT-328 como programador ISP para poder cargar el <i class="text--secondary">bootloader</i> en el microcontrolador de otra ZUM BT-328.</p>
+<p>Componentes
+    <strong>necesarios</strong>:
+    <ul>
+        <li class="icon--check">2x Placas ZUM BT-328</li>
+        <li class="icon--check">6x Cables unipolares para conexión entre placas</li>
+        <li class="icon--check"><a href="http://arduino.cc/en/Main/Software" target="_blank" class="icon--url">IDE de Arduino</a></li>
+        <li class="icon--check">Cable USB para conexión placa-ordenador</li>
+    </ul>
+</p>
+<p>
+    <strong>Pasos a seguir:</strong>
+    <ul>
+        <li class="icon--arrow-right">
+            <strong><i class="text--secondary">PASO1:</i> Cómo preparar el bootloader</strong>
+            <p>La placa ZUM BT-328 tiene un bootloader especial, no incluido entre los básicos que vienen con el programa Arduino. <a href="res/support/bootloader-ZumBT328/bootloader_ZumBT328.hex" target="_blank" class="icon--url">Lo primero que debes hacer es descargar el archivo bootloader <i class="text--secondary">(formato ".hex")</i>.</a></p>
+            <p>Puedes cargar este bootloader mediante
+                <strong>comandos avrdude</strong>, pero si nunca has utilizado comandos en la consola de tu sistema operativo puedes hacer un pequeño intercambio de archivos para poder cargarlo de forma sencilla. Este <i class="text--secondary">“truco”</i> consiste en colocar el bootloader que acabas de descargar en una carpeta en concreto del programa Arduino:
+                <ul>
+                    <li class="icon--caret-right">Entra en la carpeta donde está instalado Arduino IDE y accede a la dirección
+                        <span class="common--text-term-fx little">hardware/arduino/avr/bootloaders/bt</span>
+                        <br><i class="text--secondary">En la imagen tienes un ejemplo de como se ve la carpeta</i>
+                        <br>
+                        <img src="/images/support/zum-carpeta-arduino.png" alt="zum-carpeta-arduino" class="aligncenter">
+                    </li>
+                    <li class="icon--caret-right">
+                        Renombra el bootloader de la placa ZUM BT-328 “<i class="text--secondary">bootloader_ZumBT328.hex</i>” por “
+                        <strong>ATmegaBOOT_168_atmega328_bt.hex</strong>” y pegarlo en la carpeta que acabamos de abrir, sobreescribiendo el anterior que tenía ese mismo nombre.
+                    </li>
+                </ul>
+            </p>
+        </li>
+        <li class="icon--arrow-right">
+            <strong><i class="text--secondary">PASO 2:</i> Configurar la placa programadora (A) como programador ISP.</strong>
+            <p>Debes cargar el <i class="text--secondary">programa base</i> en la placa programadora (A), en concreto <a href="res/support/bootloader-ZumBT328ArduinoISP.ino" target="_blank" class="icon--url">ArduinoISP.ino</a>.</p>
+            <p>Conecta esta primera placa (A) al ordenador con el cable USB y abre Arduino IDE</p>
+            <p>Selecciona los siguientes parametros en el menú <i class="text--secondary">tools</i>:
+                <ol class="common--text-editor-fx">
+                    <li>Tools/Port =
+                        <strong><i class="text--secondary">El correspondiente a donde se ha conectado la placa</i></strong>
+                    </li>
+                    <li>Tools/Board =
+                        <strong>Arduino BT</strong>
+                    </li>
+                    <li>Tools/Processor =
+                        <strong>ATmega328</strong>
+                    </li>
+                </ol>
+            </p>
+        </li>
+        <li class="icon--arrow-right">
+            <strong><i class="text--secondary">PASO 3:</i> Conectar ambas placas entre sí</strong>
+            <p>Una vez hayas cargado el programa, conecta ambas placas ZUM BT-328 como indica en el siguiente esquema:</p>
+            <p>
+                <img src="/images/support/zum-bootloader-2.png" alt="placa_ZUM_2">
+            </p>
+            <table class="support--center" width="313">
+                <tbody>
+                    <tr>
+                        <th class="support--text-right">
+                            <i class="text--secondary">[Placa Programadora]</i>
+                            <strong>(A)</strong>
+                        </th>
+                        <th style="padding: 0px 5px 0px 5px;"></th>
+                        <th>
+                            <strong>(B)</strong> <i class="text--secondary">[Placa a Programar]</i>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td class="support--text-right">Pin 10</td>
+                        <td style="padding: 0px 5px 0px 5px;">
+                            <span class="icon--arrow-right" />
+                        </td>
+                        <td>RESET</td>
+                    </tr>
+                    <tr>
+                        <td class="support--text-right">Pin 11</td>
+                        <td style="padding: 0px 5px 0px 5px;">
+                            <span class="icon--arrow-right" />
+                        </td>
+                        <td>Pin 11</td>
+                    </tr>
+                    <tr>
+                        <td class="support--text-right">Pin 12</td>
+                        <td style="padding: 0px 5px 0px 5px;">
+                            <span class="icon--arrow-right" />
+                        </td>
+                        <td>Pin 12</td>
+                    </tr>
+                    <tr>
+                        <td class="support--text-right">Pin 13</td>
+                        <td style="padding: 0px 5px 0px 5px;">
+                            <span class="icon--arrow-right" />
+                        </td>
+                        <td>Pin 13</td>
+                    </tr>
+                    <tr>
+                        <td class="support--text-right">5V</td>
+                        <td style="padding: 0px 5px 0px 5px;">
+                            <span class="icon--arrow-right" />
+                        </td>
+                        <td>5V</td>
+                    </tr>
+                    <tr>
+                        <td class="support--text-right">GND</td>
+                        <td style="padding: 0px 5px 0px 5px;">
+                            <span class="icon--arrow-right" />
+                        </td>
+                        <td>GND</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>&nbsp;</p>
+        </li>
+        <li class="icon--arrow-right">
+            <strong><i class="text--secondary">PASO 4:</i> Configura parámetros previos</strong>
+            <p>Vuelve a conectar el cable USB a la placa programadora (A). y configura los siguientes parámetros en ArduinoIDE, en el menú <i class="text--secondary">tools</i>:
+                <ol class="common--text-editor-fx">
+                    <li>Tools/Port =
+                        <strong><i class="text--secondary">El correspondiente a donde se ha conectado la placa</i></strong>
+                    </li>
+                    <li>Tools/Board =
+                        <strong>Arduino BT</strong>
+                    </li>
+                    <li>Tools/Processor =
+                        <strong>ATmega328</strong>
+                    </li>
+                    <li>Tools/Programmer =
+                        <strong>Arduino as ISP</strong>
+                    </li>
+                </ol>
+                <i class="text--secondary">Respecto al paso 1, añadimos la opción Tools/Programmer; ¡no te olvides!</i>
+            </p>
+        </li>
+        <li class="icon--arrow-right">
+            <strong><i class="text--secondary">PASO 5:</i> Carga el Bootloader</strong>
+            <p style="padding-left: 30px; text-align: left;">Pulsa sobre
+                <em>Tools/Burn Bootloader</em>
+            </p>
+        </li>
+    </ul>
+</p>
+<p style="text-align: left;">
+    <strong>Si se muestran errores al cargar</strong> el
+    <i class="text--secondary">bootloader</i>,
+    <strong>prueba a reiniciar varias veces ArduinoIDE</strong> hasta que reconozca nuestro archivo
+    <i class="text--secondary">.hex</i> modificado.</p>
