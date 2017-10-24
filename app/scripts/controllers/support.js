@@ -337,13 +337,8 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'compileOther',
             'title': '¿Tiene un problema diferente a los expuestos?',
-            'data': '<p>Para poder darle una respuesta mas concreta <strong>necesitamos</strong> que nos envie mediante el formulario de contacto el <i class="text--secondary">código del programa</i> y el <i class="text--secondary">mensaje de error</i> que recibe</p>',
-            'next': [{
-                '_id': 'form',
-                'class': 'btn--secondary',
-                'icon': '',
-                'response': 'Formulario de contacto',
-            }]
+            'extData': 'compileOtherForm.html',
+            'next': []
         }, {
             '_id': 'noBoard',
             'title': '¿Bitbloq no detecta la placa?',
@@ -397,7 +392,7 @@ angular.module('bitbloqApp')
               '_id': 'bootloaderZumBT328',
               'class': 'btn--secondary',
               'icon': '',
-              'response': '¿Cómo cargo el bootloader en la placa Zum BT-328?'
+              'response': '¿Cómo cargo el bootloader en la placa ZUM Core (BT-328)?'
           }, {
               '_id': 'end',
               'class': 'btn--primary',
@@ -411,7 +406,7 @@ angular.module('bitbloqApp')
           }]
         }, {
           '_id': 'bootloaderZumBT328',
-          'title': '¿Cómo cargo el bootloader en la placa Zum BT-328?',
+          'title': '¿Cómo cargo el bootloader en la placa ZUM Core (BT-328)?',
           'extData': 'bootloaderZumBT328.html',
           'next': [{
               '_id': 'end',
@@ -573,12 +568,12 @@ angular.module('bitbloqApp')
         }, {
           '_id': '3020DeadBoard',
           'title': 'Es probable que la placa esté defectuosa',
-          'data': '<span class="support--icon--giga support--icon--rojo"><i class="fa fa-medkit" aria-hidden="true"></i><span><p>Una vez descartadas otras posibilidades, <i class="text-secondary">es probable que su placa esté defectuosa</i>.</p><p>Si no es la placa <a href="https://www.bq.com/es/mundo-maker" target="_blank" class="icon--url">BQ ZUM BT-328</a> <strong>contacte con su fabricante</strong></p>',
+          'data': '<span class="support--icon--giga support--icon--rojo"><i class="fa fa-medkit" aria-hidden="true"></i><span><p>Una vez descartadas otras posibilidades, <i class="text-secondary">es probable que su placa esté defectuosa</i>.</p><p>Si no es la placa <a href="https://www.bq.com/es/mundo-maker" target="_blank" class="icon--url">BQ ZUM Core (BT-328)</a> <strong>contacte con su fabricante</strong></p>',
           'next': [{
               '_id': 'form',
               'class': 'btn--secondary',
               'icon': '',
-              'response': 'Es la placa BQ ZUM BT-328',
+              'response': 'Es la placa BQ ZUM Core (BT-328)',
           }]
         }, {
             '_id': 'xp',
@@ -656,22 +651,49 @@ angular.module('bitbloqApp')
         })
 
         // form
-        $scope.response = { 'message': '' }
+        $scope.response = {
+          'message': '',
+          'code': '',
+          'error': ''
+         }
         // sometimes the user go back and forth...
         // lets clean the steps!
         $scope.getSteps = function() {
           common.supportSteps = _.uniqBy(common.supportSteps.reverse()).reverse()
-          return common.supportSteps.join(' ->\r\n')
+          return common.supportSteps.join('</li><li>')
         }
-        $scope.send = function(msg) {
+        $scope.send = function() {
+          var str = ''
+          // message
+          // /r/n -> <br />
+          if ($scope.response.message.length > 0) {
+            str += '<div><pre>'
+            str += unHTMLfy($scope.response.message)
+            str += '</pre></div>'
+          }
+          // code
+          if ($scope.response.code.length > 0) {
+            str += '<br><hr><strong>Código:</strong><br>'
+            str += '<div style="border: 1px dashed #1B6D33; padding: 5px; margin: 5px;"><pre>'
+            str += unHTMLfy($scope.response.code)
+            str += '</pre></div>'
+          }
+          // error
+          if ($scope.response.error.length > 0) {
+            str += '<br><hr><strong>Error:</strong><br>'
+            str += '<div style="border: 1px dashed #B8282A; padding: 5px; margin: 5px;"><pre>'
+            str += unHTMLfy($scope.response.error)
+            str += '</pre></div>'
+          }
+          // adding steps list
+          str += '<br><hr><strong>Camino:</strong><br><ol><li>'
+          str += $scope.getSteps()
+          str += '</li></ol>'
+
           var res = {
             'creator': common.user,
-            'feedback': {
-              'message': (msg +
-                '\r\n\r\n_____\r\nCamino:\r\n' +
-                $scope.getSteps()),
-              'userAgent':  window.navigator.userAgent
-            }
+            'message': str,
+            'userAgent':  window.navigator.userAgent
           }
 
           feedbackApi.send(res)
@@ -689,6 +711,15 @@ angular.module('bitbloqApp')
                     type: 'warning'
                 });
             });
+        }
+
+        var unHTMLfy = function(str) {
+          return str.replace(/(?:&)/g, '&amp;')
+          .replace(/(?:<)/g, '&lt;')
+          .replace(/(?:>)/g, '&gt;')
+          .replace(/\u00a0/g, ' ')
+          .replace(/&nbsp;/g, ' ')
+          .replace(/(?:\r\n|\r|\n)/g, '<br />')
         }
 
     });

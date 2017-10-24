@@ -1,8 +1,8 @@
-<p>Vamos a utilizar una placa ZUM BT-328 como programador ISP para poder cargar el <i class="text--secondary">bootloader</i> en el microcontrolador de otra ZUM BT-328.</p>
+<p>Vamos a utilizar una placa ZUM Core (BT-328) como programador ISP para poder cargar el <i class="text--secondary">bootloader</i> en el microcontrolador de otra ZUM Core (BT-328).</p>
 <p>Componentes
     <strong>necesarios</strong>:
     <ul>
-        <li class="icon--check">2x Placas ZUM BT-328</li>
+        <li class="icon--check">2x Placas ZUM Core (BT-328)</li>
         <li class="icon--check">6x Cables unipolares para conexión entre placas</li>
         <li class="icon--check"><a href="http://arduino.cc/en/Main/Software" target="_blank" class="icon--url">IDE de Arduino</a></li>
         <li class="icon--check">Cable USB para conexión placa-ordenador</li>
@@ -13,7 +13,7 @@
     <ul>
         <li class="icon--arrow-right">
             <strong><i class="text--secondary">PASO1:</i> Cómo preparar el bootloader</strong>
-            <p>La placa ZUM BT-328 tiene un bootloader especial, no incluido entre los básicos que vienen con el programa Arduino. <a href="res/support/bootloader-ZumBT328/bootloader_ZumBT328.hex" target="_blank" class="icon--url">Lo primero que debes hacer es descargar el archivo bootloader <i class="text--secondary">(formato ".hex")</i>.</a></p>
+            <p>La placa ZUM Core (BT-328) tiene un bootloader especial, no incluido entre los básicos que vienen con el programa Arduino. <a href="res/support/bootloader-ZumBT328/bootloader_ZumBT328.hex" target="_blank" class="icon--url">Lo primero que debes hacer es descargar el archivo bootloader <i class="text--secondary">(formato ".hex")</i>.</a></p>
             <p>Puedes cargar este bootloader mediante
                 <strong>comandos avrdude</strong>, pero si nunca has utilizado comandos en la consola de tu sistema operativo puedes hacer un pequeño intercambio de archivos para poder cargarlo de forma sencilla. Este <i class="text--secondary">“truco”</i> consiste en colocar el bootloader que acabas de descargar en una carpeta en concreto del programa Arduino:
                 <ul>
@@ -21,10 +21,12 @@
                         <span class="common--text-term-fx little">hardware/arduino/avr/bootloaders/bt</span>
                         <br><i class="text--secondary">En la imagen tienes un ejemplo de como se ve la carpeta</i>
                         <br>
-                        <img src="/images/support/zum-carpeta-arduino.png" alt="zum-carpeta-arduino" class="aligncenter">
+                        <div class="support--center">
+                            <img src="/images/support/zum-carpeta-arduino.png" alt="zum-carpeta-arduino" class="aligncenter">
+                        </div>
                     </li>
                     <li class="icon--caret-right">
-                        Renombra el bootloader de la placa ZUM BT-328 “<i class="text--secondary">bootloader_ZumBT328.hex</i>” por “
+                        Renombra el bootloader de la placa ZUM Core (BT-328) “<i class="text--secondary">bootloader_ZumBT328.hex</i>” por “
                         <strong>ATmegaBOOT_168_atmega328_bt.hex</strong>” y pegarlo en la carpeta que acabamos de abrir, sobreescribiendo el anterior que tenía ese mismo nombre.
                     </li>
                 </ul>
@@ -50,9 +52,11 @@
         </li>
         <li class="icon--arrow-right">
             <strong><i class="text--secondary">PASO 3:</i> Conectar ambas placas entre sí</strong>
-            <p>Una vez hayas cargado el programa, conecta ambas placas ZUM BT-328 como indica en el siguiente esquema:</p>
+            <p>Una vez hayas cargado el programa, conecta ambas placas ZUM Core (BT-328) como indica en el siguiente esquema:</p>
             <p>
-                <img src="/images/support/zum-bootloader-2.png" alt="placa_ZUM_2">
+                <div class="support--center">
+                    <img src="/images/support/zum-bootloader-2.png" alt="placa_ZUM_2">
+                </div>
             </p>
             <table class="support--center" width="313">
                 <tbody>
