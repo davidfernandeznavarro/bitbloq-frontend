@@ -246,7 +246,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'w2bUndetectedMac',
             'title': 'Bitbloq no detecta web2board bajo Mac',
-            'data': '<p>Para recibir soporte para <span class="icon--mac"> Mac</span>, utilice el formulario de contacto</p>',
+            'data': '<p>Para recibir soporte para <span class="icon--mac"> Mac</span>, utilice el formulario de contacto.</p>',
             'next': [{
                 '_id': 'form',
                 'class': 'btn--secondary',
@@ -375,8 +375,28 @@ angular.module('bitbloqApp')
                 'response': 'No',
             }]
         }, {
+          '_id': 'reinstallDrivers',
+          'title': 'Revise los drivers y los permisos',
+          'data': '<p>Si está utilizando <span class="icon--windows"> Windows</span>, pruebe a <strong>reinstalar los drivers.</strong></p><p>Si utiliza <span class="icon--linux"> Linux</span>, asegure que su usuario es parte del grupo <i class="text--secondary">dialout</i><ul><li class="icon--check">Utilice el comando <span class="common--text-term-fx little">groups <i class="text--secondary">usuario</i></span> para comprobar si su usuario está en el grupo <i class="text--secondary">dialout</i></li><li class="icon--check">Si no está en dicho grupo, utilice el comando <span class="common--text-term-fx little">sudo adduser <i class="text--secondary">usuario</i> dialout</span> para añadirlo</li></ul></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+          'next': [{
+              '_id': 'end',
+              'class': 'btn--primary',
+              'icon': 'icon--ok icon--big',
+              'response': 'Si',
+          }, {
+              '_id': 'error3020',
+              'class': 'btn--secondary',
+              'icon': '',
+              'response': 'No, y estoy usando la compilación online',
+          }, {
+              '_id': 'bootloader',
+              'class': 'btn--primary btn--no',
+              'icon': 'icon--no icon--big',
+              'response': 'No',
+          }]
+        }, {
           '_id': 'error3020',
-          'title': '¿Recibo el error "3020 RecieveData timeout 400ms"?',
+          'title': '¿Recibe el error "3020 RecieveData timeout 400ms"?',
           'data': '<p>Pruebe a <strong>reinicar el ordenador.</strong></p><p>Si <span class="icon--chrome"> Chrome</span> está muy saturado, el proceso de carga puede ralentizarse, causando que la placa deje de responder.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
           'next': [{
               '_id': 'end',
@@ -662,6 +682,8 @@ angular.module('bitbloqApp')
           'error': '',
           'system': '',
           'antivirus': '',
+          'linklog': '',
+          'w2blog': ''
          }
         // sometimes the user go back and forth...
         // lets clean the steps!
@@ -703,6 +725,20 @@ angular.module('bitbloqApp')
             str += '<p><strong>Antivirus: </strong><pre>'
             str += unHTMLfy($scope.response.antivirus)
             str += '</pre></p>'
+          }
+          // linklog
+          if ($scope.response.linklog.length > 0) {
+            str += '<br><hr><strong>web2boardLink.log:</strong><br>'
+            str += '<div style="border: 1px dashed #B8282A; padding: 5px; margin: 5px;"><pre>'
+            str += unHTMLfy($scope.response.linklog)
+            str += '</pre></div>'
+          }
+          // w2blog
+          if ($scope.response.w2blog.length > 0) {
+            str += '<br><hr><strong>web2board/info.log:</strong><br>'
+            str += '<div style="border: 1px dashed #B8282A; padding: 5px; margin: 5px;"><pre>'
+            str += unHTMLfy($scope.response.w2blog)
+            str += '</pre></div>'
           }
           // adding steps list
           str += '<br><hr><strong>Camino:</strong><br><ol><li>'

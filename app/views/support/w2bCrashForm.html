@@ -1,5 +1,42 @@
-<p>Este error suele producir en consecuencia que Bitbloq pida instalar de nuevo web2board
-    <br>Necesitamos que incluya los <i class="text--secondary">ficheros de log</i> de web2board en el formulario de contacto.
-</p>
-<p data-ng-include="'views/support/logRoutes.html'"></p>
-<p>FORM</p>
+<div class="support--form" data-ng-if="common.user">
+    <p>Este error suele producir en consecuencia que Bitbloq pida instalar de nuevo web2board
+        <br>Necesitamos que incluya el contenido de los <i class="text--secondary">ficheros de log</i> de web2board en el formulario de contacto.
+    </p>
+    <p data-ng-include="'views/support/logRoutes.html'"></p>
+    <br />
+    <form name="form">
+        <fieldset>
+          <!-- SO -->
+          <div class="form-control">
+              <legend class="icon--check">Sistema Operativo y versión del mismo</legend>
+              <span class="form--input common--textarea" data-ng-class="{'input--focused':focus === 'system'}">
+                  <input ng-model="response.system" ng-focus="focus = 'system'" ng-blur="focus = false" id="system" name="system" type="text" maxlength="50" placeholder="Sistema Operativo y {{'modal-inform-error-os-version-placeholder' | translate}}" autocorrect="off" autocomplete="off" required>
+              </span>
+          </div>
+            <!-- linklog -->
+            <div class="form-control">
+                <legend class="icon--check">Añada el contenido de web2boardLink.log</legend>
+                <span class="form--input common--textarea" data-ng-class="{'input--focused':focus === 'linklog'}">
+                    <textarea ng-model="response.linklog" rows="5" class="msd-elastic" ng-model="response.linklog" placeholder="{{ 'modal-inform-linklog-textarea-placeholder' | translate }}" data-ng-focus="focus = 'linklog'" data-ng-blur="focus = false" data-element="modal-inform-linklog-textarea-placeholder" style="overflow: auto;" />
+                </span>
+            </div>
+            <!-- w2blog -->
+            <div class="form-control">
+                <legend class="icon--check">Añada el contenido de info.log</legend>
+                <span class="form--input common--textarea" data-ng-class="{'input--focused':focus === 'w2blog'}">
+                    <textarea ng-model="response.w2blog" rows="5" class="msd-elastic" ng-model="response.w2blog" placeholder="{{ 'modal-inform-w2blog-textarea-placeholder' | translate }}" data-ng-focus="focus = 'w2blog'" data-ng-blur="focus = false" data-element="modal-inform-w2blog-textarea-placeholder" style="overflow: auto;" />
+                </span>
+            </div>
+        </fieldset>
+    </form>
+    <div class="form-control submit support--next">
+        <input type="submit" data-ng-disabled="!response.system || !response.linklog || !response.w2blog" data-ng-click="send()" name="submitform" class="btn btn--primary btn__login--submit" value="{{'send' | translate}}">
+    </div>
+</div>
+
+<div class="support--form" data-ng-if="!common.user">
+  <p>Este error suele producir en consecuencia que Bitbloq pida instalar de nuevo web2board, <strong>necesitamos que se ponga en contacto</strong> con nuestros técnicos enviando un mail a <a href="mailto:soporte.bitbloq@bq.com" target="_blank" class="icon--url">soporte.bitbloq@bq.com</a></p>
+    <p class="icon--check">
+        <strong>Recuerde explicar detalladamente su consulta e incluir los ficheros de log.</strong>
+    </p>
+</div>
