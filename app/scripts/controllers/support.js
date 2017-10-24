@@ -312,7 +312,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'codeError',
             'title': '¿El mensaje de error avisa de erratas en el código?',
-            'data': 'Por ejemplo:<ul><li class="common--text-term-fx">expected \'(\' before \';\'\'</li><li class="common--text-term-fx">variable example not declared</li></ul></p><p>Si este es el caso, probablemente tenga errores de programación.<br>Le recomendamos que pregunte al respecto en el <a href="/forum" target="_blank">foro de Bitbloq</a>, incluyendo en el mensaje el programa donde recibe el error.</p>',
+            'data': 'Por ejemplo:<ul><li class="common--text-term-fx">expected \'(\' before \';\'\'</li><li class="common--text-term-fx">variable example not declared</li></ul></p><p>Si este es el caso, probablemente tenga errores de programación.<br>Le recomendamos que pregunte al respecto en el <a href="/forum" target="_blank" class="icon--url">foro de Bitbloq</a>, incluyendo en el mensaje el programa donde recibe el error.</p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -337,8 +337,13 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'compileOther',
             'title': '¿Tiene un problema diferente a los expuestos?',
-            'extData': 'compileOtherForm.html',
-            'next': []
+            'data': '<p>Le recomendamos que pregunte al respecto en el <a href="/forum" target="_blank" class="icon--url">foro de Bitbloq</a>, incluyendo en el mensaje toda la información pertinente:<ul><li class="icon--check">Cual es el programa donde recibe el error</li><li class="icon--check">Añada el código fuente con el que está trabajando</li><li class="icon--check">Si recibe mensajes de error, inclúyalos</li></ul></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Fin del proceso de soporte',
+            }]
         }, {
             '_id': 'noBoard',
             'title': '¿Bitbloq no detecta la placa?',
@@ -653,8 +658,10 @@ angular.module('bitbloqApp')
         // form
         $scope.response = {
           'message': '',
-          'code': '',
-          'error': ''
+          // 'code': '',
+          'error': '',
+          'system': '',
+          'antivirus': '',
          }
         // sometimes the user go back and forth...
         // lets clean the steps!
@@ -672,18 +679,30 @@ angular.module('bitbloqApp')
             str += '</pre></div>'
           }
           // code
-          if ($scope.response.code.length > 0) {
-            str += '<br><hr><strong>Código:</strong><br>'
-            str += '<div style="border: 1px dashed #1B6D33; padding: 5px; margin: 5px;"><pre>'
-            str += unHTMLfy($scope.response.code)
-            str += '</pre></div>'
-          }
+          // if ($scope.response.code.length > 0) {
+          //   str += '<br><hr><strong>Código:</strong><br>'
+          //   str += '<div style="border: 1px dashed #1B6D33; padding: 5px; margin: 5px;"><pre>'
+          //   str += unHTMLfy($scope.response.code)
+          //   str += '</pre></div>'
+          // }
           // error
           if ($scope.response.error.length > 0) {
             str += '<br><hr><strong>Error:</strong><br>'
             str += '<div style="border: 1px dashed #B8282A; padding: 5px; margin: 5px;"><pre>'
             str += unHTMLfy($scope.response.error)
             str += '</pre></div>'
+          }
+          // system
+          if ($scope.response.system.length > 0) {
+            str += '<p><strong>Sistema Operativo: </strong><pre>'
+            str += unHTMLfy($scope.response.system)
+            str += '</pre></p>'
+          }
+          // antivirus
+          if ($scope.response.antivirus.length > 0) {
+            str += '<p><strong>Antivirus: </strong><pre>'
+            str += unHTMLfy($scope.response.antivirus)
+            str += '</pre></p>'
           }
           // adding steps list
           str += '<br><hr><strong>Camino:</strong><br><ol><li>'

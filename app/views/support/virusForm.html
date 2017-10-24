@@ -9,9 +9,37 @@
     <strong>antivirus actualizado</strong>?
     <br>Es muy importante que los antivirus estén actualizados para que funcionen correctamente, detectando los posibles virus y minimizando el numero de falsos positivos.
     <br>Cuando Bitbloq es detectado como un posible virus, procedemos a enviar una petición para que se incluya en la lista de software seguro del antivirus.</p>
-<p>Para llevar a cabo la petición para que incluyan a Bitbloq en la lista de software seguro de su antivirus, necesitamos que incluya en el formulario de contacto la siguiente información:
-    <ul>
-        <li class="icon--check">Sistema Operativo y versión del mismo</li>
-        <li class="icon--check">Antivirus y versión del mismo</li>
-    </ul>
-</p>
+
+<div class="support--form" data-ng-if="common.user">
+    <p>Para llevar a cabo la petición para que incluyan a Bitbloq en la lista de software seguro de su antivirus,
+        <strong>necesitamos que se ponga en contacto</strong> con nuestros técnicos rellenando el formulario siguiente.</p><br>
+    <form name="form">
+        <fieldset>
+            <!-- code -->
+            <div class="form-control">
+                <legend class="icon--check">Sistema Operativo y versión del mismo</legend>
+                <span class="form--input common--textarea" data-ng-class="{'input--focused':focus === 'system'}">
+                    <input ng-model="response.system" ng-focus="focus = 'system'" ng-blur="focus = false" id="system" name="system" type="text" maxlength="50" placeholder="Sistema operativo y {{'modal-inform-error-os-version-placeholder' | translate}}" autocorrect="off" autocomplete="off" required>
+                </span>
+            </div>
+            <!-- error -->
+            <div class="form-control">
+                <legend class="icon--check">Antivirus y versión del mismo</legend>
+                <span class="form--input common--textarea" data-ng-class="{'input--focused':focus === 'antivirus'}">
+                    <input ng-model="response.antivirus" ng-focus="focus = 'antivirus'" ng-blur="focus = false" id="antivirus" name="antivirus" type="text" maxlength="50" placeholder="Antivirus y versión del antivirus" autocorrect="off" autocomplete="off" required>
+                </span>
+            </div>
+        </fieldset>
+    </form>
+    <div class="form-control submit support--next">
+        <input type="submit" data-ng-disabled="!response.system || !response.antivirus" data-ng-click="send()" name="submitform" class="btn btn--primary btn__login--submit" value="{{'send' | translate}}">
+    </div>
+</div>
+
+<div class="support--form" data-ng-if="!common.user">
+    <p>Para poder proporcionarle un soporte mas personalizado,
+        <strong>necesitamos que se ponga en contacto</strong> con nuestros técnicos enviando un mail a <a href="mailto:soporte.bitbloq@bq.com" target="_blank" class="icon--url">soporte.bitbloq@bq.com</a></p>
+    <p class="icon--check">
+        <strong>Recuerde explicar detalladamente su consulta.</strong>
+    </p>
+</div>
