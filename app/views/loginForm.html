@@ -1,5 +1,5 @@
 <div id="loginContainer" class="login-container" ng-class="{'hide-container': !isLogin || isForgotPassword}">
-    <div ng-class="{'form--login__container':true}"  data-effect="shake">
+    <div ng-class="{'form--login__container':true}" data-effect="shake">
         <h1 class="h3">{{ 'enter' | translate }}</h1>
         <span class="form--subtitle">{{ 'login-profiles' | translate }}</span>
 
@@ -89,11 +89,11 @@
     </div>
     <p class="text-center">
 
-    <div class="form--login__register">
-        <a ng-show="!isSocialRegister" ng-click="form.password.submitted=false; setRegister()" data-element="create-account">
-            <strong>{{'login-create-account' | translate }}</strong>
-        </a>
-    </div>
+        <div class="form--login__register">
+            <a ng-show="!isSocialRegister" ng-click="form.password.submitted=false; setRegister()" data-element="create-account">
+                <strong>{{'login-create-account' | translate }}</strong>
+            </a>
+        </div>
     </p>
 </div>
 <div id="isForgotPassword" class="login-container" ng-class="{'hide-container': !isForgotPassword, 'form--login__container':true}" data-effect="shake">
@@ -128,8 +128,9 @@
                         </span>
                     </div>
                     <!-- Submit Form -->
-                    <div class="form-control">
-                        <button type="submit" name="submitform" class="btn btn--primary btn__login--submit" ng-click="formForgot.emailToSend.submitted=true" data-element="login-email-to-send-button">{{ 'send' | translate }}</button>
+                    <div class="form-control" id="formForgot">
+                        <button type="submit" data-ng-if="!formForgotPass.lock" name="submitform" class="btn btn--primary btn__login--submit" ng-click="formForgot.emailToSend.submitted=true" data-element="login-email-to-send-button">{{'send' | translate}}</button>
+                        <button type="submit" data-ng-if="formForgotPass.lock"  name="submitform" class="btn btn--primary btn--disabled" data-ng-disabled="true" data-element="login-email-to-send-button" data-tooltips="true" data-tooltip="Every time you use the Password Recovering form, you'll have to wait a little longer before being able to try again" data-tooltip-position="bottom"><i class="fa fa-lock" aria-hidden="true"></i>  {{formForgotPass.countdown}}</button>
                     </div>
                 </fieldset>
             </form>
