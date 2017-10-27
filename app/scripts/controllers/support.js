@@ -602,7 +602,6 @@ angular.module('bitbloqApp')
           }]
         }, {
             '_id': 'xp',
-            'permalink': 'xp',
             'title': 'Problemas comunes con Windows XP',
             'extData': 'xp.html',
             'next': [{
@@ -613,7 +612,6 @@ angular.module('bitbloqApp')
             }]
         }, {
             '_id': 'linux',
-            'permalink': 'linux',
             'title': 'Problemas comunes con Linux no certificados',
             'extData': 'linux.html',
             'next': [{
@@ -624,7 +622,53 @@ angular.module('bitbloqApp')
             }]
         }, {
             '_id': 'hardware',
-            'title': '',
+            'title': '¿Está la placa encendida y bien conectada?',
+            'data': '<p>Descartemos los errores más frecuentes:</p><ul><li class="icon--check">Compruebe que la placa esté <strong>encendida</strong>.</li><li class="icon--check">Revise que la placa esté <strong>bien conectada</strong>.</li><li class="icon--check">¿Está el componente <strong>conectado correctamente</strong>?.</li></ol></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'hardQuemado',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'hardQuemado',
+            'title': '¿Está el componente y el cable en buen estado?',
+            'data': '<p>Puede que el <i class="text--secondary">componente</i>, el <i class="text--secondary">cable</i> de conexión, el <i class="text--secondary">pin</i> al que se conecta, y el <i class="text--secondary">conector</i> del propio cable <strong>no estén dañados</strong></p><ul><li class="icon--check">Compruebe que el componente no tiene ninguna parte deteriorada o ennegrecida <i class="text--secondary">(quemada)</i>.</li><li class="icon--check">Compruebe que el cable <strong>no está pelado</strong> ni tiene algún segmento ennegrecido <i class="text--secondary">(quemado)</i>.</li><li class="icon--check">Compruebe que el pin al que se conecta no está doblado, suelto <i class="text--secondary">(notará que la pieza "baila")</i>, y que el punto de soldadura a la placa no está deteriorado.</li>' +
+                '<li class="icon--check">Compruebe que el conector del cable <i class="text--secondary">("enchufe")</i> no está deteriorado, y está firmemente unido al cable.</li></ol></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'hardUSB',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'hardUSB',
+            'title': '¿Está conectada la placa por USB?',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'hardLista',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'hardLista',
+            'title': 'Selecione el componente con el que tiene dificultades',
+            'extData': 'hardLista.html',
             'next': []
         }];
 
@@ -674,6 +718,29 @@ angular.module('bitbloqApp')
                 userApi.update({chromeapp: common.user.chromeapp})
             }
         })
+
+        // lists
+        $scope.components = [{
+          'uuid': 'led',
+          'category': 'leds',
+          'name': 'LED'
+        }, {
+          'uuid': 'servo',
+          'category': 'servos',
+          'name': 'Servomotor'
+        }, {
+          'uuid': 'lcd',
+          'category': 'lcds',
+          'name': 'LCD'
+        }, {
+          'uuid': 'us',
+          'category': 'us',
+          'name': 'Ultrasonidos'
+        }, {
+          'uuid': 'other',
+          'category': 'otro',
+          'name': 'Otro'
+        }]
 
         // form
         $scope.response = {
