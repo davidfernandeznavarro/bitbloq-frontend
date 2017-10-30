@@ -1,4 +1,10 @@
 $support-blue: rgb(59, 145, 173);
+@keyframes blink
+{
+ 0% { fill: white; }
+ 50% { fill: yellow; }
+ 110% { fill: white; }
+}
 
 .support--pane {
     min-height: 100%;
@@ -95,10 +101,14 @@ $support-blue: rgb(59, 145, 173);
                   margin-top: 10px;
                   padding: 1px;
                   li{
-                      img{
+                      svg{
                         float: right;
                         height: 100px;
                         margin-left: 20px;
+                        transition: 0.5s;
+
+                        -webkit-filter: drop-shadow(none);
+                        filter: drop-shadow(none);
                       }
                       .label {
                         color: $white;
@@ -112,6 +122,7 @@ $support-blue: rgb(59, 145, 173);
                         border-top-left-radius: 15px;
                         margin-top: -10px;
                         position: absolute;
+                        transition: 0.5s;
                         &#other {
                           background: $support-blue;
                         }
@@ -120,11 +131,26 @@ $support-blue: rgb(59, 145, 173);
                         background: $white;
                         color: $green;
                         border: 1px solid $green;
+                        -webkit-filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
+                        filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
                       }
-                      &:hover #other {
+                      &:hover span#other {
                         background: $white;
                         color: $support-blue;
                         border: 1px solid $support-blue;
+                        -webkit-filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
+                        filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
+                      }
+                      &:hover svg {
+                        filter: brightness(90%);
+                        -webkit-filter: drop-shadow(10px 10px 5px rgba(0,0,0,0.5));
+                        filter: drop-shadow(10px 10px 5px rgba(0,0,0,0.5));
+                      }
+
+                      &:hover #led svg {
+                        path#path16 {
+                          animation: blink 0.8s linear infinite;
+                        }
                       }
                   }
                 }
