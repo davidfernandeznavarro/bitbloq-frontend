@@ -8,7 +8,7 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('SupportCtrl', function($translate, $scope, $location, $routeParams, common, _, userApi, feedbackApi, alertsService) {
+    .controller('SupportCtrl', function($translate, $scope, $location, $routeParams, common, _, userApi, feedbackApi, alertsService, $http, $sce) {
 
         $scope.translate = $translate;
 
@@ -670,6 +670,111 @@ angular.module('bitbloqApp')
             'title': 'Selecione el componente con el que tiene dificultades',
             'extData': 'hardLista.html',
             'next': []
+        }, {
+            '_id': 'hardLEDs',
+            'permalink': 'hardLEDs',
+            'title': 'Selecione el componente con el que tiene dificultades',
+            'data': 'leds',
+            'next': []
+        }, {
+            '_id': 'hardServos',
+            'permalink': 'hardServos',
+            'title': '¿Utiliza un servomotor normal o un miniservo?',
+            'data': '',
+            'next': [{
+                '_id': 'hardServosNormal',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'Uso un servomotor normal',
+            }, {
+                '_id': 'hardServosMini',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'Uso un miniservo',
+            }]
+        }, {
+            '_id': 'hardServosNormal',
+            'title': '¿Qué fallo observa en su servomotor?',
+            'data': '',
+            'next': [{
+                '_id': 'hardServosAleatorio',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'No se mueve',
+            }, {
+                '_id': 'hardServosAleatorio',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'Se mueve aleatoriamente',
+            },{
+                '_id': 'hardServosNoPara',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'No para de moverse',
+            }]
+        }, {
+            '_id': 'hardServosMini',
+            'title': '¿Qué fallo observa en su miniservo?',
+            'data': '',
+            'next': [{
+                '_id': 'hardServosAleatorio',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'No se mueve',
+            }, {
+                '_id': 'hardServosAleatorio',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'Se mueve aleatoriamente',
+            }]
+        }, {
+            '_id': 'hardServosAleatorio',
+            'title': 'El servomotor se mueve aleatoriamente o no se mueve',
+            'data': '',
+            'next': [{
+                '_id': 'hardServosAleatorio',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'No se mueve',
+            }, {
+                '_id': 'hardServosAleatorio',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'Se mueve aleatoriamente',
+            }]
+        }, {
+            '_id': 'hardServosNoPara',
+            'title': 'El servomotor no para nunca',
+            'data': '',
+            'next': [{
+                '_id': 'hardServosAleatorio',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'No se mueve',
+            }, {
+                '_id': 'hardServosAleatorio',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'Se mueve aleatoriamente',
+            }]
+        }, {
+            '_id': 'hardLCDs',
+            'permalink': 'hardLCDs',
+            'title': 'Selecione el componente con el que tiene dificultades',
+            'data': 'lcds',
+            'next': []
+        }, {
+            '_id': 'hardUS',
+            'permalink': 'hardUS',
+            'title': 'Selecione el componente con el que tiene dificultades',
+            'data': 'Ultrasonidos',
+            'next': []
+        }, {
+            '_id': 'hardOther',
+            'permalink': 'hardOther',
+            'title': 'Selecione el componente con el que tiene dificultades',
+            'data': 'otros',
+            'next': []
         }];
 
         var getCard = function(id, isPermalink) {
@@ -723,24 +828,47 @@ angular.module('bitbloqApp')
         $scope.components = [{
           'uuid': 'led',
           'category': 'leds',
-          'name': 'LED'
+          'name': 'LED',
+          'permalink': 'hardLEDs',
+          'svg': ''
         }, {
           'uuid': 'servo',
           'category': 'servos',
-          'name': 'Servomotor'
+          'name': 'Servomotor',
+          'permalink': 'hardServos',
+          'svg': ''
         }, {
           'uuid': 'lcd',
           'category': 'lcds',
-          'name': 'LCD'
+          'name': 'LCD',
+          'permalink': 'hardLCDs',
+          'svg': ''
         }, {
           'uuid': 'us',
           'category': 'us',
-          'name': 'Ultrasonidos'
+          'name': 'Ultrasonidos',
+          'permalink': 'hardUS',
+          'svg': ''
         }, {
           'uuid': 'other',
           'category': 'otro',
-          'name': 'Otro'
+          'name': 'Otro',
+          'permalink': 'hardOther',
+          'svg': ''
         }]
+
+        $scope.getSVG = function(item){
+          if(item.svg === ''){
+            $http.get('images/components/'+ item.uuid + '.svg')
+              .then(function(res){
+                  item.svg = res.data
+              });
+          }
+        }
+
+        $scope.renderSVG = function(item) {
+          return $sce.trustAsHtml(item.svg) // all of this for the svg animations to fly! :)
+        }
 
         // form
         $scope.response = {
