@@ -8,7 +8,7 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('SupportCtrl', function($translate, $scope, $location, $routeParams, common, _, userApi, feedbackApi, alertsService, $http, $sce) {
+    .controller('SupportCtrl', function($translate, $scope, $location, $routeParams, common, _, userApi, feedbackApi, alertsService, $http, $sce, web2boardOnline) {
 
         $scope.translate = $translate;
 
@@ -34,7 +34,7 @@ angular.module('bitbloqApp')
             'permalink': 'end',
             'dontShowHomeButton': true,
             'title': '¡Gracias por utilizar el sistema de soporte de Bitbloq!',
-            'data': '<span class="support--icon--giga support--icon--ok"><i class="fa fa-check-circle" aria-hidden="true"></i><span>',
+            'data': '<span class="support--icon--giga support--icon--ok"><i class="fa fa-check-circle" aria-hidden="true"></i></span>',
             'next': [{
                 '_id': 'index',
                 'class': 'btn--primary',
@@ -593,7 +593,7 @@ angular.module('bitbloqApp')
         }, {
           '_id': '3020DeadBoard',
           'title': 'Es probable que la placa esté defectuosa',
-          'data': '<span class="support--icon--giga support--icon--rojo"><i class="fa fa-medkit" aria-hidden="true"></i><span><p>Una vez descartadas otras posibilidades, <i class="text-secondary">es probable que su placa esté defectuosa</i>.</p><p>Si no es la placa <a href="https://www.bq.com/es/mundo-maker" target="_blank" class="icon--url">BQ ZUM Core (BT-328)</a> <strong>contacte con su fabricante</strong></p>',
+          'data': '<span class="support--icon--giga support--icon--rojo"><i class="fa fa-medkit" aria-hidden="true"></i></span><p>Una vez descartadas otras posibilidades, <i class="text-secondary">es probable que su placa esté defectuosa</i>.</p><p>Si no es la placa <a href="https://www.bq.com/es/mundo-maker" target="_blank" class="icon--url">BQ ZUM Core (BT-328)</a> <strong>contacte con su fabricante</strong></p>',
           'next': [{
               '_id': 'form',
               'class': 'btn--secondary',
@@ -673,9 +673,35 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'hardLEDs',
             'permalink': 'hardLEDs',
-            'title': 'Selecione el componente con el que tiene dificultades',
-            'data': 'leds',
+            'title': 'Correcta configuración del componente LED',
+            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p>Es <strong>necesario</strong> que conecte el componente <strong>exactamente igual que en la imagen</strong> para que podamos lanzar un test automático.</p><p class="support--centered"><img class="support--gif-video" src="" alt="hardLEDsCables" /><ul><li class="icon--exclamation support--centered"><i class="text--secondary">Asegurese de que todo está conectado tal y como le indicamos.</i></li></ul></p><p><strong>¿Ha conectado bien el componente?</strong></p>',
+            'next': [{
+                '_id': 'hardLEDsTestIni',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si, el componente está conectado como en la imagen',
+            }]
+        }, {
+            '_id': 'hardLEDsTestIni',
+            'permalink': 'hardLEDs',
+            'title': 'Test automático del componente LED',
+            'extData': 'hardLEDsTestIni.html',
             'next': []
+        }, {
+            '_id': 'hardLEDsTestEnd',
+            'title': 'Hagamos un test al componente',
+            'data': 'hardLEDsTest',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'El LED parpadea',
+            }, {
+                '_id': 'form',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'El LED no parpadea',
+            }]
         }, {
             '_id': 'hardServos',
             'permalink': 'hardServos',
@@ -730,32 +756,32 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'hardServosAleatorio',
             'title': 'El servomotor se mueve aleatoriamente o no se mueve',
-            'data': '',
+            'data': '<p>¿Ha probado a <strong>enchufar un portapilas</strong>?</p><p>En ocasiones el puerto USB no es capaz de suminsitrar la energía suficiente para que la configuración de la placa pueda activar los servomotores.<br>Usando un <strong>portapilas</strong> podrá descartar dicha posibilidad.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
-                '_id': 'hardServosAleatorio',
-                'class': 'btn--secondary',
-                'icon': '',
-                'response': 'No se mueve',
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
             }, {
-                '_id': 'hardServosAleatorio',
-                'class': 'btn--secondary',
-                'icon': '',
-                'response': 'Se mueve aleatoriamente',
+                '_id': 'form',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
             }]
         }, {
             '_id': 'hardServosNoPara',
             'title': 'El servomotor no para nunca',
-            'data': '',
+            'data': '<p>Es probable que el servomotor necesite ser <stromg>calibrado</strong>:</p><p><ul><li class="icon--check">Observe el lado por donde está situada la salida de los cables.</li><li class="icon--check">Encontrará una endidura circular, en la que mediante un destornillador podrá calibrar el servomotor.</li></ul><p class="support--centered"><img class="support--gif-video" src="images/support/hardServoCalibrate.gif" /></p><ul><li class="icon--check">Como puede observar la imagen, colocando el servomotor con el zocalo frente a usted y los cables hacia la derecha, deberá ajustar el calibrado girando el destornillador en dirección antihoraria</li><li class="icon--check">Recalibre el servomotor hasta que logre la configuración deseada</li></ul></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
-                '_id': 'hardServosAleatorio',
-                'class': 'btn--secondary',
-                'icon': '',
-                'response': 'No se mueve',
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
             }, {
-                '_id': 'hardServosAleatorio',
-                'class': 'btn--secondary',
-                'icon': '',
-                'response': 'Se mueve aleatoriamente',
+                '_id': 'form',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
             }]
         }, {
             '_id': 'hardLCDs',
@@ -770,11 +796,37 @@ angular.module('bitbloqApp')
             'data': 'Ultrasonidos',
             'next': []
         }, {
-            '_id': 'hardOther',
-            'permalink': 'hardOther',
-            'title': 'Selecione el componente con el que tiene dificultades',
-            'data': 'otros',
-            'next': []
+            '_id': 'hardBT',
+            'permalink': 'hardBT',
+            'title': 'Pines 0-1, y configuración de los conmutadores',
+            'data': '<p>¿Tiene algún <strong>componente conectado en los pines 0 y 1</strong>?</p><ul><li><p>Los pines <i class="text--secondary">0</i> y <i class="text--secondary">1</i> se utilizan para digital i/o y para comunicación en serie <i class="text--secondary">(de la que depende la conexión por Bluetooth y el puerto USB y )</i>, por lo que si están en uso se deshabilitará la comunicación con su sistema.</p><p>Para volver a habilitar la conexión por Bluetooth, libere los pines.</p></li></ul>' +
+                '<p>¿Cómo cambio la <strong>configuración de los conmutadores</strong>?</p><div class="support--flex"><div><img src="/images/support/zum-bt-comm.png" class="support--rotate90" /></div><div><p><ul><li class="icon--check"><strong>Conmutador 1</strong>:<br> Marcado con una <i class="text--secondary">P de “Power”</i>, apaga y enciende el módulo Bluetooth.</li><li class="icon--check"><strong>Conmutador 2 y 3</strong>:<br> Marcados como <i class="text--secondary">AT</i>. Cuando están conectados, crean una derivación entre el puerto serie del USB y el puerto serie del módulo Bluetooth, permitiendo el acceso directo a la configuración del Bluetooth desde el USB.</li></ul></p></div></div>' +
+                '<p>Accediendo a la configuración del módulo Bluetooth mediante el <strong>AT Command Mode</strong>, podrá cambiar de nombre el identificador de dispositivo, entro otras opciones.</p>',
+            'next': [{
+                '_id': 'hardBTATCommand',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'AT Command Mode',
+            }]
+        }, {
+            '_id': 'hardBTATCommand',
+            'title': 'AT Command Mode',
+            'data': '<p><strong>Consideraciones previas</strong><br>Antes de acceder a los <i class="text--secondary">comandos AT</i> del módulo Bluetooth hay que asegurarse de que el ATMega tiene configurado el pin TX como entrada.<br>En caso de estar configurado como salida puede estar poniendo algún valor en la UART, por lo que el USB y Bluetooth pueden no comunicarse.<br>Existen dos soluciones:<ul><li class="icon--check">Cargar un programa al ATmega que ponga los pines 0 y 1 como entradas.</li><li class="icon--check">Poner un cable que conecte el RESET con GND, para forzar que el ATmega esté en estado de reset.</li></ul></p>' +
+                '<p><strong>Comandos AT del módulo Bluetooth</strong><br>Para acceder a los <i class="text--secondary">comandos AT</i> del módulo Bluetooth sigue los siguientes pasos:<ul><li class="icon--check">Pon todos los conmutadores en <i class="text--secondary">ON</i> y conecta la placa al ordenador mediante el cable USB.</li><li class="icon--check">Dentro de la IDE de Arduino, abre un Monitor Serial a una velocidad de comunicación de <i class="text--secondary">19200 baudios</i> y en el modo <i class="text--secondary">Ambos NL & CR</i> (nueva línea y retorno de carro).</li>' +
+                '<li class="icon--check">Comprueba la comunicación con el módulo Bluetooth enviando por la línea de comandos, el texto <i class="text--secondary">AT</i>. El módulo Bluetooth debería responder con un <i class="text--secondary">OK</i>.</li><li class="icon--check">Si quieres cambiar el nombre de tu módulo Bluetooth, el que muestra a otros dispositivos, envía comando <i class="text--secondary">AT+NAME####</i> donde #### es el nombre que quieras.</li><li class="icon--check">Si quieres modificar la tasa de baudios, envía el comando <i class="text--secondary">AT+BAUD#</i> donde # es un número de referencia a una cantidad de baudios. Por ejemplo: BAUD5 = 19200 , BAUD4 = 9600…</li><li class="icon--check">Tienes disponible la lista completa de comandos AT en el siguiente enlace: BLK-MD-BC04-B_AT COMMANDS</p>' +
+                '<p><strong>NOTA IMPORTANTE</strong>: Cambiando la velocidad de comunicación del módulo Bluetooth de 19200 baudios se deshabilitará la posibilidad de programación vía Bluetooth. Sin embargo, la comunicación serie a través del Bluetooth seguirá estando disponible con la nueva velocidad.</p>' +
+                '<p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'form',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
         }];
 
         var getCard = function(id, isPermalink) {
@@ -850,10 +902,16 @@ angular.module('bitbloqApp')
           'permalink': 'hardUS',
           'svg': ''
         }, {
+          'uuid': 'bt',
+          'category': 'bt',
+          'name': 'Bluetooth',
+          'permalink': 'hardBT',
+          'svg': ''
+        }, {
           'uuid': 'other',
           'category': 'otro',
           'name': 'Otro',
-          'permalink': 'hardOther',
+          'permalink': 'form',
           'svg': ''
         }]
 
@@ -868,6 +926,97 @@ angular.module('bitbloqApp')
 
         $scope.renderSVG = function(item) {
           return $sce.trustAsHtml(item.svg) // all of this for the svg animations to fly! :)
+        }
+
+        // hw test
+        var hexLed = ':100000000C945C000C946E000C946E000C946E00CA\r\n' +
+                    ':100010000C946E000C946E000C946E000C946E00A8' +
+                    ':100020000C946E000C946E000C946E000C946E0098' +
+                    ':100030000C946E000C946E000C946E000C946E0088' +
+                    ':100040000C9415010C946E000C946E000C946E00D0' +
+                    ':100050000C946E000C946E000C946E000C946E0068' +
+                    ':100060000C946E000C946E00000000002400270029' +
+                    ':100070002A0000000000250028002B0004040404CE' +
+                    ':100080000404040402020202020203030303030342' +
+                    ':10009000010204081020408001020408102001021F' +
+                    ':1000A00004081020000000080002010000030407FB' +
+                    ':1000B000000000000000000011241FBECFEFD8E0B8' +
+                    ':1000C000DEBFCDBF21E0A0E0B1E001C01D92A930AC' +
+                    ':1000D000B207E1F70E945F010C94CE010C9400007E' +
+                    ':1000E000E1EBF0E02491EDE9F0E09491E9E8F0E053' +
+                    ':1000F000E491EE2309F43BC0222339F1233091F03F' +
+                    ':1001000038F42130A9F0223001F524B52F7D12C03A' +
+                    ':10011000273091F02830A1F02430B9F420918000EC' +
+                    ':100120002F7D03C0209180002F77209380000DC089' +
+                    ':1001300024B52F7724BD09C02091B0002F7703C0CC' +
+                    ':100140002091B0002F7D2093B000F0E0EE0FFF1F54' +
+                    ':10015000EE58FF4FA591B4912FB7F894EC9181110F' +
+                    ':1001600003C090959E2301C09E2B9C932FBF0895A2' +
+                    ':100170003FB7F8948091050190910601A091070185' +
+                    ':10018000B091080126B5A89B05C02F3F19F0019634' +
+                    ':10019000A11DB11D3FBFBA2FA92F982F8827820F0D' +
+                    ':1001A000911DA11DB11DBC01CD0142E0660F771F5D' +
+                    ':1001B000881F991F4A95D1F708958F929F92AF9209' +
+                    ':1001C000BF92CF92DF92EF92FF920E94B8004B0154' +
+                    ':1001D0005C0180EDC82E87E0D82EE12CF12C0E9426' +
+                    ':1001E000B800DC01CB0188199909AA09BB09883E2E' +
+                    ':1001F0009340A105B10558F021E0C21AD108E108E9' +
+                    ':10020000F10888EE880E83E0981EA11CB11CC11471' +
+                    ':10021000D104E104F10419F7FF90EF90DF90CF9043' +
+                    ':10022000BF90AF909F908F9008951F920F920FB63E' +
+                    ':100230000F9211242F933F938F939F93AF93BF936C' +
+                    ':100240008091010190910201A0910301B0910401FC' +
+                    ':100250003091000123E0230F2D3720F40196A11DDA' +
+                    ':10026000B11D05C026E8230F0296A11DB11D2093E4' +
+                    ':1002700000018093010190930201A0930301B093C8' +
+                    ':1002800004018091050190910601A0910701B091B0' +
+                    ':1002900008010196A11DB11D8093050190930601EF' +
+                    ':1002A000A0930701B0930801BF91AF919F918F91E7' +
+                    ':1002B0003F912F910F900FBE0F901F90189578943B' +
+                    ':1002C00084B5826084BD84B5816084BD85B582605B' +
+                    ':1002D00085BD85B5816085BD80916E00816080930C' +
+                    ':1002E0006E00109281008091810082608093810075' +
+                    ':1002F0008091810081608093810080918000816085' +
+                    ':10030000809380008091B10084608093B1008091DF' +
+                    ':10031000B00081608093B00080917A008460809307' +
+                    ':100320007A0080917A00826080937A0080917A00CE' +
+                    ':10033000816080937A0080917A00806880937A004F' +
+                    ':100340001092C100EDE9F0E02491E9E8F0E0849139' +
+                    ':10035000882399F090E0880F991FFC01E859FF4F1E' +
+                    ':10036000A591B491FC01EE58FF4F859194918FB700' +
+                    ':10037000F894EC91E22BEC938FBFC0E0D0E081E0E9' +
+                    ':100380000E9470000E94DD0080E00E9470000E94C8' +
+                    ':10039000DD002097A1F30E940000F1CFF894FFCF79' +
+                    ':00000001FF\r\n'
+
+        $scope.hwTestStart = function(component,board) {
+          switch (component) {
+            case 'led':
+              if (board === 'bqzum') {
+                web2boardOnline.upload({
+                  board: {
+                    mcu: 'bt328'
+                  },
+                  hex: hexLed
+                }).then(function(res) {
+                  console.log('OK => ', res);
+                }).catch(function(err) {
+                  console.log('FAIL => ', err);
+                })
+              } else {
+                web2boardOnline.upload({
+                  board: {
+                    mcu: 'uno'
+                  },
+                  hex: hexLed
+                }).then(function(res) {
+                  console.log('OK => ', res);
+                }).catch(function(err) {
+                  console.log('FAIL => ', err);
+                })
+              }
+              break;
+          }
         }
 
         // form

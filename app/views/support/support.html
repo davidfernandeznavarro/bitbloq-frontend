@@ -9,7 +9,7 @@
               <span class="support--button--home">{{'Volver al inicio' | translate}}</span>
           </button>
             <div class="support--content">
-                <h1 class="h2 header__title support--tittle--centered">{{ card.title }}</h1>
+                <h1 class="h2 header__title support--centered">{{ card.title }}</h1>
                 <span class="support--card--data" data-ng-if="card.data && !card.extData" data-ng-bind-html="card.data" />
                 <span class="support--card--data" data-ng-if="card.extData" data-ng-include="'views/support/'+ card.extData" />
                 <div class="support--next">
