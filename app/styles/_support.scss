@@ -1,9 +1,42 @@
 $support-blue: rgb(59, 145, 173);
-@keyframes blink
-{
- 0% { fill: white; }
- 50% { fill: yellow; }
- 110% { fill: white; }
+@keyframes blink {
+    0% {
+        fill: white;
+    }
+
+    50% {
+        fill: yellow;
+    }
+
+    100% {
+        fill: white;
+    }
+}
+@keyframes rotate360 {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
+  }
 }
 
 .support--pane {
@@ -50,16 +83,37 @@ $support-blue: rgb(59, 145, 173);
                     height: auto;
                 }
 
-                &:before { margin:-25px -25px 0px calc(25px - 90px); }
+                &:before {
+                    margin: -25px -25px 0 calc(25px - 90px);
+                }
             }
 
-            .support--icon--si { color: $green; }
-            .support--icon--naranja { color: $toolbox-software-functions; }
-            .support--icon--rojo { color: $alert-error-icon; }
-            .support--icon--ok { color: $support-blue; }
+            .support--icon--si {
+                color: $green;
+            }
+
+            .support--icon--naranja {
+                color: $toolbox-software-functions;
+            }
+
+            .support--icon--rojo {
+                color: $alert-error-icon;
+            }
+
+            .support--icon--ok {
+                color: $support-blue;
+            }
+
             .support--icon--no {
                 color: #114698;
-                svg { fill: #114698; }
+
+                svg {
+                    fill: #114698;
+                }
+            }
+
+            .support--icon--default {
+                color: $black-light;
             }
 
             .support--content {
@@ -68,21 +122,22 @@ $support-blue: rgb(59, 145, 173);
                 margin: 15px;
                 border: 1px dashed #d6d6d6;
 
-                .support--tittle--centered {
+                .support--centered {
                     text-align: center;
                 }
 
                 .support--ok-warning {
-                  margin-top: 10px;
-                  margin-bottom: 15px;
-                  text-align: center;
-                  span {
-                    border: solid 3px $support-blue;
-                    background-color: $grey-lighter;
-                    color: $support-blue;
-                    padding: 10px;
-                    border-radius: 15px;
-                  }
+                    margin-top: 10px;
+                    margin-bottom: 15px;
+                    text-align: center;
+
+                    span {
+                        border: solid 3px $support-blue;
+                        background-color: $grey-lighter;
+                        color: $support-blue;
+                        padding: 10px;
+                        border-radius: 15px;
+                    }
                 }
 
                 p {
@@ -93,66 +148,97 @@ $support-blue: rgb(59, 145, 173);
                     padding: 0 0 0 15px;
                 }
 
-                .support--hard-list{
-                  display: inline-flex;
-                  flex-direction: row;
-                  flex-wrap: wrap;
-                  justify-content: center;
-                  margin-top: 10px;
-                  padding: 1px;
-                  li{
-                      svg{
-                        float: right;
-                        height: 100px;
-                        margin-left: 20px;
-                        transition: 0.5s;
+                .support--hard-list {
+                    display: inline-flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    margin-top: 10px;
+                    padding: 1px;
 
-                        -webkit-filter: drop-shadow(none);
-                        filter: drop-shadow(none);
-                      }
-                      .label {
-                        color: $white;
-                        display: block;
-                        text-align: right;
-                        float: left;
-                        background: $green;
-                        padding: 3px 6px 3px;
-                        border-bottom-left-radius: 15px;
-                        border-top-right-radius: 15px;
-                        border-top-left-radius: 15px;
-                        margin-top: -10px;
-                        position: absolute;
-                        transition: 0.5s;
-                        &#other {
-                          background: $support-blue;
-                        }
-                      }
-                      &:hover .label{
-                        background: $white;
-                        color: $green;
-                        border: 1px solid $green;
-                        -webkit-filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
-                        filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
-                      }
-                      &:hover span#other {
-                        background: $white;
-                        color: $support-blue;
-                        border: 1px solid $support-blue;
-                        -webkit-filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
-                        filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
-                      }
-                      &:hover svg {
-                        filter: brightness(90%);
-                        -webkit-filter: drop-shadow(10px 10px 5px rgba(0,0,0,0.5));
-                        filter: drop-shadow(10px 10px 5px rgba(0,0,0,0.5));
-                      }
+                    li {
+                        margin-left: -12px;
 
-                      &:hover #led svg {
-                        path#path16 {
-                          animation: blink 0.8s linear infinite;
+                        svg {
+                            float: right;
+                            height: 100px;
+                            margin-left: 20px;
+                            transition: 0.5s;
+                            -webkit-filter: drop-shadow(none);
+                            filter: drop-shadow(none);
                         }
-                      }
-                  }
+
+                        .label {
+                            color: $white;
+                            display: block;
+                            text-align: right;
+                            float: left;
+                            background: $green;
+                            padding: 3px 6px;
+                            border-bottom-left-radius: 15px;
+                            border-top-right-radius: 15px;
+                            border-top-left-radius: 15px;
+                            margin-top: -10px;
+                            position: absolute;
+                            transition: 0.5s;
+
+                            &#other {
+                                background: $support-blue;
+                            }
+                        }
+
+                        &:hover .label {
+                            background: $white;
+                            color: $green;
+                            border: 1px solid $green;
+                            -webkit-filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
+                            filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
+                        }
+
+                        &:hover span#other {
+                            background: $white;
+                            color: $support-blue;
+                            border: 1px solid $support-blue;
+                            -webkit-filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
+                            filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
+                        }
+
+                        &:hover svg {
+                            filter: brightness(90%);
+                            -webkit-filter: drop-shadow(10px 10px 5px rgba(0,0,0,0.5));
+                            filter: drop-shadow(10px 10px 5px rgba(0,0,0,0.5));
+                        }
+
+                        &:hover #led svg {
+                            path#path16 {
+                                animation: blink 0.8s linear infinite;
+                            }
+                        }
+
+                        &:hover #servo svg {
+                            path#path29,
+                            path#path31 {
+                                animation: rotate360 0.8s linear infinite;
+                                transition: transform 1s linear;
+                                transform-style: preserve-3D;
+                                transform-origin: 70% 70%;
+                            }
+                        }
+                        & #bt svg g.btLogo {
+                          display: none;
+                        }
+                        &:hover #bt svg {
+                          g.btLogo {
+                            display: block;
+                          }
+                          g#btBase circle {
+                            cy: 420px;
+                          }
+                          g#btSymbol {
+                            transform: translate(0px,46px);
+                          }
+                        }
+                    }
                 }
 
                 .support--next {
@@ -178,55 +264,152 @@ $support-blue: rgb(59, 145, 173);
             }
         }
     }
+
     .support--grid--2 {
-      display: inline-block;
-      width: 100%;
-      .support--grid--2--l {
-        float: left;
-        width: 50%;
-      }
-      .support--grid--2--r {
-        float: right;
-        width: 50%;
-      }
+        display: inline-block;
+        width: 100%;
+
+        .support--grid--2--l {
+            float: left;
+            width: 50%;
+        }
+
+        .support--grid--2--r {
+            float: right;
+            width: 50%;
+        }
     }
 
     .support--center {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      width: 100%;
-    }
-
-    .support--text-right {
-      text-align: right;
-    }
-
-    // clone from account panel design
-    .switch--chromeApp {
-      color: #8c919b;
-      font-size: 12px;
-      font-weight: 400;
-      padding-bottom: 15px;
-      input {
-        margin-bottom: -2.8px;
-      }
-    }
-
-    // form
-    .support--form {
-      form {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        margin-top: -15px;
-        margin-bottom: -15px;
-        padding: 5px;
-      }
-      fieldset { width: 100%; }
-      legend { text-align: left; }
-      button, input { margin: 2px; }
+        width: 100%;
+    }
+
+    .support--flex {
+        display: inline-flex;
+        margin: 10px 0px 20px;
+        align-items: center;
+    }
+
+    .support--text-right {
+        text-align: right;
+    }
+    // gif video
+    .support--gif-video {
+        border: 1px solid;
+        border-image: linear-gradient(to bottom right, $toolbox-software-zowi, $green) 1 100;
+        box-shadow: 5px 3px 10px rgba(0,0,0,0.5);
+    }
+    .support--rotate90 {
+      transform: rotate(90deg);
+      box-shadow: 5px 3px 10px rgba(0,0,0,0.5);
+      border: 1px solid $green;
+     }
+    // clone from account panel design
+    .switch--chromeApp {
+        color: #8c919b;
+        font-size: 12px;
+        font-weight: 400;
+        padding-bottom: 15px;
+
+        input {
+            margin-bottom: -2.8px;
+        }
+    }
+    // form
+    .support--form {
+        form {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: -15px;
+            margin-bottom: -15px;
+            padding: 5px;
+        }
+
+        fieldset {
+            width: 100%;
+        }
+
+        legend {
+            text-align: left;
+        }
+
+        button,
+        input {
+            margin: 2px;
+        }
+    }
+    // hardware test loader
+    #support--hw-test {
+        align-items: center;
+        justify-content: center;
+
+        .loader {
+            color: $toolbox-software-functions;
+            animation: shake 1.5s linear infinite;
+            transition: transform 1s linear;
+            float: left;
+            position: absolute;
+            font-size: 90px;
+            margin-top: -50px;
+            z-index: 99;
+        }
+        .ok {
+            color: $grey-medium;
+            // animation: rotate360 1.5s linear infinite;
+            // transition: transform 1s linear;
+            float: left;
+            position: absolute;
+            font-size: 80px;
+            margin-top: -45px;
+            z-index: 99;
+            &.checked {
+              color: $green;
+            }
+        }
+
+        li:last-child { text-align: center; }
+
+        img {
+            width: 120px;
+            transition: all 0.15s linear;
+
+            &.isHover, &:hover {
+                width: 160px;
+                border: 1px $green solid;
+                padding: 7px;
+                border-radius: 25px;
+                background: $grey-light;
+                box-shadow: 5px 3px 10px rgba(0,0,0,0.5);
+            }
+
+            &.noHover {
+                width: 80px;
+                -webkit-filter: grayscale(100%);
+                filter: grayscale(100%);
+            }
+        }
+
+        span{
+            position: absolute;
+            color: white;
+            background-color: rgba(0,0,0,0.7);
+            padding: 2px 10px;
+            border: 1px solid green;
+            border-radius: 10px;
+            text-align: center;;
+            &#bqzum {
+              margin-top: -70px;
+              margin-left: -20px;
+            }
+            &#otras{
+              margin-top: -50px;
+            }
+        }
     }
 }
