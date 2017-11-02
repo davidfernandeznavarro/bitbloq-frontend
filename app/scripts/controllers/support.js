@@ -654,16 +654,12 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'hardUSB',
             'title': '¿Está conectada la placa por USB?',
+            'data': '<p>Es <strong>imprescindible</strong> que conecte la placa mediante el <strong>puerto USB</strong> para poder realizar las comprobaciones necesarias para continuar el proceso de soporte</p>',
             'next': [{
-                '_id': 'end',
+                '_id': 'hardLista',
                 'class': 'btn--primary',
                 'icon': 'icon--ok icon--big',
-                'response': 'Si',
-            }, {
-                '_id': 'hardLista',
-                'class': 'btn--primary btn--no',
-                'icon': 'icon--no icon--big',
-                'response': 'No',
+                'response': 'La placa está conectada mediante USB',
             }]
         }, {
             '_id': 'hardLista',
