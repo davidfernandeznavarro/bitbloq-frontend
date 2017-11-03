@@ -1,0 +1,26 @@
+<p class="support--centered"><i class="text--secondary" data-ng-hide="checked">Selecciona tu placa:</i></p>
+<p>
+    <ul class="support--center" id="support--hw-test">
+        <li data-ng-mouseover="hovered = 'bqzum'" data-ng-mouseleave="hovered = null" data-ng-hide="checked === 'otras'">
+            <a href="" data-ng-click="checked = (checked) ? null : 'bqzum'"><img id="bqzum" src="/images/boards/bqZUM.svg" alt="bqzum" data-ng-class="{noHover: hovered && hovered !== 'bqzum', isHover: checked === 'bqzum' || hovered === 'bqzum'}" />
+            <span id="bqzum" data-ng-show="checked === 'bqzum' || hovered === 'bqzum'">BQ Zum Core
+                <br>(BT-328)</span></a>
+        </li>
+        <li class="support--icon--giga support--icon--default">
+            <i class="fa fa-arrows-h loader" aria-hidden="true" data-ng-hide="hovered || checked"></i>
+            <i class="fa fa-check-circle ok" aria-hidden="true" data-ng-show="hovered || checked" data-ng-class="{checked: checked}"></i>
+          </li>
+        <li data-ng-mouseover="hovered = 'otras'" data-ng-mouseleave="hovered = null" data-ng-hide="checked === 'bqzum'">
+            <a href="" data-ng-click="checked = (checked) ? null : 'otras'"><img id="otras" src="/images/boards/ArduinoUNO.svg" alt="Otras" data-ng-class="{noHover: hovered && hovered !== 'otras', isHover: checked  === 'otras' || hovered === 'otras'}" />
+            <span id="otras" data-ng-show=" checked  === 'otras' || hovered === 'otras'">Otras placas</span></a>
+        </li>
+    </ul>
+</p>
+<p class="support--centered" data-ng-show="checked">
+  Vamos a instalar un prorama en su placa, con el que probaremos su componente LCD.
+</p>
+<p class="support--centered" data-ng-show="checked">
+  <button class="btn btn--primary" data-ng-click="hwTestStart('lcd',checked)" data-element="hw_test_led_start">
+      <span class="icon--big icon--ok">Cargar el programa</span>
+  </button>
+</p>
