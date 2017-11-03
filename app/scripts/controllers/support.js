@@ -8,7 +8,7 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('SupportCtrl', function($translate, $scope, $location, $routeParams, common, _, userApi, feedbackApi, alertsService, $http, $sce, web2boardOnline) {
+    .controller('SupportCtrl', function($translate, $scope, $location, $routeParams, common, _, userApi, feedbackApi, alertsService, $http, $sce, web2boardOnline, programHex) {
 
         $scope.translate = $translate;
 
@@ -155,7 +155,7 @@ angular.module('bitbloqApp')
                 '_id': 'w2bCrash',
                 'class': 'btn--secondary',
                 'icon': '',
-                'response': 'web2board se abre y cierra rápidamente, incluso mostrando error',
+                'response': 'web2board se abre y cierra rápidamente',
             }, {
                 '_id': 'doesntCompile',
                 'class': 'btn--secondary',
@@ -375,231 +375,231 @@ angular.module('bitbloqApp')
                 'response': 'No',
             }]
         }, {
-          '_id': 'reinstallDrivers',
-          'title': 'Revise los drivers y los permisos',
-          'data': '<p>Si está utilizando <span class="icon--windows"> Windows</span>, pruebe a <strong>reinstalar los drivers.</strong></p><p>Si utiliza <span class="icon--linux"> Linux</span>, asegure que su usuario es parte del grupo <i class="text--secondary">dialout</i><ul><li class="icon--check">Utilice el comando <span class="common--text-term-fx little">groups <i class="text--secondary">usuario</i></span> para comprobar si su usuario está en el grupo <i class="text--secondary">dialout</i></li><li class="icon--check">Si no está en dicho grupo, utilice el comando <span class="common--text-term-fx little">sudo adduser <i class="text--secondary">usuario</i> dialout</span> para añadirlo</li></ul></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
-          'next': [{
-              '_id': 'end',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'Si',
-          }, {
-              '_id': 'error3020',
-              'class': 'btn--secondary',
-              'icon': '',
-              'response': 'No, y estoy usando la compilación online',
-          }, {
-              '_id': 'bootloader',
-              'class': 'btn--primary btn--no',
-              'icon': 'icon--no icon--big',
-              'response': 'No',
-          }]
+            '_id': 'reinstallDrivers',
+            'title': 'Revise los drivers y los permisos',
+            'data': '<p>Si está utilizando <span class="icon--windows"> Windows</span>, pruebe a <strong>reinstalar los drivers.</strong></p><p>Si utiliza <span class="icon--linux"> Linux</span>, asegure que su usuario es parte del grupo <i class="text--secondary">dialout</i><ul><li class="icon--check">Utilice el comando <span class="common--text-term-fx little">groups <i class="text--secondary">usuario</i></span> para comprobar si su usuario está en el grupo <i class="text--secondary">dialout</i></li><li class="icon--check">Si no está en dicho grupo, utilice el comando <span class="common--text-term-fx little">sudo adduser <i class="text--secondary">usuario</i> dialout</span> para añadirlo</li></ul></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'error3020',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'No, y estoy usando la compilación online',
+            }, {
+                '_id': 'bootloader',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
         }, {
-          '_id': 'error3020',
-          'title': '¿Recibe el error "3020 RecieveData timeout 400ms"?',
-          'data': '<p>Pruebe a <strong>reinicar el ordenador.</strong></p><p>Si <span class="icon--chrome"> Chrome</span> está muy saturado, el proceso de carga puede ralentizarse, causando que la placa deje de responder.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
-          'next': [{
-              '_id': 'end',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'Si',
-          }, {
-              '_id': 'bootloader',
-              'class': 'btn--primary btn--no',
-              'icon': 'icon--no icon--big',
-              'response': 'No',
-          }]
+            '_id': 'error3020',
+            'title': '¿Recibe el error "3020 RecieveData timeout 400ms"?',
+            'data': '<p>Pruebe a <strong>reinicar el ordenador.</strong></p><p>Si <span class="icon--chrome"> Chrome</span> está muy saturado, el proceso de carga puede ralentizarse, causando que la placa deje de responder.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'bootloader',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
         }, {
-          '_id': 'bootloader',
-          'title': 'Comprueba que tu placa tiene bootloader',
-          'data': '<p>¿Qué es un <strong>bootloader</strong>?</p><p>El <i class="text--secondary">bootloader</i> es un programa que se lanza cuando inicias la placa o la reseteas, cuya función es preparar la carga de los nuevos programas. Normalmente se necesita una herramienta especial para cargar los programas; el bootloader simplifica el proceso permitiendo cargarlos mediante el puerto USB.</p><p>¡Asegurese que el bootloader de su placa está instalado <strong>correctamente</strong>!</p><p><strong>¿Cómo compruebo si tengo instalado el Bootloader?:</strong><br>Presiona el botón de <span class="common--icon-keycap-fx">reset</span>, y si bootloader está instalado <strong>debería parpadear el led numero 13</strong></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
-          'next': [{
-              '_id': 'bootloaderZumBT328',
-              'class': 'btn--secondary',
-              'icon': '',
-              'response': '¿Cómo cargo el bootloader en la placa ZUM Core (BT-328)?'
-          }, {
-              '_id': 'end',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'Si'
-          }, {
-              '_id': '3020changeUsb',
-              'class': 'btn--primary btn--no',
-              'icon': 'icon--no icon--big',
-              'response': 'No'
-          }]
+            '_id': 'bootloader',
+            'title': 'Comprueba que tu placa tiene bootloader',
+            'data': '<p>¿Qué es un <strong>bootloader</strong>?</p><p>El <i class="text--secondary">bootloader</i> es un programa que se lanza cuando inicias la placa o la reseteas, cuya función es preparar la carga de los nuevos programas. Normalmente se necesita una herramienta especial para cargar los programas; el bootloader simplifica el proceso permitiendo cargarlos mediante el puerto USB.</p><p>¡Asegurese que el bootloader de su placa está instalado <strong>correctamente</strong>!</p><p><strong>¿Cómo compruebo si tengo instalado el Bootloader?:</strong><br>Presiona el botón de <span class="common--icon-keycap-fx">reset</span>, y si bootloader está instalado <strong>debería parpadear el led numero 13</strong></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'bootloaderZumBT328',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': '¿Cómo cargo el bootloader en la placa ZUM Core (BT-328)?'
+            }, {
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si'
+            }, {
+                '_id': '3020changeUsb',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No'
+            }]
         }, {
-          '_id': 'bootloaderZumBT328',
-          'title': '¿Cómo cargo el bootloader en la placa ZUM Core (BT-328)?',
-          'extData': 'bootloaderZumBT328.html',
-          'next': [{
-              '_id': 'end',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'Si'
-          }, {
-              '_id': '3020changeUsb',
-              'class': 'btn--primary btn--no',
-              'icon': 'icon--no icon--big',
-              'response': 'No'
-          }]
+            '_id': 'bootloaderZumBT328',
+            'title': '¿Cómo cargo el bootloader en la placa ZUM Core (BT-328)?',
+            'extData': 'bootloaderZumBT328.html',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si'
+            }, {
+                '_id': '3020changeUsb',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No'
+            }]
         }, {
-          '_id': '3020changeUsb',
-          'title': 'Cambie de puerto USB y pruebe con otro cable',
-          'data': '<p>Aunque poco probable, tanto el puerto USB donde conecta la placa a su sistema como el propio cable de comunicación pueden deteriorarse.</p><p>Para <strong>descartar</strong> esta posibilidad, pruebe a cambiar de puerto y utilice un cable diferente.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
-          'next': [{
-              '_id': 'end',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'Si',
-          }, {
-              '_id': '3020pin01',
-              'class': 'btn--primary btn--no',
-              'icon': 'icon--no icon--big',
-              'response': 'No',
-          }]
+            '_id': '3020changeUsb',
+            'title': 'Cambie de puerto USB y pruebe con otro cable',
+            'data': '<p>Aunque poco probable, tanto el puerto USB donde conecta la placa a su sistema como el propio cable de comunicación pueden deteriorarse.</p><p>Para <strong>descartar</strong> esta posibilidad, pruebe a cambiar de puerto y utilice un cable diferente.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': '3020pin01',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
         }, {
-          '_id': '3020pin01',
-          'title': '¿Tiene algún componente conectado en los pines 0 y 1?',
-          'data': '<p>Los pines <i class="text--secondary">0</i> y <i class="text--secondary">1</i> se utilizan para digital i/o y para comunicación en serie <i class="text--secondary">(de la que depende el puerto USB y la conexión por Bluetooth)</i>, por lo que si están en uso se deshabilitará la comunicación con su sistema.</p><p>Para volver a habilitar el puerto USB, libere los pines.<p><strong>¿Ha solucionado su consulta?</strong></p>',
-          'next': [{
-              '_id': 'end',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'Si',
-          }, {
-              '_id': '3020aLotOfPower',
-              'class': 'btn--primary btn--no',
-              'icon': 'icon--no icon--big',
-              'response': 'No',
-          }]
+            '_id': '3020pin01',
+            'title': '¿Tiene algún componente conectado en los pines 0 y 1?',
+            'data': '<p>Los pines <i class="text--secondary">0</i> y <i class="text--secondary">1</i> se utilizan para digital i/o y para comunicación en serie <i class="text--secondary">(de la que depende el puerto USB y la conexión por Bluetooth)</i>, por lo que si están en uso se deshabilitará la comunicación con su sistema.</p><p>Para volver a habilitar el puerto USB, libere los pines.<p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': '3020aLotOfPower',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
         }, {
-          '_id': '3020aLotOfPower',
-          'title': '¿Tiene muchos componentes conectados o un componente con un consumo alto?',
-          'data': '<p>Si conecta <strong>muchos componentes</strong> al mismo tiempo, o tiene componentes con un consumo elevado <i class="text--secondary">(como por ejemplo un servomotor)</i>, puede ocurrir que el ordenador no pueda suminsitrar suficiente por el puerto USB.<br><div class="support--icon--giga"><img src="images/support/zum-power.png" /></div><br>Pruebe <strong>apagando la placa</strong> <i class="text--secondary">(botón rojo en posición off)</i> o conectado una fuente de alimentación</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
-          'next': [{
-              '_id': 'end',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'Si',
-          }, {
-              '_id': '3020btConnected',
-              'class': 'btn--primary btn--no',
-              'icon': 'icon--no icon--big',
-              'response': 'No',
-          }]
+            '_id': '3020aLotOfPower',
+            'title': '¿Tiene muchos componentes conectados o un componente con un consumo alto?',
+            'data': '<p>Si conecta <strong>muchos componentes</strong> al mismo tiempo, o tiene componentes con un consumo elevado <i class="text--secondary">(como por ejemplo un servomotor)</i>, puede ocurrir que el ordenador no pueda suminsitrar suficiente por el puerto USB.<br><div class="support--icon--giga"><img src="images/support/zum-power.png" /></div><br>Pruebe <strong>apagando la placa</strong> <i class="text--secondary">(botón rojo en posición off)</i> o conectado una fuente de alimentación</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': '3020btConnected',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
         }, {
-          '_id': '3020btConnected',
-          'title': '¿Tiene algún dispositivo conectado por Bluetooth?',
-          'data': '<p>El puerto de comunicación de la placa es el mismo para la conexión por USB que para conexión por BT, por lo que <strong>no puede conectar al mismo tiempo una placa por ambos sistemas</strong></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
-          'next': [{
-              '_id': 'end',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'Si',
-          }, {
-              '_id': '3020SO',
-              'class': 'btn--primary btn--no',
-              'icon': 'icon--no icon--big',
-              'response': 'No',
-          }]
+            '_id': '3020btConnected',
+            'title': '¿Tiene algún dispositivo conectado por Bluetooth?',
+            'data': '<p>El puerto de comunicación de la placa es el mismo para la conexión por USB que para conexión por BT, por lo que <strong>no puede conectar al mismo tiempo una placa por ambos sistemas</strong></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': '3020SO',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
         }, {
-          '_id': '3020SO',
-          'title': '¿Que sistema utiliza?',
-          'data': '',
-          'next': [{
-              '_id': '3020Windows',
-              'class': 'btn--secondary',
-              'icon': 'icon--windows icon--big',
-              'response': 'Windows',
-          }, {
-              '_id': '3020isModeChromeApp',
-              'class': 'btn--secondary',
-              'icon': 'icon--linux icon--big',
-              'response': 'Linux',
-          }, {
-              '_id': '3020isModeChromeApp',
-              'class': 'btn--secondary',
-              'icon': 'icon--mac icon--big',
-              'response': 'Mac',
-          }, {
-              '_id': 'form',
-              'class': 'btn--secondary',
-              'icon': 'icon--chrome icon--big',
-              'response': 'Chromebook',
-          }]
+            '_id': '3020SO',
+            'title': '¿Que sistema utiliza?',
+            'data': '',
+            'next': [{
+                '_id': '3020Windows',
+                'class': 'btn--secondary',
+                'icon': 'icon--windows icon--big',
+                'response': 'Windows',
+            }, {
+                '_id': '3020isModeChromeApp',
+                'class': 'btn--secondary',
+                'icon': 'icon--linux icon--big',
+                'response': 'Linux',
+            }, {
+                '_id': '3020isModeChromeApp',
+                'class': 'btn--secondary',
+                'icon': 'icon--mac icon--big',
+                'response': 'Mac',
+            }, {
+                '_id': 'form',
+                'class': 'btn--secondary',
+                'icon': 'icon--chrome icon--big',
+                'response': 'Chromebook',
+            }]
         }, {
-          '_id': '3020isModeChromeApp',
-          'title': '¿Tiene Bitbloq configurado en modo ChromeApp?',
-          'extData': '3020isModeChromeApp.html',
-          'next': [{
-              '_id': 'form',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'Si tengo activado el modo Chromeapp',
-          }, {
-              '_id': '3020logPorts',
-              'class': 'btn--primary btn--no',
-              'icon': 'icon--no icon--big',
-              'response': 'No tengo activado el modo Chromeapp',
-          }]
+            '_id': '3020isModeChromeApp',
+            'title': '¿Tiene Bitbloq configurado en modo ChromeApp?',
+            'extData': '3020isModeChromeApp.html',
+            'next': [{
+                '_id': 'form',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si tengo activado el modo Chromeapp',
+            }, {
+                '_id': '3020logPorts',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No tengo activado el modo Chromeapp',
+            }]
         }, {
-          '_id': '3020Windows',
-          'title': '¿Ha probado a cambiar el puerto COM al que se conecta?',
-          'data': '<p>Los puertos COM son un tipo de puerto cada vez menos frecuente, pero que en ocasiones aún se puede encontrar en ordenadores antiguos.<br>Es común encontrar estos puertos siendo aprovechados mediante un adaptador conversor a USB.</p><p>Es posible que la configuración del puerto pueda estar dando problemas al estar ya en uso, por lo que <strong>aconsejamos que pruebe a cambiar su numero de puerto COM</strong><ol><li class="icon--check">Presione las teclas <span class="common--icon-keycap-fx">Win</span> + <span class="common--icon-keycap-fx">X</span> para abrir el panel de administración de dispositivos</li>' +
+            '_id': '3020Windows',
+            'title': '¿Ha probado a cambiar el puerto COM al que se conecta?',
+            'data': '<p>Los puertos COM son un tipo de puerto cada vez menos frecuente, pero que en ocasiones aún se puede encontrar en ordenadores antiguos.<br>Es común encontrar estos puertos siendo aprovechados mediante un adaptador conversor a USB.</p><p>Es posible que la configuración del puerto pueda estar dando problemas al estar ya en uso, por lo que <strong>aconsejamos que pruebe a cambiar su numero de puerto COM</strong><ol><li class="icon--check">Presione las teclas <span class="common--icon-keycap-fx">Win</span> + <span class="common--icon-keycap-fx">X</span> para abrir el panel de administración de dispositivos</li>' +
                 '<li class="icon--check">Ve a la sección <i class="text-secondary">"Puertos (COM y LPT)"</i></li><li class="icon--check">Busca el puerto, y en el menú contextual <i class="text-secondary">(botón derecho en el ratón)</i> seleciona "Propiedades"</li><li class="icon--check">Ve a la pestaña de configuración de puerto, y seleciona "Opciones avanzadas"</li><li class="icon--check">En el panel de configuración avanzada, busca la sección de número de puerto COM, y <strong>cambia el numero del puerto a uno que no esté en uso</strong>"</li></ol></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
-          'next': [{
-              '_id': 'end',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'Si',
-          }, {
-              '_id': '3020isModeChromeApp',
-              'class': 'btn--primary btn--no',
-              'icon': 'icon--no icon--big',
-              'response': 'No',
-          }]
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': '3020isModeChromeApp',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
         }, {
-          '_id': '3020logPorts',
-          'title': '¿Muestra algún error respecto a los puertos en el fichero de log?',
-          'extData': '3020logPorts.html',
-          'next': [{
-              '_id': 'form',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'He encontrado errores',
-          }, {
-              '_id': '3020ideArduino',
-              'class': 'btn--primary btn--no',
-              'icon': 'icon--no icon--big',
-              'response': 'No hay errores',
-          }]
+            '_id': '3020logPorts',
+            'title': '¿Muestra algún error respecto a los puertos en el fichero de log?',
+            'extData': '3020logPorts.html',
+            'next': [{
+                '_id': 'form',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'He encontrado errores',
+            }, {
+                '_id': '3020ideArduino',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No hay errores',
+            }]
         }, {
-          '_id': '3020ideArduino',
-          'title': '¿Ha probado a cargar la placa en otro entorno de desarollo?',
-          'data': '<p>Por ejemplo, puedes descargar el IDE de Arduino de la <a href="https://www.arduino.cc/en/Main/Software" target="_blank" class="icon--url">web oficial</a></p><p><strong>¿Le detecta la placa el otro entorno de desarrollo?</strong></p>',
-          'next': [{
-              '_id': 'form',
-              'class': 'btn--primary',
-              'icon': 'icon--ok icon--big',
-              'response': 'Si detecta la placa',
-          }, {
-              '_id': '3020DeadBoard',
-              'class': 'btn--primary btn--no',
-              'icon': 'icon--no icon--big',
-              'response': 'No detecta la placa',
-          }]
+            '_id': '3020ideArduino',
+            'title': '¿Ha probado a cargar la placa en otro entorno de desarollo?',
+            'data': '<p>Por ejemplo, puedes descargar el IDE de Arduino de la <a href="https://www.arduino.cc/en/Main/Software" target="_blank" class="icon--url">web oficial</a></p><p><strong>¿Le detecta la placa el otro entorno de desarrollo?</strong></p>',
+            'next': [{
+                '_id': 'form',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si detecta la placa',
+            }, {
+                '_id': '3020DeadBoard',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No detecta la placa',
+            }]
         }, {
-          '_id': '3020DeadBoard',
-          'title': 'Es probable que la placa esté defectuosa',
-          'data': '<span class="support--icon--giga support--icon--rojo"><i class="fa fa-medkit" aria-hidden="true"></i></span><p>Una vez descartadas otras posibilidades, <i class="text-secondary">es probable que su placa esté defectuosa</i>.</p><p>Si no es la placa <a href="https://www.bq.com/es/mundo-maker" target="_blank" class="icon--url">BQ ZUM Core (BT-328)</a> <strong>contacte con su fabricante</strong></p>',
-          'next': [{
-              '_id': 'form',
-              'class': 'btn--secondary',
-              'icon': '',
-              'response': 'Es la placa BQ ZUM Core (BT-328)',
-          }]
+            '_id': '3020DeadBoard',
+            'title': 'Es probable que la placa esté defectuosa',
+            'data': '<span class="support--icon--giga support--icon--rojo"><i class="fa fa-medkit" aria-hidden="true"></i></span><p>Una vez descartadas otras posibilidades, <i class="text-secondary">es probable que su placa esté defectuosa</i>.</p><p>Si no es la placa <a href="https://www.bq.com/es/mundo-maker" target="_blank" class="icon--url">BQ ZUM Core (BT-328)</a> <strong>contacte con su fabricante</strong></p>',
+            'next': [{
+                '_id': 'form',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'Es la placa BQ ZUM Core (BT-328)',
+            }]
         }, {
             '_id': 'xp',
             'title': 'Problemas comunes con Windows XP',
@@ -670,7 +670,7 @@ angular.module('bitbloqApp')
             '_id': 'hardLEDs',
             'permalink': 'hardLEDs',
             'title': 'Correcta configuración del componente LED',
-            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p>Es <strong>necesario</strong> que conecte el componente <strong>exactamente igual que en la imagen</strong> para que podamos lanzar un test automático.</p><p class="support--centered"><img class="support--gif-video" src="" alt="hardLEDsCables" /><ul><li class="icon--exclamation support--centered"><i class="text--secondary">Asegurese de que todo está conectado tal y como le indicamos.</i></li></ul></p><p><strong>¿Ha conectado bien el componente?</strong></p>',
+            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p>Es <strong>necesario</strong> que conecte el componente <strong>exactamente igual que en la imagen</strong> para que podamos lanzar un test automático.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-led-comm.png" alt="hardLEDsCables" /><ul><li class="icon--exclamation support--centered"><i class="text--secondary">Asegurese de que todo está conectado tal y como le indicamos.</i></li></ul></p><p><strong>¿Ha conectado bien el componente?</strong></p>',
             'next': [{
                 '_id': 'hardLEDsTestIni',
                 'class': 'btn--primary',
@@ -685,8 +685,9 @@ angular.module('bitbloqApp')
             'next': []
         }, {
             '_id': 'hardLEDsTestEnd',
-            'title': 'Hagamos un test al componente',
-            'data': 'hardLEDsTest',
+            'permalink': 'hardLEDsTestEnd',
+            'title': 'Comprueba visualmente si el LED parpadea',
+            'data': 'Tras cargar nuestro programa de test en su placa, <strong>su componente LED debería estar parpadeando</strong>; y, por lo tanto, <strong>funcionando correctamente</strong>.',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -728,7 +729,7 @@ angular.module('bitbloqApp')
                 'class': 'btn--secondary',
                 'icon': '',
                 'response': 'Se mueve aleatoriamente',
-            },{
+            }, {
                 '_id': 'hardServosNoPara',
                 'class': 'btn--secondary',
                 'icon': '',
@@ -782,15 +783,107 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'hardLCDs',
             'permalink': 'hardLCDs',
-            'title': 'Selecione el componente con el que tiene dificultades',
-            'data': 'lcds',
+            'title': '¿Ha conectado bien el componente?',
+            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-lcd-comm.png" alt="hardLCDsCables" /></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'hardLCDsPalanca',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'hardLCDsPalanca',
+            'title': '¿Ha seleccionado el modo I/O correcto?',
+            'data': '<p>En la parte posterior de su componente LCD, se encuentra una palanca que permite seleccionar entre el <strong>modo de comunicación I2C</strong> y SPI</p><p>Solo damos soporte al modo I2C.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'hardLCDsASCII',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'hardLCDsASCII',
+            'title': '¿Está utilizando simbolos "raros"?',
+            'data': '<p>Su panel LCD solo es compatible con los <a href="images/support/ascii.pdf" target="_blank" class="icon--url">símbolos del código ASCII Reducido</a></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'hardLCDsTestIni',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'hardLCDsTestIni',
+            'title': 'Test automático del componente LCDs',
+            'extData': 'hardLCDsTestIni.html',
             'next': []
+        }, {
+            '_id': 'hardLCDsTestEnd',
+            'permalink': 'hardLCDsTestEnd',
+            'title': 'Comprueba si el LCD muestra un texto',
+            'data': 'Tras cargar nuestro programa de test en su placa, <strong>su componente LCD debería estar mostrando un texto</strong>; y, por lo tanto, <strong>funcionando correctamente</strong>.',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'El LCD muestra un texto',
+            }, {
+                '_id': 'form',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'El LCD no muestra un texto',
+            }],
         }, {
             '_id': 'hardUS',
             'permalink': 'hardUS',
-            'title': 'Selecione el componente con el que tiene dificultades',
-            'data': 'Ultrasonidos',
+            'title': '¿Ha conectado correctamente el componente?',
+            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-us-comm.png" alt="hardLCDsCables" /></p><p><ul><li  class="icon--exclamation support--centered">Es importante que <strong>no conecte nunca los cables del reves</strong>; si lo hace <i class="text--secondary">puede estropearlos</i>.</li></ul></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'hardUSTestIni',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'hardUSTestIni',
+            'title': 'Test automático del componente Sensor de Ultrasonidos',
+            'extData': 'hardUSTestIni.html',
             'next': []
+        }, {
+            '_id': 'hardUSTestEnd',
+            'permalink': 'hardUSTestEnd',
+            'title': 'Comprueba si el Sensor de Ultrasonidos funciona',
+            'extData': 'hardUSTestEnd.html',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'El sensor mide',
+            }, {
+                '_id': 'form',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'El sensor no mide',
+            }]
         }, {
             '_id': 'hardBT',
             'permalink': 'hardBT',
@@ -809,7 +902,7 @@ angular.module('bitbloqApp')
             'title': 'AT Command Mode',
             'data': '<p><strong>Consideraciones previas</strong><br>Antes de acceder a los <i class="text--secondary">comandos AT</i> del módulo Bluetooth hay que asegurarse de que el ATMega tiene configurado el pin TX como entrada.<br>En caso de estar configurado como salida puede estar poniendo algún valor en la UART, por lo que el USB y Bluetooth pueden no comunicarse.<br>Existen dos soluciones:<ul><li class="icon--check">Cargar un programa al ATmega que ponga los pines 0 y 1 como entradas.</li><li class="icon--check">Poner un cable que conecte el RESET con GND, para forzar que el ATmega esté en estado de reset.</li></ul></p>' +
                 '<p><strong>Comandos AT del módulo Bluetooth</strong><br>Para acceder a los <i class="text--secondary">comandos AT</i> del módulo Bluetooth sigue los siguientes pasos:<ul><li class="icon--check">Pon todos los conmutadores en <i class="text--secondary">ON</i> y conecta la placa al ordenador mediante el cable USB.</li><li class="icon--check">Dentro de la IDE de Arduino, abre un Monitor Serial a una velocidad de comunicación de <i class="text--secondary">19200 baudios</i> y en el modo <i class="text--secondary">Ambos NL & CR</i> (nueva línea y retorno de carro).</li>' +
-                '<li class="icon--check">Comprueba la comunicación con el módulo Bluetooth enviando por la línea de comandos, el texto <i class="text--secondary">AT</i>. El módulo Bluetooth debería responder con un <i class="text--secondary">OK</i>.</li><li class="icon--check">Si quieres cambiar el nombre de tu módulo Bluetooth, el que muestra a otros dispositivos, envía comando <i class="text--secondary">AT+NAME####</i> donde #### es el nombre que quieras.</li><li class="icon--check">Si quieres modificar la tasa de baudios, envía el comando <i class="text--secondary">AT+BAUD#</i> donde # es un número de referencia a una cantidad de baudios. Por ejemplo: BAUD5 = 19200 , BAUD4 = 9600…</li><li class="icon--check">Tienes disponible la lista completa de comandos AT en el siguiente enlace: BLK-MD-BC04-B_AT COMMANDS</p>' +
+                '<li class="icon--check">Comprueba la comunicación con el módulo Bluetooth enviando por la línea de comandos, el texto <i class="text--secondary">AT</i>. El módulo Bluetooth debería responder con un <i class="text--secondary">OK</i>.</li><li class="icon--check">Si quieres cambiar el nombre de tu módulo Bluetooth, el que muestra a otros dispositivos, envía comando <i class="text--secondary">AT+NAME####</i> donde #### es el nombre que quieras.</li><li class="icon--check">Si quieres modificar la tasa de baudios, envía el comando <i class="text--secondary">AT+BAUD#</i> donde # es un número de referencia a una cantidad de baudios. Por ejemplo: BAUD5 = 19200 , BAUD4 = 9600…</li><li class="icon--check">Tienes disponible la <a href="/images/support/BLK-MD-BC04-B_AT-COMMANDS.pdf" target="_blank">lista completa de comandos AT</a>.</p>' +
                 '<p><strong>NOTA IMPORTANTE</strong>: Cambiando la velocidad de comunicación del módulo Bluetooth de 19200 baudios se deshabilitará la posibilidad de programación vía Bluetooth. Sin embargo, la comunicación serie a través del Bluetooth seguirá estando disponible con la nueva velocidad.</p>' +
                 '<p><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
@@ -822,6 +915,49 @@ angular.module('bitbloqApp')
                 'class': 'btn--primary btn--no',
                 'icon': 'icon--no icon--big',
                 'response': 'No',
+            }]
+        }, {
+            '_id': 'hard2forum',
+            'permalink': 'hard2forum',
+            'title': 'El test no funciona con su configuración',
+            'data': '<p>Le recomendamos que pregunte al respecto en el <a href="/forum" target="_blank" class="icon--url">foro de Bitbloq</a>, incluyendo en el mensaje toda la información pertinente:<ul><li class="icon--check">¿Cual es la placa con la que tiene el problema?.</li><li class="icon--check">¿Cual es el componente con el que tiene el problema?.</li><li class="icon--check">Añada el código fuente con el que está trabajando, si corresponde.</li><li class="icon--check">Si recibe mensajes de error, inclúyalos.</li></ul></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Fin del proceso de soporte',
+            }]
+        }, {
+            '_id': 'hardBuzz',
+            'permalink': 'hardBuzz',
+            'title': 'Correcta configuración del componente Zumbador',
+            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p>Es <strong>necesario</strong> que conecte el componente <strong>exactamente igual que en la imagen</strong> para que podamos lanzar un test automático.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-buzz-comm.png" alt="hardBuzzCables" /><ul><li class="icon--exclamation support--centered"><i class="text--secondary">Asegurese de que todo está conectado tal y como le indicamos.</i></li></ul></p><p><strong>¿Ha conectado bien el componente?</strong></p>',
+            'next': [{
+                '_id': 'hardBuzzTestIni',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si, el componente está conectado como en la imagen',
+            }]
+        }, {
+            '_id': 'hardBuzzTestIni',
+            'title': 'Test automático del componente Zumbador',
+            'extData': 'hardBuzzTestIni.html',
+            'next': []
+        }, {
+            '_id': 'hardBuzzTestEnd',
+            'permalink': 'hardBuzzTestEnd',
+            'title': 'Comprueba si el Zumbador suena',
+            'data': 'Tras cargar nuestro programa de test en su placa, <strong>su componente Zumbador debería estar sonando</strong>; y, por lo tanto, <strong>funcionando correctamente</strong>.',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'El Zumbador suena',
+            }, {
+                '_id': 'form',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'El Zumbador no suena',
             }]
         }];
 
@@ -843,278 +979,326 @@ angular.module('bitbloqApp')
         }
 
         $scope.go = function(childId, isPermalink) {
-          if (childId) {
-            var child = (isPermalink) ? getCard(childId, true) : getCard(childId, false)
-            if (child && !isPermalink) {
-                common.supportSteps.push(child.title)
-                $location.path('/support/' + child._id)
-            } else {
-                var childIndex = getCard('index', true)
-                if (childId === childIndex._id) {
-                  common.supportSteps = []
-                  $location.path('/support')
+            if (childId) {
+                var child = (isPermalink) ? getCard(childId, true) : getCard(childId, false)
+                if (child && !isPermalink) {
+                    common.supportSteps.push(child.title)
+                    $location.path('/support/' + child._id)
                 } else {
-                  common.supportSteps.push(child.title)
-                  $location.path('/support/' + childId)
+                    var childIndex = getCard('index', true)
+                    if (childId === childIndex._id) {
+                        common.supportSteps = []
+                        $location.path('/support')
+                    } else {
+                        common.supportSteps.push(child.title)
+                        $location.path('/support/' + childId)
+                    }
                 }
+            } else {
+                console.warn('Se está intentando acceder a un botón sin childId', childId, isPermalink);
             }
-          } else {
-            console.warn('Se está intentando acceder a un botón sin childId', childId, isPermalink);
-          }
         }
 
         // switches
         common.itsUserLoaded()
-          .then(function() {
-            $scope.user = common.user
-            $scope.switchUserChromeAppMode = function() {
-                userApi.update({chromeapp: common.user.chromeapp})
-            }
-        })
+            .then(function() {
+                $scope.user = common.user
+                $scope.switchUserChromeAppMode = function() {
+                    userApi.update({
+                        chromeapp: common.user.chromeapp
+                    })
+                }
+            })
 
         // lists
         $scope.components = [{
-          'uuid': 'led',
-          'category': 'leds',
-          'name': 'LED',
-          'permalink': 'hardLEDs',
-          'svg': ''
+            'uuid': 'lcd',
+            'name': 'LCD',
+            'permalink': 'hardLCDs',
+            'svg': ''
         }, {
-          'uuid': 'servo',
-          'category': 'servos',
-          'name': 'Servomotor',
-          'permalink': 'hardServos',
-          'svg': ''
+            'uuid': 'led',
+            'name': 'LED',
+            'permalink': 'hardLEDs',
+            'svg': ''
         }, {
-          'uuid': 'lcd',
-          'category': 'lcds',
-          'name': 'LCD',
-          'permalink': 'hardLCDs',
-          'svg': ''
+            'uuid': 'servo',
+            'name': 'Servomotor',
+            'permalink': 'hardServos',
+            'svg': ''
         }, {
-          'uuid': 'us',
-          'category': 'us',
-          'name': 'Ultrasonidos',
-          'permalink': 'hardUS',
-          'svg': ''
+            'uuid': 'us',
+            'name': 'Ultrasonidos',
+            'permalink': 'hardUS',
+            'svg': ''
         }, {
-          'uuid': 'bt',
-          'category': 'bt',
-          'name': 'Bluetooth',
-          'permalink': 'hardBT',
-          'svg': ''
+            'uuid': 'buzz',
+            'name': 'Zumbador',
+            'permalink': 'hardBuzz',
+            'svg': ''
         }, {
-          'uuid': 'other',
-          'category': 'otro',
-          'name': 'Otro',
-          'permalink': 'form',
-          'svg': ''
+            'uuid': 'other',
+            'name': 'Otro',
+            'permalink': 'form',
+            'svg': ''
         }]
 
-        $scope.getSVG = function(item){
-          if(item.svg === ''){
-            $http.get('images/components/'+ item.uuid + '.svg')
-              .then(function(res){
-                  item.svg = res.data
-              });
-          }
+        $scope.getSVG = function(item) {
+            if (item.svg === '') {
+                $http.get('images/components/' + item.uuid + '.svg')
+                    .then(function(res) {
+                        //we want to delete all height and width atributes form the original svg files
+                        item.svg = _.replace(res.data, /\b(width|height)="+[a-zA-Z1-9]+" ?\b/gi, '');
+                    });
+            }
         }
 
         $scope.renderSVG = function(item) {
-          return $sce.trustAsHtml(item.svg) // all of this for the svg animations to fly! :)
+            return $sce.trustAsHtml(item.svg) // all of this for the svg animations to fly! :)
         }
 
         // hw test
-        var hexLed = ':100000000C945C000C946E000C946E000C946E00CA\r\n' +
-                    ':100010000C946E000C946E000C946E000C946E00A8' +
-                    ':100020000C946E000C946E000C946E000C946E0098' +
-                    ':100030000C946E000C946E000C946E000C946E0088' +
-                    ':100040000C9415010C946E000C946E000C946E00D0' +
-                    ':100050000C946E000C946E000C946E000C946E0068' +
-                    ':100060000C946E000C946E00000000002400270029' +
-                    ':100070002A0000000000250028002B0004040404CE' +
-                    ':100080000404040402020202020203030303030342' +
-                    ':10009000010204081020408001020408102001021F' +
-                    ':1000A00004081020000000080002010000030407FB' +
-                    ':1000B000000000000000000011241FBECFEFD8E0B8' +
-                    ':1000C000DEBFCDBF21E0A0E0B1E001C01D92A930AC' +
-                    ':1000D000B207E1F70E945F010C94CE010C9400007E' +
-                    ':1000E000E1EBF0E02491EDE9F0E09491E9E8F0E053' +
-                    ':1000F000E491EE2309F43BC0222339F1233091F03F' +
-                    ':1001000038F42130A9F0223001F524B52F7D12C03A' +
-                    ':10011000273091F02830A1F02430B9F420918000EC' +
-                    ':100120002F7D03C0209180002F77209380000DC089' +
-                    ':1001300024B52F7724BD09C02091B0002F7703C0CC' +
-                    ':100140002091B0002F7D2093B000F0E0EE0FFF1F54' +
-                    ':10015000EE58FF4FA591B4912FB7F894EC9181110F' +
-                    ':1001600003C090959E2301C09E2B9C932FBF0895A2' +
-                    ':100170003FB7F8948091050190910601A091070185' +
-                    ':10018000B091080126B5A89B05C02F3F19F0019634' +
-                    ':10019000A11DB11D3FBFBA2FA92F982F8827820F0D' +
-                    ':1001A000911DA11DB11DBC01CD0142E0660F771F5D' +
-                    ':1001B000881F991F4A95D1F708958F929F92AF9209' +
-                    ':1001C000BF92CF92DF92EF92FF920E94B8004B0154' +
-                    ':1001D0005C0180EDC82E87E0D82EE12CF12C0E9426' +
-                    ':1001E000B800DC01CB0188199909AA09BB09883E2E' +
-                    ':1001F0009340A105B10558F021E0C21AD108E108E9' +
-                    ':10020000F10888EE880E83E0981EA11CB11CC11471' +
-                    ':10021000D104E104F10419F7FF90EF90DF90CF9043' +
-                    ':10022000BF90AF909F908F9008951F920F920FB63E' +
-                    ':100230000F9211242F933F938F939F93AF93BF936C' +
-                    ':100240008091010190910201A0910301B0910401FC' +
-                    ':100250003091000123E0230F2D3720F40196A11DDA' +
-                    ':10026000B11D05C026E8230F0296A11DB11D2093E4' +
-                    ':1002700000018093010190930201A0930301B093C8' +
-                    ':1002800004018091050190910601A0910701B091B0' +
-                    ':1002900008010196A11DB11D8093050190930601EF' +
-                    ':1002A000A0930701B0930801BF91AF919F918F91E7' +
-                    ':1002B0003F912F910F900FBE0F901F90189578943B' +
-                    ':1002C00084B5826084BD84B5816084BD85B582605B' +
-                    ':1002D00085BD85B5816085BD80916E00816080930C' +
-                    ':1002E0006E00109281008091810082608093810075' +
-                    ':1002F0008091810081608093810080918000816085' +
-                    ':10030000809380008091B10084608093B1008091DF' +
-                    ':10031000B00081608093B00080917A008460809307' +
-                    ':100320007A0080917A00826080937A0080917A00CE' +
-                    ':10033000816080937A0080917A00806880937A004F' +
-                    ':100340001092C100EDE9F0E02491E9E8F0E0849139' +
-                    ':10035000882399F090E0880F991FFC01E859FF4F1E' +
-                    ':10036000A591B491FC01EE58FF4F859194918FB700' +
-                    ':10037000F894EC91E22BEC938FBFC0E0D0E081E0E9' +
-                    ':100380000E9470000E94DD0080E00E9470000E94C8' +
-                    ':10039000DD002097A1F30E940000F1CFF894FFCF79' +
-                    ':00000001FF\r\n'
-
-        $scope.hwTestStart = function(component,board) {
-          switch (component) {
-            case 'led':
-              if (board === 'bqzum') {
-                web2boardOnline.upload({
-                  board: {
-                    mcu: 'bt328'
-                  },
-                  hex: hexLed
-                }).then(function(res) {
-                  console.log('OK => ', res);
-                }).catch(function(err) {
-                  console.log('FAIL => ', err);
-                })
-              } else {
-                web2boardOnline.upload({
-                  board: {
-                    mcu: 'uno'
-                  },
-                  hex: hexLed
-                }).then(function(res) {
-                  console.log('OK => ', res);
-                }).catch(function(err) {
-                  console.log('FAIL => ', err);
-                })
-              }
-              break;
-          }
+        $scope.hwTestTries = 0
+        $scope.hwTestStart = function(component, board) {
+            switch (component) {
+                case 'led':
+                    if (board === 'bqzum') {
+                        web2boardOnline.upload({
+                            board: {
+                                mcu: 'bt328'
+                            },
+                            hex: programHex.supportLED.bt328
+                        }).then(function() {
+                            $scope.go('hardLEDsTestEnd', true)
+                        }).catch(function() {
+                            if ($scope.hwTestTries > 2) {
+                                $scope.go('form', true)
+                            } else {
+                                $scope.hwTestTries++
+                            }
+                        })
+                    } else {
+                        web2boardOnline.upload({
+                            board: {
+                                mcu: 'uno'
+                            },
+                            hex: programHex.supportLED.uno
+                        }).then(function() {
+                            $scope.go('hardLEDsTestEnd', true)
+                        }).catch(function() {
+                            if ($scope.hwTestTries > 2) {
+                                $scope.go('hard2forum', true)
+                            } else {
+                                $scope.hwTestTries++
+                            }
+                        })
+                    }
+                    break;
+                case 'buzz':
+                    if (board === 'bqzum') {
+                        web2boardOnline.upload({
+                            board: {
+                                mcu: 'bt328'
+                            },
+                            hex: programHex.supportBuzz.bt328
+                        }).then(function() {
+                            $scope.go('hardBuzzTestEnd', true)
+                        }).catch(function() {
+                            if ($scope.hwTestTries > 2) {
+                                $scope.go('form', true)
+                            } else {
+                                $scope.hwTestTries++
+                            }
+                        })
+                    } else {
+                        web2boardOnline.upload({
+                            board: {
+                                mcu: 'uno'
+                            },
+                            hex: programHex.supportBuzz.uno
+                        }).then(function() {
+                            $scope.go('hardBuzzTestEnd', true)
+                        }).catch(function() {
+                            if ($scope.hwTestTries > 2) {
+                                $scope.go('hard2forum', true)
+                            } else {
+                                $scope.hwTestTries++
+                            }
+                        })
+                    }
+                    break;
+                case 'lcd':
+                    if (board === 'bqzum') {
+                        web2boardOnline.upload({
+                            board: {
+                                mcu: 'bt328'
+                            },
+                            hex: programHex.supportLCD.bt328
+                        }).then(function() {
+                            $scope.go('hardLCDsTestEnd', true)
+                        }).catch(function() {
+                            if ($scope.hwTestTries > 2) {
+                                $scope.go('form', true)
+                            } else {
+                                $scope.hwTestTries++
+                            }
+                        })
+                    } else {
+                        web2boardOnline.upload({
+                            board: {
+                                mcu: 'uno'
+                            },
+                            hex: programHex.supportLCD.uno
+                        }).then(function() {
+                            $scope.go('hardLCDsTestEnd', true)
+                        }).catch(function() {
+                            if ($scope.hwTestTries > 2) {
+                                $scope.go('hard2forum', true)
+                            } else {
+                                $scope.hwTestTries++
+                            }
+                        })
+                    }
+                    break;
+                case 'us':
+                    if (board === 'bqzum') {
+                        web2boardOnline.upload({
+                            board: {
+                                mcu: 'bt328'
+                            },
+                            hex: programHex.supportUS.bt328
+                        }).then(function() {
+                            $scope.go('hardUSTestEnd', true)
+                        }).catch(function() {
+                            if ($scope.hwTestTries > 2) {
+                                $scope.go('form', true)
+                            } else {
+                                $scope.hwTestTries++
+                            }
+                        })
+                    } else {
+                        web2boardOnline.upload({
+                            board: {
+                                mcu: 'uno'
+                            },
+                            hex: programHex.supportUS.uno
+                        }).then(function() {
+                            $scope.go('hardUSTestEnd', true)
+                        }).catch(function() {
+                            if ($scope.hwTestTries > 2) {
+                                $scope.go('hard2forum', true)
+                            } else {
+                                $scope.hwTestTries++
+                            }
+                        })
+                    }
+                    break;
+            }
+        }
+        $scope.getUSValue = function(){
+          return $sce.trustAsHtml('<span>'+[1,2,3,4,5,6,7,8,9,0].join('</span><span>')+'</span>');
         }
 
         // form
         $scope.response = {
-          'message': '',
-          // 'code': '',
-          'error': '',
-          'system': '',
-          'antivirus': '',
-          'linklog': '',
-          'w2blog': ''
-         }
+            'message': '',
+            // 'code': '',
+            'error': '',
+            'system': '',
+            'antivirus': '',
+            'linklog': '',
+            'w2blog': ''
+        }
         // sometimes the user go back and forth...
         // lets clean the steps!
         $scope.getSteps = function() {
-          common.supportSteps = _.uniqBy(common.supportSteps.reverse()).reverse()
-          return common.supportSteps.join('</li><li>')
+            common.supportSteps = _.uniqBy(common.supportSteps.reverse()).reverse()
+            return common.supportSteps.join('</li><li>')
         }
         $scope.send = function() {
-          var str = ''
-          // message
-          // /r/n -> <br />
-          if ($scope.response.message.length > 0) {
-            str += '<div><pre>'
-            str += unHTMLfy($scope.response.message)
-            str += '</pre></div>'
-          }
-          // code
-          // if ($scope.response.code.length > 0) {
-          //   str += '<br><hr><strong>Código:</strong><br>'
-          //   str += '<div style="border: 1px dashed #1B6D33; padding: 5px; margin: 5px;"><pre>'
-          //   str += unHTMLfy($scope.response.code)
-          //   str += '</pre></div>'
-          // }
-          // error
-          if ($scope.response.error.length > 0) {
-            str += '<br><hr><strong>Error:</strong><br>'
-            str += '<div style="border: 1px dashed #B8282A; padding: 5px; margin: 5px;"><pre>'
-            str += unHTMLfy($scope.response.error)
-            str += '</pre></div>'
-          }
-          // system
-          if ($scope.response.system.length > 0) {
-            str += '<p><strong>Sistema Operativo: </strong><pre>'
-            str += unHTMLfy($scope.response.system)
-            str += '</pre></p>'
-          }
-          // antivirus
-          if ($scope.response.antivirus.length > 0) {
-            str += '<p><strong>Antivirus: </strong><pre>'
-            str += unHTMLfy($scope.response.antivirus)
-            str += '</pre></p>'
-          }
-          // linklog
-          if ($scope.response.linklog.length > 0) {
-            str += '<br><hr><strong>web2boardLink.log:</strong><br>'
-            str += '<div style="border: 1px dashed #B8282A; padding: 5px; margin: 5px;"><pre>'
-            str += unHTMLfy($scope.response.linklog)
-            str += '</pre></div>'
-          }
-          // w2blog
-          if ($scope.response.w2blog.length > 0) {
-            str += '<br><hr><strong>web2board/info.log:</strong><br>'
-            str += '<div style="border: 1px dashed #B8282A; padding: 5px; margin: 5px;"><pre>'
-            str += unHTMLfy($scope.response.w2blog)
-            str += '</pre></div>'
-          }
-          // adding steps list
-          str += '<br><hr><strong>Camino:</strong><br><ol><li>'
-          str += $scope.getSteps()
-          str += '</li></ol>'
+            var str = ''
+            // message
+            // /r/n -> <br />
+            if ($scope.response.message.length > 0) {
+                str += '<div><pre>'
+                str += unHTMLfy($scope.response.message)
+                str += '</pre></div>'
+            }
+            // code
+            // if ($scope.response.code.length > 0) {
+            //   str += '<br><hr><strong>Código:</strong><br>'
+            //   str += '<div style="border: 1px dashed #1B6D33; padding: 5px; margin: 5px;"><pre>'
+            //   str += unHTMLfy($scope.response.code)
+            //   str += '</pre></div>'
+            // }
+            // error
+            if ($scope.response.error.length > 0) {
+                str += '<br><hr><strong>Error:</strong><br>'
+                str += '<div style="border: 1px dashed #B8282A; padding: 5px; margin: 5px;"><pre>'
+                str += unHTMLfy($scope.response.error)
+                str += '</pre></div>'
+            }
+            // system
+            if ($scope.response.system.length > 0) {
+                str += '<p><strong>Sistema Operativo: </strong><pre>'
+                str += unHTMLfy($scope.response.system)
+                str += '</pre></p>'
+            }
+            // antivirus
+            if ($scope.response.antivirus.length > 0) {
+                str += '<p><strong>Antivirus: </strong><pre>'
+                str += unHTMLfy($scope.response.antivirus)
+                str += '</pre></p>'
+            }
+            // linklog
+            if ($scope.response.linklog.length > 0) {
+                str += '<br><hr><strong>web2boardLink.log:</strong><br>'
+                str += '<div style="border: 1px dashed #B8282A; padding: 5px; margin: 5px;"><pre>'
+                str += unHTMLfy($scope.response.linklog)
+                str += '</pre></div>'
+            }
+            // w2blog
+            if ($scope.response.w2blog.length > 0) {
+                str += '<br><hr><strong>web2board/info.log:</strong><br>'
+                str += '<div style="border: 1px dashed #B8282A; padding: 5px; margin: 5px;"><pre>'
+                str += unHTMLfy($scope.response.w2blog)
+                str += '</pre></div>'
+            }
+            // adding steps list
+            str += '<br><hr><strong>Camino:</strong><br><ol><li>'
+            str += $scope.getSteps()
+            str += '</li></ol>'
 
-          var res = {
-            'creator': common.user,
-            'message': str,
-            'userAgent':  window.navigator.userAgent
-          }
+            var res = {
+                'creator': common.user,
+                'message': str,
+                'userAgent': window.navigator.userAgent
+            }
 
-          feedbackApi.send(res)
-            .success(function () {
-                alertsService.add({
-                    text: 'modal-comments-done',
-                    id: 'modal-comments',
-                    type: 'ok',
-                    time: 5000
+            feedbackApi.send(res)
+                .success(function() {
+                    alertsService.add({
+                        text: 'modal-comments-done',
+                        id: 'modal-comments',
+                        type: 'ok',
+                        time: 5000
+                    });
+                }).error(function() {
+                    alertsService.add({
+                        text: 'modal-comments-error',
+                        id: 'modal-comments',
+                        type: 'warning'
+                    });
                 });
-            }).error(function () {
-                alertsService.add({
-                    text: 'modal-comments-error',
-                    id: 'modal-comments',
-                    type: 'warning'
-                });
-            });
         }
 
         var unHTMLfy = function(str) {
-          return str.replace(/(?:&)/g, '&amp;')
-          .replace(/(?:<)/g, '&lt;')
-          .replace(/(?:>)/g, '&gt;')
-          .replace(/\u00a0/g, ' ')
-          .replace(/&nbsp;/g, ' ')
-          .replace(/(?:\r\n|\r|\n)/g, '<br />')
+            return str.replace(/(?:&)/g, '&amp;')
+                .replace(/(?:<)/g, '&lt;')
+                .replace(/(?:>)/g, '&gt;')
+                .replace(/\u00a0/g, ' ')
+                .replace(/&nbsp;/g, ' ')
+                .replace(/(?:\r\n|\r|\n)/g, '<br />')
         }
 
     });

@@ -1,12 +1,13 @@
 <div class="support--pane">
     <div class="section-header table__header">
-        <h1 class="h1 header__title support--tittle"><i class="fa fa-question-circle" aria-hidden="true"></i> {{ 'Soporte de Bitbloq' | translate }}</h1>
+      <button class="btn btn--primary btn--small icon--home icon--big support--button--home" data-ng-hide="{{card.dontShowHomeButton}}" data-ng-click="go('index',true)" data-element="support_next_child-{{child._id}}">
+          <span>{{'Volver al Inicio' | translate}}</span>
+      </button>
+      <h1 class="h1 header__title support--tittle">{{ 'Soporte de Bitbloq' | translate }}</h1>
     </div>
     <section>
         <div class="support--block">
-            <button class="btn btn--primary btn--small icon--home icon--big" data-ng-hide="{{card.dontShowHomeButton}}" data-ng-click="go('index',true)" data-element="support_next_child-{{child._id}}">
-                <span class="support--button--home">{{'Volver al inicio' | translate}}</span>
-            </button>
+
             <div class="support--content">
                 <h1 class="h2 header__title support--centered">{{ card.title }}</h1>
                 <span class="support--card--data" data-ng-if="card.data && !card.extData" data-ng-bind-html="card.data" />

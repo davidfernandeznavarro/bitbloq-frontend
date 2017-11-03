@@ -82,6 +82,11 @@ angular.module('bitbloqApp')
             var compilerPromise = compilerApi.compile(params);
             if (!params.upload) {
                 compilerAlerts(compilerPromise);
+                if (envData.config.env !== 'production') {
+                  compilerPromise.then(function(res) {
+                    console.log(res.data.hex);
+                  })
+                }
             } else {
                 compilerPromise.finally(function() {
                     completed = true;
