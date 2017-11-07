@@ -17,7 +17,7 @@ angular.module('bitbloqApp')
             'permalink': 'index',
             'dontShowHomeButton': true,
             'title': '¡Bienvenido a la página de soporte de Bitbloq!',
-            'data': '<p>Ayudanos a diagnosticar tu caso para que podamos ayudarte.</p><p>¿Usas la <strong>versión Online</strong> de Bitbloq, o la versión <a href="http://bitbloq.bq.com/#/offline" class="icon--url">Offline</a>?</p>',
+            'data': '<p class="support--center">Ayudanos a diagnosticar tu caso para que podamos ayudarte.</p><p class="support--center"><strong>¿Usas la versión Online de Bitbloq, o la versión <a href="http://bitbloq.bq.com/#/offline" class="icon--url">Offline</a>?</strong></p>',
             'next': [{
                 '_id': 'online',
                 'class': 'btn--secondary',
@@ -125,33 +125,195 @@ angular.module('bitbloqApp')
             }]
         }, {
             '_id': 'offlineInstallWindows',
-            'title': '¿Qué es Bitbloq Offline?',
-            'data': '',
+            'title': '¿Cómo instalo la  versión offline en Windows?',
+            'data': '<p><ul><li class="icon--check">Descarga la última versión de <a href="https://github.com/bq/bitbloq-offline/releases/download/latest/windows.zip" target="_blank" class="icon--url">Bitbloq offline para <span class="icon--windows">Windows</span></a></li><li class="icon--check">Crea una nueva carpeta en <i class="text--secondary">"Mis Documentos"</i>, y llámala Bitbloq Offline.</li><li class="icon--check">Mueve el archivo recien descargado a la nueva carpeta.</li><li class="icon--check">Haz click con el botón derecho del ratón en el archivo, y selecciona <strong>Extraer todo</strong>.</li></ul></p><p class="support--center"><strong>¿Ha solucionado su problema?</strong></p>',
             'next': [{
-                '_id': 'offlineOpciones',
+                '_id': 'end',
                 'class': 'btn--primary',
                 'icon': 'icon--ok icon--big',
-                'response': 'Continuar con el soporte',
+                'response': 'Si',
+            }, {
+                '_id': 'offlineOpciones',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No'
             }]
         }, {
             '_id': 'offlineInstallLinux',
-            'title': '¿Qué es Bitbloq Offline?',
-            'data': '',
+            'title': '¿Cómo instalo la  versión offline en Linux?',
+            'data': '<p><ul><li class="icon--check">Descarga la última versión de Bitbloq offline para <a href="https://github.com/bq/bitbloq-offline/releases/download/latest/linux.zip" target="_blank" class="icon--url"><span class="icon--linux">Linux 64</span></a> o <a href="https://github.com/bq/bitbloq-offline/releases/download/latest/linux32.zip" target="_blank" class="icon--url"><span class="icon--linux">Linux 32</span></a></li><li class="icon--check">Crea una nueva carpeta en la carpeta <i class="text--secondary">"Documentos"</i> de tu usuario, y llámala Bitbloq Offline.</li><li class="icon--check">Mueve el archivo recien descargado a la nueva carpeta.</li><li class="icon--check">Haz click con el botón derecho del ratón en el archivo, y selecciona <strong>Extraer aquí</strong>.<br>Si necesita un descompresor, le recomendamos: <span class="common--text-term-fx little">sudo apt-get install unzip</span></li></ul></p>' +
+                '<p>Es necesario que se asegure de que su usuario es parte del grupo <i class="text--secondary">dialout</i><ul><li class="icon--check">Utilice el comando <span class="common--text-term-fx little">groups <i class="text--secondary">usuario</i></span> para comprobar si su usuario está en el grupo <i class="text--secondary">dialout</i></li><li class="icon--check">Si no está en dicho grupo, utilice el comando <span class="common--text-term-fx little">sudo adduser <i class="text--secondary">usuario</i> dialout</span> para añadirlo</li></ul></p>' +
+                '<p>¿Su distribución es <strong class="icon--linux"> MAX9</strong>?:</p><ul><li class="icon--check">Puede instalar Bitbloq offline mediante <span class="common--text-term-fx little">sudo apt-get install bitbloq-offline</span></li></ul></p><p class="support--center"><strong>¿Ha solucionado su problema?</strong></p>',
             'next': [{
-                '_id': 'offlineOpciones',
+                '_id': 'end',
                 'class': 'btn--primary',
                 'icon': 'icon--ok icon--big',
-                'response': 'Continuar con el soporte',
+                'response': 'Si',
+            }, {
+                '_id': 'offlineOpciones',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No'
             }]
         }, {
             '_id': 'offlineInstallMac',
-            'title': '¿Qué es Bitbloq Offline?',
-            'data': '',
+            'title': '¿Cómo instalo la  versión offline en Mac?',
+            'data': '<p><ul><li class="icon--check">Descarga la última versión de <a href="https://github.com/bq/bitbloq-offline/releases/download/latest/mac.zip" target="_blank" class="icon--url">Bitbloq offline para <span class="icon--mac">Mac</span></a></li><li class="icon--check">Crea una nueva carpeta en <i class="text--secondary">"Documentos"</i>, y llámala Bitbloq Offline.</li><li class="icon--check">Mueve el archivo recien descargado a la nueva carpeta, y <strong>ábrelo</strong></li></ul></p><p class="support--center"><strong>¿Ha solucionado su problema?</strong></p>',
             'next': [{
-                '_id': 'offlineOpciones',
+                '_id': 'end',
                 'class': 'btn--primary',
                 'icon': 'icon--ok icon--big',
-                'response': 'Continuar con el soporte',
+                'response': 'Si',
+            }, {
+                '_id': 'offlineOpciones',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No'
+            }]
+        }, {
+            '_id': 'offlineOpciones',
+            'title': 'Por favor, indicanos el motivo de tu consulta:',
+            'data': '',
+            'next': [{
+                '_id': 'offlineNoPlaca',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'No me detecta la placa',
+            }, {
+                '_id': 'hardware',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'Tengo una incidencia con un componente de hardware',
+            }]
+        }, {
+            '_id': 'offlineNoPlaca',
+            'title': 'Selecciona tu sistema operativo:',
+            'data': '',
+            'next': [{
+                '_id': 'offlineDriversWindows',
+                'class': 'btn--secondary',
+                'icon': 'icon--windows icon--big',
+                'response': 'Windows',
+            }, {
+                '_id': 'offlineBootloader',
+                'class': 'btn--secondary',
+                'icon': 'icon--linux icon--big',
+                'response': 'Linux',
+            }, {
+                '_id': 'offlineDriversMac',
+                'class': 'btn--secondary',
+                'icon': 'icon--mac icon--big',
+                'response': 'Mac',
+            }]
+        }, {
+            '_id': 'offlineDriversMac',
+            'title': 'Revise los drivers',
+            'data': '<p><ul><li class="icon--check">Drivers para <a href="https://storage.googleapis.com/bitbloq/drivers/zowi/mac/Mac_OSX_VCP_Driver.zip" target="_blank"><strong>Zowi</strong></a>.</li><li class="icon--check">Drivers para la placa <a href="https://storage.googleapis.com/bitbloq/drivers/zum/mac/FTDIUSBSerialDriver_v2_4_2.dmg" target="_blank"><strong>BQ ZUM Core (BT-328)</strong></a>.</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'offlineBootloader',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'offlineDriversWindows',
+            'title': 'Revise los drivers',
+            'data': '<p><ul><li class="icon--check">Drivers para <a href="https://storage.googleapis.com/bitbloq/drivers/zowi/windows/CP210x_Windows_Drivers.zip" target="_blank"><strong>Zowi</strong></a>.</li><li class="icon--check">Drivers para la placa <a href="https://storage.googleapis.com/bitbloq/drivers/zum/windows/CDM21228_Setup.zip" target="_blank"><strong>BQ ZUM Core (BT-328)</strong></a>.</li><li class="icon--check">Drivers para la placa <a href="https://storage.googleapis.com/bitbloq/drivers/arduino/drivers.zip" target="_blank"><strong>Arduino UNO</strong></a> <i class="">(y basados en ella)</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'offlineBootloader',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'offlineBootloader',
+            'title': 'Comprueba que tu placa tiene bootloader',
+            'data': '<p>¿Qué es un <strong>bootloader</strong>?</p><p>El <i class="text--secondary">bootloader</i> es un programa que se lanza cuando inicias la placa o la reseteas, cuya función es preparar la carga de los nuevos programas. Normalmente se necesita una herramienta especial para cargar los programas; el bootloader simplifica el proceso permitiendo cargarlos mediante el puerto USB.</p><p>¡Asegurese que el bootloader de su placa está instalado <strong>correctamente</strong>!</p><p><strong>¿Cómo compruebo si tengo instalado el Bootloader?:</strong><br>Presiona el botón de <span class="common--icon-keycap-fx">reset</span>, y si bootloader está instalado <strong>debería parpadear el led numero 13</strong></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'offlineBootloaderZumBT328',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': '¿Cómo cargo el bootloader en la placa ZUM Core (BT-328)?'
+            }, {
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si'
+            }, {
+                '_id': 'offlineChangeUsb',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No'
+            }]
+        }, {
+            '_id': 'offlineBootloaderZumBT328',
+            'title': '¿Cómo cargo el bootloader en la placa ZUM Core (BT-328)?',
+            'extData': 'bootloaderZumBT328.html',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si'
+            }, {
+                '_id': 'offlineChangeUsb',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No'
+            }]
+        }, {
+            '_id': 'offlineChangeUsb',
+            'title': 'Cambie de puerto USB y pruebe con otro cable',
+            'data': '<p>Aunque poco probable, tanto el puerto USB donde conecta la placa a su sistema como el propio cable de comunicación pueden deteriorarse.</p><p>Para <strong>descartar</strong> esta posibilidad, pruebe a cambiar de puerto y utilice un cable diferente.</p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'offlinePin01',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'offlinePin01',
+            'title': '¿Tiene algún componente conectado en los pines 0 y 1?',
+            'data': '<p>Los pines <i class="text--secondary">0</i> y <i class="text--secondary">1</i> se utilizan para digital i/o y para comunicación en serie <i class="text--secondary">(de la que depende el puerto USB y la conexión por Bluetooth)</i>, por lo que si están en uso se deshabilitará la comunicación con su sistema.</p><p>Para volver a habilitar el puerto USB, libere los pines.<p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'offlineALotOfPower',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'offlineALotOfPower',
+            'title': '¿Tiene muchos componentes conectados o un componente con un consumo alto?',
+            'data': '<p>Si conecta <strong>muchos componentes</strong> al mismo tiempo, o tiene componentes con un consumo elevado <i class="text--secondary">(como por ejemplo un servomotor)</i>, puede ocurrir que el ordenador no pueda suminsitrar suficiente por el puerto USB.<br><div class="support--icon--giga"><img src="images/support/zum-power.png" /></div><br>Pruebe <strong>apagando la placa</strong> <i class="text--secondary">(botón rojo en posición off)</i> o conectado una fuente de alimentación</p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'form',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
             }]
         }, {
             '_id': 'dontLoad',
@@ -234,7 +396,6 @@ angular.module('bitbloqApp')
             }]
         }, {
             '_id': 'w2bVirus',
-            'dontShowHomeButton': true,
             'title': 'El sistema reconoce web2board como posible virus',
             'extData': 'virusForm.html',
             'next': []
@@ -256,7 +417,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'w2bUndetected',
             'title': 'Bitbloq no detecta web2board',
-            'data': '<p>Selecione su sistema operativo:</p>',
+            'data': '<p class="support--center"><strong>Selecione su sistema operativo:</strong></p>',
             'next': [{
                 '_id': 'w2bUndetectedWindows',
                 'class': 'btn--secondary',
@@ -268,7 +429,7 @@ angular.module('bitbloqApp')
                 'icon': 'icon--linux icon--big',
                 'response': 'Linux',
             }, {
-                '_id': 'w2bUndetectedMac',
+                '_id': 'form',
                 'class': 'btn--secondary',
                 'icon': 'icon--mac icon--big',
                 'response': 'Mac',
@@ -291,7 +452,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'w2bUndetectedLinux',
             'title': 'Bitbloq no detecta web2board bajo Linux',
-            'data': '<p>¿<strong>Existe</strong> el fichero <i class="text--secondary">mimeapps.list</i> <strong>y contiene lineas de web2board</strong>?</p><p>El fichero <i class="text--secondary">mimeapps.list</i> ubicado en <span class="common--text-term-fx little">~/.local/share/applications/mimeapps.list</span> tiene que incluir estas líneas:</p><ol class="common--text-editor-fx"><li>[Default Applications]</li><li>#custom handler for bitbloqs web2board:</li><li>x-scheme-handler/web2board=web2board-handler.desktop</li></ol><p>Si no encuentra las líneas en el archivo, añadalas a mano.</p><p><strong>¿Se ha solucionado su consulta?</strong></p>',
+            'data': '<p>¿<strong>Existe</strong> el fichero <i class="text--secondary">mimeapps.list</i> <strong>y contiene lineas de web2board</strong>?</p><p>El fichero <i class="text--secondary">mimeapps.list</i> ubicado en <span class="common--text-term-fx little">~/.local/share/applications/mimeapps.list</span> tiene que incluir estas líneas:</p><ol class="common--text-editor-fx"><li>[Default Applications]</li><li>#custom handler for bitbloqs web2board:</li><li>x-scheme-handler/web2board=web2board-handler.desktop</li></ol><p>Si no encuentra las líneas en el archivo, añadalas a mano.</p><p class="support--center"><strong>¿Se ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -302,16 +463,6 @@ angular.module('bitbloqApp')
                 'class': 'btn--primary btn--no',
                 'icon': 'icon--no icon--big',
                 'response': 'No',
-            }]
-        }, {
-            '_id': 'w2bUndetectedMac',
-            'title': 'Bitbloq no detecta web2board bajo Mac',
-            'data': '<p>Para recibir soporte para <span class="icon--mac"> Mac</span>, utilice el formulario de contacto.</p>',
-            'next': [{
-                '_id': 'form',
-                'class': 'btn--secondary',
-                'icon': '',
-                'response': 'Formulario de contacto',
             }]
         }, {
             '_id': 'w2bUndetectedWindowsProxy',
@@ -502,7 +653,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'reinstallDriversLinux',
             'title': 'Revise los permisos',
-            'data': 'Para las distribuciones de <span class="icon--linux"> Linux</span> no es necesario que instale ningún tipo de drivers, pero es necesario que se asegure de que su usuario es parte del grupo <i class="text--secondary">dialout</i><ul><li class="icon--check">Utilice el comando <span class="common--text-term-fx little">groups <i class="text--secondary">usuario</i></span> para comprobar si su usuario está en el grupo <i class="text--secondary">dialout</i></li><li class="icon--check">Si no está en dicho grupo, utilice el comando <span class="common--text-term-fx little">sudo adduser <i class="text--secondary">usuario</i> dialout</span> para añadirlo</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>Para las distribuciones de <span class="icon--linux"> Linux</span> no es necesario que instale ningún tipo de drivers, pero es necesario que se asegure de que su usuario es parte del grupo <i class="text--secondary">dialout</i><ul><li class="icon--check">Utilice el comando <span class="common--text-term-fx little">groups <i class="text--secondary">usuario</i></span> para comprobar si su usuario está en el grupo <i class="text--secondary">dialout</i></li><li class="icon--check">Si no está en dicho grupo, utilice el comando <span class="common--text-term-fx little">sudo adduser <i class="text--secondary">usuario</i> dialout</span> para añadirlo</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -703,7 +854,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': '3020ideArduino',
             'title': '¿Ha probado a cargar la placa en otro entorno de desarollo?',
-            'data': '<p>Por ejemplo, puedes descargar el IDE de Arduino de la <a href="https://www.arduino.cc/en/Main/Software" target="_blank" class="icon--url">web oficial</a></p><p><strong>¿Le detecta la placa el otro entorno de desarrollo?</strong></p>',
+            'data': '<p class="support--center">Por ejemplo, puedes descargar el IDE de Arduino de la <a href="https://www.arduino.cc/en/Main/Software" target="_blank" class="icon--url">web oficial</a></p><p class="support--center"><strong>¿Le detecta la placa el otro entorno de desarrollo?</strong></p>',
             'next': [{
                 '_id': 'form',
                 'class': 'btn--primary',
@@ -718,7 +869,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': '3020DeadBoard',
             'title': 'Es probable que la placa esté defectuosa',
-            'data': '<span class="support--icon--giga support--icon--rojo"><i class="fa fa-medkit" aria-hidden="true"></i></span><p>Una vez descartadas otras posibilidades, <i class="text-secondary">es probable que su placa esté defectuosa</i>.</p><p>Si no es la placa <a href="https://www.bq.com/es/mundo-maker" target="_blank" class="icon--url">BQ ZUM Core (BT-328)</a> <strong>contacte con su fabricante</strong></p>',
+            'data': '<span class="support--icon--giga support--icon--rojo"><i class="fa fa-medkit" aria-hidden="true"></i></span><p class="support--center">Una vez descartadas otras posibilidades, <i class="text-secondary">es probable que su placa esté defectuosa</i>.</p><p class="support--center">Si no es la placa <a href="https://www.bq.com/es/mundo-maker" target="_blank" class="icon--url">BQ ZUM Core (BT-328)</a> <strong>contacte con su fabricante</strong></p>',
             'next': [{
                 '_id': 'form',
                 'class': 'btn--secondary',
@@ -797,7 +948,7 @@ angular.module('bitbloqApp')
             '_id': 'hardLEDs',
             'permalink': 'hardLEDs',
             'title': 'Correcta configuración del componente LED',
-            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p>Es <strong>necesario</strong> que conecte el componente <strong>exactamente igual que en la imagen</strong> para que podamos lanzar un test automático.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-led-comm.png" alt="hardLEDsCables" /><ul><li class="icon--exclamation support--centered"><i class="text--secondary">Asegurese de que todo está conectado tal y como le indicamos.</i></li></ul></p><p><strong>¿Ha conectado bien el componente?</strong></p>',
+            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p>Es <strong>necesario</strong> que conecte el componente <strong>exactamente igual que en la imagen</strong> para que podamos lanzar un test automático.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-led-comm.png" alt="hardLEDsCables" /><ul><li class="icon--exclamation support--centered"><i class="text--secondary">Asegurese de que todo está conectado tal y como le indicamos.</i></li></ul></p><p class="support--center"><strong>¿Ha conectado bien el componente?</strong></p>',
             'next': [{
                 '_id': 'hardLEDsTestIni',
                 'class': 'btn--primary',
@@ -1048,7 +1199,7 @@ angular.module('bitbloqApp')
             '_id': 'hardBuzz',
             'permalink': 'hardBuzz',
             'title': 'Correcta configuración del componente Zumbador',
-            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p>Es <strong>necesario</strong> que conecte el componente <strong>exactamente igual que en la imagen</strong> para que podamos lanzar un test automático.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-buzz-comm.png" alt="hardBuzzCables" /><ul><li class="icon--exclamation support--centered"><i class="text--secondary">Asegurese de que todo está conectado tal y como le indicamos.</i></li></ul></p><p><strong>¿Ha conectado bien el componente?</strong></p>',
+            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p>Es <strong>necesario</strong> que conecte el componente <strong>exactamente igual que en la imagen</strong> para que podamos lanzar un test automático.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-buzz-comm.png" alt="hardBuzzCables" /><ul><li class="icon--exclamation support--centered"><i class="text--secondary">Asegurese de que todo está conectado tal y como le indicamos.</i></li></ul></p><p class="support--center"><strong>¿Ha conectado bien el componente?</strong></p>',
             'next': [{
                 '_id': 'hardBuzzTestIni',
                 'class': 'btn--primary',
