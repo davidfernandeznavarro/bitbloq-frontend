@@ -23,7 +23,7 @@
                     <ul>
                         <a href=""  data-ng-repeat="child in card.next" data-ng-click="go(child._id)" data-element="support_next_child-{{child._id}}">
                             <li>
-                                {{child.response | translate}}
+                                <span data-ng-class="child.icon">{{child.response | translate}}</span>
                             </li>
                         </a>
                     </ul>

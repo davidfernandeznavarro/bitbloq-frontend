@@ -8,7 +8,7 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('SupportCtrl', function($translate, $scope, $location, $routeParams, common, _, userApi, feedbackApi, alertsService, $http, $sce, web2boardOnline, programHex) {
+    .controller('SupportCtrl', function($translate, $scope, $location, $routeParams, common, _, userApi, feedbackApi, alertsService, $http, $sce, web2boardOnline, programHex, chromeAppApi, hardwareService, utils, $rootScope, $window) {
 
         $scope.translate = $translate;
 
@@ -90,9 +90,69 @@ angular.module('bitbloqApp')
             }]
         }, {
             '_id': 'offline',
-            'title': '',
+            'title': '¿Qué es Bitbloq Offline?',
+            'data': '<p>Nuestra versión offline tiene dos ventajas principales:<ul><li class="icon--check"><strong>No es necesario tener conexión a internet</strong></li><li class="icon--check"><strong>No requiere ser instalada</strong> en el sentido clásico, al ser una aplicación portable <i class="text--secondary">(puede ser ejecutada desde cualquier carpeta)</i></li></ul></p><p>Estas ventajas conllevan la necesidad de ser una <strong>versión reducida respecto a la versión online</strong>, lo cual significa que habrá ciertas opciones a las que no tendrá acceso:<ul><li class="icon--no">Todas las funciones enfocadas a compartir proyectos, como explora o el modo centro, requieren internet, y por lo tanto no son accesibles.</li><li class="icon--no">Algunas de las novedades más recientes no estarán incluidas en la versión offline.</li></ul></p>',
+            'next': [{
+                '_id': 'offlineInstall',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Continuar con el soporte',
+            }]
+        }, {
+            '_id': 'offlineInstall',
+            'title': 'Compruebe que Bitbloq offline está instalado correctamente',
+            'data': '<p>Asegurese de que ha añadido Bitbloq offline en una carpeta donde su usuario tiene permisos<br>Le recomendamos utilizar la manera mas sencilla: <strong>Guarde la aplicación en la carpeta de documentos por defecto de su sistema operativo</strong>.</p><p><strong>¿Qué sistema operativo utiliza?</strong></p>',
+            'next': [{
+                '_id': 'offlineInstallWindows',
+                'class': 'btn--secondary',
+                'icon': 'icon--windows icon--big',
+                'response': 'Windows',
+            }, {
+                '_id': 'offlineInstallLinux',
+                'class': 'btn--secondary',
+                'icon': 'icon--linux icon--big',
+                'response': 'Linux',
+            }, {
+                '_id': 'offlineInstallMac',
+                'class': 'btn--secondary',
+                'icon': 'icon--mac icon--big',
+                'response': 'Mac',
+            }, {
+                '_id': 'offlineOpciones',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Bitbloq Offline está bien instalado',
+            }]
+        }, {
+            '_id': 'offlineInstallWindows',
+            'title': '¿Qué es Bitbloq Offline?',
             'data': '',
-            'next': []
+            'next': [{
+                '_id': 'offlineOpciones',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Continuar con el soporte',
+            }]
+        }, {
+            '_id': 'offlineInstallLinux',
+            'title': '¿Qué es Bitbloq Offline?',
+            'data': '',
+            'next': [{
+                '_id': 'offlineOpciones',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Continuar con el soporte',
+            }]
+        }, {
+            '_id': 'offlineInstallMac',
+            'title': '¿Qué es Bitbloq Offline?',
+            'data': '',
+            'next': [{
+                '_id': 'offlineOpciones',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Continuar con el soporte',
+            }]
         }, {
             '_id': 'dontLoad',
             'title': '¿Tienes problemas cargando la web de Bitbloq?',
@@ -126,7 +186,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'tetering',
             'title': 'Prueba con el tetering del móvil',
-            'data': '<p>Activando la opción de tetering de su móvil, y compartiendo la conexión con su computadora, puede comprobar si carga Bitbloq desde una red diferente.</p><p>Si consigue cargar, tiene un problema en la configuración de su red y/o software ajeno a Bitbloq; contacte con los administradores de la red.</p><p><strong>¿Ha solucionado el problema?</strong></p>',
+            'data': '<p>Activando la opción de tetering de su móvil, y compartiendo la conexión con su computadora, puede comprobar si carga Bitbloq desde una red diferente.</p><p>Si consigue cargar, tiene un problema en la configuración de su red y/o software ajeno a Bitbloq; contacte con los administradores de la red.</p><p class="support--center"><strong>¿Ha solucionado el problema?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -181,7 +241,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'keepAsking2Install',
             'title': 'Bitbloq no deja de pedirme que instale web2board',
-            'data': '<p>Espere un par de minutos y <strong>reintente el proceso.</strong> La primera vez que se lanza, o si se actualizan las librerías, puede que el proceso tarde, especialmente en sistemas antiguos.</p><p><strong>¿Ha solucionado su problema?</strong></p>',
+            'data': '<p>Espere un par de minutos y <strong>reintente el proceso.</strong> La primera vez que se lanza, o si se actualizan las librerías, puede que el proceso tarde, especialmente en sistemas antiguos.</p><p class="support--center"><strong>¿Ha solucionado su problema?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -256,7 +316,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'w2bUndetectedWindowsProxy',
             'title': '¿Utiliza un proxy?',
-            'data': '<p><strong>Si utiiza un proxy</strong>, añadalo a la configuración de web2board:<ul><li class="icon--check">Abra o edite un proyecto</li><li class="icon--check">En el menú, haga click en <span class="common--icon-keycap-fx">ver</span>, <span class="common--icon-keycap-fx">Configuración web2board</span></li><li class="icon--check">Añada los datos de su proxy donde corresponda</li></ul></p><p><strong>¿Ha solucionado su consulta?</strong>',
+            'data': '<p><strong>Si utiiza un proxy</strong>, añadalo a la configuración de web2board:<ul><li class="icon--check">Abra o edite un proyecto</li><li class="icon--check">En el menú, haga click en <span class="common--icon-keycap-fx">ver</span>, <span class="common--icon-keycap-fx">Configuración web2board</span></li><li class="icon--check">Añada los datos de su proxy donde corresponda</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -271,7 +331,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'w2bUndetectedWindowsLocal2Proxy',
             'title': '¿Tiene configurado que pasen las llamadas locales por el proxy?',
-            'data': '<p>Si lo tiene configurado para que pasen las llamas locales por el proxy, necesitará deshabilitarlo<ul><li class="icon--check">Presione en el teclado <span class="common--icon-keycap-fx">ctrl</span> + <span class="common--icon-keycap-fx">R</span> para abrir la ventana de ejecución de comandos</li><li class="icon--check">Escriba <span class="common--text-term-fx little">inetcpl.cpl</span> y de al botón de <span class="common--icon-keycap-fx">intro</span></li><li class="icon--check">Haga click en <i class="text--secondary">"Configuración de LAN"</i>, y seleccione <i class="text--secondary">"No usar el servidor proxy para direcciones locales"</i></li></ul></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>Si lo tiene configurado para que pasen las llamas locales por el proxy, necesitará deshabilitarlo<ul><li class="icon--check">Presione en el teclado <span class="common--icon-keycap-fx">ctrl</span> + <span class="common--icon-keycap-fx">R</span> para abrir la ventana de ejecución de comandos</li><li class="icon--check">Escriba <span class="common--text-term-fx little">inetcpl.cpl</span> y de al botón de <span class="common--icon-keycap-fx">intro</span></li><li class="icon--check">Haga click en <i class="text--secondary">"Configuración de LAN"</i>, y seleccione <i class="text--secondary">"No usar el servidor proxy para direcciones locales"</i></li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -347,7 +407,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'noBoard',
             'title': '¿Bitbloq no detecta la placa?',
-            'data': '<p><strong>¿Está intentando programar Zowi?</strong></p><p>Asegurese que Zowi está <strong>encendido</strong> <i class="text--secondary">(primer botón)</i>, ya que de lo contrario Bitbloq no detectará la placa.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p><strong>¿Está intentando programar Zowi?</strong></p><p>Asegurese que Zowi está <strong>encendido</strong> <i class="text--secondary">(primer botón)</i>, ya que de lo contrario Bitbloq no detectará la placa.</p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -377,7 +437,72 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'reinstallDrivers',
             'title': 'Revise los drivers y los permisos',
-            'data': '<p>Si está utilizando <span class="icon--windows"> Windows</span>, pruebe a <strong>reinstalar los drivers.</strong></p><p>Si utiliza <span class="icon--linux"> Linux</span>, asegure que su usuario es parte del grupo <i class="text--secondary">dialout</i><ul><li class="icon--check">Utilice el comando <span class="common--text-term-fx little">groups <i class="text--secondary">usuario</i></span> para comprobar si su usuario está en el grupo <i class="text--secondary">dialout</i></li><li class="icon--check">Si no está en dicho grupo, utilice el comando <span class="common--text-term-fx little">sudo adduser <i class="text--secondary">usuario</i> dialout</span> para añadirlo</li></ul></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p class="support--centered"><strong>Seleccione el sistema operativo correspondiente</strong></p>',
+            'next': [{
+                '_id': 'reinstallDriversWindows',
+                'class': 'btn--primary',
+                'icon': 'icon--windows icon--big',
+                'response': 'Windows',
+            }, {
+                '_id': 'reinstallDriversLinux',
+                'class': 'btn--primary',
+                'icon': 'icon--linux icon--big',
+                'response': 'Linux',
+            }, {
+                '_id': 'reinstallDriversMac',
+                'class': 'btn--primary',
+                'icon': 'icon--mac icon--big',
+                'response': 'Mac',
+            }, {
+                '_id': 'error3020',
+                'class': 'btn--secondary',
+                'icon': 'icon--chrome icon--big',
+                'response': 'Utilizo Chromebook o el modo de compilación online',
+            }]
+        }, {
+            '_id': 'reinstallDriversMac',
+            'title': 'Revise los drivers',
+            'data': '<p><ul><li class="icon--check">Drivers para <a href="https://storage.googleapis.com/bitbloq/drivers/zowi/mac/Mac_OSX_VCP_Driver.zip" target="_blank"><strong>Zowi</strong></a>.</li><li class="icon--check">Drivers para la placa <a href="https://storage.googleapis.com/bitbloq/drivers/zum/mac/FTDIUSBSerialDriver_v2_4_2.dmg" target="_blank"><strong>BQ ZUM Core (BT-328)</strong></a>.</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'error3020',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'No, y estoy usando la compilación online',
+            }, {
+                '_id': 'bootloader',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'reinstallDriversWindows',
+            'title': 'Revise los drivers',
+            'data': '<p><ul><li class="icon--check">Drivers para <a href="https://storage.googleapis.com/bitbloq/drivers/zowi/windows/CP210x_Windows_Drivers.zip" target="_blank"><strong>Zowi</strong></a>.</li><li class="icon--check">Drivers para la placa <a href="https://storage.googleapis.com/bitbloq/drivers/zum/windows/CDM21228_Setup.zip" target="_blank"><strong>BQ ZUM Core (BT-328)</strong></a>.</li><li class="icon--check">Drivers para la placa <a href="https://storage.googleapis.com/bitbloq/drivers/arduino/drivers.zip" target="_blank"><strong>Arduino UNO</strong></a> <i class="">(y basados en ella)</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+            'next': [{
+                '_id': 'end',
+                'class': 'btn--primary',
+                'icon': 'icon--ok icon--big',
+                'response': 'Si',
+            }, {
+                '_id': 'error3020',
+                'class': 'btn--secondary',
+                'icon': '',
+                'response': 'No, y estoy usando la compilación online',
+            }, {
+                '_id': 'bootloader',
+                'class': 'btn--primary btn--no',
+                'icon': 'icon--no icon--big',
+                'response': 'No',
+            }]
+        }, {
+            '_id': 'reinstallDriversLinux',
+            'title': 'Revise los permisos',
+            'data': 'Para las distribuciones de <span class="icon--linux"> Linux</span> no es necesario que instale ningún tipo de drivers, pero es necesario que se asegure de que su usuario es parte del grupo <i class="text--secondary">dialout</i><ul><li class="icon--check">Utilice el comando <span class="common--text-term-fx little">groups <i class="text--secondary">usuario</i></span> para comprobar si su usuario está en el grupo <i class="text--secondary">dialout</i></li><li class="icon--check">Si no está en dicho grupo, utilice el comando <span class="common--text-term-fx little">sudo adduser <i class="text--secondary">usuario</i> dialout</span> para añadirlo</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -397,7 +522,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'error3020',
             'title': '¿Recibe el error "3020 RecieveData timeout 400ms"?',
-            'data': '<p>Pruebe a <strong>reinicar el ordenador.</strong></p><p>Si <span class="icon--chrome"> Chrome</span> está muy saturado, el proceso de carga puede ralentizarse, causando que la placa deje de responder.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>Pruebe a <strong>reinicar el ordenador.</strong></p><p>Si <span class="icon--chrome"> Chrome</span> está muy saturado, el proceso de carga puede ralentizarse, causando que la placa deje de responder.</p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -412,7 +537,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'bootloader',
             'title': 'Comprueba que tu placa tiene bootloader',
-            'data': '<p>¿Qué es un <strong>bootloader</strong>?</p><p>El <i class="text--secondary">bootloader</i> es un programa que se lanza cuando inicias la placa o la reseteas, cuya función es preparar la carga de los nuevos programas. Normalmente se necesita una herramienta especial para cargar los programas; el bootloader simplifica el proceso permitiendo cargarlos mediante el puerto USB.</p><p>¡Asegurese que el bootloader de su placa está instalado <strong>correctamente</strong>!</p><p><strong>¿Cómo compruebo si tengo instalado el Bootloader?:</strong><br>Presiona el botón de <span class="common--icon-keycap-fx">reset</span>, y si bootloader está instalado <strong>debería parpadear el led numero 13</strong></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>¿Qué es un <strong>bootloader</strong>?</p><p>El <i class="text--secondary">bootloader</i> es un programa que se lanza cuando inicias la placa o la reseteas, cuya función es preparar la carga de los nuevos programas. Normalmente se necesita una herramienta especial para cargar los programas; el bootloader simplifica el proceso permitiendo cargarlos mediante el puerto USB.</p><p>¡Asegurese que el bootloader de su placa está instalado <strong>correctamente</strong>!</p><p><strong>¿Cómo compruebo si tengo instalado el Bootloader?:</strong><br>Presiona el botón de <span class="common--icon-keycap-fx">reset</span>, y si bootloader está instalado <strong>debería parpadear el led numero 13</strong></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'bootloaderZumBT328',
                 'class': 'btn--secondary',
@@ -447,7 +572,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': '3020changeUsb',
             'title': 'Cambie de puerto USB y pruebe con otro cable',
-            'data': '<p>Aunque poco probable, tanto el puerto USB donde conecta la placa a su sistema como el propio cable de comunicación pueden deteriorarse.</p><p>Para <strong>descartar</strong> esta posibilidad, pruebe a cambiar de puerto y utilice un cable diferente.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>Aunque poco probable, tanto el puerto USB donde conecta la placa a su sistema como el propio cable de comunicación pueden deteriorarse.</p><p>Para <strong>descartar</strong> esta posibilidad, pruebe a cambiar de puerto y utilice un cable diferente.</p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -462,7 +587,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': '3020pin01',
             'title': '¿Tiene algún componente conectado en los pines 0 y 1?',
-            'data': '<p>Los pines <i class="text--secondary">0</i> y <i class="text--secondary">1</i> se utilizan para digital i/o y para comunicación en serie <i class="text--secondary">(de la que depende el puerto USB y la conexión por Bluetooth)</i>, por lo que si están en uso se deshabilitará la comunicación con su sistema.</p><p>Para volver a habilitar el puerto USB, libere los pines.<p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>Los pines <i class="text--secondary">0</i> y <i class="text--secondary">1</i> se utilizan para digital i/o y para comunicación en serie <i class="text--secondary">(de la que depende el puerto USB y la conexión por Bluetooth)</i>, por lo que si están en uso se deshabilitará la comunicación con su sistema.</p><p>Para volver a habilitar el puerto USB, libere los pines.<p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -477,7 +602,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': '3020aLotOfPower',
             'title': '¿Tiene muchos componentes conectados o un componente con un consumo alto?',
-            'data': '<p>Si conecta <strong>muchos componentes</strong> al mismo tiempo, o tiene componentes con un consumo elevado <i class="text--secondary">(como por ejemplo un servomotor)</i>, puede ocurrir que el ordenador no pueda suminsitrar suficiente por el puerto USB.<br><div class="support--icon--giga"><img src="images/support/zum-power.png" /></div><br>Pruebe <strong>apagando la placa</strong> <i class="text--secondary">(botón rojo en posición off)</i> o conectado una fuente de alimentación</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>Si conecta <strong>muchos componentes</strong> al mismo tiempo, o tiene componentes con un consumo elevado <i class="text--secondary">(como por ejemplo un servomotor)</i>, puede ocurrir que el ordenador no pueda suminsitrar suficiente por el puerto USB.<br><div class="support--icon--giga"><img src="images/support/zum-power.png" /></div><br>Pruebe <strong>apagando la placa</strong> <i class="text--secondary">(botón rojo en posición off)</i> o conectado una fuente de alimentación</p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -492,7 +617,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': '3020btConnected',
             'title': '¿Tiene algún dispositivo conectado por Bluetooth?',
-            'data': '<p>El puerto de comunicación de la placa es el mismo para la conexión por USB que para conexión por BT, por lo que <strong>no puede conectar al mismo tiempo una placa por ambos sistemas</strong></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>El puerto de comunicación de la placa es el mismo para la conexión por USB que para conexión por BT, por lo que <strong>no puede conectar al mismo tiempo una placa por ambos sistemas</strong></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -548,7 +673,7 @@ angular.module('bitbloqApp')
             '_id': '3020Windows',
             'title': '¿Ha probado a cambiar el puerto COM al que se conecta?',
             'data': '<p>Los puertos COM son un tipo de puerto cada vez menos frecuente, pero que en ocasiones aún se puede encontrar en ordenadores antiguos.<br>Es común encontrar estos puertos siendo aprovechados mediante un adaptador conversor a USB.</p><p>Es posible que la configuración del puerto pueda estar dando problemas al estar ya en uso, por lo que <strong>aconsejamos que pruebe a cambiar su numero de puerto COM</strong><ol><li class="icon--check">Presione las teclas <span class="common--icon-keycap-fx">Win</span> + <span class="common--icon-keycap-fx">X</span> para abrir el panel de administración de dispositivos</li>' +
-                '<li class="icon--check">Ve a la sección <i class="text-secondary">"Puertos (COM y LPT)"</i></li><li class="icon--check">Busca el puerto, y en el menú contextual <i class="text-secondary">(botón derecho en el ratón)</i> seleciona "Propiedades"</li><li class="icon--check">Ve a la pestaña de configuración de puerto, y seleciona "Opciones avanzadas"</li><li class="icon--check">En el panel de configuración avanzada, busca la sección de número de puerto COM, y <strong>cambia el numero del puerto a uno que no esté en uso</strong>"</li></ol></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+                '<li class="icon--check">Ve a la sección <i class="text-secondary">"Puertos (COM y LPT)"</i></li><li class="icon--check">Busca el puerto, y en el menú contextual <i class="text-secondary">(botón derecho en el ratón)</i> seleciona "Propiedades"</li><li class="icon--check">Ve a la pestaña de configuración de puerto, y seleciona "Opciones avanzadas"</li><li class="icon--check">En el panel de configuración avanzada, busca la sección de número de puerto COM, y <strong>cambia el numero del puerto a uno que no esté en uso</strong>"</li></ol></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -602,6 +727,7 @@ angular.module('bitbloqApp')
             }]
         }, {
             '_id': 'xp',
+            'permalink': 'xp',
             'title': 'Problemas comunes con Windows XP',
             'extData': 'xp.html',
             'next': [{
@@ -612,6 +738,7 @@ angular.module('bitbloqApp')
             }]
         }, {
             '_id': 'linux',
+            'permalink': 'linux',
             'title': 'Problemas comunes con Linux no certificados',
             'extData': 'linux.html',
             'next': [{
@@ -623,7 +750,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'hardware',
             'title': '¿Está la placa encendida y bien conectada?',
-            'data': '<p>Descartemos los errores más frecuentes:</p><ul><li class="icon--check">Compruebe que la placa esté <strong>encendida</strong>.</li><li class="icon--check">Revise que la placa esté <strong>bien conectada</strong>.</li><li class="icon--check">¿Está el componente <strong>conectado correctamente</strong>?.</li></ol></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>Descartemos los errores más frecuentes:</p><ul><li class="icon--check">Compruebe que la placa esté <strong>encendida</strong>.</li><li class="icon--check">Revise que la placa esté <strong>bien conectada</strong>.</li><li class="icon--check">¿Está el componente <strong>conectado correctamente</strong>?.</li></ol></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -639,7 +766,7 @@ angular.module('bitbloqApp')
             '_id': 'hardQuemado',
             'title': '¿Está el componente y el cable en buen estado?',
             'data': '<p>Puede que el <i class="text--secondary">componente</i>, el <i class="text--secondary">cable</i> de conexión, el <i class="text--secondary">pin</i> al que se conecta, y el <i class="text--secondary">conector</i> del propio cable <strong>no estén dañados</strong></p><ul><li class="icon--check">Compruebe que el componente no tiene ninguna parte deteriorada o ennegrecida <i class="text--secondary">(quemada)</i>.</li><li class="icon--check">Compruebe que el cable <strong>no está pelado</strong> ni tiene algún segmento ennegrecido <i class="text--secondary">(quemado)</i>.</li><li class="icon--check">Compruebe que el pin al que se conecta no está doblado, suelto <i class="text--secondary">(notará que la pieza "baila")</i>, y que el punto de soldadura a la placa no está deteriorado.</li>' +
-                '<li class="icon--check">Compruebe que el conector del cable <i class="text--secondary">("enchufe")</i> no está deteriorado, y está firmemente unido al cable.</li></ol></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+                '<li class="icon--check">Compruebe que el conector del cable <i class="text--secondary">("enchufe")</i> no está deteriorado, y está firmemente unido al cable.</li></ol></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -753,7 +880,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'hardServosAleatorio',
             'title': 'El servomotor se mueve aleatoriamente o no se mueve',
-            'data': '<p>¿Ha probado a <strong>enchufar un portapilas</strong>?</p><p>En ocasiones el puerto USB no es capaz de suminsitrar la energía suficiente para que la configuración de la placa pueda activar los servomotores.<br>Usando un <strong>portapilas</strong> podrá descartar dicha posibilidad.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>¿Ha probado a <strong>enchufar un portapilas</strong>?</p><p>En ocasiones el puerto USB no es capaz de suminsitrar la energía suficiente para que la configuración de la placa pueda activar los servomotores.<br>Usando un <strong>portapilas</strong> podrá descartar dicha posibilidad.</p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -768,7 +895,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'hardServosNoPara',
             'title': 'El servomotor no para nunca',
-            'data': '<p>Es probable que el servomotor necesite ser <stromg>calibrado</strong>:</p><p><ul><li class="icon--check">Observe el lado por donde está situada la salida de los cables.</li><li class="icon--check">Encontrará una endidura circular, en la que mediante un destornillador podrá calibrar el servomotor.</li></ul><p class="support--centered"><img class="support--gif-video" src="images/support/hardServoCalibrate.gif" /></p><ul><li class="icon--check">Como puede observar la imagen, colocando el servomotor con el zocalo frente a usted y los cables hacia la derecha, deberá ajustar el calibrado girando el destornillador en dirección antihoraria</li><li class="icon--check">Recalibre el servomotor hasta que logre la configuración deseada</li></ul></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>Es probable que el servomotor necesite ser <stromg>calibrado</strong>:</p><p><ul><li class="icon--check">Observe el lado por donde está situada la salida de los cables.</li><li class="icon--check">Encontrará una endidura circular, en la que mediante un destornillador podrá calibrar el servomotor.</li></ul><p class="support--centered"><img class="support--gif-video" src="images/support/hardServoCalibrate.gif" /></p><ul><li class="icon--check">Como puede observar la imagen, colocando el servomotor con el zocalo frente a usted y los cables hacia la derecha, deberá ajustar el calibrado girando el destornillador en dirección antihoraria</li><li class="icon--check">Recalibre el servomotor hasta que logre la configuración deseada</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -784,7 +911,7 @@ angular.module('bitbloqApp')
             '_id': 'hardLCDs',
             'permalink': 'hardLCDs',
             'title': '¿Ha conectado bien el componente?',
-            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-lcd-comm.png" alt="hardLCDsCables" /></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-lcd-comm.png" alt="hardLCDsCables" /></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -799,7 +926,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'hardLCDsPalanca',
             'title': '¿Ha seleccionado el modo I/O correcto?',
-            'data': '<p>En la parte posterior de su componente LCD, se encuentra una palanca que permite seleccionar entre el <strong>modo de comunicación I2C</strong> y SPI</p><p>Solo damos soporte al modo I2C.</p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>En la parte posterior de su componente LCD, se encuentra una palanca que permite seleccionar entre el <strong>modo de comunicación I2C</strong> y SPI</p><p>Solo damos soporte al modo I2C.</p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -814,7 +941,7 @@ angular.module('bitbloqApp')
         }, {
             '_id': 'hardLCDsASCII',
             'title': '¿Está utilizando simbolos "raros"?',
-            'data': '<p>Su panel LCD solo es compatible con los <a href="images/support/ascii.pdf" target="_blank" class="icon--url">símbolos del código ASCII Reducido</a></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>Su panel LCD solo es compatible con los <a href="images/support/ascii.pdf" target="_blank" class="icon--url">símbolos del código ASCII Reducido</a></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -851,7 +978,7 @@ angular.module('bitbloqApp')
             '_id': 'hardUS',
             'permalink': 'hardUS',
             'title': '¿Ha conectado correctamente el componente?',
-            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-us-comm.png" alt="hardLCDsCables" /></p><p><ul><li  class="icon--exclamation support--centered">Es importante que <strong>no conecte nunca los cables del reves</strong>; si lo hace <i class="text--secondary">puede estropearlos</i>.</li></ul></p><p><strong>¿Ha solucionado su consulta?</strong></p>',
+            'data': '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-us-comm.png" alt="hardLCDsCables" /></p><p><ul><li  class="icon--exclamation support--centered">Es importante que <strong>no conecte nunca los cables del reves</strong>; si lo hace <i class="text--secondary">puede estropearlos</i>.</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -873,17 +1000,7 @@ angular.module('bitbloqApp')
             'permalink': 'hardUSTestEnd',
             'title': 'Comprueba si el Sensor de Ultrasonidos funciona',
             'extData': 'hardUSTestEnd.html',
-            'next': [{
-                '_id': 'end',
-                'class': 'btn--primary',
-                'icon': 'icon--ok icon--big',
-                'response': 'El sensor mide',
-            }, {
-                '_id': 'form',
-                'class': 'btn--primary btn--no',
-                'icon': 'icon--no icon--big',
-                'response': 'El sensor no mide',
-            }]
+            'next': []
         }, {
             '_id': 'hardBT',
             'permalink': 'hardBT',
@@ -904,7 +1021,7 @@ angular.module('bitbloqApp')
                 '<p><strong>Comandos AT del módulo Bluetooth</strong><br>Para acceder a los <i class="text--secondary">comandos AT</i> del módulo Bluetooth sigue los siguientes pasos:<ul><li class="icon--check">Pon todos los conmutadores en <i class="text--secondary">ON</i> y conecta la placa al ordenador mediante el cable USB.</li><li class="icon--check">Dentro de la IDE de Arduino, abre un Monitor Serial a una velocidad de comunicación de <i class="text--secondary">19200 baudios</i> y en el modo <i class="text--secondary">Ambos NL & CR</i> (nueva línea y retorno de carro).</li>' +
                 '<li class="icon--check">Comprueba la comunicación con el módulo Bluetooth enviando por la línea de comandos, el texto <i class="text--secondary">AT</i>. El módulo Bluetooth debería responder con un <i class="text--secondary">OK</i>.</li><li class="icon--check">Si quieres cambiar el nombre de tu módulo Bluetooth, el que muestra a otros dispositivos, envía comando <i class="text--secondary">AT+NAME####</i> donde #### es el nombre que quieras.</li><li class="icon--check">Si quieres modificar la tasa de baudios, envía el comando <i class="text--secondary">AT+BAUD#</i> donde # es un número de referencia a una cantidad de baudios. Por ejemplo: BAUD5 = 19200 , BAUD4 = 9600…</li><li class="icon--check">Tienes disponible la <a href="/images/support/BLK-MD-BC04-B_AT-COMMANDS.pdf" target="_blank">lista completa de comandos AT</a>.</p>' +
                 '<p><strong>NOTA IMPORTANTE</strong>: Cambiando la velocidad de comunicación del módulo Bluetooth de 19200 baudios se deshabilitará la posibilidad de programación vía Bluetooth. Sin embargo, la comunicación serie a través del Bluetooth seguirá estando disponible con la nueva velocidad.</p>' +
-                '<p><strong>¿Ha solucionado su consulta?</strong></p>',
+                '<p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
             'next': [{
                 '_id': 'end',
                 'class': 'btn--primary',
@@ -1195,11 +1312,81 @@ angular.module('bitbloqApp')
                     break;
             }
         }
-        $scope.getUSValue = function(){
-          return $sce.trustAsHtml('<span>'+[1,2,3,4,5,6,7,8,9,0].join('</span><span>')+'</span>');
-        }
 
-        // form
+        $scope.boards = []
+        $scope.getBoards = function() {
+            //then lets load the ports
+            chromeAppApi.getPorts().then(function(response) {
+                $scope.ports = filterPortsByOS(response.ports);
+                hardwareService.itsHardwareLoaded().then(function() {
+                    utils.getPortsPrettyNames($scope.ports, hardwareService.hardware.boards);
+                    $scope.portNames = [];
+
+                    for (var i = 0; i < $scope.ports.length; i++) {
+                        $scope.portNames.push($scope.ports[i].portName);
+                    }
+
+                    $scope.boards = $scope.portNames
+                });
+
+            }).catch(function(error) {
+                console.log('error SerialMonitorCtrl', error);
+            });
+        };
+
+        // dc function to free the serial port
+        $scope.dc = function() {
+            chromeAppApi.stopSerialCommunication();
+            if (serialEvent) { serialEvent(); }
+        };
+
+        function filterPortsByOS(ports) {
+            var result = [];
+            if (common.os === 'Mac') {
+                for (var i = 0; i < ports.length; i++) {
+                    if (ports[i].comName.indexOf('/dev/cu') !== -1) {
+                        result.push(ports[i]);
+                    }
+                }
+            } else {
+                result = ports;
+            }
+            return result;
+        }
+        $scope.selected = false
+        $scope.selectBoardUS = function(item) {
+            $scope.selected = true;
+            var port = _.find($scope.ports, {
+                portName: item
+            });
+            $scope.selectedPort = port;
+            chromeAppApi.getSerialData($scope.selectedPort);
+            serialEvent = $rootScope.$on('serial', function(event, msg) {
+                // maybe we recieve more than one metric on the same package
+                var piece = msg.split(/\s+/)[0].slice(0, -3)
+
+                if (piece.length === 1) {
+                    piece = '00' + piece
+                } else if (piece.length === 2) {
+                    piece = '0' + piece
+                } else if (piece.length > 3) {
+                    piece = '---'
+                }
+
+                $scope.serialMsg = $sce.trustAsHtml(
+                    '<span>' +
+                    (piece + 'cm')
+                    .split(/(?!^)/)
+                    .join('</span><span>') +
+                    '</span>');
+                utils.apply($scope)
+            });
+        };
+
+        $scope.serialMsg = '<span>-</span><span>-</span><span>-</span><span>c</span><span>m</span>' // default
+        var serialEvent = null
+
+        // form + '|' + piece[1]
         $scope.response = {
             'message': '',
             // 'code': '',
@@ -1301,4 +1488,8 @@ angular.module('bitbloqApp')
                 .replace(/(?:\r\n|\r|\n)/g, '<br />')
         }
 
+        $window.onbeforeunload = $scope.dc()
+        $scope.$on('$destroy', function() {
+            $scope.dc();
+        });
     });
