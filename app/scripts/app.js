@@ -38,8 +38,8 @@ angular
         'nvd3',
         'datePicker',
         'ngPatternRestrict', 'mp.colorPicker',
-        'ngCsv',
-        'ngAnimate'
+        'ngCsv'
+        // 'ngAnimate'
     ])
     .config(['$provide', '$routeProvider', '$httpProvider', '$translateProvider', '$authProvider', '$logProvider', 'envData',
         function ($provide, $routeProvider, $httpProvider, $translateProvider, $authProvider, $logProvider, envData) {
