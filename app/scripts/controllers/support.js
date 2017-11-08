@@ -14,21 +14,21 @@ angular
         $scope,
         $location,
         $routeParams,
+        $http,
+        $sce,
+        $rootScope,
+        $window,
         common,
         _,
         userApi,
         feedbackApi,
         alertsService,
-        $http,
-        $sce,
         web2boardOnline,
         programHex,
         chromeAppApi,
         hardwareService,
         utils,
-        $rootScope,
-        $window,
-        $interval
+        ngDialog
     ) {
         $scope.translate = $translate;
 
@@ -1269,8 +1269,7 @@ angular
                 _id: 'hardLEDs',
                 permalink: 'hardLEDs',
                 title: 'Correcta configuración del componente LED',
-                data:
-                    '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p>Es <strong>necesario</strong> que conecte el componente <strong>exactamente igual que en la imagen</strong> para que podamos lanzar un test automático.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-led-comm.png" alt="hardLEDsCables" /><ul><li class="icon--exclamation support--centered"><i class="text--secondary">Asegurese de que todo está conectado tal y como le indicamos.</i></li></ul></p><p class="support--center"><strong>¿Ha conectado bien el componente?</strong></p>',
+                extData: 'hardLEDs.html',
                 next: [
                     {
                         _id: 'hardLEDsTestIni',
@@ -1417,8 +1416,7 @@ angular
                 _id: 'hardLCDs',
                 permalink: 'hardLCDs',
                 title: '¿Ha conectado bien el componente?',
-                data:
-                    '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-lcd-comm.png" alt="hardLCDsCables" /></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+                extData: 'hardLCDs.html',
                 next: [
                     {
                         _id: 'end',
@@ -1505,8 +1503,7 @@ angular
                 _id: 'hardUS',
                 permalink: 'hardUS',
                 title: '¿Ha conectado correctamente el componente?',
-                data:
-                    '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-us-comm.png" alt="hardLCDsCables" /></p><p><ul><li  class="icon--exclamation support--centered">Es importante que <strong>no conecte nunca los cables del reves</strong>; si lo hace <i class="text--secondary">puede estropearlos</i>.</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+                extData: 'hardUS.html',
                 next: [
                     {
                         _id: 'end',
@@ -1595,8 +1592,7 @@ angular
                 _id: 'hardBuzz',
                 permalink: 'hardBuzz',
                 title: 'Correcta configuración del componente Zumbador',
-                data:
-                    '<p>En la siguiente imagen puede observar cómo se realiza la correcta conexión de los cables, tanto a la placa como al componente.</p><p>Es <strong>necesario</strong> que conecte el componente <strong>exactamente igual que en la imagen</strong> para que podamos lanzar un test automático.</p><p class="support--centered"><img class="support--gif-video" src="/images/support/zum-buzz-comm.png" alt="hardBuzzCables" /><ul><li class="icon--exclamation support--centered"><i class="text--secondary">Asegurese de que todo está conectado tal y como le indicamos.</i></li></ul></p><p class="support--center"><strong>¿Ha conectado bien el componente?</strong></p>',
+                extData: 'hardBuzz.html',
                 next: [
                     {
                         _id: 'hardBuzzTestIni',
@@ -1755,6 +1751,24 @@ angular
 
         $scope.renderSVG = function(item) {
             return $sce.trustAsHtml(item.svg); // all of this for the svg animations to fly! :)
+        };
+
+        // imgModal
+
+        $scope.imgModal = function(img) {
+          console.log('dentro');
+            var parent = $rootScope,
+                modalOptions = parent.$new();
+
+            _.extend(modalOptions, {
+                contentHTML: '<div><img src="'+ img + '" /></div>'
+            });
+
+            ngDialog.open({
+                template: '/views/modals/modal.html',
+                className: 'modal--container',
+                scope: modalOptions
+            });
         };
 
         // hw test

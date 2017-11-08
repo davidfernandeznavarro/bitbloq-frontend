@@ -5,6 +5,7 @@
                 <h1 class="modal--title" data-element="modal-title">{{title | translate}}</h1>
             </div>
             <div ng-if="contentTemplate" ng-include="contentTemplate" class="modal__body"></div>
+            <div ng-if="contentHTML" data-ng-bind-html="contentHTML" class="modal__body"></div>
             <div ng-if="modalButtons" class="modal__footer">
                 <div class="modal--buttons" ng-if="!footerText">
                     <button ng-if="confirmButton" type="submit" ng-click="confirmAction(input.value || groups) && closeThisDialog()" ng-disabled="condition && !condition()" ng-class="{'btn--primary': rejectButton, 'btn--secondary': !rejectButton, 'btn--disabled':condition && !condition()}" class="btn btn__modal--footer btn--confirm" data-element="modal-ok-dialog">{{confirmButton | translate}}</button>

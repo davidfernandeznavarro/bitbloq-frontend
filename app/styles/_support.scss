@@ -1,4 +1,6 @@
 $support-blue: rgb(59, 145, 173);
+$support-width: 900px;
+
 @keyframes blink {
     0% {
         fill: white;
@@ -103,28 +105,18 @@ $support-blue: rgb(59, 145, 173);
     }
 }
 @keyframes sound {
-    10%,
-    90% {
-        border: 2px solid red;
+    10% {
+        r: 13;
+        opacity: 1;
+        stroke: $support-blue;
     }
 
-    20%,
-    80% {
-        border: 4px solid red;
-    }
-
-    30%,
-    50%,
-    70% {
-        border: 6px solid red;
-    }
-
-    40%,
-    60% {
-        border: 8px solid red;
+    100% {
+        r: 35;
+        opacity: 0;
+        stroke: $grey-light;
     }
 }
-
 
 // start
 
@@ -146,7 +138,7 @@ $support-blue: rgb(59, 145, 173);
         min-height: calc(100% - 93px);
 
         .support--block {
-            max-width: 900px;
+            max-width: $support-width;
             min-height: calc(100% - 93px);
             margin: 0 auto;
             padding: 30px;
@@ -284,22 +276,30 @@ $support-blue: rgb(59, 145, 173);
                             background: $white;
                             color: $green;
                             border: 1px solid $green;
-                            -webkit-filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
-                            filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
+                            -webkit-filter: drop-shadow(
+                                5px 3px 3px rgba(0, 0, 0, 0.5)
+                            );
+                            filter: drop-shadow(5px 3px 3px rgba(0, 0, 0, 0.5));
                         }
 
                         &:hover span#other {
                             background: $white;
                             color: $support-blue;
                             border: 1px solid $support-blue;
-                            -webkit-filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
-                            filter: drop-shadow(5px 3px 3px rgba(0,0,0,0.5));
+                            -webkit-filter: drop-shadow(
+                                5px 3px 3px rgba(0, 0, 0, 0.5)
+                            );
+                            filter: drop-shadow(5px 3px 3px rgba(0, 0, 0, 0.5));
                         }
 
                         &:hover svg {
                             filter: brightness(90%);
-                            -webkit-filter: drop-shadow(10px 10px 5px rgba(0,0,0,0.5));
-                            filter: drop-shadow(10px 10px 5px rgba(0,0,0,0.5));
+                            -webkit-filter: drop-shadow(
+                                10px 10px 5px rgba(0, 0, 0, 0.5)
+                            );
+                            filter: drop-shadow(
+                                10px 10px 5px rgba(0, 0, 0, 0.5)
+                            );
                         }
 
                         &:hover #led svg {
@@ -317,14 +317,19 @@ $support-blue: rgb(59, 145, 173);
                             }
                         }
 
-                        &:hover #us svg #icon circle {
-                            animation: sound 1s linear infinite;
-                            transition: border 1s linear;
+                        &:hover #us svg .USSoundWave {
+                            display: inherit !important;
+                            circle {
+                                stroke: $support-blue;
+                                animation: sound 0.75s linear infinite;
+                                transition: r 0.75s, stroke 0.75s,
+                                    opacity 0.75s ease-in-out;
+                            }
                         }
 
                         &:hover #buzz svg #icon {
-                            animation: minishake 0.5s linear infinite;
-                            transition: transform 1s linear;
+                            animation: minishake 0.25s linear infinite;
+                            transition: transform 0.5s linear;
                         }
 
                         & #bt svg g.btLogo {
@@ -341,7 +346,7 @@ $support-blue: rgb(59, 145, 173);
                             }
 
                             g#btSymbol {
-                                transform: translate(0px,46px);
+                                transform: translate(0px, 46px);
                             }
                         }
 
@@ -373,7 +378,7 @@ $support-blue: rgb(59, 145, 173);
                         padding: 2px;
 
                         .btn--no {
-                            background-color: #D92C32;
+                            background-color: #d92c32;
 
                             &:hover {
                                 background-color: #f93940;
@@ -461,13 +466,18 @@ $support-blue: rgb(59, 145, 173);
     // gif video
     .support--gif-video {
         border: 1px solid;
-        border-image: linear-gradient(to bottom right, $toolbox-software-zowi, $green) 1 100;
-        box-shadow: 5px 3px 10px rgba(0,0,0,0.5);
+        border-image: linear-gradient(
+                to bottom right,
+                $toolbox-software-zowi,
+                $green
+            )
+            1 100;
+        box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.5);
     }
 
     .support--rotate90 {
         transform: rotate(90deg);
-        box-shadow: 5px 3px 10px rgba(0,0,0,0.5);
+        box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.5);
         border: 1px solid $green;
     }
     // clone from account panel design
@@ -508,8 +518,8 @@ $support-blue: rgb(59, 145, 173);
     }
     // selector
     .support--selector {
-      display: flex;
-      align-items: center;
+        display: flex;
+        align-items: center;
 
         .support--btn-icon {
             width: 50px;
@@ -522,10 +532,11 @@ $support-blue: rgb(59, 145, 173);
                 padding: 0;
             }
 
-            &:active, &:hover {
-              span:before {
-                animation: rotate360 1s linear 1;
-              }
+            &:active,
+            &:hover {
+                span:before {
+                    animation: rotate360 1s linear 1;
+                }
             }
         }
 
@@ -579,7 +590,7 @@ $support-blue: rgb(59, 145, 173);
                 padding: 7px;
                 border-radius: 25px;
                 background: $grey-light;
-                box-shadow: 5px 3px 10px rgba(0,0,0,0.5);
+                box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.5);
             }
 
             &.noHover {
@@ -592,7 +603,7 @@ $support-blue: rgb(59, 145, 173);
         span {
             position: absolute;
             color: white;
-            background-color: rgba(0,0,0,0.7);
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 2px 10px;
             border: 1px solid green;
             border-radius: 10px;
@@ -618,8 +629,172 @@ $support-blue: rgb(59, 145, 173);
                 border: $green 1px solid;
                 color: $green;
                 font-size: 2.5em;
-                box-shadow: 5px 3px 10px rgba(0,0,0,0.5);
-                font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+                box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.5);
+                font-family: Consolas, Monaco, Lucida Console, Liberation Mono,
+                    DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New,
+                    monospace;
+            }
+        }
+    }
+
+    .support--img-modal {
+        width: 100%;
+
+        img {
+            max-width: calc(#{$support-width} - 60%);
+            display: inline-block;
+            border: 1px solid $green;
+            box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.5);
+            border-radius: 5%;
+            transition: all 0.15s;
+        }
+        span {
+            display: inline-block;
+            opacity: 0;
+            position: absolute;
+            border-left: $green solid 2px;
+            background: $black;
+            box-shadow: 5px 3px 10px rgba(0, 0, 0, 0.5);
+            color: $green;
+            padding: 0px 5px 0px 15px;
+            margin-top: 20px;
+            margin-left: -20px;
+            border-radius: 0px 5px 5px 0px;
+            font-size: large;
+            z-index: 1;
+            transition: all 0.15s;
+        }
+
+        &:hover {
+            img {
+                max-width: calc(#{$support-width} - 58%);
+                border: 2px solid $green;
+                border-radius: 0%;
+                filter: invert(100%);
+            }
+            span {
+                opacity: 1;
+            }
+        }
+    }
+    ///// TESTfigure.effect-goliath {
+    @media screen and (max-width: 50em) {
+        .support--img-coolmodal figure {
+            display: inline-block;
+            float: none;
+            margin: 10px auto;
+            width: 100%;
+        }
+    }
+    .support--img-coolmodal {
+        position: relative;
+        clear: both;
+        margin: auto 50%;
+        max-width: $support-width;
+        list-style: none;
+        text-align: center;
+
+        figure {
+            position: relative;
+            float: left;
+            overflow: hidden;
+            margin: 10px 1%;
+            min-width: 320px;
+            max-width: 480px;
+            max-height: 360px;
+            width: 48%;
+            height: auto;
+            background: #3085a3;
+            text-align: center;
+            cursor: pointer;
+
+            img {
+                position: relative;
+                display: block;
+                min-height: 100%;
+                max-width: 100%;
+                opacity: 0.8;
+            }
+            figcaption {
+                padding: 2em;
+                color: #fff;
+                text-transform: uppercase;
+                font-size: 1.25em;
+                -webkit-backface-visibility: hidden;
+                backface-visibility: hidden;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                &::before,
+                &::after {
+                    pointer-events: none;
+                }
+                & > a {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    z-index: 1000;
+                    text-indent: 200%;
+                    white-space: nowrap;
+                    font-size: 0;
+                    opacity: 0;
+                }
+            }
+
+            h2 {
+                word-spacing: -0.15em;
+                font-weight: 300;
+                margin: 0;
+                letter-spacing: 1px;
+                font-size: 68.5%;
+                width: 100%;
+                background: $green;
+                color: white;
+                span {
+                    font-weight: 800;
+                    color: $black;
+                }
+            }
+            &.effect-goliath {
+                background: transparent;
+                border: 1px solid $green;
+
+                img {
+                    -webkit-transition: -webkit-transform 0.35s;
+                    transition: transform 0.35s;
+                    -webkit-backface-visibility: hidden;
+                    backface-visibility: hidden;
+                }
+                h2 {
+                    -webkit-transition: -webkit-transform 0.35s;
+                    transition: transform 0.35s;
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    padding: 30px;
+                    text-transform: none;
+                    font-size: 90%;
+                    opacity: 0;
+                    -webkit-transition: opacity 0.35s, -webkit-transform 0.35s;
+                    transition: opacity 0.35s, transform 0.35s;
+                    -webkit-transform: translate3d(0, 50px, 0);
+                    transform: translate3d(0, 50px, 0);
+                }
+                &:hover img {
+                    -webkit-transform: translate3d(0, -80px, 0);
+                    transform: translate3d(0, -80px, 0);
+                }
+                &:hover h2 {
+                    // -webkit-transform: translate3d(0,-100px,0);
+                    // transform: translate3d(0,-100px,0);
+                    opacity: 1;
+                    -webkit-transform: translate3d(0, 0, 0);
+                    transform: translate3d(0, 0, 0);
+                }
             }
         }
     }
