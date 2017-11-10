@@ -137,7 +137,7 @@ angular
                 _id: 'offline',
                 title: '¿Qué es Bitbloq Offline?',
                 data:
-                    '<p>Nuestra versión offline tiene dos ventajas principales:<ul><li class="icon--check"><strong>No es necesario tener conexión a internet</strong></li><li class="icon--check"><strong>No requiere ser instalada</strong> en el sentido clásico, al ser una aplicación portable <i class="text--secondary">(puede ser ejecutada desde cualquier carpeta)</i></li></ul></p><p>Estas ventajas conllevan la necesidad de ser una <strong>versión reducida respecto a la versión online</strong>, lo cual significa que habrá ciertas opciones a las que no tendrá acceso:<ul><li class="icon--no">Todas las funciones enfocadas a compartir proyectos, como explora o el modo centro, requieren internet, y por lo tanto no son accesibles.</li><li class="icon--no">Algunas de las novedades más recientes no estarán incluidas en la versión offline.</li></ul></p>',
+                    '<p>Nuestra versión offline tiene dos ventajas principales:<ul><li class="icon--check"><strong>No es necesario tener conexión a internet</strong></li><li class="icon--check"><strong>No requiere ser instalada</strong> ya que es una aplicación portable, <i class="text--secondary">con solo hacer doble click se puede iniciar.</i></li></ul></p><p>Estas ventajas conllevan la necesidad de ser una <strong>versión reducida respecto a la versión online</strong>, lo cual significa que habrá ciertas opciones a las que no tendrá acceso:<ul><li class="icon--no">Todas las funciones enfocadas a compartir proyectos, como explora o el modo centro, requieren internet, y por lo tanto no son accesibles.</li><li class="icon--no">Algunas de las novedades más recientes no estarán incluidas en la versión offline.</li></ul></p>',
                 next: [
                     {
                         _id: 'offlineInstall',
@@ -150,9 +150,9 @@ angular
             {
                 _id: 'offlineInstall',
                 title:
-                    'Compruebe que Bitbloq offline está instalado correctamente',
+                    'Compruebe que Bitbloq offline se inicia correctamente',
                 data:
-                    '<p>Asegurese de que ha añadido Bitbloq offline en una carpeta donde su usuario tiene permisos<br>Le recomendamos utilizar la manera mas sencilla: <strong>Guarde la aplicación en la carpeta de documentos por defecto de su sistema operativo</strong>.</p><p><strong>¿Qué sistema operativo utiliza?</strong></p>',
+                    '<p>Asegurese de que ha descomprimido Bitbloq offline en una carpeta donde su usuario tiene permisos; le recomendamos utilizar la carpeta <i class="text--secondary">"Mis Documentos"</i> o el escritorio.</p><p><strong>Si no se está iniciando correctamente, indíquenos su sistema operativo:</strong></p>',
                 next: [
                     {
                         _id: 'offlineInstallWindows',
@@ -176,7 +176,7 @@ angular
                         _id: 'offlineOpciones',
                         class: 'btn--primary',
                         icon: 'icon--ok icon--big',
-                        response: 'Bitbloq Offline está bien instalado'
+                        response: 'Bitbloq Offline se inicia correctamente'
                     }
                 ]
             },
@@ -206,7 +206,7 @@ angular
                 data:
                     '<p><ul><li class="icon--check">Descarga la última versión de Bitbloq offline para <a href="https://github.com/bq/bitbloq-offline/releases/download/latest/linux.zip" target="_blank" class="icon--url"><span class="icon--linux">Linux 64</span></a> o <a href="https://github.com/bq/bitbloq-offline/releases/download/latest/linux32.zip" target="_blank" class="icon--url"><span class="icon--linux">Linux 32</span></a></li><li class="icon--check">Crea una nueva carpeta en la carpeta <i class="text--secondary">"Documentos"</i> de tu usuario, y llámala Bitbloq Offline.</li><li class="icon--check">Mueve el archivo recien descargado a la nueva carpeta.</li><li class="icon--check">Haz click con el botón derecho del ratón en el archivo, y selecciona <strong>Extraer aquí</strong>.<br>Si necesita un descompresor, le recomendamos: <span class="common--text-term-fx little">sudo apt-get install unzip</span></li></ul></p>' +
                     '<p>Es necesario que se asegure de que su usuario es parte del grupo <i class="text--secondary">dialout</i><ul><li class="icon--check">Utilice el comando <span class="common--text-term-fx little">groups <i class="text--secondary">usuario</i></span> para comprobar si su usuario está en el grupo <i class="text--secondary">dialout</i></li><li class="icon--check">Si no está en dicho grupo, utilice el comando <span class="common--text-term-fx little">sudo adduser <i class="text--secondary">usuario</i> dialout</span> para añadirlo</li></ul></p>' +
-                    '<p>¿Su distribución es <strong class="icon--linux"> MAX9</strong>?:</p><ul><li class="icon--check">Puede instalar Bitbloq offline mediante <span class="common--text-term-fx little">sudo apt-get install bitbloq-offline</span></li></ul></p><p class="support--center"><strong>¿Ha solucionado su problema?</strong></p>',
+                    '<p>¿Su distribución es <strong class="icon--linux"> Vitalinux</strong>?:</p><ul><li class="icon--check">Puede <a href="http://wiki.vitalinux.educa.aragon.es/index.php/Rob%C3%B3tica_con_Vitalinux#BitBloq_Offline" class="icon--url" target="_blank">instalar Bitbloq offline</a> mediante el paquete<span class="common--text-term-fx little">vx-dga-l-bitbloq-offline</span></li></ul></p><p>¿Su distribución es <strong class="icon--linux"> MAX9</strong>?:</p><ul><li class="icon--check">Puede instalar Bitbloq offline mediante <span class="common--text-term-fx little">sudo apt-get install bitbloq-offline</span></li></ul></p><p class="support--center"><strong>¿Ha solucionado su problema?</strong></p>',
                 next: [
                     {
                         _id: 'end',
@@ -1164,17 +1164,30 @@ angular
             },
             {
                 _id: '3020DeadBoard',
-                title: 'Es probable que la placa esté defectuosa',
+                title: 'Es probable que la placa tenga una incidencia',
                 data:
-                    '<span class="support--icon--giga support--icon--rojo"><i class="fa fa-medkit" aria-hidden="true"></i></span><p class="support--center">Una vez descartadas otras posibilidades, <i class="text-secondary">es probable que su placa esté defectuosa</i>.</p><p class="support--center">Si no es la placa <a href="https://www.bq.com/es/mundo-maker" target="_blank" class="icon--url">BQ ZUM Core (BT-328)</a> <strong>contacte con su fabricante</strong></p>',
+                    '<span class="support--icon--giga support--icon--rojo"><i class="fa fa-medkit" aria-hidden="true"></i></span><p>Una vez descartadas otras posibilidades, <i class="text-secondary">es probable que su placa tenga una incidencia que le impida funcionar con normalidad</i>.</p><p class="support--centered">Si no es la placa <a href="https://www.bq.com/es/mundo-maker" target="_blank" class="icon--url">BQ ZUM Core (BT-328)</a> <strong>contacte con su fabricante</strong></p>',
                 next: [
                     {
-                        _id: 'form',
+                        _id: 'bqZumForm',
                         class: 'btn--secondary',
                         icon: '',
-                        response: 'Es la placa BQ ZUM Core (BT-328)'
+                        response: 'Si es la placa BQ ZUM Core (BT-328), haga click aquí'
                     }
                 ]
+            },
+            {
+                _id: 'bqZumForm',
+                permalink: 'bqZumForm',
+                title: 'Contacta con nuestro soporte técnico',
+                data: '<p>Para ponerse en contacto con nuestros técnicos, envie un mail a <a href="mailto:soporte.bitbloq@bq.com" target="_blank" class="icon--url">soporte.bitbloq@bq.com</a>, incluyendo:<ul><li class="icon--check">Número de <strong>factura</strong></li><li class="icon--check">Número de <strong>serie</strong> de la placa</li></ul></p>',
+                next: [
+                    {
+                        _id: 'end',
+                        class: 'btn--primary',
+                        icon: 'icon--ok icon--big',
+                        response: 'Fin del proceso de soporte'
+                    }]
             },
             {
                 _id: 'xp',
@@ -1321,7 +1334,7 @@ angular
                         response: 'Uso un servomotor normal'
                     },
                     {
-                        _id: 'hardServosMini',
+                        _id: 'hardServosAleatorio',
                         class: 'btn--secondary',
                         icon: '',
                         response: 'Uso un miniservo'
@@ -1354,29 +1367,10 @@ angular
                 ]
             },
             {
-                _id: 'hardServosMini',
-                title: '¿Qué fallo observa en su miniservo?',
-                data: '',
-                next: [
-                    {
-                        _id: 'hardServosAleatorio',
-                        class: 'btn--secondary',
-                        icon: '',
-                        response: 'No se mueve'
-                    },
-                    {
-                        _id: 'hardServosAleatorio',
-                        class: 'btn--secondary',
-                        icon: '',
-                        response: 'Se mueve aleatoriamente'
-                    }
-                ]
-            },
-            {
                 _id: 'hardServosAleatorio',
                 title: 'El servomotor se mueve aleatoriamente o no se mueve',
                 data:
-                    '<p>¿Ha probado a <strong>enchufar un portapilas</strong>?</p><p>En ocasiones el puerto USB no es capaz de suminsitrar la energía suficiente para que la configuración de la placa pueda activar los servomotores.<br>Usando un <strong>portapilas</strong> podrá descartar dicha posibilidad.</p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+                    '<p>¿Ha probado a <strong>conectar un portapilas</strong>?</p><p>En ocasiones el puerto USB no es capaz de suminsitrar la energía suficiente para que la configuración de la placa pueda activar los servomotores.<br>Usando un <strong>portapilas</strong> podrá descartar dicha posibilidad.</p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
                 next: [
                     {
                         _id: 'end',
@@ -1396,7 +1390,7 @@ angular
                 _id: 'hardServosNoPara',
                 title: 'El servomotor no para nunca',
                 data:
-                    '<p>Es probable que el servomotor necesite ser <stromg>calibrado</strong>:</p><p><ul><li class="icon--check">Observe el lado por donde está situada la salida de los cables.</li><li class="icon--check">Encontrará una endidura circular, en la que mediante un destornillador podrá calibrar el servomotor.</li></ul><p class="support--centered"><img class="support--gif-video" src="images/support/hardServoCalibrate.gif" /></p><ul><li class="icon--check">Como puede observar la imagen, colocando el servomotor con el zocalo frente a usted y los cables hacia la derecha, deberá ajustar el calibrado girando el destornillador en dirección antihoraria</li><li class="icon--check">Recalibre el servomotor hasta que logre la configuración deseada</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
+                    '<p>Es probable que el servomotor necesite ser <stromg>calibrado</strong>:</p><p><ul><li class="icon--check">Observe el lado por donde está situada la salida de los cables.</li><li class="icon--check">Encontrará una endidura circular, en la que mediante un destornillador podrá calibrar el servomotor.</li></ul><p class="support--centered"><img class="support--gif-video" src="images/support/hardServoCalibrate.gif" /></p><ul><li class="icon--check">Como puede observar la imagen, colocando el servomotor con el zocalo frente a usted y los cables hacia la derecha, deberá ajustar el calibrado girando el destornillador en dirección antihoraria.</li><li class="icon--check">Recalibre el servomotor hasta que se detenga.</li></ul></p><p class="support--center"><strong>¿Ha solucionado su consulta?</strong></p>',
                 next: [
                     {
                         _id: 'end',
@@ -1483,19 +1477,19 @@ angular
                 permalink: 'hardLCDsTestEnd',
                 title: 'Comprueba si el LCD muestra un texto',
                 data:
-                    'Tras cargar nuestro programa de test en su placa, <strong>su componente LCD debería estar mostrando un texto</strong>; y, por lo tanto, <strong>funcionando correctamente</strong>.',
+                    '<p>Tras cargar nuestro programa de test en su placa, <strong>su componente LCD debería estar mostrando un texto</strong> que se desplaza a la derecha; y, por lo tanto, <strong>no debería haber una incidencia en el hardware</strong>.</p><p>Si pese a funcionar correctamente no consigue mostrar el texto que desea, recuerde que puede consultar en la conunidad a traves del <a href="/forum" target="_blank" class="icon--url">foro de Bitbloq</a>.</p>',
                 next: [
                     {
                         _id: 'end',
                         class: 'btn--primary',
                         icon: 'icon--ok icon--big',
-                        response: 'El LCD muestra un texto'
+                        response: 'El LCD muestra el texto correctamente'
                     },
                     {
                         _id: 'form',
                         class: 'btn--primary btn--no',
                         icon: 'icon--no icon--big',
-                        response: 'El LCD no muestra un texto'
+                        response: 'El LCD no muestra el texto correctamente'
                     }
                 ]
             },
@@ -1682,6 +1676,10 @@ angular
                     isPermalink
                 );
             }
+        };
+
+        $scope.goBack = function() {
+          $window.history.back();
         };
 
         // switches
@@ -2027,9 +2025,10 @@ angular
         // sometimes the user go back and forth...
         // lets clean the steps!
         $scope.getSteps = function() {
-            common.supportSteps = _.uniqBy(
-                common.supportSteps.reverse()
-            ).reverse();
+          // only if we donesn't want duplicates
+            // common.supportSteps = _.uniqBy(
+            //     common.supportSteps.reverse()
+            // ).reverse();
             return common.supportSteps.join('</li><li>');
         };
         $scope.send = function() {

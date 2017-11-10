@@ -1,13 +1,15 @@
 <div class="support--pane">
     <div class="section-header table__header">
-      <button class="btn btn--primary btn--small icon--home icon--big support--button--home" data-ng-hide="{{card.dontShowHomeButton}}" data-ng-click="go('index',true)" data-element="support_next_child-{{child._id}}">
-          <span>{{'Volver al Inicio' | translate}}</span>
-      </button>
-      <h1 class="h1 header__title support--tittle">{{ 'Soporte de Bitbloq' | translate }}</h1>
+        <button class="btn btn--primary btn--small icon--home icon--big support--button--home" data-ng-hide="{{card.dontShowHomeButton}}" data-ng-click="go('index',true)" data-element="support_next_child-{{child._id}}">
+            <span>{{'Volver al Inicio' | translate}}</span>
+        </button>
+        <button class="btn btn--primary btn--small icon--back icon--big support--button--back" data-ng-show="card.permalink !== 'index'" data-ng-click="goBack()" data-element="support_next_child-{{child._id}}">
+            <span>{{'Atrás' | translate}}</span>
+        </button>
+        <h1 class="h1 header__title support--tittle">{{ 'Soporte de Bitbloq' | translate }}</h1>
     </div>
     <section>
         <div class="support--block">
-
             <div class="support--content">
                 <h1 class="h2 header__title support--centered">{{ card.title }}</h1>
                 <span class="support--card--data" data-ng-if="card.data && !card.extData" data-ng-bind-html="card.data" />
@@ -21,7 +23,7 @@
                 </div>
                 <div class="support--next big" data-ng-if="card.next.length > 3">
                     <ul>
-                        <a href=""  data-ng-repeat="child in card.next" data-ng-click="go(child._id)" data-element="support_next_child-{{child._id}}">
+                        <a href="" data-ng-repeat="child in card.next" data-ng-click="go(child._id)" data-element="support_next_child-{{child._id}}">
                             <li>
                                 <span data-ng-class="child.icon">{{child.response | translate}}</span>
                             </li>
