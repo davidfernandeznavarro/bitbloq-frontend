@@ -15,7 +15,8 @@
         </div>
     </div>
     <div class="forum__block">
-        <div dir-paginate="thread in forum.categoryThemes | filter:q | itemsPerPage: forum.categoryThemesPerPage" class="row">
+        <div data-element="forum-topic" dir-paginate="thread in forum.categoryThemes | filter:q | itemsPerPage: forum.categoryThemesPerPage"
+            class="row">
             <div class="col-vsmall-6">
                 <ul class="forum__block__list">
                     <li class="forum__block__item">
@@ -31,21 +32,23 @@
             <div class="col-vsmall-2">
                 <ul class="forum__block__list">
                     <li class="forum__block__item">
-                        <span>{{thread.numberOfAnswers}}</span>
+                        <span data-element="forum-thread-numberofanswers">{{thread.numberOfAnswers}}</span>
                     </li>
                 </ul>
             </div>
             <div class="col-vsmall-2">
                 <ul class="forum__block__list">
                     <li class="forum__block__item">
-                        <span>{{thread.numberOfViews}}</span>
+                        <span data-element="forum-thread-numberofviews">{{thread.numberOfViews}}</span>
                     </li>
                 </ul>
             </div>
             <div class="col-vsmall-2">
                 <ul class="forum__block__list" ng-if="thread.numberOfAnswers !== 0">
                     <li class="forum__block__item">
-                        <span class="block__username">{{'by' | translate}} <span class="block__username__link">{{thread.lastAnswer.creator.username}}</span></span>
+                        <span class="block__username">{{'by' | translate}}
+                            <span class="block__username__link">{{thread.lastAnswer.creator.username}}</span>
+                        </span>
                         <time>{{thread.lastAnswer.updatedAt | amDateFormat:'DD MMM YYYY, HH:mm'}}</time>
                     </li>
                 </ul>
@@ -64,11 +67,11 @@
                     <a ng-href="{{'#/forum/' + result.category.name + '/' + result._id}}">
                         <h2 class="block__item__title">{{result.title}}</h2>
                     </a>
-                <span class="block__item__description">{{'by' | translate}}
-                    <span class="block__item__owner">{{result.creator.username}}</span>
-                    <span>{{'forum__searcher__into' | translate}}</span>
-                    <span>{{result.category.name}}</span>
-                </span>
+                    <span class="block__item__description">{{'by' | translate}}
+                        <span class="block__item__owner">{{result.creator.username}}</span>
+                        <span>{{'forum__searcher__into' | translate}}</span>
+                        <span>{{result.category.name}}</span>
+                    </span>
                 </li>
             </ul>
         </div>

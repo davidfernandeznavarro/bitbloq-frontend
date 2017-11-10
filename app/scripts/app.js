@@ -39,6 +39,7 @@ angular
         'datePicker',
         'ngPatternRestrict', 'mp.colorPicker',
         'ngCsv'
+        // 'ngAnimate'
     ])
     .config(['$provide', '$routeProvider', '$httpProvider', '$translateProvider', '$authProvider', '$logProvider', 'envData',
         function ($provide, $routeProvider, $httpProvider, $translateProvider, $authProvider, $logProvider, envData) {
@@ -300,6 +301,7 @@ angular
 
         if (envData.config.env === 'local') {
             AnalyticsProvider.setDomainName('none');
+            AnalyticsProvider.useAnalytics(false);
         }
 
     })

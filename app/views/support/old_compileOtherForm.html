@@ -1,0 +1,29 @@
+<div class="support--form" data-ng-if="common.user">
+    <p>Para poder proporcionarle un soporte mas personalizado, <strong>necesitamos que se ponga en contacto</strong> con nuestros técnicos rellenando el siguiente formulario.</p>
+    <form name="form">
+        <fieldset>
+            <!-- code -->
+            <div class="form-control">
+                <legend class="icon--check">Añada el código del programa</legend>
+                <span class="form--input common--textarea" data-ng-class="{'input--focused':focus === 'code'}">
+                    <textarea ng-model="response.code" rows="5" class="msd-elastic" ng-model="response.code" placeholder="{{ 'modal-inform-code-textarea-placeholder' | translate }}" data-ng-focus="focus = 'code'" data-ng-blur="focus = false" data-element="modal-inform-code-textarea-placeholder" style="overflow: auto;" />
+                </span>
+            </div>
+            <!-- error -->
+            <div class="form-control">
+                <legend class="icon--check">Añada el mensaje de error que recibe</legend>
+                <span class="form--input common--textarea" data-ng-class="{'input--focused':focus === 'error'}">
+                    <textarea ng-model="response.error" rows="5" class="msd-elastic" ng-model="response.error" placeholder="{{ 'modal-inform-error-textarea-placeholder' | translate }}" data-ng-focus="focus = 'error'" data-ng-blur="focus = false" data-element="modal-inform-error-textarea-placeholder" style="overflow: auto;" />
+                </span>
+            </div>
+        </fieldset>
+    </form>
+    <div class="form-control submit support--next">
+        <input type="submit" data-ng-disabled="!response.code || !response.error" data-ng-click="send()" name="submitform" class="btn btn--primary btn__login--submit" value="{{'send' | translate}}">
+    </div>
+</div>
+
+<div class="support--form" data-ng-if="!common.user">
+    <p>Para poder proporcionarle un soporte mas personalizado, <strong>necesitamos que se ponga en contacto</strong> con nuestros técnicos enviando un mail a <a href="mailto:soporte.bitbloq@bq.com" target="_blank" class="icon--url">soporte.bitbloq@bq.com</a></p>
+    <p class="icon--check"><strong>Recuerde explicar detalladamente su consulta.</strong></p>
+</div>

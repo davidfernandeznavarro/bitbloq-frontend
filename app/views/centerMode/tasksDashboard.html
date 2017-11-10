@@ -1,7 +1,7 @@
 <div class="section-header table__header center-mode__header">
     <div class="breadcrumb header__title col-vsmall-7" data-element="centerMode-header-breadcrumb">
         <h1 class="breadcrumb__title">{{groupArray.length === 1 ? 'header_tab_tasks_of' : 'header_tab_tasks' | translate}}</h1>
-        <h1 class="breadcrumb__title" ng-if="groupArray.length === 1" data-element="tasks-dashboard-class-name">{{groupArray[0].name}}</h1>
+        <h1 class="breadcrumb__title inline" ng-if="groupArray.length === 1" data-element="tasks-dashboard-class-name">{{' ' + groupArray[0].name}}</h1>
     </div>
     <div class="button-group">
         <h1 class="header__title class__title" ng-if="groupArray.length > 1">{{'centermode-class' | translate}}</h1>

@@ -9,7 +9,7 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('LoginCtrl', function($scope, User, envData, $log, userApi, _, $cookieStore, $auth, $location, $q, moment, alertsService, ngDialog, $routeParams, $translate, userRobotsApi) {
+    .controller('LoginCtrl', function($scope, User, envData, $log, userApi, _, $cookieStore, $auth, $location, $q, moment, alertsService, ngDialog, $routeParams, $translate, $rootScope, userRobotsApi, $localStorage, $timeout) {
 
         $scope.envData = envData;
         $scope.common.isLoading = false;
@@ -17,7 +17,7 @@ angular.module('bitbloqApp')
         $scope.isSocialRegister = false;
         $scope.isForgotPassword = false;
         $scope.isLessThan18 = false;
-        $scope.checked = false;
+        $scope.checked = false
 
         $scope.user = {
             username: '',
@@ -482,6 +482,8 @@ angular.module('bitbloqApp')
         $scope.setForgotPassword = function() {
             var $loginContainer = angular.element('#loginContainer');
             _transitionForm($loginContainer);
+            // change password lock punisher
+            $scope.formForgotPass.init()
         };
 
         $scope.setForgotPasswordFromRegister = function() {
@@ -522,6 +524,7 @@ angular.module('bitbloqApp')
                     fireShakeEffect();
                     $scope.recovery.emailError = true;
                 });
+                $scope.formForgotPass.setLock()
             } else {
                 fireShakeEffect();
             }
@@ -651,6 +654,93 @@ angular.module('bitbloqApp')
             });
         }
 
+        /**********************
+         **  recover password lock **
+         **********************/
+
+        // AKA: The Punisher
+        var maxPunisher = 30; //const, min, try num 5+
+        var punishments = [10,90,600]; // const, min, try num 2,3,4
+        var diff = null;
+        var timer = 0
+
+        $scope.formForgotPass = {}
+        $scope.formForgotPass.lock = false
+        $scope.formForgotPass.countdown = '00:00:00'
+        var punisherTimeoutFunc = null
+
+        $scope.formForgotPass.init = function() {
+            if ($localStorage.formForgotPassWhen) {
+                diff = $scope.formForgotPass.diff()
+                if (diff[0]) {
+                    if ($scope.formForgotPass.lock === false) {
+                        $scope.formForgotPass.lock = true
+                    }
+                    timer = diff[1]
+                    $scope.formForgotPass.countdown = $scope.formForgotPass.setTimer(timer)
+                    punisherTimeoutFunc = $timeout($scope.formForgotPass.punisher, 1000)
+                }
+            }
+        }
+
+        $scope.formForgotPass.setLock = function() {
+            $localStorage.formForgotPassWhen = moment()
+            if (typeof $localStorage.formForgotPassTimeouts === 'number' &&
+                        $localStorage.formForgotPassTimeouts > 0) {
+                $localStorage.formForgotPassTimeouts++
+                if ($localStorage.formForgotPassTimeouts > 1) {
+                    $scope.formForgotPass.lock = true
+                    $scope.formForgotPass.init()
+                }
+            } else {
+                $localStorage.formForgotPassTimeouts = 1
+            }
+        }
+
+        $scope.formForgotPass.diff = function() {
+            var max = maxPunisher * 60
+            diff = moment().diff($localStorage.formForgotPassWhen, 'seconds')
+            // reduce punisher timeouts counter as maxPunisher-times
+            var diffPunisher = Math.floor(diff / (max/2))
+            var timeouts = $localStorage.formForgotPassTimeouts
+            if (timeouts && timeouts > 0) {
+                var index = [0, 1, 2, 3, 4, 'ALL'].find(function(i) {
+                    return i === 'ALL' || diffPunisher === i && timeouts > i
+                })
+                timeouts -= (index === 'ALL') ? timeouts : index
+                $localStorage.formForgotPassTimeouts = timeouts
+            }
+
+            // lets return the timer
+            var punishTime = (timeouts >= 2 && timeouts <= 4) ? punishments[timeouts-2] : max
+            if (timeouts < 2 || punishTime < diff) {
+                return [false, null]
+            } else {
+                var t = punishTime - diff
+                return [true, (t > max) ? max : t]
+            }
+        }
+
+        $scope.formForgotPass.punisher = function() {
+            if (!timer || timer <= 0) {
+                $timeout.cancel(punisherTimeoutFunc)
+                $scope.formForgotPass.lock = false
+                $scope.formForgotPass.countdown = '00:00:00'
+                timer = 0
+            } else {
+                timer--
+                $scope.formForgotPass.countdown = $scope.formForgotPass.setTimer()
+                punisherTimeoutFunc = $timeout($scope.formForgotPass.punisher, 1000)
+            }
+        }
+
+        $scope.formForgotPass.setTimer = function() {
+            return moment('2015-01-01')
+                .startOf('night')
+                .second(timer)
+                .format('H:mm:ss')
+        }
+
         /***********
          **  init **
          ***********/
@@ -661,6 +751,7 @@ angular.module('bitbloqApp')
                 break;
             case '/resetpassword':
                 $scope.isForgotPassword = true;
+                $scope.formForgotPass.init()
                 break;
         }
 

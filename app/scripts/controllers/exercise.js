@@ -116,6 +116,7 @@ angular.module('bitbloqApp')
                 case 'mcore':
                 case 'meauriga':
                 case 'meorion':
+                case 'buildandcode':
                     result = false;
                     break;
                 case 'bqZUM':

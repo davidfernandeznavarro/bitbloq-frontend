@@ -92,7 +92,7 @@
             <li class="toolbox__content__list" ng-if="board.showInToolbox && (!board.underDevelopment || common.user.seeBoardsUnderDevelopment)"
                 ng-repeat="board in hardware.boardList track by board.uuid" data-ng-click="drop({type:'boards', uuid:board.uuid})">
                 <h1 class="list-name" translate>{{board.uuid}}</h1>
-                <img draggable dragid="{{board.uuid}}" dragtype="boards" ng-src="/images/boards/{{board.uuid}}.png">
+                <img draggable dragid="{{board.uuid}}" data-element="board-{{board.uuid}}" dragtype="boards" ng-src="/images/boards/{{board.uuid}}.png">
             </li>
         </ul>
     </div>
@@ -120,12 +120,12 @@
             <li class="toolbox__content__list" ng-if="!robot.underDevelopment || common.user.seeBoardsUnderDevelopment" ng-repeat="robot in hardware.robotList track by robot.uuid"
                 data-ng-click="drop({type:'robots', uuid:robot.uuid, robot: robot})" data-element="toolbox-hardware-{{robot.uuid}}">
                 <h1 class="list-name" translate>{{robot.uuid}}</h1>
-                <img ng-if="!robot.thirdParty && !common.user || common.user" draggable dragid="{{robot.uuid}}" dragtype="robots" ng-src="/images/robots/{{robot.uuid}}.svg"
-                    ng-style="{width:robot.width + 'px'}">
+                <img ng-if="!robot.thirdParty && !common.user || common.user" data-element="robot-{{robot.uuid}}" draggable dragid="{{robot.uuid}}"
+                    dragtype="robots" ng-src="/images/robots/{{robot.uuid}}.svg" ng-style="{width:robot.width + 'px'}">
                 <div ng-if="robot.thirdParty === true && !common.user" data-tooltips="true" data-tooltip="{{'need-to-be-logged-robot' | translate}}"
                     data-tooltip-position="bottom">
-                    <img class="component-image--device" draggable dragid="{{robot.uuid}}" dragtype="robots" ng-src="/images/robots/{{robot.uuid}}.svg"
-                        ng-style="{width:robot.width + 'px'}">
+                    <img class="component-image--device" data-element="robot-{{robot.uuid}}" draggable dragid="{{robot.uuid}}" dragtype="robots"
+                        ng-src="/images/robots/{{robot.uuid}}.svg" ng-style="{width:robot.width + 'px'}">
                 </div>
             </li>
         </ul>

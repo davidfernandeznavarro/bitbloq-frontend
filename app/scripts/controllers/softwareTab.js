@@ -465,6 +465,8 @@ angular.module('bitbloqApp')
                         result = existComponent(['freakscar_integrated_lightsensor'], connectedComponents);
                     } else if ((item === 'mkbGyroscope') || (item === 'mkbIntegratedSoundSensor') || (item === 'mkbAccelerometer')) {
                         result = currentProjectService.project && currentProjectService.project.hardware && (currentProjectService.project.hardware.board === 'meauriga');
+                    } else if ((item === 'motorSetSpeed') || (item === 'motorSetSpeedAdvanced')) {
+                        result = existComponent(['drivegearmotor'], connectedComponents);
                     } else if ((item === 'robotSetMotorSpeed') || (item === 'robotSetMotorSpeedAdvanced')) {
                         if (currentProjectService.project && currentProjectService.project.hardware) {
                             switch (currentProjectService.project.hardware.board) {
@@ -779,8 +781,8 @@ angular.module('bitbloqApp')
             utils.apply($scope);
         }
 
-        function onMoveBloq(bloq) {
-            console.log(bloq);
+        function onMoveBloq() {
+            //console.log(bloq);
             $scope.showTrashcan = true;
             // $scope.selectedBloqsToolbox = '';
             utils.apply($scope);

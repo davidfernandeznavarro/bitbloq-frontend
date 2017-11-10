@@ -14,9 +14,9 @@
             <span>{{'forum_column_lastTheme' | translate}}</span>
         </div>
     </div>
-    <div ng-repeat="(key, section) in forum.sections" class="forum__block">
-        <div ng-if="key !== 'forum_section_1_main'" class="section__heading">{{key | translate}}</div>
-        <div ng-repeat="category in section | orderBy:'order'" class="row">
+    <div ng-repeat="(key, section) in forum.sections" data-element="forum-section" class="forum__block">
+        <div ng-if="key !== 'forum_section_1_main'" data-element="forum-section-header" class="section__heading">{{key | translate}}</div>
+        <div ng-repeat="category in section | orderBy:'order'" class="row" data-element="forum-section-category">
             <div class="col-vsmall-4">
                 <ul class="forum__block__list">
                     <li class="forum__block__item">
@@ -59,17 +59,18 @@
 </div>
 <div class="forum__categories" ng-if="forum.results.show">
     <div class="forum__block">
-        <div dir-paginate="result in forum.results.data | itemsPerPage: forum.itemsPerPage track by $index" current-page="forum.currentPage" total-items="forum.results.totalSize">
+        <div dir-paginate="result in forum.results.data | itemsPerPage: forum.itemsPerPage track by $index" current-page="forum.currentPage"
+            total-items="forum.results.totalSize">
             <ul class="forum__block__list">
                 <li class="forum__search__item">
                     <a ng-href="{{'#/forum/' + result.category.name + '/' + result._id}}">
                         <h2 class="block__item__title">{{result.title}}</h2>
                     </a>
-                <span class="block__item__description">{{'by' | translate}}
-                    <span class="block__item__owner">{{result.creator.username}}</span>
-                    {{'forum__searcher__into' | translate}}
-                    <span>{{result.category.name}}</span>
-                </span>
+                    <span class="block__item__description">{{'by' | translate}}
+                        <span class="block__item__owner">{{result.creator.username}}</span>
+                        {{'forum__searcher__into' | translate}}
+                        <span>{{result.category.name}}</span>
+                    </span>
                 </li>
             </ul>
         </div>

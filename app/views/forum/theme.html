@@ -23,7 +23,8 @@
             </div>
         </div>
         <div class="forum__admin" ng-if="forum.isAdmin()">
-            <div class="forum__admin__action forum__delete-theme" data-tooltip-position="bottom" data-tooltip="{{ 'delete-theme' | translate }}" data-tooltips="true">
+            <div class="forum__admin__action forum__delete-theme" data-tooltip-position="bottom" data-tooltip="{{ 'delete-theme' | translate }}"
+                data-tooltips="true">
                 <button class="btn btn--small btn--delete-answer" ng-click="forum.deleteThread(forum.currentThread._id)">
                     <svg class="svg-icon svg-icon--text">
                         <use xlink:href="#delete"></use>
@@ -39,21 +40,24 @@
                 </button>
             </div>
             <div class="forum__admin__action forum__ban-user--main" ng-if="forum.firstAnswer.creator._id !== common.user._id && forum.firstAnswer.owner.scopes[0]!=='bitbloq:user:banned'">
-                <button class="btn btn--secondary btn--small" ng-class="{'btn--disabled': userBanned}" ng-click="userBanned=true; forum.banUser(forum.firstAnswer.creator._id)" ng-init="userBanned=false">
+                <button class="btn btn--secondary btn--small" ng-class="{'btn--disabled': userBanned}" ng-click="userBanned=true; forum.banUser(forum.firstAnswer.creator._id)"
+                    ng-init="userBanned=false">
                     <span>{{'button_banUser' | translate}}</span>
                 </button>
             </div>
         </div>
-        <div class="forun__theme__content" data-element="forum-theme-theme-content" name="testValidation" ng-model-options="{debounce: 1000}" ng-model="forum.firstAnswer.content" placeholder="test placeholder" required ta-bind></div>
+        <div class="forun__theme__content" data-element="forum-theme-theme-content" name="testValidation" ng-model-options="{debounce: 1000}"
+            ng-model="forum.firstAnswer.content" placeholder="test placeholder" required ta-bind></div>
     </div>
 </div>
 <div ng-init="forum.currentPage=1">
-    <div class="theme__answer" current-page="forum.currentPage" dir-paginate="answer in forum.themeAnswers | filter:q | itemsPerPage: forum.categoryThemesPerPage">
+    <div class="theme__answer" data-element="forum-answer" current-page="forum.currentPage" dir-paginate="answer in forum.themeAnswers | filter:q | itemsPerPage: forum.categoryThemesPerPage">
         <div class="forum__theme__item">
-            <span class="forum__answer-number">#{{(forum.currentPage-1)*10 + ($index +1)}}</span>
+            <span data-element="forum-answer-number" class="forum__answer-number">#{{(forum.currentPage-1)*10 + ($index +1)}}</span>
 
             <div class="forum__admin" ng-if="forum.isAdmin()">
-                <div class="forum__admin__action forum__delete-answer" data-tooltip-position="bottom" data-tooltip="{{ 'delete-answer' | translate }}" data-tooltips="true">
+                <div class="forum__admin__action forum__delete-answer" data-tooltip-position="bottom" data-tooltip="{{ 'delete-answer' | translate }}"
+                    data-tooltips="true">
                     <button class="btn btn--small btn--delete-answer" ng-click="forum.deleteAnswer(answer)">
                         <svg class="svg-icon svg-icon--text">
                             <use xlink:href="#delete"></use>
@@ -61,7 +65,8 @@
                     </button>
                 </div>
                 <div class="forum__admin__action forum__ban-user" ng-if="answer.creator._id !== common.user._id && !answer.creator.bannedInForum">
-                    <button class="btn btn--secondary btn--small" ng-class="{'btn--disabled': userBanned}" ng-click="userBanned=true; forum.banUser(answer.creator._id)" ng-init="userBanned=false">
+                    <button class="btn btn--secondary btn--small" ng-class="{'btn--disabled': userBanned}" ng-click="userBanned=true; forum.banUser(answer.creator._id)"
+                        ng-init="userBanned=false">
                         <span>{{'button_banUser' | translate}}</span>
                     </button>
                 </div>
@@ -77,7 +82,8 @@
                 <span class="forum__date" ng-if="!answer.updatedAt">{{'forumAnswer_text_recent' | translate}}</span>
             </div>
             <div class="answer__content">
-                <div data-element="forum-theme-answer" name="testValidation" ng-model-options="{debounce: 1000}" ng-model="answer.content" placeholder="test placeholder" required ta-bind></div>
+                <div data-element="forum-theme-answer" name="testValidation" ng-model-options="{debounce: 1000}" ng-model="answer.content"
+                    placeholder="test placeholder" required ta-bind></div>
             </div>
         </div>
     </div>
@@ -90,9 +96,13 @@
                     </div>
                     <h2 class="theme__answer--title">{{'forum_action_answer' | translate}}</h2>
                 </div>
-                <text-angular data-element="forum-theme-answer-theme" name="themeeditor" ng-model="forum.textEditorContent.htmlContent" ng-mouseenter="forum.setFocusToEditor('themeeditor')" ta-toolbar="[['h1','h2','h3','p'], ['bold','italics','underline','ul','ol','undo','redo','clear'], ['uploadImage','insertLink','insertVideo']]"></text-angular>
-                <button class="btn btn--primary btn--small" data-element="forum-theme-publish-answer-button" ng-class="{'btn--disabled':forum.textEditorContent.htmlContent===''}" ng-click="forum.submitNewAnswer()" ng-disabled="forum.textEditorContent.htmlContent===''" type="submit">{{'forum_button_publishAnswer' | translate}}</button>
-                <input class="btn btn--primary btn--small main-image--input invisible" data-element="infotab-fileinput" data-ng-blur="focus = false" data-ng-focus="focus = 'projectimage'" id="projectimage" name="projectimage" onchange="angular.element(this).scope().forum.addImage(this.files)" placeholder="" tabindex="-1" type="file"/>
+                <text-angular data-element="forum-theme-answer-theme" name="themeeditor" ng-model="forum.textEditorContent.htmlContent" ng-mouseenter="forum.setFocusToEditor('themeeditor')"
+                    ta-toolbar="[['h1','h2','h3','p'], ['bold','italics','underline','ul','ol','undo','redo','clear'], ['uploadImage','insertLink','insertVideo']]"></text-angular>
+                <button class="btn btn--primary btn--small" data-element="forum-theme-publish-answer-button" ng-class="{'btn--disabled':forum.textEditorContent.htmlContent===''}"
+                    ng-click="forum.submitNewAnswer()" ng-disabled="forum.textEditorContent.htmlContent===''" type="submit">{{'forum_button_publishAnswer' | translate}}</button>
+                <input class="btn btn--primary btn--small main-image--input invisible" data-element="infotab-fileinput" data-ng-blur="focus = false"
+                    data-ng-focus="focus = 'projectimage'" id="projectimage" name="projectimage" onchange="angular.element(this).scope().forum.addImage(this.files)"
+                    placeholder="" tabindex="-1" type="file" />
             </form>
         </div>
     </div>

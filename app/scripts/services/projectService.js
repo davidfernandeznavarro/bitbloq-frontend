@@ -399,44 +399,11 @@ angular.module('bitbloqApp')
             }
         };
 
-        function fillHardwareSchemas(newProject) {
-            var defered = $q.defer();
-            if (newProject.hardware.components) {
-                hardwareService.itsHardwareLoaded().then(function () {
-                    if (newProject.hardware.components) {
-                        var newItem;
-                        for (var i = 0; i < newProject.hardware.components.length; i++) {
-                            newItem = _.cloneDeep(hardwareService.componentsMap[newProject.hardware.components[i].uuid || newProject.hardware.components[i].id]);
-                            newItem.integratedComponent = newProject.hardware.components[i].integratedComponent;
-                            newItem.oscillator = newProject.hardware.components[i].oscillator;
-                            newItem.baudRate = newProject.hardware.components[i].baudRate;
-                            newItem.coordinates = newProject.hardware.components[i].coordinates;
-                            newItem.connected = newProject.hardware.components[i].connected;
-                            newItem.name = newProject.hardware.components[i].name;
-                            newItem.pin = newProject.hardware.components[i].pin;
-                            newItem.endpoints = newProject.hardware.components[i].endpoints;
-                            newItem.uid = newProject.hardware.components[i].uid;
-
-                            delete newItem.createdAt;
-                            delete newItem.updatedAt;
-                            delete newItem.__v;
-
-                            newProject.hardware.components[i] = newItem;
-                        }
-                        defered.resolve(newProject);
-                    }
-                });
-            } else {
-                defered.resolve(newProject);
-            }
-            return defered.promise;
-        }
-
         exports.setProject = function (newproject, type, watcher) {
             var defered = $q.defer();
             newproject.hardware.board = newproject.hardware.board ? newproject.hardware.board.replace(/\s+/g, '') : '';
 
-            fillHardwareSchemas(newproject).then(function (newProjectFilled) {
+            utils.fillHardwareSchemas(newproject, hardwareService).then(function (newProjectFilled) {
 
                 _unBlindAllWatchers();
                 newproject.codeProject = type === 'code' ? true : newProjectFilled.codeProject;

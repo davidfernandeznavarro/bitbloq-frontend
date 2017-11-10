@@ -1,0 +1,16 @@
+<p>
+    Podrá comprobar en qué modo está trabajando accediendo al panel "<a href="/#/account" target="_blank">{{ 'account-config' | translate }}</a>", que contiene la opción para activar y desactivar el modo chromeapp
+</p>
+<p>
+    A continuación le mostramos la configuración actual del cliente donde está consultando el soporte.
+</p>
+<p class="icon--exclamation"> <i class="text--secondary">Recuerde que si está consultando en un cliente distinto a donde tiene la incidencia, la configuración no tiene por que ser la misma.</i></p>
+</p>
+<p class="support--ok-warning" data-ng-show="common.user.chromeapp === true"><i class="fa fa-check-circle support--icon--mid support--icon--si" aria-hidden="true"><i class="fa fa-chrome support--icon--giga support--icon--ok" aria-hidden="true"></i></i>
+    <br>
+    <span>Tienes <i class="support--icon--si">activado</i> el <strong>modo Chromeapp<strong></span>
+</p>
+<p class="support--ok-warning" data-ng-show="common.user.chromeapp === false"><i class="fa fa-times-circle support--icon--mid support--icon--naranja" aria-hidden="true"><i class="fa fa-chrome support--icon--giga support--icon--ok" aria-hidden="true"></i></i>
+    <br>
+    <span>Tienes <u class="support--icon--naranja">desactivado</u> el <strong>modo Chromeapp<strong></span>
+</p>

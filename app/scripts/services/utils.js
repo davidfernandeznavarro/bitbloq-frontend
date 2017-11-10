@@ -8,7 +8,7 @@
  * Service in the bitbloqApp.
  */
 angular.module('bitbloqApp')
-    .service('utils', function(_, $q, $window, $translate, moment) {
+    .service('utils', function (_, $q, $window, $translate, moment) {
         // AngularJS will instantiate a singleton by calling "new" on this function
         var exports = {};
         var defaultDiacriticsRemovalap = [{
@@ -279,12 +279,12 @@ angular.module('bitbloqApp')
             }
         }
 
-        exports.removeDiacritics = function(str, config, defaultName) {
+        exports.removeDiacritics = function (str, config, defaultName) {
             var configDefault = config || {
-                    spaces: true
-                },
+                spaces: true
+            },
                 newStr;
-            newStr = str.replace(/[^\u0000-\u007E]/g, function(a) {
+            newStr = str.replace(/[^\u0000-\u007E]/g, function (a) {
                 return diacriticsMap[a] || a;
             }).replace(/[^\w\s]/gi, '');
             if (configDefault.spaces) {
@@ -296,7 +296,7 @@ angular.module('bitbloqApp')
             return newStr;
         };
 
-        exports.downloadFile = function(fileName, data, type) {
+        exports.downloadFile = function (fileName, data, type) {
             var blob,
                 tempA,
                 url;
@@ -327,13 +327,13 @@ angular.module('bitbloqApp')
             }
         };
 
-        exports.isYoutubeURL = function(url) {
+        exports.isYoutubeURL = function (url) {
             url = url || '';
             var REGEXP = /^(?:https?:\/\/)?(?:www\.)?(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))((\w|-){11})(?:\S+)?$/;
             return (url.match(REGEXP)) ? RegExp.$1 : false;
         };
 
-        exports.userIsOwner = function(object, userId, type) {
+        exports.userIsOwner = function (object, userId, type) {
             var isOwner = false;
             if (userId && object) {
                 if (type === 'exercise' || type === 'task') {
@@ -345,7 +345,7 @@ angular.module('bitbloqApp')
             return isOwner;
         };
 
-        exports.userIsUnder14 = function(date, format) {
+        exports.userIsUnder14 = function (date, format) {
             var result = false;
             date = moment(date, format);
             if (date.isValid()) {
@@ -356,7 +356,7 @@ angular.module('bitbloqApp')
             return result;
         };
 
-        exports.getDOMElement = function(selector) {
+        exports.getDOMElement = function (selector) {
             var nodeList = document.querySelectorAll(selector);
             return (nodeList.length) ? nodeList[nodeList.length - 1] : null;
         };
@@ -366,7 +366,7 @@ angular.module('bitbloqApp')
          * @param  {Function|*} cb - a 'potential' function
          * @return {Function}
          */
-        exports.safeCb = function(cb) {
+        exports.safeCb = function (cb) {
             return (angular.isFunction(cb)) ? cb : angular.noop;
         };
         /**
@@ -375,7 +375,7 @@ angular.module('bitbloqApp')
          * @param  {String} url - the url to parse
          * @return {Object}     - the parsed url, anchor element
          */
-        exports.urlParse = function(url) {
+        exports.urlParse = function (url) {
             var a = document.createElement('a');
             a.href = url;
             return a;
@@ -388,12 +388,12 @@ angular.module('bitbloqApp')
          * @param  {String|String[]}  [origins] - additional origins to test against
          * @return {Boolean}                    - true if url is same origin
          */
-        exports.isSameOrigin = function(url, origins) {
+        exports.isSameOrigin = function (url, origins) {
             url = exports.urlParse(url);
             origins = (origins && [].concat(origins)) || [];
             origins = origins.map(exports.urlParse);
             origins.push($window.location);
-            origins = origins.filter(function(o) {
+            origins = origins.filter(function (o) {
                 return url.hostname === o.hostname &&
                     url.port === o.port &&
                     url.protocol === o.protocol;
@@ -401,7 +401,7 @@ angular.module('bitbloqApp')
             return (origins.length >= 1);
         };
 
-        exports.uploadImage = function(e, properties) {
+        exports.uploadImage = function (e, properties) {
             var defered = $q.defer(),
                 file = e[0],
                 fileSize = file.size,
@@ -420,7 +420,7 @@ angular.module('bitbloqApp')
                     } else {
                         var reader = new FileReader();
 
-                        reader.onload = function() {
+                        reader.onload = function () {
 
                             var blob = new Blob([reader.result], {
                                 type: file.type
@@ -428,7 +428,7 @@ angular.module('bitbloqApp')
                             var urlCreator = window.URL || window.webkitURL;
                             img = new Image();
                             img.src = urlCreator.createObjectURL(blob);
-                            img.onload = function() {
+                            img.onload = function () {
                                 // access image size here
                                 if ((properties.minWidth && properties.minHeight) && (this.width < properties.minWidth || this.height < properties.minHeight)) {
                                     defered.reject({
@@ -460,14 +460,14 @@ angular.module('bitbloqApp')
             return defered.promise;
         };
 
-        exports.uploadProjects = function(e) {
+        exports.uploadProjects = function (e) {
             var defered = $q.defer(),
                 files = e,
                 fileSize,
                 filesParsed = [],
                 filesCounter = 0;
 
-            _.forEach(files, function(file, index) {
+            _.forEach(files, function (file, index) {
                 if (file.name.match(/\.(bitbloq)$/g) || file.name.match(/\.(json)$/g)) {
                     fileSize = file.size;
                     if (fileSize > 1000000) {
@@ -482,7 +482,7 @@ angular.module('bitbloqApp')
                     } else {
                         var reader = new FileReader();
                         //On load call
-                        reader.onloadend = function(event) {
+                        reader.onloadend = function (event) {
                             var target = event.target,
                                 fileParsed;
                             if (target.readyState === FileReader.DONE) {
@@ -522,7 +522,7 @@ angular.module('bitbloqApp')
 
         /* jshint ignore:start */
 
-        exports.prettyCode = function(code) {
+        exports.prettyCode = function (code) {
             var pretty = '';
 
             //Prepare string to js_beautify
@@ -540,7 +540,7 @@ angular.module('bitbloqApp')
         };
         /* jshint ignore:end */
 
-        exports.getOs = function() {
+        exports.getOs = function () {
             if ($window.navigator.platform.indexOf('Win') !== -1) {
                 return 'Windows';
             } else if ($window.navigator.platform.indexOf('Mac') !== -1) {
@@ -552,7 +552,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        exports.parseCompileError = function(errors) {
+        exports.parseCompileError = function (errors) {
             var translatedErrors = [],
                 line = $translate.instant('line').toUpperCase(),
                 column = $translate.instant('column').toUpperCase(),
@@ -571,11 +571,11 @@ angular.module('bitbloqApp')
             return translatedErrors.join('<br>');
         };
 
-        exports.clone = function(object) {
+        exports.clone = function (object) {
             return JSON.parse(JSON.stringify(object));
         };
 
-        exports.getPortsPrettyNames = function(ports, boards) {
+        exports.getPortsPrettyNames = function (ports, boards) {
             var boardFound = -1,
                 j;
             for (var i = 0; i < ports.length; i++) {
@@ -591,7 +591,7 @@ angular.module('bitbloqApp')
             return ports;
         };
 
-        exports.getBoardByPort = function(port, boards) {
+        exports.getBoardByPort = function (port, boards) {
             var boardFound,
                 board,
                 j = 0;
@@ -605,7 +605,7 @@ angular.module('bitbloqApp')
             return board;
         };
 
-        exports.getPortByBoard = function(ports, board) {
+        exports.getPortByBoard = function (ports, board) {
             var portFound,
                 port,
                 i = 0;
@@ -619,7 +619,7 @@ angular.module('bitbloqApp')
             return port;
         };
 
-        exports.portOwnBoard = function(port, board) {
+        exports.portOwnBoard = function (port, board) {
             console.log('portOwnBoard');
             console.log(port.comName, port.productId, port.vendorId);
             console.log(board.name, board.productIds, board.vendorIds);
@@ -635,16 +635,49 @@ angular.module('bitbloqApp')
             return result;
         };
 
-        exports.itsOver = function(item1, item2, margin) {
+        exports.itsOver = function (item1, item2, margin) {
             margin = margin || 0;
             return item1.left < (item2.left + item2.width + margin) && (item1.left + item1.width) > (item2.left - margin) && item1.top < (item2.top + item2.height + margin) && (item1.top + item1.height) > (item2.top - margin);
         };
 
-        exports.apply = function($scope) {
+        exports.apply = function ($scope) {
             if (!$scope.$$phase) {
                 $scope.$apply();
             }
         };
+
+        exports.fillHardwareSchemas = function (newProject, hardwareService) {
+            var defered = $q.defer();
+            if (newProject.hardware.components) {
+                hardwareService.itsHardwareLoaded().then(function () {
+                    if (newProject.hardware.components) {
+                        var newItem;
+                        for (var i = 0; i < newProject.hardware.components.length; i++) {
+                            newItem = _.cloneDeep(hardwareService.componentsMap[newProject.hardware.components[i].uuid || newProject.hardware.components[i].id]);
+                            newItem.integratedComponent = newProject.hardware.components[i].integratedComponent;
+                            newItem.oscillator = newProject.hardware.components[i].oscillator;
+                            newItem.baudRate = newProject.hardware.components[i].baudRate;
+                            newItem.coordinates = newProject.hardware.components[i].coordinates;
+                            newItem.connected = newProject.hardware.components[i].connected;
+                            newItem.name = newProject.hardware.components[i].name;
+                            newItem.pin = newProject.hardware.components[i].pin;
+                            newItem.endpoints = newProject.hardware.components[i].endpoints;
+                            newItem.uid = newProject.hardware.components[i].uid;
+
+                            delete newItem.createdAt;
+                            delete newItem.updatedAt;
+                            delete newItem.__v;
+
+                            newProject.hardware.components[i] = newItem;
+                        }
+                        defered.resolve(newProject);
+                    }
+                });
+            } else {
+                defered.resolve(newProject);
+            }
+            return defered.promise;
+        }
 
         return exports;
     });

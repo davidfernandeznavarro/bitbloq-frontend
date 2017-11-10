@@ -9,7 +9,7 @@
  */
 
 angular.module('bitbloqApp')
-    .controller('BloqsprojectCtrl', function($rootScope, $route, $scope, $log, $timeout, $routeParams, $document, $window, $location,
+    .controller('BloqsprojectCtrl', function ($rootScope, $route, $scope, $log, $timeout, $routeParams, $document, $window, $location,
         $q, web2board, alertsService, ngDialog, _, projectApi, bloqs, bloqsUtils, utils, userApi, hw2Bloqs, web2boardOnline, commonModals,
         projectService, hardwareConstants, chromeAppApi) {
 
@@ -17,11 +17,11 @@ angular.module('bitbloqApp')
          Project save / edit
          *************************************************/
 
-        $scope.setCode = function(code) {
+        $scope.setCode = function (code) {
             $scope.currentProject.code = code;
         };
 
-        $scope.uploadFileProject = function(project) {
+        $scope.uploadFileProject = function (project) {
             $scope.hardware.firstLoad = true;
             if ($scope.hardware.cleanSchema) {
                 $scope.hardware.cleanSchema();
@@ -30,13 +30,13 @@ angular.module('bitbloqApp')
         };
 
         $scope.twitterWheel = false;
-        $scope.anyComponent = function(componentList) {
+        $scope.anyComponent = function (componentList) {
             componentList = componentList || projectService.project.hardware.components;
             return projectService.project.useBitbloqConnect || projectService.project.hardware.board === 'freakscar' || (componentList.length > 0);
         };
 
-        $scope.anyExternalComponent = function() {
-            var connectedComponents = _.filter(projectService.project.hardware.components, function(item) {
+        $scope.anyExternalComponent = function () {
+            var connectedComponents = _.filter(projectService.project.hardware.components, function (item) {
                 return (item.uuid.indexOf('integrated') === -1);
             });
             return $scope.anyComponent(connectedComponents);
@@ -46,21 +46,21 @@ angular.module('bitbloqApp')
          web2board communication
          *************************************************/
 
-        var w2bDisconnectedEvent = $rootScope.$on('web2board:disconnected', function() {
+        var w2bDisconnectedEvent = $rootScope.$on('web2board:disconnected', function () {
             web2board.setInProcess(false);
         });
 
-        var w2bVersionEvent = $rootScope.$on('web2board:wrong-version', function() {
+        var w2bVersionEvent = $rootScope.$on('web2board:wrong-version', function () {
             web2board.setInProcess(false);
         });
 
-        var w2bNow2bEvent = $rootScope.$on('web2board:no-web2board', function() {
+        var w2bNow2bEvent = $rootScope.$on('web2board:no-web2board', function () {
             alertsService.close(compilingAlert);
             alertsService.close(settingBoardAlert);
             web2board.setInProcess(false);
         });
 
-        var w2bCompileErrorEvent = $rootScope.$on('web2board:compile-error', function(event, error) {
+        var w2bCompileErrorEvent = $rootScope.$on('web2board:compile-error', function (event, error) {
             error = JSON.parse(error);
             alertsService.add({
                 text: 'alert-web2board-compile-error',
@@ -71,7 +71,7 @@ angular.module('bitbloqApp')
             web2board.setInProcess(false);
         });
 
-        var w2bCompileVerifiedEvent = $rootScope.$on('web2board:compile-verified', function() {
+        var w2bCompileVerifiedEvent = $rootScope.$on('web2board:compile-verified', function () {
             alertsService.add({
                 text: 'alert-web2board-compile-verified',
                 id: 'compile',
@@ -81,7 +81,7 @@ angular.module('bitbloqApp')
             web2board.setInProcess(false);
         });
 
-        var w2bBoardReadyEvent = $rootScope.$on('web2board:boardReady', function(evt, data) {
+        var w2bBoardReadyEvent = $rootScope.$on('web2board:boardReady', function (evt, data) {
             data = JSON.parse(data);
             if (data.length > 0) {
                 if (!alertsService.isVisible('uid', serialMonitorAlert)) {
@@ -102,7 +102,7 @@ angular.module('bitbloqApp')
             }
         });
 
-        var w2bBoardNotReadyEvent = $rootScope.$on('web2board: boardNotReady', function() {
+        var w2bBoardNotReadyEvent = $rootScope.$on('web2board: boardNotReady', function () {
             alertsService.add({
                 text: 'alert-web2board-boardNotReady',
                 id: 'upload',
@@ -111,7 +111,7 @@ angular.module('bitbloqApp')
             web2board.setInProcess(false);
         });
 
-        var w2bUploadingEvent = $rootScope.$on('web2board:uploading', function(evt, port) {
+        var w2bUploadingEvent = $rootScope.$on('web2board:uploading', function (evt, port) {
             alertsService.add({
                 text: 'alert-web2board-uploading',
                 id: 'upload',
@@ -121,7 +121,7 @@ angular.module('bitbloqApp')
             web2board.setInProcess(true);
         });
 
-        var w2bCodeUploadedEvent = $rootScope.$on('web2board:code-uploaded', function() {
+        var w2bCodeUploadedEvent = $rootScope.$on('web2board:code-uploaded', function () {
             alertsService.add({
                 text: 'alert-web2board-code-uploaded',
                 id: 'upload',
@@ -131,7 +131,7 @@ angular.module('bitbloqApp')
             web2board.setInProcess(false);
         });
 
-        var w2bUploadErrorEvent = $rootScope.$on('web2board:upload-error', function(evt, data) {
+        var w2bUploadErrorEvent = $rootScope.$on('web2board:upload-error', function (evt, data) {
             data = JSON.parse(data);
             if (!data.error) {
                 alertsService.add({
@@ -157,7 +157,7 @@ angular.module('bitbloqApp')
             web2board.setInProcess(false);
         });
 
-        var w2bNoPortFoundEvent = $rootScope.$on('web2board:no-port-found', function() {
+        var w2bNoPortFoundEvent = $rootScope.$on('web2board:no-port-found', function () {
             $scope.currentTab = 0;
             $scope.levelOne = 'boards';
             web2board.setInProcess(false);
@@ -169,7 +169,7 @@ angular.module('bitbloqApp')
             });
         });
 
-        var w2bSerialOpenedEvent = $rootScope.$on('web2board:serial-monitor-opened', function() {
+        var w2bSerialOpenedEvent = $rootScope.$on('web2board:serial-monitor-opened', function () {
             alertsService.close(serialMonitorAlert);
             web2board.setInProcess(false);
         });
@@ -330,18 +330,18 @@ angular.module('bitbloqApp')
             }
         }
 
-        $scope.getComponents = function(componentsArray) {
+        $scope.getComponents = function (componentsArray) {
             var components = {};
 
-            var serialPort = _.find(componentsArray, function(o) {
+            var serialPort = _.find(componentsArray, function (o) {
                 return o.uuid === 'sp';
             });
 
-            var bluetooth = _.find(componentsArray, function(o) {
+            var bluetooth = _.find(componentsArray, function (o) {
                 return o.uuid === 'bt';
             });
 
-            var phoneElements = _.find(componentsArray, function(o) {
+            var phoneElements = _.find(componentsArray, function (o) {
                 return o.uuid === 'device';
             });
             if (serialPort) {
@@ -356,7 +356,7 @@ angular.module('bitbloqApp')
                 components.device = phoneElements.name;
             }
 
-            _.forEach(componentsArray, function(value) {
+            _.forEach(componentsArray, function (value) {
                 if (hardwareConstants.viewerSensors.indexOf(value.uuid) !== -1) {
                     if (components[value.uuid]) {
                         components[value.uuid].names.push(value.name);
@@ -370,7 +370,7 @@ angular.module('bitbloqApp')
             return components;
         };
 
-        $scope.getViewerCode = function(componentsArray, originalCode) {
+        $scope.getViewerCode = function (componentsArray, originalCode) {
             var components = $scope.getComponents(componentsArray);
             var code = originalCode;
             var serialName;
@@ -435,7 +435,7 @@ angular.module('bitbloqApp')
             return finalCode;
         }
 
-        $scope.thereIsSerialBlock = function(code) {
+        $scope.thereIsSerialBlock = function (code) {
             var serialBlock;
             if (code.indexOf('/*sendViewerData*/') > -1) {
                 serialBlock = true;
@@ -446,7 +446,7 @@ angular.module('bitbloqApp')
             return serialBlock;
         };
 
-        $scope.thereIsTwitterBlock = function(code) {
+        $scope.thereIsTwitterBlock = function (code) {
             var twitterBlock;
             if (code.indexOf('/*sendTwitterAppConfig*/') > -1) {
                 twitterBlock = true;
@@ -457,15 +457,15 @@ angular.module('bitbloqApp')
         };
 
         function generateSensorsCode(components, serialName, code) {
-            _.forEach(components, function(value, key) {
+            _.forEach(components, function (value, key) {
                 if (angular.isObject(value)) {
                     if (value.type === 'analog') {
-                        _.forEach(value.names, function(name) {
+                        _.forEach(value.names, function (name) {
                             code = code.concat(serialName + '.println(String("[' + key.toUpperCase() + ':' + name + ']:") + String(String(analogRead(' + name + '))));\n\r');
                             //  code = code + 'delay(500);\n\r';
                         });
                     } else {
-                        _.forEach(value.names, function(name) {
+                        _.forEach(value.names, function (name) {
                             if (key === 'us' || key === 'encoder') {
                                 code = code.concat(serialName + '.println(String("[' + key.toUpperCase() + ':' + name + ']:") + String(String(' + name + '.read())));\n\r');
                                 code = code + 'delay(50);\n\r';
@@ -488,7 +488,7 @@ angular.module('bitbloqApp')
 
         $scope.isRobotActivated = projectService.isRobotActivated;
 
-        $scope.verify = function() {
+        $scope.verify = function () {
             if (projectService.project.hardware.showRobotImage && !$scope.isRobotActivated()) {
                 alertsService.add({
                     text: 'robots-not-activated-compile',
@@ -521,7 +521,7 @@ angular.module('bitbloqApp')
 
         var warningShown;
 
-        $scope.upload = function(code) {
+        $scope.upload = function (code) {
             if (projectService.project.hardware.showRobotImage && !$scope.isRobotActivated()) {
                 alertsService.add({
                     text: 'robots-not-activated-upload',
@@ -550,7 +550,7 @@ angular.module('bitbloqApp')
                                     type: 'error',
                                     time: 'infinite',
                                     linkText: 'click-here-load-with-web2board',
-                                    link: function() {
+                                    link: function () {
                                         alertsService.closeByTag('mbotChromebooks');
                                         uploadWithWeb2board();
                                     }
@@ -631,6 +631,7 @@ angular.module('bitbloqApp')
                     break;
                 case 'bqZUM':
                 case 'FreaduinoUNO':
+                case 'buildandcode':
                 case 'ArduinoMEGA2560':
                 case 'ArduinoUNO':
                 case 'ArduinoLeonardo':
@@ -655,11 +656,11 @@ angular.module('bitbloqApp')
             return compileWarning;
         }
 
-        $scope.showCompileWarningByComponent = function(board, component, pin) {
+        $scope.showCompileWarningByComponent = function (board, component, pin) {
             var result = false;
             if (itsABoardWithCompileWarning(board)) {
                 if ((component.uuid !== 'sp') && !component.integratedComponent) {
-                    result = _.findKey(pin || component.pin, function(o) {
+                    result = _.findKey(pin || component.pin, function (o) {
                         return ((o === '1') || (o === '0'));
                     });
                 }
@@ -676,7 +677,7 @@ angular.module('bitbloqApp')
             }
         }
 
-        $scope.serialMonitor = function() {
+        $scope.serialMonitor = function () {
             if (projectService.project.hardware.board) {
                 if ($scope.common.useChromeExtension()) {
                     commonModals.launchSerialWindow(projectService.getBoardMetaData());
@@ -702,7 +703,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.chartMonitor = function() {
+        $scope.chartMonitor = function () {
             if (projectService.project.hardware.board) {
                 web2board.chartMonitor(projectService.getBoardMetaData());
             } else {
@@ -716,11 +717,11 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.showWeb2boardSettings = function() {
+        $scope.showWeb2boardSettings = function () {
             web2board.showSettings();
         };
 
-        $scope.showPlotter = function() {
+        $scope.showPlotter = function () {
             if (projectService.project.hardware.board) {
                 if ($scope.common.useChromeExtension()) {
                     commonModals.launchPlotterWindow(projectService.getBoardMetaData());
@@ -743,12 +744,12 @@ angular.module('bitbloqApp')
 
         };
 
-        $scope.getCode = function() {
+        $scope.getCode = function () {
             $scope.updateBloqs();
             return projectService.getCode();
         };
 
-        $scope.getPrettyCode = function(code) {
+        $scope.getPrettyCode = function (code) {
             var prettyCode;
             if (code) {
                 prettyCode = utils.prettyCode(code);
@@ -758,7 +759,7 @@ angular.module('bitbloqApp')
             return prettyCode;
         };
 
-        $scope.updateBloqs = function() {
+        $scope.updateBloqs = function () {
             if (projectService.bloqs.varsBloq) {
                 return bloqs.startBloqsUpdate($scope.currentProjectService.componentsArray);
             }
@@ -769,7 +770,7 @@ angular.module('bitbloqApp')
          *************************************************/
         $scope.currentTab = 0;
 
-        $scope.setTab = function(index) {
+        $scope.setTab = function (index) {
 
             if (index === 0) {
                 hw2Bloqs.repaint();
@@ -787,7 +788,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.disableUndo = function(currentTab, hardwareHistory, bloqsHistory) {
+        $scope.disableUndo = function (currentTab, hardwareHistory, bloqsHistory) {
             var condition = false;
             switch (currentTab) {
                 case 0:
@@ -800,7 +801,7 @@ angular.module('bitbloqApp')
             return condition;
         };
 
-        $scope.disableRedo = function(currentTab, hardwareHistory, bloqsHistory) {
+        $scope.disableRedo = function (currentTab, hardwareHistory, bloqsHistory) {
             var condition = false;
             switch (currentTab) {
                 case 0:
@@ -813,7 +814,7 @@ angular.module('bitbloqApp')
             return condition;
         };
 
-        $scope.undo = function() {
+        $scope.undo = function () {
             switch ($scope.currentTab) {
                 case 0:
                     $scope.undoHardwareStep();
@@ -824,7 +825,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.redo = function() {
+        $scope.redo = function () {
             switch ($scope.currentTab) {
                 case 0:
                     $scope.redoHardwareStep();
@@ -835,14 +836,14 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.toggleCollapseHeader = function() {
+        $scope.toggleCollapseHeader = function () {
             $scope.collapsedHeader = !$scope.collapsedHeader;
             hw2Bloqs.repaint();
         };
 
-        $scope.publishProject = function(type) {
+        $scope.publishProject = function (type) {
             type = type || '';
-            projectService.checkPublish(type).then(function() {
+            projectService.checkPublish(type).then(function () {
                 var projectDefault = projectService.getDefaultProject();
                 projectService.completedProject();
                 delete projectDefault.software.freeBloqs;
@@ -860,7 +861,7 @@ angular.module('bitbloqApp')
                         commonModals.publishModal(projectService.project);
                     }
                 }
-            }).catch(function() {
+            }).catch(function () {
                 $scope.publishProjectError = true;
                 $scope.setTab(2);
             });
@@ -871,7 +872,7 @@ angular.module('bitbloqApp')
          *************************************************/
 
         //Stores one step in the history
-        $scope.saveBloqStep = function(step) {
+        $scope.saveBloqStep = function (step) {
             //$log.debug('Guardamos Estado de Bloqs');
             var freeBloqs = bloqs.getFreeBloqs();
             //$log.debug(freeBloqs);
@@ -891,7 +892,7 @@ angular.module('bitbloqApp')
 
         };
 
-        $scope.undoBloqStep = function() {
+        $scope.undoBloqStep = function () {
             //$log.log('undo bloq', $scope.bloqsHistory.pointer, $scope.bloqsHistory.history.length);
             if ($scope.bloqsHistory.pointer > 0) {
                 $scope.bloqsHistory.pointer--;
@@ -906,7 +907,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.redoBloqStep = function() {
+        $scope.redoBloqStep = function () {
             //$log.log('redo bloq', $scope.bloqsHistory.pointer, $scope.bloqsHistory.history.length);
             if ($scope.bloqsHistory.pointer < ($scope.bloqsHistory.history.length - 1)) {
                 $scope.bloqsHistory.pointer++;
@@ -922,7 +923,7 @@ angular.module('bitbloqApp')
 
         };
 
-        $scope.hideTwitterWheel = function() {
+        $scope.hideTwitterWheel = function () {
             $scope.twitterWheel = false;
         };
 
@@ -943,14 +944,14 @@ angular.module('bitbloqApp')
 
         function addProjectWatchersAndListener() {
             projectService.addWatchers();
-            $scope.$watch('code', function(newVal, oldVal) {
+            $scope.$watch('code', function (newVal, oldVal) {
                 if (newVal !== oldVal && oldVal !== '') {
                     projectService.startAutosave();
                     $scope.hardware.firstLoad = false;
                 }
             });
 
-            $window.addEventListener('bloqs:dragend', function(evt) {
+            $window.addEventListener('bloqs:dragend', function (evt) {
                 if (evt.detail.bloq.bloqData.name === 'phoneConfigTwitter') {
                     $scope.twitterWheel = true;
                 }
@@ -960,19 +961,19 @@ angular.module('bitbloqApp')
                 utils.apply($scope);
             });
 
-            $window.addEventListener('bloqs:suggestedAdded', function() {
+            $window.addEventListener('bloqs:suggestedAdded', function () {
                 $scope.saveBloqStep();
                 $scope.hardware.firstLoad = false;
                 utils.apply($scope);
             });
 
-            $window.addEventListener('bloqs:connect', function() {
+            $window.addEventListener('bloqs:connect', function () {
                 projectService.startAutosave();
                 $scope.hardware.firstLoad = false;
                 utils.apply($scope);
             });
 
-            $window.addEventListener('bloqs:change', function() {
+            $window.addEventListener('bloqs:change', function () {
                 if (projectService.bloqs.loopBloq) {
                     $scope.saveBloqStep();
                     projectService.startAutosave();
@@ -1030,7 +1031,7 @@ angular.module('bitbloqApp')
                 modalGuestInit;
             _.extend(modalGuest, {
                 contentTemplate: '/views/modals/alert.html',
-                confirmAction: function() {
+                confirmAction: function () {
                     ngDialog.closeAll();
                     $scope.common.goToLogin();
                 },
@@ -1064,7 +1065,7 @@ angular.module('bitbloqApp')
          *   Toolbox
          *****************************/
 
-        $scope.handleTour = function(step) {
+        $scope.handleTour = function (step) {
             step = step || 1;
             switch (step) {
                 case 1:
@@ -1076,8 +1077,8 @@ angular.module('bitbloqApp')
                     if ($scope.tourCurrentStep === 1) {
 
                         $scope.tourCurrentStep = 2;
-                        var runStepThree = $scope.$on('menu--open', function() {
-                            $timeout(function() {
+                        var runStepThree = $scope.$on('menu--open', function () {
+                            $timeout(function () {
                                 $('.toolbox__content').animate({
                                     scrollTop: $('[dragid="led"]').offset().top - 150
                                 }, 'slow');
@@ -1094,7 +1095,7 @@ angular.module('bitbloqApp')
                             $scope.handleTour(2);
                         } else {
                             $scope.tourCurrentStep = 3;
-                            var runStepFour = $rootScope.$on('component-connected', function() {
+                            var runStepFour = $rootScope.$on('component-connected', function () {
                                 $scope.handleTour(4);
                                 runStepFour();
                             });
@@ -1114,7 +1115,7 @@ angular.module('bitbloqApp')
                 case 6:
                     if ($scope.tourCurrentStep === 5) {
                         $scope.tourCurrentStep = 6;
-                        var runStepSeven = $window.addEventListener('bloqs:connect', function() {
+                        var runStepSeven = $window.addEventListener('bloqs:connect', function () {
                             $scope.handleTour(7);
                             runStepSeven();
                         });
@@ -1122,10 +1123,10 @@ angular.module('bitbloqApp')
                     break;
                 case 7:
                     if ($scope.tourCurrentStep === 6) {
-                        $scope.$apply(function() {
+                        $scope.$apply(function () {
                             $scope.tourCurrentStep = 7;
                         });
-                        var endTour = $scope.$on('uploading', function() {
+                        var endTour = $scope.$on('uploading', function () {
                             $scope.tourDone();
                             endTour();
                         });
@@ -1139,7 +1140,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.tourDone = function() {
+        $scope.tourDone = function () {
             ngDialog.closeAll();
             $scope.tourCurrentStep = null;
             if ($scope.common.user) {
@@ -1201,25 +1202,25 @@ angular.module('bitbloqApp')
         $scope.common.isLoading = true;
         $scope.hwBasicsLoaded = $q.defer();
 
-        $scope.initHardwarePromise = function() {
+        $scope.initHardwarePromise = function () {
             $scope.hwBasicsLoaded = $q.defer();
         };
 
-        $scope.itsCurrentProjectLoaded = function() {
+        $scope.itsCurrentProjectLoaded = function () {
             return $scope.currentProjectLoaded.promise;
         };
 
-        $scope.common.itsUserLoaded().then(function() {
+        $scope.common.itsUserLoaded().then(function () {
             $log.debug('There is a registed user');
             if ($routeParams.id) {
-                loadProject($routeParams.id).finally(function() {
+                loadProject($routeParams.id).finally(function () {
                     checkIfTwitterBloq(projectService.project);
                     addProjectWatchersAndListener();
                 });
             } else {
                 if ($scope.common.session.save) {
                     $scope.common.session.save = false;
-                    projectService.setProject($scope.common.session.project).then(function() {
+                    projectService.setProject($scope.common.session.project).then(function () {
                         if (projectService.project.hardware.showRobotImage && $scope.isRobotActivated()) {
                             $scope.currentProjectService.showActivation = false;
                             $scope.currentProjectService.closeActivation = false;
@@ -1232,10 +1233,10 @@ angular.module('bitbloqApp')
                     finishLoadingWorkspace();
                 }
             }
-        }, function() {
+        }, function () {
             $log.debug('no registed user');
             if ($routeParams.id) {
-                loadProject($routeParams.id).finally(function() {
+                loadProject($routeParams.id).finally(function () {
                     addProjectWatchersAndListener();
                 });
             } else {
@@ -1249,24 +1250,24 @@ angular.module('bitbloqApp')
                 launchModalTour();
             }
             addProjectWatchersAndListener();
-            $scope.hwBasicsLoaded.promise.then(function() {
+            $scope.hwBasicsLoaded.promise.then(function () {
                 $scope.$emit('drawHardware');
             });
             $scope.currentProjectLoaded.resolve();
         }
 
         function checkIfTwitterBloq(projectData) {
-            projectData.software.loop.childs.forEach(function(element) {
+            projectData.software.loop.childs.forEach(function (element) {
                 if (element.name === 'phoneConfigTwitter') {
                     $scope.twitterWheel = true;
                 }
             });
-            projectData.software.setup.childs.forEach(function(element) {
+            projectData.software.setup.childs.forEach(function (element) {
                 if (element.name === 'phoneConfigTwitter') {
                     $scope.twitterWheel = true;
                 }
             });
-            projectData.software.vars.childs.forEach(function(element) {
+            projectData.software.vars.childs.forEach(function (element) {
                 if (element.name === 'phoneConfigTwitter') {
                     $scope.twitterWheel = true;
                 }
@@ -1274,10 +1275,10 @@ angular.module('bitbloqApp')
         }
 
         function loadProject(id) {
-            return projectApi.get(id).then(function(response) {
+            return projectApi.get(id).then(function (response) {
                 _uploadProject(response.data);
                 $scope.currentProjectLoaded.resolve();
-            }, function(error) {
+            }, function (error) {
                 projectService.addWatchers();
                 $scope.currentProjectLoaded.reject();
                 switch (error.status) {
@@ -1314,11 +1315,11 @@ angular.module('bitbloqApp')
                 if (project.software) {
                     project.software.freeBloqs = project.software.freeBloqs || [];
                 }
-                projectService.setProject(project, project.codeProject, true).then(function() {
+                projectService.setProject(project, project.codeProject, true).then(function () {
                     checkIfTwitterBloq(projectService.project);
                     $scope.saveBloqStep(_.clone(project.software));
                     projectService.saveOldProject();
-                    $scope.hwBasicsLoaded.promise.then(function() {
+                    $scope.hwBasicsLoaded.promise.then(function () {
                         $scope.$emit('drawHardware');
                     });
                     $scope.$broadcast('refresh-bloqs');
@@ -1340,7 +1341,7 @@ angular.module('bitbloqApp')
         $document.on('keydown', checkBackspaceKey);
         $window.onbeforeunload = confirmExit;
 
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
             $document.off('keydown', checkBackspaceKey);
             chromeAppApi.stopSerialCommunication();
             $window.onbeforeunload = null;

@@ -88,6 +88,7 @@ angular.module('bitbloqApp')
 
         };
 
+
         exports.assignGroup = function (exercise, teacherId, oldGroups, centerId, onlyEdit) {
             var defered = $q.defer(),
                 checkWatchers = [];
@@ -614,42 +615,27 @@ angular.module('bitbloqApp')
                 }
             }
         };
-        ///temp fix to code refactor, sensor types
-        var sensorsTypes = {};
-        var sensorsArray = [];
-        hardwareService.itsHardwareLoaded().then(function () {
-            sensorsArray = _.filter(hardwareService.hardware.components, {
-                category: 'sensors'
-            });
-        });
-
-        for (var i = 0; i < sensorsArray.length; i++) {
-            sensorsTypes[sensorsArray[i].uuid] = sensorsArray[i].dataReturnType;
-        }
 
         exports.setExercise = function (newExercise) {
             var defered = $q.defer();
-            for (var i = 0; i < newExercise.hardware.components.length; i++) {
-                if (newExercise.hardware.components[i].category === 'sensors') {
-                    newExercise.hardware.components[i].dataReturnType = sensorsTypes[newExercise.hardware.components[i].uuid];
-                }
-            }
-            //end temp fix
 
-            if (_.isEmpty(exports.exercise)) {
-                exports.getDefaultExercise().then(function (defaultExercise) {
-                    exports.exercise = defaultExercise;
-                    _.extend(exports.exercise, newExercise);
+            utils.fillHardwareSchemas(newExercise, hardwareService).then(function (newExerciseFilled) {
+
+                if (_.isEmpty(exports.exercise)) {
+                    exports.getDefaultExercise().then(function (defaultExercise) {
+                        exports.exercise = defaultExercise;
+                        _.extend(exports.exercise, newExerciseFilled);
+                        exports.setComponentsArray();
+                        exports.addWatchers();
+                        defered.resolve();
+                    }).catch(defered.reject);
+                } else {
+                    _.extend(exports.exercise, newExerciseFilled);
                     exports.setComponentsArray();
                     exports.addWatchers();
                     defered.resolve();
-                }).catch(defered.reject);
-            } else {
-                _.extend(exports.exercise, newExercise);
-                exports.setComponentsArray();
-                exports.addWatchers();
-                defered.resolve();
-            }
+                }
+            });
 
             return defered.promise;
         };

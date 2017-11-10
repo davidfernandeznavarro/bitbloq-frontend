@@ -57,6 +57,14 @@
         background-color: inherit;
         text-align: center;
     }
+
+    & + #formForgot {
+      .btn--disabled {
+        width: 100%;
+        color: red;
+        border: 1px solid red;
+      }
+    }
 }
 
 .separator {

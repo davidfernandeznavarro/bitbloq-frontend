@@ -7,7 +7,7 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-module.exports = function(grunt) {
+module.exports = function (grunt) {
 
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
@@ -78,7 +78,7 @@ module.exports = function(grunt) {
             livereload: {
                 options: {
                     open: true,
-                    middleware: function(connect) {
+                    middleware: function (connect) {
                         return [
                             connect.static('.tmp'),
                             connect().use(
@@ -97,7 +97,7 @@ module.exports = function(grunt) {
             test: {
                 options: {
                     port: 9001,
-                    middleware: function(connect) {
+                    middleware: function (connect) {
                         return [
                             connect.static('.tmp'),
                             connect.static('test'),
@@ -119,7 +119,7 @@ module.exports = function(grunt) {
             selenium: {
                 options: {
                     open: false,
-                    middleware: function(connect) {
+                    middleware: function (connect) {
                         return [
                             connect.static('.tmp'),
                             connect().use(
@@ -565,7 +565,7 @@ module.exports = function(grunt) {
         'wiredep:app'
     ]);
 
-    grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {
+    grunt.registerTask('serve', 'Compile then start a connect web server', function (target) {
 
         if (target === 'dist') {
             return grunt.task.run(['dist', 'connect:dist:keepalive']);
@@ -580,12 +580,12 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function(target) {
+    grunt.registerTask('server', 'DEPRECATED TASK. Use the "serve" task instead', function (target) {
         grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
         grunt.task.run(['serve:' + target]);
     });
 
-    grunt.registerTask('generateConfigFiles', 'Configure data files', function(env) {
+    grunt.registerTask('generateConfigFiles', 'Configure data files', function (env) {
         var environment = env || 'local';
 
         grunt.task.run([
@@ -595,7 +595,7 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('generateConfig', 'Configure data files', function(env) {
+    grunt.registerTask('generateConfig', 'Configure data files', function (env) {
 
         var environment = env || 'qa',
             configJSON;
@@ -617,7 +617,7 @@ module.exports = function(grunt) {
         grunt.file.write(file, configJSON);
     });
 
-    grunt.registerTask('generateFacebook', 'Configure data files', function(env) {
+    grunt.registerTask('generateFacebook', 'Configure data files', function (env) {
 
         var environment = env || 'qa',
             configJSON;
@@ -639,7 +639,7 @@ module.exports = function(grunt) {
         grunt.file.write(file, configJSON);
     });
 
-    grunt.registerTask('generateGoogle', 'Configure data files', function(env) {
+    grunt.registerTask('generateGoogle', 'Configure data files', function (env) {
 
         var environment = env || 'qa',
             configJSON;
@@ -661,7 +661,7 @@ module.exports = function(grunt) {
         grunt.file.write(file, configJSON);
     });
 
-    grunt.registerTask('dist', function() {
+    grunt.registerTask('dist', function () {
         grunt.task.run([
             'clean:dist',
             'wiredep',
@@ -682,7 +682,7 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('distGCS', function() {
+    grunt.registerTask('distGCS', function () {
         grunt.task.run([
             'clean:dist',
             'wiredep',
@@ -702,7 +702,7 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('deploy', 'Deploy app to s3', function(env) {
+    grunt.registerTask('deploy', 'Deploy app to s3', function (env) {
 
         var configFile = grunt.option('config') || 'app/res/config/config.json';
         var configData = grunt.file.readJSON(configFile);
@@ -732,7 +732,7 @@ module.exports = function(grunt) {
      * grunt clean:i18n && grunt getpoeditorfiles:38967:xliff:untranslated:bitbloq_ && grunt getpoeditorfiles:42730:xliff:untranslated:bloqs_ && grunt getpoeditorfiles:38968:xliff:untranslated:faqs_ && grunt getpoeditorfiles:39968:xliff:untranslated:changelog_
      */
 
-    grunt.registerTask('i18n', 'get all file of i18n', function() {
+    grunt.registerTask('i18n', 'get all file of i18n', function () {
         grunt.task.run([
             'clean:i18n',
             'getpoeditorfiles:38967',
@@ -740,7 +740,7 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('poeditorbackup', 'backup all poeditor projects', function() {
+    grunt.registerTask('poeditorbackup', 'backup all poeditor projects', function () {
         var date = new Date();
         var dateFormat = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '_' + date.getHours() + '-' + date.getMinutes();
         grunt.task.run([
@@ -751,7 +751,7 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('poeditorbackupocio', 'backup all poeditor projects from odio digital', function() {
+    grunt.registerTask('poeditorbackupocio', 'backup all poeditor projects from odio digital', function () {
         var date = new Date();
         var dateFormat = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '_' + date.getHours() + '-' + date.getMinutes();
         grunt.task.run([
@@ -762,7 +762,7 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('getUntranslatedTexts', 'get bitbloq and bloqs text to send to translation department', function() {
+    grunt.registerTask('getUntranslatedTexts', 'get bitbloq and bloqs text to send to translation department', function () {
         var date = new Date();
         var dateFormat = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + '_' + date.getHours() + '-' + date.getMinutes();
         grunt.task.run([
@@ -771,18 +771,18 @@ module.exports = function(grunt) {
         ]);
     });
 
-    grunt.registerTask('getbloqsfrombranch', function(branch) {
+    grunt.registerTask('getbloqsfrombranch', function (branch) {
         branch = branch || 'master';
         var done = this.async(),
             https = require('https');
-        https.get('https://raw.githubusercontent.com/bq/bloqs/' + branch + '/dist/list.json').on('response', function(response) {
+        https.get('https://raw.githubusercontent.com/bq/bloqs/' + branch + '/dist/list.json').on('response', function (response) {
             var body = '';
             var i = 0;
-            response.on('data', function(chunk) {
+            response.on('data', function (chunk) {
                 i++;
                 body += chunk;
             });
-            response.on('end', function() {
+            response.on('end', function () {
                 if (body.length) {
                     grunt.log.oklns('get Bloqs done!');
                     grunt.file.write('dataBaseFiles/bloq/bloq.json', body);
@@ -794,12 +794,12 @@ module.exports = function(grunt) {
         });
     });
 
-    grunt.registerTask('getbloqs', function() {
+    grunt.registerTask('getbloqs', function () {
         var bloqsFile = grunt.file.readJSON('./bower_components/bloqs/dist/list.json');
         grunt.file.write('dataBaseFiles/bloq/bloq.json', JSON.stringify(bloqsFile));
     });
 
-    grunt.registerTask('prepareversion', function(version) {
+    grunt.registerTask('prepareversion', function (version) {
         if (version) {
             grunt.task.run([
                 'i18n',
@@ -825,11 +825,11 @@ module.exports = function(grunt) {
         }
     });
 
-    var getAllFiles = function(source) {
+    var getAllFiles = function (source) {
         var files = [];
-        grunt.file.expand(source).forEach(function(file) {
+        grunt.file.expand(source).forEach(function (file) {
             if (grunt.file.isDir(file)) {
-                grunt.file.recurse(file, function(f) {
+                grunt.file.recurse(file, function (f) {
                     files = files.concat(getAllFiles(f));
                 });
             } else {
@@ -842,63 +842,69 @@ module.exports = function(grunt) {
         return files;
     };
 
-    var replaceFileName = function(oldName, newName, sources) {
+    var replaceFileName = function (oldName, newName, sources) {
         var fileContent = '';
-        grunt.file.expand(sources).forEach(function(file) {
+        //grunt.log.writeln('Replacing can take time, logs disabled');
+        grunt.file.expand(sources).forEach(function (file) {
             if (grunt.file.isDir(file)) {
-                grunt.file.recurse(file, function(f) {
+                grunt.file.recurse(file, function (f) {
                     replaceFileName(oldName, newName, f);
                 });
             } else {
-                grunt.log.writeln('Replacing ' + oldName + ' to ' + newName + ' in ' + file);
+                //grunt.log.writeln('Replacing ' + oldName + ' to ' + newName + ' in ' + file);
                 var regExp = new RegExp('([\'|/|"])' + oldName, 'g');
                 fileContent = grunt.file.read(file);
                 grunt.file.write(file, fileContent.replace(regExp, '$1' + newName));
             }
         });
+        //grunt.log.writeln('Finish replacing');
     };
 
-    var replaceAngularHTMLFile = function(timestamp, sources) {
+    var replaceAngularHTMLFile = function (timestamp, sources) {
         var fileContent = '';
-        grunt.file.expand(sources).forEach(function(file) {
+        grunt.log.writeln('Replacing Force start with ' + timestamp + ' logs disabled');
+        grunt.file.expand(sources).forEach(function (file) {
             if (grunt.file.isDir(file)) {
-                grunt.file.recurse(file, function(f) {
+                grunt.file.recurse(file, function (f) {
                     replaceFileName(timestamp, f);
                 });
             } else {
-                grunt.log.writeln('Replacing Force with ' + timestamp + ' in ' + file);
+                //grunt.log.writeln('Replacing Force with ' + timestamp + ' in ' + file);
                 var regExp = new RegExp('ng-src="[A-Za-z/]*{{[A-Za-z/.]*}}.(svg|png|jpg|ico)', 'g');
                 fileContent = grunt.file.read(file);
-                grunt.file.write(file, fileContent.replace(regExp, function(stringReplace) {
+                grunt.file.write(file, fileContent.replace(regExp, function (stringReplace) {
                     var stringArray = stringReplace.split('{{');
                     return stringArray[0] + timestamp + '.{{' + stringArray[1];
                 }));
             }
         });
+        grunt.log.writeln('Replacing Force finish with ' + timestamp);
     };
 
-    var replaceForceComponent = function(timestamp, sources) {
+    var replaceForceComponent = function (timestamp, sources) {
         var fileContent = '';
-        grunt.file.expand(sources).forEach(function(file) {
+        grunt.log.writeln('Replacing Force component with ' + timestamp);
+        grunt.file.expand(sources).forEach(function (file) {
             if (grunt.file.isDir(file)) {
-                grunt.file.recurse(file, function(f) {
+                grunt.file.recurse(file, function (f) {
                     replaceFileName(timestamp, f);
                 });
             } else { // /images/components/
-                grunt.log.writeln('Replacing Force with ' + timestamp + ' in ' + file);
+                //grunt.log.writeln('Replacing Force with ' + timestamp + ' in ' + file);
                 var regExp = new RegExp('/images/(components|boards|robots)/[A-Za-z.+\'\" ]*.(svg|png|jpg|ico)', 'g');
                 fileContent = grunt.file.read(file);
-                grunt.file.write(file, fileContent.replace(regExp, function(stringReplace) {
+                grunt.file.write(file, fileContent.replace(regExp, function (stringReplace) {
                     var splitString = stringReplace.split('images/')[1].split('/')[0],
                         stringArray = stringReplace.split(splitString + '/');
                     return stringArray[0] + splitString + '/' + timestamp + '.' + stringArray[1];
                 }));
             }
         });
+        grunt.log.writeln('Replacing Force component finish');
     };
 
-    grunt.task.registerMultiTask('addTimestampToFiles', 'Add timestamps to html, locale, config, image and static files', function() {
-        grunt.log.writeln(this.target + ': ' + this.data);
+    grunt.task.registerMultiTask('addTimestampToFiles', 'Add timestamps to html, locale, config, image and static files', function () {
+        //grunt.log.writeln(this.target + ': ' + this.data);
         var timestamp = Date.now(),
             fs = require('fs'),
             htmlFiles = getAllFiles(this.data.htmlFiles),
@@ -906,11 +912,11 @@ module.exports = function(grunt) {
             configFiles = getAllFiles(this.data.configFiles),
             imageFiles = getAllFiles(this.data.imageFiles),
             staticFiles = getAllFiles(this.data.staticFiles);
-        console.log(htmlFiles);
+        /*console.log(htmlFiles);
         console.log(localeFiles);
         console.log(configFiles);
         console.log(imageFiles);
-        console.log(staticFiles);
+        console.log(staticFiles);*/
         var newName = '';
         var i;
 
@@ -947,14 +953,14 @@ module.exports = function(grunt) {
         replaceForceComponent(timestamp, this.data.replaceStaticNames);
     });
 
-    grunt.registerTask('updateAllCollections', function() {
+    grunt.registerTask('updateAllCollections', function () {
         grunt.task.run([
             'updateCollection:bloq',
             'updateCollection:property'
         ]);
     });
 
-    grunt.registerTask('generateConstantsFileWithConfig', function() {
+    grunt.registerTask('generateConstantsFileWithConfig', function () {
         var configFile = grunt.file.readJSON('app/res/config/config.json'),
             facebookFile = grunt.file.readJSON('app/res/config/facebook.json'),
             googleFile = grunt.file.readJSON('app/res/config/google.json');

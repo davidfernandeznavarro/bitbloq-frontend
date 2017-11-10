@@ -142,6 +142,9 @@
                 },
                 {
                     "name": "viewer"
+                },
+                {
+                    "name": "motorSetSpeedAdvanced"
                 }
             ],
             "advancedControls": [
@@ -435,6 +438,9 @@
                 },
                 {
                     "name": "readJoystickXY"
+                },
+                {
+                    "name": "motorSetSpeed"
                 }
             ],
             "controls": [

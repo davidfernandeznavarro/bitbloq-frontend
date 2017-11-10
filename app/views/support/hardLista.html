@@ -1,0 +1,11 @@
+<div class="support--centered">
+    <ul class="support--hard-list" data-ng-repeat="item in components">
+        <li data-ng-init="getSVG(item)">
+            <a href="" data-ng-click="go(item.permalink, true)">
+                <!-- <img src="images/components/{{item.uuid}}.svg" height="100" alt="{{item.name}}" id="{{item.uuid}}-svg" /> -->
+                <div  id="{{item.uuid}}" ng-bind-html="renderSVG(item)"></div>
+                <span class="label" id="{{item.uuid}}">{{item.name}}</span>
+            </a>
+        </li>
+    </ul>
+</div>

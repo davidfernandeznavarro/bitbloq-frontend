@@ -761,10 +761,8 @@ function hardwareTabCtrl($rootScope, $scope, $document, $log, hw2Bloqs, alertsSe
                         newComponent.baudRate = 19200;
                         break;
                     case 'FreaduinoUNO':
-                        newComponent.baudRate = 38400;
-                        $scope.isMobileConnected = true;
-                        break;
                     case 'ArduinoUNO':
+                    case 'buildandcode':
                         newComponent.baudRate = 38400;
                         $scope.isMobileConnected = true;
                         break;
@@ -803,9 +801,8 @@ function hardwareTabCtrl($rootScope, $scope, $document, $log, hw2Bloqs, alertsSe
                             item.baudRate = 19200;
                             break;
                         case 'FreaduinoUNO':
-                            item.baudRate = 38400;
-                            break;
                         case 'ArduinoUNO':
+                        case 'buildandcode':
                             item.baudRate = 38400;
                             break;
                     }
