@@ -17,7 +17,7 @@ angular.module('bitbloqApp')
         $scope.isSocialRegister = false;
         $scope.isForgotPassword = false;
         $scope.isLessThan18 = false;
-        $scope.checked = false
+        $scope.checked = false;
 
         $scope.user = {
             username: '',

@@ -21,7 +21,7 @@
                 </div>
                 <div class="table__block__item table__column--centered col-vsmall-3">
                     <span data-element="{{'centerMode-student-averageMark' + student.username}}">
-                        {{student.averageMark || '-'}}
+                        {{student.averageMark || ((student.averageMark === 0) ? 0 : '-')}}
                     </span>
                 </div>
                 <div class="table__block__item table__column--hover table__column--right col-vsmall-2">
