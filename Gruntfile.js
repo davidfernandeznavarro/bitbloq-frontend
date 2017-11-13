@@ -662,10 +662,11 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('dist', function () {
+        var timestamp = Date.now();
         grunt.task.run([
             'clean:dist',
             'wiredep',
-            'generateConstantsFileWithConfig',
+            'generateConstantsFileWithConfig:' + timestamp,
             'useminPrepare',
             'concurrent:dist',
             'postcss:dist',
@@ -678,7 +679,7 @@ module.exports = function (grunt) {
             'filerev',
             'usemin',
             'htmlmin',
-            'addTimestampToFiles'
+            'addTimestampToFiles:' + timestamp
         ]);
     });
 
@@ -903,10 +904,10 @@ module.exports = function (grunt) {
         grunt.log.writeln('Replacing Force component finish');
     };
 
-    grunt.task.registerMultiTask('addTimestampToFiles', 'Add timestamps to html, locale, config, image and static files', function () {
+    grunt.task.registerMultiTask('addTimestampToFiles', 'Add timestamps to html, locale, config, image and static files', function (timestamp) {
         //grunt.log.writeln(this.target + ': ' + this.data);
-        var timestamp = Date.now(),
-            fs = require('fs'),
+        timestamp = timestamp || Date.now();
+        var fs = require('fs'),
             htmlFiles = getAllFiles(this.data.htmlFiles),
             localeFiles = getAllFiles(this.data.localeFiles),
             configFiles = getAllFiles(this.data.configFiles),
@@ -960,10 +961,13 @@ module.exports = function (grunt) {
         ]);
     });
 
-    grunt.registerTask('generateConstantsFileWithConfig', function () {
+    grunt.registerTask('generateConstantsFileWithConfig', function (timestamp) {
+        timestamp = timestamp || '';
         var configFile = grunt.file.readJSON('app/res/config/config.json'),
             facebookFile = grunt.file.readJSON('app/res/config/facebook.json'),
             googleFile = grunt.file.readJSON('app/res/config/google.json');
+
+        configFile.timestamp = timestamp;
 
         grunt.config('ngconstant.local.constants.envData', {
             config: configFile,
