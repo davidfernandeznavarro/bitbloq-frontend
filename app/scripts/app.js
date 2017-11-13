@@ -20,6 +20,7 @@ angular
         'ngResource',
         'ngSanitize',
         'config',
+        'makeconfig',
         'pascalprecht.translate',
         'ngStorage',
         'duScroll',

@@ -8,7 +8,7 @@
  * Service in the bitbloqApp.
  */
 angular.module('bitbloqApp')
-    .service('utils', function (_, $q, $window, $translate, moment) {
+    .service('utils', function (_, $q, $window, $translate, moment, makeConfig) {
         // AngularJS will instantiate a singleton by calling "new" on this function
         var exports = {};
         var defaultDiacriticsRemovalap = [{
@@ -678,6 +678,14 @@ angular.module('bitbloqApp')
             }
             return defered.promise;
         }
+
+        exports.getTimestampPrefix = function () {
+            var result = '';
+            if (makeConfig.timestamp) {
+                result = makeConfig.timestamp + '.'
+            }
+            return result;
+        };
 
         return exports;
     });
