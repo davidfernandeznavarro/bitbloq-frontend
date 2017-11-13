@@ -28,8 +28,7 @@ angular
         chromeAppApi,
         hardwareService,
         utils,
-        ngDialog,
-        envData
+        ngDialog
     ) {
         $scope.translate = $translate;
 
@@ -1736,7 +1735,7 @@ angular
         $scope.getSVG = function (item) {
             if (item.svg === '') {
                 $http
-                    .get('images/components/' + envData.config.timestamp + '.' + item.uuid + '.svg')
+                    .get('images/components/' + utils.getTimestampPrefix() + item.uuid + '.svg')
                     .then(function (res) {
                         //we want to delete all height and width atributes form the original svg files
                         item.svg = _.replace(
