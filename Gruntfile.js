@@ -662,11 +662,12 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('dist', function () {
-        var timestamp = Date.now();
+
+        grunt.option('timestamp', Date.now());
         grunt.task.run([
             'clean:dist',
             'wiredep',
-            'generateConstantsFileWithConfig:' + timestamp,
+            'generateConstantsFileWithConfig',
             'useminPrepare',
             'concurrent:dist',
             'postcss:dist',
@@ -679,7 +680,7 @@ module.exports = function (grunt) {
             'filerev',
             'usemin',
             'htmlmin',
-            'addTimestampToFiles:' + timestamp
+            'addTimestampToFiles'
         ]);
     });
 
@@ -904,9 +905,11 @@ module.exports = function (grunt) {
         grunt.log.writeln('Replacing Force component finish');
     };
 
-    grunt.task.registerMultiTask('addTimestampToFiles', 'Add timestamps to html, locale, config, image and static files', function (timestamp) {
+    grunt.task.registerMultiTask('addTimestampToFiles', 'Add timestamps to html, locale, config, image and static files', function () {
         //grunt.log.writeln(this.target + ': ' + this.data);
-        timestamp = timestamp || Date.now();
+        grunt.log.writeln("here");
+        var timestamp = grunt.option('timestamp') || Date.now();
+        grunt.log.writeln(timestamp);
         var fs = require('fs'),
             htmlFiles = getAllFiles(this.data.htmlFiles),
             localeFiles = getAllFiles(this.data.localeFiles),
@@ -962,12 +965,13 @@ module.exports = function (grunt) {
     });
 
     grunt.registerTask('generateConstantsFileWithConfig', function (timestamp) {
-        timestamp = timestamp || '';
+
+
         var configFile = grunt.file.readJSON('app/res/config/config.json'),
             facebookFile = grunt.file.readJSON('app/res/config/facebook.json'),
             googleFile = grunt.file.readJSON('app/res/config/google.json');
 
-        configFile.timestamp = timestamp;
+        configFile.timestamp = grunt.option('timestamp');
 
         grunt.config('ngconstant.local.constants.envData', {
             config: configFile,
