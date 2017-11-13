@@ -578,7 +578,8 @@ $support-width: 900px;
         }
 
         p {
-            width: -webkit-fill-available;
+            // width: -webkit-fill-available;
+            width: fill;
         }
     }
     // hardware test loader

@@ -12,6 +12,11 @@ li[class^="icon"]:before { margin-right: 3px; }
   font-family: FontAwesome;
 }
 
+.icon--pointer {
+  cursor: pointer;
+  pointer-events: auto !important;
+}
+
 // icons
 .icon--arrow-right:before { content: "\f061"; }
 .icon--back:before { content: "\f137"; }

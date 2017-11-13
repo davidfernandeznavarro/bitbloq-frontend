@@ -1,9 +1,9 @@
 <div class="section-header table__header center-mode__header">
     <div class="breadcrumb header__title col-vsmall-7" ng-class="{'breadcrumb-longer':!student.average, 'second-level':secondaryBreadcrumb || tertiaryBreadcrumb}" data-element="centerMode-header-breadcrumb">
         <h1><a href="#/classes">{{'header_tab_myClass' | translate}}</a></h1>
-        <a ng-if="secondaryBreadcrumb || tertiaryBreadcrumb" ng-class="{'breadcrumb--secondary': secondaryBreadcrumb, 'breadcrumb__item': tertiaryBreadcrumb}" ng-href="#/class/{{group._id}}">
-      {{group.name}}
-    </a>
+        <a class="center-mode__header_editable icon--pointer" ng-click="changeNameModal()" ng-if="secondaryBreadcrumb || tertiaryBreadcrumb" ng-class="{'breadcrumb--secondary': secondaryBreadcrumb, 'breadcrumb__item': tertiaryBreadcrumb}" ng-href="#/class/{{group._id}}">
+          <span>{{group.name}}</span>
+        </a>
         <div class="color-swatch" ng-if="!tertiaryBreadcrumb">
             <div class="color-thumbnail" ng-style="{'background-color': group.color}" ng-click="colorPickerFlag.open = !colorPickerFlag.open;"></div>
             <div class="nav__menu menu--overlay menu--overlay__content menu--colorpicker" ng-if="colorPickerFlag.open">

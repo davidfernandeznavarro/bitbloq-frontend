@@ -8,7 +8,7 @@
      * Controller of the bitbloqApp
      */
     angular.module('bitbloqApp')
-        .controller('ClassCtrl', function ($log, $scope, $rootScope, _, ngDialog, alertsService, centerModeApi, exerciseApi, centerModeService, $routeParams, $location, commonModals, $window, exerciseService) {
+        .controller('ClassCtrl', function ($log, $scope, $rootScope, _, ngDialog, alertsService, centerModeApi, exerciseApi, centerModeService, $routeParams, $location, commonModals, $window, exerciseService, $q) {
 
             $scope.moment = moment;
             $scope.exercises = [];
@@ -337,6 +337,48 @@
 
                 return headers;
             };
+
+            $scope.changeNameModal = function () {
+              var renameModal,
+                  defered = $q.defer(),
+                  currentClassName = $scope.group.name,
+                  modalOptions = $rootScope.$new();
+
+              function confirmAction(newName) {
+                  console.log('DENTRO');
+                  console.log('>> Cambiando nombre a ' + newName);
+                  $scope.group.name = newName;
+                  renameModal.close();
+                  // defered.resolve();
+                }
+
+              _.extend(modalOptions, {
+                  title: 'change-name',
+                  modalButtons: true,
+                  confirmButton: 'save',
+                  rejectButton: 'cancel',
+                  modalInput: true,
+                  confirmAction: confirmAction,
+                  contentTemplate: '/views/modals/input.html',
+                  mainText: 'classChangeName',
+                  input: {
+                      id: 'classChangeName',
+                      name: 'classChangeName',
+                      placeholder: currentClassName,
+                      value: currentClassName
+                  },
+                  condition: function () {
+                      return !!modalOptions.input.value;
+                  }
+              });
+
+              renameModal = ngDialog.open({
+                  template: '/views/modals/modal.html',
+                  className: 'modal--container modal--input',
+                  scope: modalOptions
+              });
+              return defered.promise;
+            }
 
             /**************************
              ***  PRIVATE FUNCTIONS ***

@@ -7,6 +7,24 @@
     }
 }
 
+// header
+.center-mode__header {
+  .center-mode__header_editable {
+    &:hover:after {
+      content: '';
+      font-size: 0.7em;
+      display: inline-block;
+      margin-left: 3px;
+      width: 1em;
+      height: 1em;
+      background-image: url(../images/icons/pencil.svg);
+      top: 26px;
+      background-repeat: no-repeat;
+      right: -8px;
+    }
+  }
+}
+
 .center-mode {
     background-color: #eeeeee;
 
@@ -561,7 +579,7 @@
             display: inline-block;
             margin: 10px 0;
             padding-right: 20px;
-            
+
 
             .hardware__add__container {
                 &:after {

@@ -43,8 +43,15 @@
             </button>
             <div ng-show="showMoreActionsInClass" class="table__block__item--menu table__block__moreactions--menu">
                 <ul>
+                    <li class="table__block__item--menu__item" ng-click="changeNameModal()" data-element="menu-change-name">
+                        <svg class="svg-icon svg-icon--text svg-icon--menu">
+                            <use xlink:href="#pencil"></use>
+                        </svg>
+                        {{'change-name' | translate}}
+                    </li>
+                    <li class="dropdown__item--separator--thick"></li>
                     <li class="table__block__item--menu__item" ng-csv="studentsJSON" csv-header="getCsvHeaders();" filename="{{group.name + '.csv'}}"
-                        data-element="menu-change-name">
+                        data-element="menu-download-csv">
                         <svg class="svg-icon svg-icon--text svg-icon--menu">
                             <use xlink:href="#download"></use>
                         </svg>
