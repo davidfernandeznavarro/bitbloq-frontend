@@ -1,9 +1,9 @@
 // Modals
 
 .ngdialog-close:before {
-    color: $grey-light;
     position: relative;
     right: 4px;
+    color: $grey-light;
 }
 
 .modal--container {
@@ -14,9 +14,9 @@
     &:before {
         content: '';
         display: inline-block;
+        margin-right: -0.25em;
         height: 100%;
         vertical-align: middle;
-        margin-right: -0.25em;
     }
 
     .ngdialog-overlay {
@@ -24,10 +24,10 @@
     }
 
     .ngdialog-content {
-        border-radius: 5px;
-        white-space: normal;
         display: inline-block;
+        border-radius: 5px;
         vertical-align: middle;
+        white-space: normal;
     }
 
     &.modal--feedback-error,
@@ -61,10 +61,10 @@
                 margin-bottom: 30px;
 
                 label {
-                    margin-bottom: 10px;
-                    color: $grey-dark;
                     font-size: 14px;
                     font-weight: 400;
+                    color: $grey-dark;
+                    margin-bottom: 10px;
                 }
             }
         }
@@ -77,10 +77,10 @@
         }
 
         .modal--title {
-            white-space: nowrap;
+            padding-right: 10px;
             overflow: hidden;
             text-overflow: ellipsis;
-            padding-right: 10px;
+            white-space: nowrap;
         }
     }
 
@@ -96,19 +96,19 @@
             margin-bottom: 10px;
 
             textarea {
-                resize: none;
-                border-radius: 10px;
-                color: $grey-medium;
                 font-size: 13px;
                 font-style: italic;
+                color: $grey-medium;
+                border-radius: 10px;
+                resize: none;
             }
         }
 
         .form--input {
             input {
-                color: $grey-medium;
                 font-size: 13px;
                 font-style: italic;
+                color: $grey-medium;
                 border-radius: 4px;
             }
         }
@@ -121,17 +121,17 @@
         }
 
         textarea {
-            resize: none;
-            border-radius: 10px;
-            color: $grey-medium;
             font-size: 13px;
             font-style: italic;
+            color: $grey-medium;
+            border-radius: 10px;
+            resize: none;
         }
 
         input {
-            color: $grey-medium;
             font-size: 13px;
             font-style: italic;
+            color: $grey-medium;
             border-radius: 4px;
         }
     }
@@ -141,25 +141,25 @@
             width: 560px;
 
             .modal {
-                text-align: center;
                 position: relative;
+                text-align: center;
 
                 .modal--not-logged--image {
-                    width: 65px;
-                    fill: #f33;
-                    height: 59px;
-                    margin: 20px auto;
                     display: block;
+                    margin: 20px auto;
+                    width: 65px;
+                    height: 59px;
+                    fill: #f33;
                 }
 
                 .modal--not-logged-alert {
-                    color: $black-light;
+                    display: block;
+                    font-family: 'PT Sans', sans-serif;
                     font-size: 24px;
                     font-weight: 700;
-                    font-family: 'PT Sans', sans-serif;
+                    color: $black-light;
                     margin-top: 20px;
                     margin-bottom: 20px;
-                    display: block;
                 }
 
                 .modal--not-logged--text {
@@ -208,34 +208,34 @@
                 }
 
                 span {
-                    height: 50px;
-                    min-width: 236px;
-                    background-color: $grey-item-hover;
                     display: block;
-                    line-height: 50px;
-                    padding-left: 20px;
-                    border-radius: 4px;
-                    color: $black-light;
+                    position: relative;
                     font-size: 14px;
                     font-weight: 700;
-                    text-align: left;
-                    max-width: 235px;
-                    margin: 10px auto;
+                    background-color: $grey-item-hover;
+                    color: $black-light;
                     cursor: pointer;
-                    position: relative;
+                    padding-left: 20px;
+                    margin: 10px auto;
+                    border-radius: 4px;
+                    line-height: 50px;
+                    text-align: left;
+                    height: 50px;
+                    max-width: 235px;
+                    min-width: 236px;
 
                     input {
                         margin-right: 20px;
                     }
 
                     label {
-                        height: 100%;
                         display: block;
                         position: absolute;
                         top: 0;
                         left: 0;
-                        width: 100%;
                         padding-left: 50px;
+                        width: 100%;
+                        height: 100%;
                     }
                 }
             }
@@ -304,8 +304,8 @@
 
     &.modal--download-web2board {
         .ngdialog-content {
-            width: 550px;
             text-align: center;
+            width: 550px;
         }
 
         .modal--download--webtoboard--title {
@@ -316,17 +316,17 @@
 
         .modal--download--webtoboard--text {
             margin-bottom: 2em;
-            text-align: center;
             margin-left: 1em;
             margin-right: 1em;
+            text-align: center;
         }
 
         .modal--download--webtoboard--choose {
+            display: block;
             font-weight: bold;
+            margin-bottom: 2em;
             text-align: center;
             width: 100%;
-            display: block;
-            margin-bottom: 2em;
         }
 
         .modal--download--webtoboard--block-container {
@@ -339,40 +339,40 @@
             }
 
             .webtoboard-view-all-link {
-                color: #666;
-                font-size: 12px;
-                margin-top: 17px;
                 display: block;
+                font-size: 12px;
+                color: #666;
+                margin-top: 17px;
             }
         }
 
         .modal--download--webtoboard--image--container {
             display: flex;
+            margin-left: 7%;
             width: 127px;
             height: 118px;
-            margin-left: 7%;
         }
 
         .modal--download--webtoboard--text-container {
             float: right;
 
             span {
-                height: 13px;
-                color: $black-light;
+                display: block;
                 font-size: 16px;
                 font-weight: 700;
-                line-height: 22px;
-                display: block;
+                color: $black-light;
                 cursor: default;
+                line-height: 22px;
+                height: 13px;
             }
         }
 
         .btn--webtoboard {
+            background-color: $black-light;
+            margin-top: 17px;
+            border-radius: 4px;
             width: 139px;
             height: 36px;
-            background-color: $black-light;
-            border-radius: 4px;
-            margin-top: 17px;
         }
     }
 
@@ -385,10 +385,10 @@
                     padding: 0;
 
                     .open-project--tabs {
-                        padding: 20px 30px;
-                        color: $grey-dark;
                         font-size: 14px;
                         font-weight: 700;
+                        color: $grey-dark;
+                        padding: 20px 30px;
                     }
 
                     .modal--projects--actions {
@@ -405,32 +405,32 @@
 
                     .modal--project--list {
                         margin-bottom: 30px;
-                        height: 328px;
                         overflow: auto;
+                        height: 328px;
 
                         & .modal--project--item {
-                            height: 50px;
-                            line-height: 50px;
                             padding-left: 30px;
                             padding-right: 30px;
+                            line-height: 50px;
+                            height: 50px;
 
                             .modal--project--name {
-                                width: 70%;
                                 float: left;
-                                text-overflow: ellipsis;
                                 overflow: hidden;
+                                width: 70%;
+                                text-overflow: ellipsis;
                                 white-space: nowrap;
                             }
 
                             .modal--project--date {
-                                float: right;
-                                width: 30%;
-                                float: right;
-                                color: $grey-medium;
                                 font-size: 12px;
-                                text-align: right;
-                                text-overflow: ellipsis;
+                                color: $grey-medium;
+                                float: right;
+                                float: right;
                                 overflow: hidden;
+                                text-align: right;
+                                width: 30%;
+                                text-overflow: ellipsis;
                                 white-space: nowrap;
                             }
 
@@ -450,9 +450,9 @@
                         }
 
                         .selected--item {
+                            font-weight: bold;
                             background-color: black !important;
                             color: white;
-                            font-weight: bold;
 
                             &:hover {
                                 background-color: black;
@@ -476,8 +476,8 @@
 }
 
 .modal {
-    height: 100%;
     text-align: left;
+    height: 100%;
 
     .modal__dialog {
         height: 100%;
@@ -488,16 +488,16 @@
     }
 
     .modal__header {
-        width: 100%;
-        height: 60px;
-        border-bottom: 1px solid #e2e2e2;
-        line-height: 60px;
-        color: $black-light;
+        font-family: 'PT Sans', sans-serif;
         font-size: 16px;
         font-weight: 700;
-        font-family: 'PT Sans', sans-serif;
-        border-top-right-radius: 5px;
+        color: $black-light;
+        border-bottom: 1px solid #e2e2e2;
         border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        line-height: 60px;
+        width: 100%;
+        height: 60px;
 
         .modal--close,
         h1 {
@@ -507,15 +507,15 @@
 
         h1 {
             padding-left: 30px;
-            width: calc(100% - 60px);
             border-right: 1px solid #e2e2e2;
+            width: calc(100% - 60px);
         }
 
         .modal--close {
-            width: 60px;
             border: 1px solid #e2e2e2;
             border-bottom: 0;
             float: right;
+            width: 60px;
 
             .btn__modal--close {
                 width: 100%;
@@ -523,10 +523,10 @@
             }
 
             .svg-icon__modal--close {
-                fill: $grey-light;
                 width: 13px;
                 height: 13px;
                 transition: fill 250ms;
+                fill: $grey-light;
             }
 
             &:hover {
@@ -560,9 +560,11 @@
 
     .modal--buttons {
         button {
-            margin-right: 20px;
+            margin: 0 10px;
         }
-        padding: 0 30px 30px;
+        padding-bottom: 30px;
+        display: flex;
+        justify-content: center;
     }
 }
 
@@ -607,14 +609,14 @@
 }
 
 .modal-share--short-url-input {
-    width: 100%;
     margin-top: 10px;
+    width: 100%;
 
     input {
-        height: 28px;
-        text-align: center;
         padding-right: 10px;
         border-right: 1px solid $grey-border;
+        text-align: center;
+        height: 28px;
         min-width: calc(100% - 60px);
     }
 
@@ -623,8 +625,8 @@
     }
 
     .copy-selected-text {
-        margin-left: 5px;
         position: relative;
+        margin-left: 5px;
         text-align: center;
 
         &:hover {
@@ -641,9 +643,9 @@
 }
 
 .modal__footer--text {
+    background-color: $grey-lighter;
     padding: 17px;
     text-align: center;
-    background-color: $grey-lighter;
 
     .link--modal {
         color: $black-light;
@@ -652,13 +654,13 @@
 
 .modal--web2board-errors {
     .modal__body {
-        width: 546px;
         padding: 50px;
+        width: 546px;
     }
 
     .modal--web2board-errors--title {
-        text-align: center;
         margin: 20px 0;
+        text-align: center;
     }
 
     .modal--web2board-errors--content {
@@ -673,8 +675,8 @@
         margin: 5px 0;
 
         .svg-icon {
-            fill: $green;
             width: 15px;
+            fill: $green;
         }
     }
 
@@ -705,26 +707,26 @@
 * simple and information modals
 */
 .modal--information {
-    text-align: center;
     display: block;
+    text-align: center;
 
     .modal__header {
         padding-top: 30px;
-        border-bottom: none;
         padding-left: 0;
+        border-bottom: none;
 
         h1 {
-            border-right: 0;
             padding-left: 0;
+            border-right: 0;
         }
     }
 
     .modal--title {
         font-size: 21px;
         font-weight: bold;
-        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .modal--sencond-title {
@@ -759,20 +761,20 @@
         text-align: left;
 
         li {
-            vertical-align: middle;
-            margin: 10px 0;
-            text-indent: -1.8em;
             padding-left: 1.8em;
+            margin: 10px 0;
             line-height: 1.57;
+            vertical-align: middle;
+            text-indent: -1.8em;
         }
 
         li::before {
             content: '';
-            margin-right: 11.5px;
-            background-image: url("../images/common/tickGreen.svg");
-            background-size: 13px 10px;
-            background-repeat: no-repeat;
             display: inline-block;
+            background-image: url('../images/common/tickGreen.svg');
+            background-repeat: no-repeat;
+            background-size: 13px 10px;
+            margin-right: 11.5px;
             width: 12px;
             height: 10px;
         }
@@ -784,18 +786,18 @@
         }
 
         label {
+            font-size: 13px;
+            line-height: 2.5;
             text-align: right;
             height: 35px;
-            line-height: 2.5;
-            font-size: 13px;
         }
 
         & input {
-            width: 324px;
-            height: 35px;
-            border-radius: 4px;
             background-color: $white;
             border: solid 1px $grey-border;
+            border-radius: 4px;
+            width: 324px;
+            height: 35px;
         }
 
         small {

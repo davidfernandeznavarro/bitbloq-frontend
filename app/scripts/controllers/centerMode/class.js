@@ -1,4 +1,4 @@
-(function () {
+(function() {
     'use strict';
     /**
      * @ngdoc function
@@ -7,9 +7,25 @@
      * # ClassCtrl
      * Controller of the bitbloqApp
      */
-    angular.module('bitbloqApp')
-        .controller('ClassCtrl', function ($log, $scope, $rootScope, _, ngDialog, alertsService, centerModeApi, exerciseApi, centerModeService, $routeParams, $location, commonModals, $window, exerciseService, $q) {
-
+    angular
+        .module('bitbloqApp')
+        .controller('ClassCtrl', function(
+            $log,
+            $scope,
+            $rootScope,
+            _,
+            ngDialog,
+            alertsService,
+            centerModeApi,
+            exerciseApi,
+            centerModeService,
+            $routeParams,
+            $location,
+            commonModals,
+            $window,
+            exerciseService,
+            $q
+        ) {
             $scope.moment = moment;
             $scope.exercises = [];
             $scope.group = {};
@@ -30,11 +46,11 @@
             $scope.search = {};
             $scope.filterExercisesParams = {};
             $scope.pagination = {
-                'exercises': {
-                    'current': 1
+                exercises: {
+                    current: 1
                 },
-                'tasks': {
-                    'current': 1
+                tasks: {
+                    current: 1
                 }
             };
             $scope.groupArray = {};
@@ -44,7 +60,7 @@
 
             var currentModal;
 
-            $scope.changeExerciseMenu = function (index) {
+            $scope.changeExerciseMenu = function(index) {
                 var previousState;
                 if ($scope.menuActive[index]) {
                     previousState = $scope.menuActive[index];
@@ -55,8 +71,8 @@
                 $scope.menuActive[index] = !previousState;
             };
 
-            $scope.changeStatusClass = function () {
-                centerModeApi.updateGroup($scope.group).catch(function () {
+            $scope.changeStatusClass = function() {
+                centerModeApi.updateGroup($scope.group).catch(function() {
                     alertsService.add({
                         text: 'updateGroup_alert_Error',
                         id: 'deleteGroup',
@@ -65,13 +81,13 @@
                 });
             };
 
-            $scope.changeGroupColor = function () {
-                centerModeApi.updateGroup($scope.group).then(function () {
+            $scope.changeGroupColor = function() {
+                centerModeApi.updateGroup($scope.group).then(function() {
                     $scope.colorPickerFlag.open = false;
                 });
             };
 
-            $scope.closeGroup = function () {
+            $scope.closeGroup = function() {
                 var parent = $rootScope,
                     modalOptions = parent.$new();
                 _.extend(modalOptions, {
@@ -91,33 +107,49 @@
                 });
             };
 
-            $scope.editExerciseGroup = function (exercise) {
-                centerModeApi.getGroupsByExercise(exercise._id).then(function (response) {
-                    exerciseService.assignGroup(exercise, $scope.common.user._id, response.data, null, true).then(function (response) {
-                        _getExercisesGroup($routeParams.id, $routeParams.page);
+            $scope.editExerciseGroup = function(exercise) {
+                centerModeApi
+                    .getGroupsByExercise(exercise._id)
+                    .then(function(response) {
+                        exerciseService
+                            .assignGroup(
+                                exercise,
+                                $scope.common.user._id,
+                                response.data,
+                                null,
+                                true
+                            )
+                            .then(function() {
+                                _getExercisesGroup(
+                                    $routeParams.id,
+                                    $routeParams.page
+                                );
+                            });
                     });
-                });
             };
 
-            $scope.deleteGroup = function () {
-                var confirmAction = function () {
-                    centerModeApi.deleteGroup($scope.group._id).then(function () {
-                        alertsService.add({
-                            text: 'centerMode_alert_deleteClass',
-                            id: 'deleteGroup',
-                            type: 'ok',
-                            time: 5000
-                        });
-                        $location.path('classes');
-                    }).catch(function () {
-                        alertsService.add({
-                            text: 'centerMode_alert_deleteClass-Error',
-                            id: 'deleteGroup',
-                            type: 'ko'
-                        });
-                    });
-                    currentModal.close();
-                },
+            $scope.deleteGroup = function() {
+                var confirmAction = function() {
+                        centerModeApi
+                            .deleteGroup($scope.group._id)
+                            .then(function() {
+                                alertsService.add({
+                                    text: 'centerMode_alert_deleteClass',
+                                    id: 'deleteGroup',
+                                    type: 'ok',
+                                    time: 5000
+                                });
+                                $location.path('classes');
+                            })
+                            .catch(function() {
+                                alertsService.add({
+                                    text: 'centerMode_alert_deleteClass-Error',
+                                    id: 'deleteGroup',
+                                    type: 'ko'
+                                });
+                            });
+                        currentModal.close();
+                    },
                     parent = $rootScope,
                     modalOptions = parent.$new();
                 _.extend(modalOptions, {
@@ -125,50 +157,64 @@
                     confirmButton: 'button_delete',
                     confirmAction: confirmAction,
                     rejectButton: 'modal-button-cancel',
-                    contentTemplate: '/views/modals/centerMode/deleteGroup.html',
+                    contentTemplate:
+                        '/views/modals/centerMode/deleteGroup.html',
                     finishAction: $scope.closeGroup,
                     modalButtons: true
                 });
 
                 currentModal = ngDialog.open({
                     template: '/views/modals/modal.html',
-                    className: 'modal--container modal--input modal--delete-group',
+                    className:
+                        'modal--container modal--input modal--delete-group',
                     scope: modalOptions
                 });
             };
 
-            $scope.deleteTask = function (task) {
-                var confirmAction = function () {
-                    exerciseApi.deleteTask(task._id).then(function () {
-                        _.remove($scope.tasks, task);
-                        alertsService.add({
-                            text: 'centerMode_alert_deleteTask',
-                            id: 'deleteTask',
-                            type: 'ok',
-                            time: 5000
-                        });
-                    }).catch(function () {
-                        alertsService.add({
-                            text: 'centerMode_alert_deleteTask-error',
-                            id: 'deleteTask',
-                            type: 'ko'
-                        });
-                    });
-                    currentModal.close();
-                },
+            $scope.deleteTask = function(task) {
+                var confirmAction = function() {
+                        exerciseApi
+                            .deleteTask(task._id)
+                            .then(function() {
+                                _.remove($scope.tasks, task);
+                                alertsService.add({
+                                    text: 'centerMode_alert_deleteTask',
+                                    id: 'deleteTask',
+                                    type: 'ok',
+                                    time: 5000
+                                });
+                            })
+                            .catch(function() {
+                                alertsService.add({
+                                    text: 'centerMode_alert_deleteTask-error',
+                                    id: 'deleteTask',
+                                    type: 'ko'
+                                });
+                            });
+                        currentModal.close();
+                    },
                     parent = $rootScope,
                     modalOptions = parent.$new(),
-                    student = $scope.student && $scope.student.firstName ? $scope.student.firstName + $scope.student.lastName : $scope.student.username;
+                    student =
+                        $scope.student && $scope.student.firstName
+                            ? $scope.student.firstName + $scope.student.lastName
+                            : $scope.student.username;
                 _.extend(modalOptions, {
-                    title: $scope.common.translate('deleteTask_modal_title') + ': ' + task.name,
+                    title:
+                        $scope.common.translate('deleteTask_modal_title') +
+                        ': ' +
+                        task.name,
                     confirmButton: 'button_delete',
                     value: $scope.student.username,
                     confirmAction: confirmAction,
                     rejectButton: 'modal-button-cancel',
                     contentTemplate: '/views/modals/information.html',
-                    textContent: $scope.common.translate('deleteTask_modal_information', {
-                        value: student
-                    }),
+                    textContent: $scope.common.translate(
+                        'deleteTask_modal_information',
+                        {
+                            value: student
+                        }
+                    ),
                     secondaryContent: 'deleteTask_modal_information-explain',
                     modalButtons: true
                 });
@@ -180,8 +226,7 @@
                 });
             };
 
-
-            $scope.deleteExerciseInGroup = function (exerciseId) {
+            $scope.deleteExerciseInGroup = function(exerciseId) {
                 var parent = $rootScope,
                     modalOptions = parent.$new();
 
@@ -190,9 +235,12 @@
                     confirmButton: 'unassignGroup_modal_acceptButton',
                     confirmAction: _deleteTasks,
                     rejectButton: 'modal-button-cancel',
-                    textContent: $scope.common.translate('unassignClass_modal_info', {
-                        value: $scope.group.name
-                    }),
+                    textContent: $scope.common.translate(
+                        'unassignClass_modal_info',
+                        {
+                            value: $scope.group.name
+                        }
+                    ),
                     contentTemplate: '/views/modals/information.html',
                     modalButtons: true
                 });
@@ -204,35 +252,47 @@
                 });
 
                 function _deleteTasks() {
-                    centerModeApi.unassignExerciseInGroup(exerciseId, $scope.group._id).then(function () {
-                        confirmDeleteModal.close();
-                        _getExercisesGroup($routeParams.id, $routeParams.page);
-                    });
+                    centerModeApi
+                        .unassignExerciseInGroup(exerciseId, $scope.group._id)
+                        .then(function() {
+                            confirmDeleteModal.close();
+                            _getExercisesGroup(
+                                $routeParams.id,
+                                $routeParams.page
+                            );
+                        });
                 }
             };
 
-            $scope.deleteStudent = function (student) {
-                var confirmAction = function () {
-                    centerModeApi.deleteStudent(student._id, $scope.group._id).then(function () {
-                        alertsService.add({
-                            text: 'centerMode_alert_deleteStudent',
-                            id: 'deleteStudent',
-                            type: 'ok',
-                            time: 5000
-                        });
-                        $location.path('class/' + $scope.group._id);
-                    }).catch(function () {
-                        alertsService.add({
-                            text: 'centerMode_alert_deleteStudent-error',
-                            id: 'deleteTStudent',
-                            type: 'error'
-                        });
-                    });
-                    studentModal.close();
-                },
+            $scope.deleteStudent = function(student) {
+                var confirmAction = function() {
+                        centerModeApi
+                            .deleteStudent(student._id, $scope.group._id)
+                            .then(function() {
+                                alertsService.add({
+                                    text: 'centerMode_alert_deleteStudent',
+                                    id: 'deleteStudent',
+                                    type: 'ok',
+                                    time: 5000
+                                });
+                                $location.path('class/' + $scope.group._id);
+                            })
+                            .catch(function() {
+                                alertsService.add({
+                                    text:
+                                        'centerMode_alert_deleteStudent-error',
+                                    id: 'deleteTStudent',
+                                    type: 'error'
+                                });
+                            });
+                        studentModal.close();
+                    },
                     parent = $rootScope,
                     modalOptions = parent.$new(),
-                    studentName = $scope.student && $scope.student.firstName ? $scope.student.firstName + $scope.student.lastName : $scope.student.username;
+                    studentName =
+                        $scope.student && $scope.student.firstName
+                            ? $scope.student.firstName + $scope.student.lastName
+                            : $scope.student.username;
 
                 _.extend(modalOptions, {
                     title: 'deleteStudent_modal_title',
@@ -240,9 +300,12 @@
                     rejectButton: 'cancel',
                     confirmAction: confirmAction,
                     contentTemplate: '/views/modals/information.html',
-                    textContent: $scope.common.translate('deleteStudentClass_modal_information', {
-                        value: studentName
-                    }),
+                    textContent: $scope.common.translate(
+                        'deleteStudentClass_modal_information',
+                        {
+                            value: studentName
+                        }
+                    ),
                     modalButtons: true
                 });
 
@@ -253,15 +316,15 @@
                 });
             };
 
-            $scope.getExercisesPaginated = function (pageno) {
+            $scope.getExercisesPaginated = function(pageno) {
                 _getExercisesGroup($routeParams.id, pageno);
             };
 
-            $scope.getTasksPaginated = function (pageno) {
+            $scope.getTasksPaginated = function(pageno) {
                 _getTasks($routeParams.id, $routeParams.studentId, pageno);
             };
 
-            $scope.sortInstances = function (type) {
+            $scope.sortInstances = function(type) {
                 $log.debug('sortInstances', type);
                 switch (type) {
                     case 'explore-sortby-recent':
@@ -291,94 +354,116 @@
                 }
             };
 
-            $scope.saveUrl = function (newUrl) {
+            $scope.saveUrl = function(newUrl) {
                 $scope.common.lastUrl = $location.url();
                 $location.url(newUrl);
             };
-
 
             function _moreOptionsDropdownGlobalClickHandler(e) {
                 console.log(e);
                 if (e.target.className.indexOf('btn--showMoreActions') === -1) {
                     $scope.showMoreActionsInClass = false;
                 }
-                document.body.removeEventListener('click', _moreOptionsDropdownGlobalClickHandler, true);
+                document.body.removeEventListener(
+                    'click',
+                    _moreOptionsDropdownGlobalClickHandler,
+                    true
+                );
             }
 
-            $scope.setMoreOptionsInClass = function () {
+            $scope.setMoreOptionsInClass = function() {
                 $scope.showMoreActionsInClass = !$scope.showMoreActionsInClass;
                 if ($scope.showMoreActionsInClass) {
-                    document.body.addEventListener('click', _moreOptionsDropdownGlobalClickHandler, true);
+                    document.body.addEventListener(
+                        'click',
+                        _moreOptionsDropdownGlobalClickHandler,
+                        true
+                    );
                 }
             };
 
-            $scope.searchExercises = function () {
+            $scope.searchExercises = function() {
                 $location.search($scope.filterExercisesParams);
-                getTeacherExercisesPaginated($scope.pageno, $scope.filterExercisesParams);
+                getTeacherExercisesPaginated(
+                    $scope.pageno,
+                    $scope.filterExercisesParams
+                );
                 _getExercisesCount($scope.filterExercisesParams);
             };
 
-            $scope.setTab = function (tab) {
+            $scope.setTab = function(tab) {
                 if (!tab) {
-                    tab = sessionStorage['classViewSelectedTab_' + $routeParams.id] || 'exercises';
+                    tab =
+                        sessionStorage[
+                            'classViewSelectedTab_' + $routeParams.id
+                        ] || 'exercises';
                 }
                 $scope.selectedTab = tab;
 
                 sessionStorage['classViewSelectedTab_' + $routeParams.id] = tab;
             };
 
-            $scope.getCsvHeaders = function () {
-                var translations = $scope.common.translate(['surname', 'name', 'centerMode_column_averageMark', 'email', 'user-name']),
+            $scope.getCsvHeaders = function() {
+                var translations = $scope.common.translate([
+                        'surname',
+                        'name',
+                        'centerMode_column_averageMark',
+                        'email',
+                        'user-name'
+                    ]),
                     headers = [];
 
-                _.forEach(translations, function (element) {
+                _.forEach(translations, function(element) {
                     headers.push(element);
                 });
 
                 return headers;
             };
 
-            $scope.changeNameModal = function () {
-              var renameModal,
-                  defered = $q.defer(),
-                  currentClassName = $scope.group.name,
-                  modalOptions = $rootScope.$new();
+            $scope.changeNameModal = function() {
+                var renameModal,
+                    defered = $q.defer(),
+                    currentClassName = $scope.group.name,
+                    modalOptions = $rootScope.$new();
 
-              function confirmAction(newName) {
-                  console.log('DENTRO');
-                  console.log('>> Cambiando nombre a ' + newName);
-                  $scope.group.name = newName;
-                  renameModal.close();
-                  // defered.resolve();
+                function confirmAction(newName) {
+                    console.log('DENTRO');
+                    if ($scope.group.name !== newName) {
+                        console.log('>> Cambiando nombre a ' + newName);
+                        $scope.group.name = newName;
+                        centerModeApi.updateGroup($scope.group)
+                    }
+                    renameModal.close();
+                    // defered.resolve();
                 }
 
-              _.extend(modalOptions, {
-                  title: 'change-name',
-                  modalButtons: true,
-                  confirmButton: 'save',
-                  rejectButton: 'cancel',
-                  modalInput: true,
-                  confirmAction: confirmAction,
-                  contentTemplate: '/views/modals/input.html',
-                  mainText: 'classChangeName',
-                  input: {
-                      id: 'classChangeName',
-                      name: 'classChangeName',
-                      placeholder: currentClassName,
-                      value: currentClassName
-                  },
-                  condition: function () {
-                      return !!modalOptions.input.value;
-                  }
-              });
+                _.extend(modalOptions, {
+                    title: 'change-name',
+                    modalButtons: true,
+                    confirmButton: 'save',
+                    rejectButton: 'cancel',
+                    modalInput: true,
+                    confirmAction: confirmAction,
+                    contentTemplate: '/views/modals/input.html',
+                    mainText: 'classChangeName',
+                    input: {
+                        id: 'classChangeName',
+                        name: 'classChangeName',
+                        placeholder: currentClassName,
+                        value: currentClassName
+                    },
+                    condition: function() {
+                        return !!modalOptions.input.value;
+                    }
+                });
 
-              renameModal = ngDialog.open({
-                  template: '/views/modals/modal.html',
-                  className: 'modal--container modal--input',
-                  scope: modalOptions
-              });
-              return defered.promise;
-            }
+                renameModal = ngDialog.open({
+                    template: '/views/modals/modal.html',
+                    className: 'modal--container modal--input',
+                    scope: modalOptions
+                });
+                return defered.promise;
+            };
 
             /**************************
              ***  PRIVATE FUNCTIONS ***
@@ -390,10 +475,14 @@
                     page = $routeParams.page;
                 }
                 if ($scope.urlSubType && $scope.urlSubType === 'student') {
-                    $scope.pagination.tasks.current = $routeParams.page ? $routeParams.page : 1;
+                    $scope.pagination.tasks.current = $routeParams.page
+                        ? $routeParams.page
+                        : 1;
                     _getTasks($routeParams.id, $routeParams.studentId, page);
                 } else {
-                    $scope.pagination.exercises.current = $routeParams.page ? $routeParams.page : 1;
+                    $scope.pagination.exercises.current = $routeParams.page
+                        ? $routeParams.page
+                        : 1;
                     _getGroup($routeParams.id);
                     _getStudentsGroup($routeParams.id);
                     _getExercisesGroup($routeParams.id, page);
@@ -401,48 +490,59 @@
             }
 
             function getTeacherExercisesPaginated(pageno, search) {
-                centerModeApi.getExercises($scope.common.user._id, {
-                    'page': pageno,
-                    'pageSize': $scope.itemsPerPage,
-                    'searchParams': search ? search : {}
-                }).then(function (response) {
-                    $scope.exercises = response.data;
-                    $location.search('page', pageno);
-                });
+                centerModeApi
+                    .getExercises($scope.common.user._id, {
+                        page: pageno,
+                        pageSize: $scope.itemsPerPage,
+                        searchParams: search ? search : {}
+                    })
+                    .then(function(response) {
+                        $scope.exercises = response.data;
+                        $location.search('page', pageno);
+                    });
             }
 
             function _closeGroupAction() {
                 $scope.classStateCheck = false;
                 $scope.group.status = 'closed';
                 $scope.group.color = '#c0c3c9';
-                centerModeApi.updateGroup($scope.group).then(function () {
-                    alertsService.add({
-                        text: 'centerMode_alert_closeGroup',
-                        id: 'closeGroup',
-                        type: 'ok',
-                        time: 5000
+                centerModeApi
+                    .updateGroup($scope.group)
+                    .then(function() {
+                        alertsService.add({
+                            text: 'centerMode_alert_closeGroup',
+                            id: 'closeGroup',
+                            type: 'ok',
+                            time: 5000
+                        });
+                    })
+                    .catch(function() {
+                        alertsService.add({
+                            text: 'centerMode_alert_closeGroup-Error',
+                            id: 'closeGroup',
+                            type: 'ko'
+                        });
                     });
-                }).catch(function () {
-                    alertsService.add({
-                        text: 'centerMode_alert_closeGroup-Error',
-                        id: 'closeGroup',
-                        type: 'ko'
-                    });
-                });
                 currentModal.close();
             }
 
             function _getExercisesCount(searchText) {
-                var searchParams = searchText ? searchText : ($routeParams.name ? {
-                    'name': $routeParams.name
-                } : '');
-                centerModeApi.getExercisesCount($scope.common.user._id, searchParams).then(function (response) {
-                    $scope.exercisesCount = response.data.count;
-                });
+                var searchParams = searchText
+                    ? searchText
+                    : $routeParams.name
+                      ? {
+                            name: $routeParams.name
+                        }
+                      : '';
+                centerModeApi
+                    .getExercisesCount($scope.common.user._id, searchParams)
+                    .then(function(response) {
+                        $scope.exercisesCount = response.data.count;
+                    });
             }
 
             function _getGroup(groupId) {
-                centerModeApi.getGroup(groupId).then(function (response) {
+                centerModeApi.getGroup(groupId).then(function(response) {
                     $scope.secondaryBreadcrumb = true;
                     $scope.group = response.data;
                     $scope.classStateCheck = $scope.group.status === 'open';
@@ -450,74 +550,102 @@
             }
 
             function _getStudentsGroup(groupId) {
-                centerModeApi.getStudentsGroup(groupId).then(function (response) {
-                    $scope.students = response.data;
-                    _.forEach($scope.students, function (student) {
-                        $scope.studentsJSON.push(_.pick(student, 'lastName', 'firstName', 'averageMark', 'email', 'username'));
+                centerModeApi
+                    .getStudentsGroup(groupId)
+                    .then(function(response) {
+                        $scope.students = response.data;
+                        _.forEach($scope.students, function(student) {
+                            $scope.studentsJSON.push(
+                                _.pick(
+                                    student,
+                                    'lastName',
+                                    'firstName',
+                                    'averageMark',
+                                    'email',
+                                    'username'
+                                )
+                            );
+                        });
                     });
-                });
             }
 
             function _getExercisesGroup(groupId, page) {
                 var pageno = page ? page : 1;
                 var pageParams = {
-                    'page': pageno
+                    page: pageno
                 };
-                centerModeApi.getExercisesGroup(groupId, pageParams).then(function (response) {
-                    $scope.exercises = response.data.exercises;
-                    $scope.exercisesCount = response.data.count;
-                    $location.search('page', pageno);
-                });
+                centerModeApi
+                    .getExercisesGroup(groupId, pageParams)
+                    .then(function(response) {
+                        $scope.exercises = response.data.exercises;
+                        $scope.exercisesCount = response.data.count;
+                        $location.search('page', pageno);
+                    });
             }
 
             function _getTasks(groupId, studentId, pageno) {
                 var page = pageno ? pageno : 1,
                     pageParams = {
-                        'page': page
+                        page: page
                     };
-                exerciseApi.getTasks(groupId, studentId, pageParams).then(function (response) {
-                    $scope.exercises = response.data;
-                    if ($scope.urlSubType === 'student') {
-                        $scope.exercises.tasks.forEach(function (task) {
-                            if (task.status === 'pending' && exerciseService.getDatetime(task.endDate, true)) {
-                                task.status = 'notDelivered';
-                            }
-                        });
-                        $scope.tertiaryBreadcrumb = true;
-                        $scope.tasks = response.data.tasks;
-                        $scope.tasksCount = response.data.count;
-                        $scope.group = response.data.group;
-                        $scope.student = response.data.student;
-                        $location.search('page', page);
-                    }
-                });
+                exerciseApi
+                    .getTasks(groupId, studentId, pageParams)
+                    .then(function(response) {
+                        $scope.exercises = response.data;
+                        if ($scope.urlSubType === 'student') {
+                            $scope.exercises.tasks.forEach(function(task) {
+                                if (
+                                    task.status === 'pending' &&
+                                    exerciseService.getDatetime(
+                                        task.endDate,
+                                        true
+                                    )
+                                ) {
+                                    task.status = 'notDelivered';
+                                }
+                            });
+                            $scope.tertiaryBreadcrumb = true;
+                            $scope.tasks = response.data.tasks;
+                            $scope.tasksCount = response.data.count;
+                            $scope.group = response.data.group;
+                            $scope.student = response.data.student;
+                            $location.search('page', page);
+                        }
+                    });
             }
 
             function _init() {
-                $scope.common.itsUserLoaded().then(function () {
-                    $scope.common.itsRoleLoaded().then(function () {
-                        switch ($scope.common.userRole) {
-                            case 'headmaster':
-                            case 'teacher':
-                                _checkUrl();
-                                break;
-                            default:
-                                $location.path('/projects');
-                        }
-                    });
-                }, function () {
-                    $scope.common.setUser();
-                    alertsService.add({
-                        text: 'view-need-tobe-logged',
-                        id: 'view-need-tobe-logged',
-                        type: 'error'
-                    });
-                    $scope.common.goToLogin();
-                });
+                $scope.common.itsUserLoaded().then(
+                    function() {
+                        $scope.common.itsRoleLoaded().then(function() {
+                            switch ($scope.common.userRole) {
+                                case 'headmaster':
+                                case 'teacher':
+                                    _checkUrl();
+                                    break;
+                                default:
+                                    $location.path('/projects');
+                            }
+                        });
+                    },
+                    function() {
+                        $scope.common.setUser();
+                        alertsService.add({
+                            text: 'view-need-tobe-logged',
+                            id: 'view-need-tobe-logged',
+                            type: 'error'
+                        });
+                        $scope.common.goToLogin();
+                    }
+                );
             }
 
-            $scope.$on('$destroy', function () {
-                document.body.removeEventListener('click', _moreOptionsDropdownGlobalClickHandler, true);
+            $scope.$on('$destroy', function() {
+                document.body.removeEventListener(
+                    'click',
+                    _moreOptionsDropdownGlobalClickHandler,
+                    true
+                );
             });
 
             /************************
@@ -525,6 +653,5 @@
              ************************/
 
             _init();
-
         });
 })();
