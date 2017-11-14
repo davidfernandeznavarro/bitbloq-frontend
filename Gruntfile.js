@@ -461,7 +461,7 @@ module.exports = function (grunt) {
             makeConfig: {
                 options: {
                     name: 'makeconfig',
-                    dest: 'app/res/config/makeConfig.js'
+                    dest: 'app/scripts/makeConfig.js'
                 },
                 constants: {
                     makeConfig: ''
