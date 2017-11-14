@@ -33,3 +33,4 @@ package-template.json
 sendToTranslate
 
 package-lock\.json
+makeConfig.js
