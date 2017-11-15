@@ -164,7 +164,7 @@ angular.module('bitbloqApp')
                     bloqsUtils.redrawTree(tempBloq, bloqs.bloqs, bloqs.connectors);
                 }
             }
-            bloqsUtils.drawTree(bloqs.bloqs, bloqs.connectors);
+            //bloqsUtils.drawTree(bloqs.bloqs, bloqs.connectors);
         };
 
         $scope.onFieldKeyDown = function (event) {
