@@ -27,7 +27,7 @@
             $scope.exerciseService = exerciseService;
             $scope.centerModeService = centerModeService;
 
-            $scope.groupSelected;
+            $scope.groupSelected = false;
             $scope.moment = moment;
 
             $scope.assignToGroup = function(exercise) {

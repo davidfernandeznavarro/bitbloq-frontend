@@ -33,6 +33,7 @@
                             <label class="without-date" for="{{'withoutDate' + group._id}}">{{'centerMode_exerciseWithoutDate' | translate}}</label>
                         </span>
                         <div ng-show="!group.withoutDate">
+                          <div class="dropdown__item--separator--thick"></div>
                             <div class="picker__container" ng-init="group.calendar.from={}">
                                 <span class="picker-title">{{'centerMode_date_from' | translate}}</span>
                                 <div class="date-picker" ng-init="group.calendar.from.date=oldGroups[group._id]?oldGroups[group._id][0].initDate:''">
@@ -76,6 +77,10 @@
                                     </button>
                                 </div>
                             </div>
+                            <span class="checkbox">
+                                <input type="checkbox" name="date" id="{{'hideUntilDate' + group._id}}" ng-model="group.hideUntilDate" />
+                                <label class="hide-until-date" for="{{'hideUntilDate' + group._id}}">{{'centerMode_exerciseHideUntilDate' | translate}}</label>
+                            </span>
                         </div>
                     </div>
                 </ng-form>

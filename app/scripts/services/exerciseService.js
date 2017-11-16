@@ -102,9 +102,11 @@ angular.module('bitbloqApp')
                 function confirmAction(groups) {
                     if (!exercise._id) {
                         _saveExercise().then(function () {
+                            console.log(groups);
                             assign(groups, exports.exercise);
                         });
                     } else {
+                        console.log(groups);
                         assign(groups, exercise);
                     }
 
