@@ -102,11 +102,9 @@ angular.module('bitbloqApp')
                 function confirmAction(groups) {
                     if (!exercise._id) {
                         _saveExercise().then(function () {
-                            console.log(groups);
                             assign(groups, exports.exercise);
                         });
                     } else {
-                        console.log(groups);
                         assign(groups, exercise);
                     }
 
@@ -161,7 +159,8 @@ angular.module('bitbloqApp')
                                 group: group._id,
                                 exercise: project._id,
                                 initDate: group.calendar.from.date,
-                                endDate: group.calendar.to.date
+                                endDate: group.calendar.to.date,
+                                hideUntilDate: group.hideUntilDate
                             });
                         }
                     });

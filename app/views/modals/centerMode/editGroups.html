@@ -77,7 +77,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <span class="checkbox">
+                            <span class="checkbox" ng-init="group.hideUntilDate=oldGroups[group._id][0].hideUntilDate">
                                 <input type="checkbox" name="date" id="{{'hideUntilDate' + group._id}}" ng-model="group.hideUntilDate" />
                                 <label class="hide-until-date" for="{{'hideUntilDate' + group._id}}">{{'centerMode_exerciseHideUntilDate' | translate}}</label>
                             </span>
