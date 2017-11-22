@@ -253,8 +253,8 @@ angular
             },
             {
                 _id: 'offlineNoPlaca',
-                title: '',
-                data: 'support-offlineNoPlaca-title',
+                title: 'support-offlineNoPlaca-title',
+                data: '',
                 next: [
                     {
                         _id: 'offlineDriversWindows',
@@ -1251,7 +1251,7 @@ angular
             {
                 _id: 'hardLEDsTestIni',
                 permalink: 'hardLEDs',
-                title: 'support-hardLEDsTestIni-titleTest',
+                title: 'support-hardLEDsTestIni-title',
                 extData: 'hardLEDsTestIni.html',
                 next: []
             },
