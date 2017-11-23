@@ -9,7 +9,7 @@
  */
 angular
     .module('bitbloqApp')
-    .controller('SupportCtrl', function (
+    .controller('SupportCtrl', function(
         $translate,
         $scope,
         $location,
@@ -149,8 +149,7 @@ angular
             },
             {
                 _id: 'offlineInstall',
-                title:
-                    'Compruebe que Bitbloq offline se inicia correctamente',
+                title: 'Compruebe que Bitbloq offline se inicia correctamente',
                 data:
                     '<p>Asegurese de que ha descomprimido Bitbloq offline en una carpeta donde su usuario tiene permisos; le recomendamos utilizar la carpeta <i class="text--secondary">"Mis Documentos"</i> o el escritorio.</p><p><strong>Si no se está iniciando correctamente, indíquenos su sistema operativo:</strong></p>',
                 next: [
@@ -1172,7 +1171,8 @@ angular
                         _id: 'bqZumForm',
                         class: 'btn--secondary',
                         icon: '',
-                        response: 'Si es la placa BQ ZUM Core (BT-328), haga click aquí'
+                        response:
+                            'Si es la placa BQ ZUM Core (BT-328), haga click aquí'
                     }
                 ]
             },
@@ -1180,14 +1180,16 @@ angular
                 _id: 'bqZumForm',
                 permalink: 'bqZumForm',
                 title: 'Contacta con nuestro soporte técnico',
-                data: '<p>Para ponerse en contacto con nuestros técnicos, envie un mail a <a href="mailto:soporte.bitbloq@bq.com" target="_blank" class="icon--url">soporte.bitbloq@bq.com</a>, incluyendo:<ul><li class="icon--check">Número de <strong>factura</strong></li><li class="icon--check">Número de <strong>serie</strong> de la placa</li></ul></p>',
+                data:
+                    '<p>Para ponerse en contacto con nuestros técnicos, envie un mail a <a href="mailto:soporte.bitbloq@bq.com" target="_blank" class="icon--url">soporte.bitbloq@bq.com</a>, incluyendo:<ul><li class="icon--check">Número de <strong>factura</strong></li><li class="icon--check">Número de <strong>serie</strong> de la placa</li></ul></p>',
                 next: [
                     {
                         _id: 'end',
                         class: 'btn--primary',
                         icon: 'icon--ok icon--big',
                         response: 'Fin del proceso de soporte'
-                    }]
+                    }
+                ]
             },
             {
                 _id: 'xp',
@@ -1623,12 +1625,54 @@ angular
                         response: 'El Zumbador no suena'
                     }
                 ]
+            },
+            {
+                _id: 'hardButton',
+                permalink: 'hardButton',
+                title: 'Correcta configuración del componente Pulsador',
+                extData: 'hardButton.html',
+                next: [
+                    {
+                        _id: 'hardButtonTestIni',
+                        class: 'btn--primary',
+                        icon: 'icon--ok icon--big',
+                        response:
+                            'Si, el componente está conectado como en la imagen'
+                    }
+                ]
+            },
+            {
+                _id: 'hardButtonTestIni',
+                title: 'Test automático del componente Pulsador',
+                extData: 'hardButtonTestIni.html',
+                next: []
+            },
+            {
+                _id: 'hardButtonTestEnd',
+                permalink: 'hardButtonTestEnd',
+                title: 'Comprueba si el led 13 se ilumina al presionar el Pulsador',
+                data:
+                    '<p class="support--centered"><img class="support--gif-video" src="images/support/zum-button-comm2.gif" /></p><p>Tras cargar nuestro programa de test en su placa, <strong>al presionar su componente Pulsador se debería estar encendiendo el Led 13 de su placa</strong>; y, por lo tanto, debería estar <strong>funcionando correctamente</strong>.</p>',
+                next: [
+                    {
+                        _id: 'end',
+                        class: 'btn--primary',
+                        icon: 'icon--ok icon--big',
+                        response: 'El led se ilumina al pulsar'
+                    },
+                    {
+                        _id: 'form',
+                        class: 'btn--primary btn--no',
+                        icon: 'icon--no icon--big',
+                        response: 'El led no se ilumina al pulsar'
+                    }
+                ]
             }
         ];
 
-        var getCard = function (id, isPermalink) {
+        var getCard = function(id, isPermalink) {
             return db
-                .filter(function (card) {
+                .filter(function(card) {
                     return id === (isPermalink ? card.permalink : card._id);
                 })
                 .pop();
@@ -1651,7 +1695,7 @@ angular
             common.supportSteps.push($scope.card.title);
         }
 
-        $scope.go = function (childId, isPermalink) {
+        $scope.go = function(childId, isPermalink) {
             if (childId) {
                 var child = isPermalink
                     ? getCard(childId, true)
@@ -1678,14 +1722,14 @@ angular
             }
         };
 
-        $scope.goBack = function () {
+        $scope.goBack = function() {
             $window.history.back();
         };
 
         // switches
-        common.itsUserLoaded().then(function () {
+        common.itsUserLoaded().then(function() {
             $scope.user = common.user;
-            $scope.switchUserChromeAppMode = function () {
+            $scope.switchUserChromeAppMode = function() {
                 userApi.update({
                     chromeapp: common.user.chromeapp
                 });
@@ -1704,6 +1748,12 @@ angular
                 uuid: 'led',
                 name: 'LED',
                 permalink: 'hardLEDs',
+                svg: ''
+            },
+            {
+                uuid: 'button',
+                name: 'Pulsador',
+                permalink: 'hardButton',
                 svg: ''
             },
             {
@@ -1732,11 +1782,16 @@ angular
             }
         ];
 
-        $scope.getSVG = function (item) {
+        $scope.getSVG = function(item) {
             if (item.svg === '') {
                 $http
-                    .get('images/components/' + utils.getTimestampPrefix() + item.uuid + '.svg')
-                    .then(function (res) {
+                    .get(
+                        'images/components/' +
+                            utils.getTimestampPrefix() +
+                            item.uuid +
+                            '.svg'
+                    )
+                    .then(function(res) {
                         //we want to delete all height and width atributes form the original svg files
                         item.svg = _.replace(
                             res.data,
@@ -1747,13 +1802,13 @@ angular
             }
         };
 
-        $scope.renderSVG = function (item) {
+        $scope.renderSVG = function(item) {
             return $sce.trustAsHtml(item.svg); // all of this for the svg animations to fly! :)
         };
 
         // imgModal
 
-        $scope.imgModal = function (img) {
+        $scope.imgModal = function(img) {
             console.log('dentro');
             var parent = $rootScope,
                 modalOptions = parent.$new();
@@ -1771,7 +1826,7 @@ angular
 
         // hw test
         $scope.hwTestTries = 0;
-        $scope.hwTestStart = function (component, board) {
+        $scope.hwTestStart = function(component, board) {
             switch (component) {
                 case 'led':
                     if (board === 'bqzum') {
@@ -1782,10 +1837,10 @@ angular
                                 },
                                 hex: programHex.supportLED.bt328
                             })
-                            .then(function () {
+                            .then(function() {
                                 $scope.go('hardLEDsTestEnd', true);
                             })
-                            .catch(function () {
+                            .catch(function() {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('form', true);
                                 } else {
@@ -1800,10 +1855,10 @@ angular
                                 },
                                 hex: programHex.supportLED.uno
                             })
-                            .then(function () {
+                            .then(function() {
                                 $scope.go('hardLEDsTestEnd', true);
                             })
-                            .catch(function () {
+                            .catch(function() {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('hard2forum', true);
                                 } else {
@@ -1821,10 +1876,10 @@ angular
                                 },
                                 hex: programHex.supportBuzz.bt328
                             })
-                            .then(function () {
+                            .then(function() {
                                 $scope.go('hardBuzzTestEnd', true);
                             })
-                            .catch(function () {
+                            .catch(function() {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('form', true);
                                 } else {
@@ -1839,10 +1894,10 @@ angular
                                 },
                                 hex: programHex.supportBuzz.uno
                             })
-                            .then(function () {
+                            .then(function() {
                                 $scope.go('hardBuzzTestEnd', true);
                             })
-                            .catch(function () {
+                            .catch(function() {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('hard2forum', true);
                                 } else {
@@ -1860,10 +1915,10 @@ angular
                                 },
                                 hex: programHex.supportLCD.bt328
                             })
-                            .then(function () {
+                            .then(function() {
                                 $scope.go('hardLCDsTestEnd', true);
                             })
-                            .catch(function () {
+                            .catch(function() {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('form', true);
                                 } else {
@@ -1878,10 +1933,10 @@ angular
                                 },
                                 hex: programHex.supportLCD.uno
                             })
-                            .then(function () {
+                            .then(function() {
                                 $scope.go('hardLCDsTestEnd', true);
                             })
-                            .catch(function () {
+                            .catch(function() {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('hard2forum', true);
                                 } else {
@@ -1899,10 +1954,10 @@ angular
                                 },
                                 hex: programHex.supportUS.bt328
                             })
-                            .then(function () {
+                            .then(function() {
                                 $scope.go('hardUSTestEnd', true);
                             })
-                            .catch(function () {
+                            .catch(function() {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('form', true);
                                 } else {
@@ -1917,10 +1972,49 @@ angular
                                 },
                                 hex: programHex.supportUS.uno
                             })
-                            .then(function () {
+                            .then(function() {
                                 $scope.go('hardUSTestEnd', true);
                             })
-                            .catch(function () {
+                            .catch(function() {
+                                if ($scope.hwTestTries > 2) {
+                                    $scope.go('hard2forum', true);
+                                } else {
+                                    $scope.hwTestTries++;
+                                }
+                            });
+                    }
+                    break;
+                case 'button':
+                    if (board === 'bqzum') {
+                        web2boardOnline
+                            .upload({
+                                board: {
+                                    mcu: 'bt328'
+                                },
+                                hex: programHex.supportButton.bt328
+                            })
+                            .then(function() {
+                                $scope.go('hardButtonTestEnd', true);
+                            })
+                            .catch(function() {
+                                if ($scope.hwTestTries > 2) {
+                                    $scope.go('form', true);
+                                } else {
+                                    $scope.hwTestTries++;
+                                }
+                            });
+                    } else {
+                        web2boardOnline
+                            .upload({
+                                board: {
+                                    mcu: 'uno'
+                                },
+                                hex: programHex.supportButton.uno
+                            })
+                            .then(function() {
+                                $scope.go('hardButtonTestEnd', true);
+                            })
+                            .catch(function() {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('hard2forum', true);
                                 } else {
@@ -1933,13 +2027,13 @@ angular
         };
 
         $scope.boards = [];
-        $scope.getBoards = function () {
+        $scope.getBoards = function() {
             //then lets load the ports
             chromeAppApi
                 .getPorts()
-                .then(function (response) {
+                .then(function(response) {
                     $scope.ports = filterPortsByOS(response.ports);
-                    hardwareService.itsHardwareLoaded().then(function () {
+                    hardwareService.itsHardwareLoaded().then(function() {
                         utils.getPortsPrettyNames(
                             $scope.ports,
                             hardwareService.hardware.boards
@@ -1953,13 +2047,13 @@ angular
                         $scope.boards = $scope.portNames;
                     });
                 })
-                .catch(function (error) {
+                .catch(function(error) {
                     console.log('error SerialMonitorCtrl', error);
                 });
         };
 
         // dc function to free the serial port
-        $scope.dc = function () {
+        $scope.dc = function() {
             chromeAppApi.stopSerialCommunication();
             if (serialEvent) {
                 serialEvent();
@@ -1980,14 +2074,14 @@ angular
             return result;
         }
         $scope.selected = false;
-        $scope.selectBoardUS = function (item) {
+        $scope.selectBoardUS = function(item) {
             $scope.selected = true;
             var port = _.find($scope.ports, {
                 portName: item
             });
             $scope.selectedPort = port;
             chromeAppApi.getSerialData($scope.selectedPort);
-            serialEvent = $rootScope.$on('serial', function (event, msg) {
+            serialEvent = $rootScope.$on('serial', function(event, msg) {
                 // maybe we recieve more than one metric on the same package
                 var piece = msg.split(/\s+/)[0].slice(0, -3);
 
@@ -2001,8 +2095,8 @@ angular
 
                 $scope.serialMsg = $sce.trustAsHtml(
                     '<span>' +
-                    (piece + 'cm').split(/(?!^)/).join('</span><span>') +
-                    '</span>'
+                        (piece + 'cm').split(/(?!^)/).join('</span><span>') +
+                        '</span>'
                 );
                 utils.apply($scope);
             });
@@ -2024,14 +2118,14 @@ angular
         };
         // sometimes the user go back and forth...
         // lets clean the steps!
-        $scope.getSteps = function () {
+        $scope.getSteps = function() {
             // only if we donesn't want duplicates
             // common.supportSteps = _.uniqBy(
             //     common.supportSteps.reverse()
             // ).reverse();
             return common.supportSteps.join('</li><li>');
         };
-        $scope.send = function () {
+        $scope.send = function() {
             var str = '';
             // message
             // /r/n -> <br />
@@ -2096,7 +2190,7 @@ angular
 
             feedbackApi
                 .send(res)
-                .success(function () {
+                .success(function() {
                     alertsService.add({
                         text: 'modal-comments-done',
                         id: 'modal-comments',
@@ -2104,7 +2198,7 @@ angular
                         time: 5000
                     });
                 })
-                .error(function () {
+                .error(function() {
                     alertsService.add({
                         text: 'modal-comments-error',
                         id: 'modal-comments',
@@ -2113,7 +2207,7 @@ angular
                 });
         };
 
-        var unHTMLfy = function (str) {
+        var unHTMLfy = function(str) {
             return str
                 .replace(/(?:&)/g, '&amp;')
                 .replace(/(?:<)/g, '&lt;')
@@ -2124,7 +2218,7 @@ angular
         };
 
         $window.onbeforeunload = $scope.dc();
-        $scope.$on('$destroy', function () {
+        $scope.$on('$destroy', function() {
             $scope.dc();
         });
     });
