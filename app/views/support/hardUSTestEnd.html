@@ -3,28 +3,26 @@
         <button class="btn btn--primary support--btn-icon" data-ng-click="getBoards()">
             <span class="icon--reload icon--big"></span>
         </button>
-        <p><strong>Seleciona tu placa:</strong>
+        <p><strong>{{'make-hardware-select-board' | translate}}:</strong>
             <common-dropdown options="boards" options-click="selectBoardUS" class="ng-isolate-scope" />
         </p>
 
     </div>
     <br>
     <div v id="support--hw-test" data-ng-show="selected">
-        <p>Tras cargar nuestro programa de test en su placa,
-            <strong>su componente Sensor de Ultrasonidos debería estar captando distancias</strong>, mostrandolas en el siguiente medidor:</p>
+        <p>{{'support-view--hardUSTestEnd-content1' | translate}}</p>
         <p class="support--centered support--hw-test-us-value" ng-bind-html="serialMsg"></p>
-        <p>Si al acercar la mano al sensor, y alejarla, ve cambios en el medidor, el componente
-            <strong>funciona correctamente</strong>.</p>
+        <p>{{'support-view--hardUSTestEnd-content2' | translate}}</p>
     </div>
     <div class="support--next" data-ng-show="selected">
         <span class="support--next-child">
             <button class="btn btn--primary" data-ng-click="go('end', true)">
-                <span class="icon--ok icon--big">El sensor mide</span>
+                <span class="icon--ok icon--big">{{'support-view--hardUSTestEnd-nextMide' | translate}}</span>
             </button>
         </span>
         <span class="support--next-child">
             <button class="btn btn--primary btn--no" data-ng-click="go('form', true)">
-                <span class="icon--no icon--big">El sensor no mide</span>
+                <span class="icon--no icon--big">{{'support-view--hardUSTestEnd-nextNoMide' | translate}}</span>
             </button>
         </span>
     </div>

@@ -595,6 +595,7 @@ $support-width: 900px;
         p {
             // width: -webkit-fill-available;
             width: fill;
+            width: -webkit-fill-available;
         }
     }
     // hardware test loader
