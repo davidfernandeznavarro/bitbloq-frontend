@@ -427,9 +427,7 @@
                     modalOptions = $rootScope.$new();
 
                 function confirmAction(newName) {
-                    console.log('DENTRO');
                     if ($scope.group.name !== newName) {
-                        console.log('>> Cambiando nombre a ' + newName);
                         $scope.group.name = newName;
                         centerModeApi.updateGroup($scope.group)
                     }
@@ -459,10 +457,30 @@
 
                 renameModal = ngDialog.open({
                     template: '/views/modals/modal.html',
-                    className: 'modal--container modal--input',
+                    className: 'modal--container modal--rename',
                     scope: modalOptions
                 });
                 return defered.promise;
+            };
+
+            $scope.showGroupId = function() {
+                var bigTextModal,
+                    groupId = $scope.group.accessId,
+                    modalOptions = $rootScope.$new();
+
+                _.extend(modalOptions, {
+                    title: 'centerMode_modal_classIdPlaceholder',
+                    modalButtons: false,
+                    bigText: groupId,
+                    translate: false,
+                    contentTemplate: '/views/modals/bigText.html',
+                });
+
+                bigTextModal = ngDialog.open({
+                    template: '/views/modals/modal.html',
+                    className: 'modal--container modal--bigText',
+                    scope: modalOptions
+                });
             };
 
             /**************************

@@ -339,13 +339,13 @@ $support-width: 900px;
                             );
                         }
 
-                        &:hover #led svg {
+                        & #led:hover svg {
                             path#path16 {
                                 animation: blink 0.8s linear infinite;
                             }
                         }
 
-                        &:hover #servo svg {
+                        & #servo:hover svg {
                             path#path29,
                             path#path31 {
                                 animation: rotate360 0.8s linear infinite;
@@ -354,7 +354,7 @@ $support-width: 900px;
                             }
                         }
 
-                        &:hover #us svg .USSoundWave {
+                        & #us:hover svg .USSoundWave {
                             display: inherit !important;
                             circle {
                                 stroke: $support-blue;
@@ -364,7 +364,7 @@ $support-width: 900px;
                             }
                         }
 
-                        &:hover #buzz svg #icon {
+                        & #buzz:hover svg #icon {
                             animation: minishake 0.25s linear infinite;
                             transition: transform 0.5s linear;
                         }
@@ -373,7 +373,7 @@ $support-width: 900px;
                             display: none;
                         }
 
-                        &:hover #bt svg {
+                        & #bt:hover svg {
                             g.btLogo {
                                 display: block;
                             }
@@ -397,7 +397,18 @@ $support-width: 900px;
                             }
                         }
 
-                        &:hover #other svg text {
+                        & #button:hover svg {
+                            transition: all 1s linear 1s;
+
+                            #SVGID_3_ {
+                              display: none;
+                            }
+                            .switch {
+                              transform: translateY(5px);
+                            }
+                        }
+
+                        & #other:hover svg text {
                             animation: color 0.8s linear infinite;
                         }
                     }

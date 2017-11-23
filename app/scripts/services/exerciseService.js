@@ -159,7 +159,8 @@ angular.module('bitbloqApp')
                                 group: group._id,
                                 exercise: project._id,
                                 initDate: group.calendar.from.date,
-                                endDate: group.calendar.to.date
+                                endDate: group.calendar.to.date,
+                                hideUntilDate: group.hideUntilDate
                             });
                         }
                     });

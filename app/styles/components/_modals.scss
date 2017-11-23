@@ -473,7 +473,32 @@
             margin-bottom: 0;
         }
     }
+
+    &.modal--bigText {
+        text-align: center;
+        font-size: -webkit-xxx-large;
+    }
 }
+
+// .modal__scroll {
+//   .modal {
+//     .modal__body {
+//       height: 700px;
+//       overflow-y: scroll;
+//       &::-webkit-scrollbar {
+//           width: 6px;
+//         }
+//       &::-webkit-scrollbar-thumb {
+//           background-color: $black;
+//       }
+//       &::-webkit-scrollbar-track {
+//           background-color: transparent;
+//           border-left: 1px solid $grey-light;
+//           border-bottom: 1px solid $grey-light;
+//       }
+//     }
+//   }
+// }
 
 .modal {
     text-align: left;
@@ -492,7 +517,7 @@
         font-size: 16px;
         font-weight: 700;
         color: $black-light;
-        border-bottom: 1px solid #e2e2e2;
+        border-bottom: 1px solid $grey-divider;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
         line-height: 60px;
@@ -507,12 +532,12 @@
 
         h1 {
             padding-left: 30px;
-            border-right: 1px solid #e2e2e2;
+            border-right: 1px solid $grey-divider;
             width: calc(100% - 60px);
         }
 
         .modal--close {
-            border: 1px solid #e2e2e2;
+            border: 1px solid $grey-divider;
             border-bottom: 0;
             float: right;
             width: 60px;
@@ -540,6 +565,19 @@
 
     .modal__body {
         padding: 30px;
+        overflow-y: auto;
+        max-height: 750px;
+        &::-webkit-scrollbar {
+            width: 6px;
+          }
+        &::-webkit-scrollbar-thumb {
+            background-color: $black;
+        }
+        &::-webkit-scrollbar-track {
+            background-color: transparent;
+            border-left: 1px solid $grey-divider;
+            border-bottom: 1px solid $grey-divider;
+        }
 
         .modal__parraph {
             margin-bottom: 17px;
@@ -562,7 +600,8 @@
         button {
             margin: 0 10px;
         }
-        padding-bottom: 30px;
+        padding-bottom: 20px;
+        padding-top: 20px;
         display: flex;
         justify-content: center;
     }
@@ -578,7 +617,7 @@
     }
 
     .import-modal__error-files {
-        background-color: #e2e2e2;
+        background-color: $grey-divider;
         padding: 20px 48px;
 
         .files {
@@ -587,7 +626,7 @@
     }
 
     .share-modal__emails-no-user {
-        background-color: #e2e2e2;
+        background-color: $grey-divider;
         padding: 20px 30px;
 
         .files {
