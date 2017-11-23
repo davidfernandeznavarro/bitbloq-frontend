@@ -2,7 +2,7 @@
 @TODO: rename classes
  */
 .form--login {
-    background-image: url('../../images/common/pattern.png');
+    background-image: url("../../images/common/pattern.png");
     background-repeat: repeat;
     background-size: 30%;
     width: 100%;
@@ -14,7 +14,7 @@
         background-color: #000;
         width: 100%;
         height: 50px;
-        border-radius: .2em;
+        border-radius: 0.2em;
     }
 
     .btn--check-user {
@@ -33,9 +33,9 @@
 }
 
 .form-control {
-    a,
     .btn--forgot,
-    .btn--forgot-error {
+    .btn--forgot-error,
+    a {
         color: #629300;
         text-decoration: underline;
     }
@@ -46,7 +46,7 @@
     }
 
     label {
-        font-size: .8125em;
+        font-size: 0.8125em;
         position: relative;
         top: -3px;
         left: 3px;
@@ -59,11 +59,11 @@
     }
 
     & + #formForgot {
-      .btn--disabled {
-        width: 100%;
-        color: red;
-        border: 1px solid red;
-      }
+        .btn--disabled {
+            width: 100%;
+            color: red;
+            border: 1px solid red;
+        }
     }
 }
 
@@ -76,7 +76,7 @@
 
     span {
         display: inline-block;
-        padding: 0 .5em;
+        padding: 0 0.5em;
         background-color: #F5F3F3;
         z-index: 2;
         position: relative;
@@ -99,12 +99,12 @@
 
 .btn__login--facebook {
     background-color: #4573ba;
-    -webkit-border-top-left-radius: .2em;
-    -webkit-border-bottom-left-radius: .2em;
-    -moz-border-radius-topleft: .2em;
-    -moz-border-radius-bottomleft: .2em;
-    border-top-left-radius: .2em;
-    border-bottom-left-radius: .2em;
+    -webkit-border-top-left-radius: 0.2em;
+    -webkit-border-bottom-left-radius: 0.2em;
+    -moz-border-radius-topleft: 0.2em;
+    -moz-border-radius-bottomleft: 0.2em;
+    border-top-left-radius: 0.2em;
+    border-bottom-left-radius: 0.2em;
 
     &:hover {
         background-color: #5386d4;
@@ -117,12 +117,12 @@
 
 .btn__login--google {
     background-color: #D92C32;
-    -webkit-border-top-right-radius: .2em;
-    -webkit-border-bottom-right-radius: .2em;
-    -moz-border-radius-topright: .2em;
-    -moz-border-radius-bottomright: .2em;
-    border-top-right-radius: .2em;
-    border-bottom-right-radius: .2em;
+    -webkit-border-top-right-radius: 0.2em;
+    -webkit-border-bottom-right-radius: 0.2em;
+    -moz-border-radius-topright: 0.2em;
+    -moz-border-radius-bottomright: 0.2em;
+    border-top-right-radius: 0.2em;
+    border-bottom-right-radius: 0.2em;
 
     &:hover {
         background-color: #f93940;
@@ -145,7 +145,7 @@
     background-color: #F1F1F1;
     border: 1px solid #CCC;
     padding: 1em;
-    border-radius: .4em;
+    border-radius: 0.4em;
     text-align: center;
     position: relative;
 
@@ -173,7 +173,7 @@
 }
 
 .form--login__footer {
-    font-size: .875em;
+    font-size: 0.875em;
 }
 
 .form--login__register {
@@ -209,13 +209,14 @@
 .form--subtitle {
     font-size: small;
     width: 220px;
-    margin: .5em auto 1em;
+    margin: 0.5em auto 1em;
     display: block;
     text-align: left;
 }
 
 .social--button__container {
     float: left;
+
     &#authorize-button {
         float: right;
     }
@@ -275,7 +276,7 @@ iframe[src^="https://apis.google.com"] {
 }
 
 .form-birthday {
-    margin: 15px 0 20px 0;
+    margin: 15px 0 20px;
 }
 
 .login-paragraph {
@@ -326,11 +327,10 @@ iframe[src^="https://apis.google.com"] {
 }
 
 ::-webkit-calendar-picker-indicator,
-::-webkit-inner-spin-button,
-::-webkit-clear-button {
+::-webkit-clear-button,
+::-webkit-inner-spin-button {
     display: none;
 }
-
 /* Webkit, Chrome and Safari */
 @-webkit-keyframes fadeout {
     0% {
@@ -343,7 +343,6 @@ iframe[src^="https://apis.google.com"] {
         -webkit-transform: translate3d(0, 15%, 0);
     }
 }
-
 @-webkit-keyframes fadein {
     0% {
         opacity: 0;
@@ -360,7 +359,6 @@ iframe[src^="https://apis.google.com"] {
         -webkit-transform: translate3d(0, 0, 0);
     }
 }
-
 @-webkit-keyframes shake {
     0% {
         -webkit-transform: translate(2px, 1px) rotate(0deg);

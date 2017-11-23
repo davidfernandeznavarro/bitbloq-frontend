@@ -427,9 +427,7 @@
                     modalOptions = $rootScope.$new();
 
                 function confirmAction(newName) {
-                    console.log('DENTRO');
                     if ($scope.group.name !== newName) {
-                        console.log('>> Cambiando nombre a ' + newName);
                         $scope.group.name = newName;
                         centerModeApi.updateGroup($scope.group)
                     }
