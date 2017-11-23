@@ -111,14 +111,8 @@ angular.module('bitbloqApp')
         };
 
         $scope.init = function () {
-            if (currentProjectService.bloqs.varsBloq) {
-                bloqs.removeBloq(currentProjectService.bloqs.varsBloq.uuid, true);
-                currentProjectService.bloqs.varsBloq = null;
-                bloqs.removeBloq(currentProjectService.bloqs.setupBloq.uuid, true);
-                currentProjectService.bloqs.setupBloq = null;
-                bloqs.removeBloq(currentProjectService.bloqs.loopBloq.uuid, true);
-                currentProjectService.bloqs.loopBloq = null;
-            }
+
+            bloqs.removeAllBloqs();
 
             currentProjectService.bloqs.varsBloq = bloqs.buildBloqWithContent($scope.currentProject.software.vars, currentProjectService.componentsArray, bloqsApi.schemas, $scope.$field);
             currentProjectService.bloqs.setupBloq = bloqs.buildBloqWithContent($scope.currentProject.software.setup, currentProjectService.componentsArray, bloqsApi.schemas);
@@ -170,7 +164,7 @@ angular.module('bitbloqApp')
                     bloqsUtils.redrawTree(tempBloq, bloqs.bloqs, bloqs.connectors);
                 }
             }
-            bloqsUtils.drawTree(bloqs.bloqs, bloqs.connectors);
+            //bloqsUtils.drawTree(bloqs.bloqs, bloqs.connectors);
         };
 
         $scope.onFieldKeyDown = function (event) {
