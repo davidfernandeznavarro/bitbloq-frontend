@@ -285,7 +285,8 @@ angular.module('bitbloqApp')
                     rejectAction: defered.reject,
                     confirmAction: confirmAction,
                     modalButtons: true,
-                    clickGroupHandler: clickGroupHandler
+                    clickGroupHandler: clickGroupHandler,
+                    scroll: true
                 });
 
                 allCheckWatchers(modalOptions.groups);
