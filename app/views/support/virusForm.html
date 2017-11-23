@@ -1,32 +1,31 @@
 <p class="support--ok-warning"><i class="fa fa-check-circle support--icon--giga support--icon--ok" aria-hidden="true"></i>
     <br>
-    <span>No tenéis de que preocuparos,
-        <strong>no hay ningún virus ni amenaza</strong>
+    <span>{{'support-view--virusForm-content1-a' | translate}}
+        <strong>{{'support-view--virusForm-content1-b' | translate}}</strong>
     </span>
 </p>
-<p>Los antivirus no tienen tiempo de analizar todos los programas que existen, por lo que analizan los programas y cuando detectan acciones poco habituales, automáticamente, lo catalogan como amenaza, generalmente como troyano. En Bitbloq tenemos muchas librerías que compilan programas, accedemos a los puerto serie <i>(USB)</i> para cargar a las placas. Estas caracteristicas hacen que los antivirus puedan detectar Bitbloq como un virus potencial, generando un <i>falso positivo</i></p>
-<p>¿Tiene el sistema y el
-    <strong>antivirus actualizado</strong>?
-    <br>Es muy importante que los antivirus estén actualizados para que funcionen correctamente, detectando los posibles virus y minimizando el numero de falsos positivos.
-    <br>Cuando Bitbloq es detectado como un posible virus, procedemos a enviar una petición para que se incluya en la lista de software seguro del antivirus.</p>
+<p>{{'support-view--virusForm-content2' | translate}}</p>
+<p>{{'support-view--virusForm-content3' | translate}}
+    <br>{{'support-view--virusForm-content4' | translate}}
+    <br>{{'support-view--virusForm-content5' | translate}}</p>
 
 <div class="support--form" data-ng-if="common.user">
-    <p>Para llevar a cabo la petición para que incluyan a Bitbloq en la lista de software seguro de su antivirus,
-        <strong>necesitamos que se ponga en contacto</strong> con nuestros técnicos rellenando el formulario siguiente.</p><br>
+    <p>{{'support-view--virusForm-content6' | translate}}</p>
+    <br>
     <form name="form">
         <fieldset>
             <!-- SO -->
             <div class="form-control">
-                <legend class="icon--check">Sistema Operativo y versión del mismo</legend>
+                <legend class="icon--check">{{'modal-inform-error-os-version-placeholder' | translate}}</legend>
                 <span class="form--input common--textarea" data-ng-class="{'input--focused':focus === 'system'}">
-                    <input ng-model="response.system" ng-focus="focus = 'system'" ng-blur="focus = false" id="system" name="system" type="text" maxlength="50" placeholder="Sistema operativo y {{'modal-inform-error-os-version-placeholder' | translate}}" autocorrect="off" autocomplete="off" required>
+                    <input ng-model="response.system" ng-focus="focus = 'system'" ng-blur="focus = false" id="system" name="system" type="text" maxlength="50" placeholder="{{'modal-inform-error-os-version-placeholder' | translate}}" autocorrect="off" autocomplete="off" required>
                 </span>
             </div>
             <!-- antivirus -->
             <div class="form-control">
-                <legend class="icon--check">Antivirus y versión del mismo</legend>
+                <legend class="icon--check">{{'support-view--virusForm-content7' | translate}}</legend>
                 <span class="form--input common--textarea" data-ng-class="{'input--focused':focus === 'antivirus'}">
-                    <input ng-model="response.antivirus" ng-focus="focus = 'antivirus'" ng-blur="focus = false" id="antivirus" name="antivirus" type="text" maxlength="50" placeholder="Antivirus y versión del antivirus" autocorrect="off" autocomplete="off" required>
+                    <input ng-model="response.antivirus" ng-focus="focus = 'antivirus'" ng-blur="focus = false" id="antivirus" name="antivirus" type="text" maxlength="50" placeholder="{{'support-view--virusForm-content7' | translate}}" autocorrect="off" autocomplete="off" required>
                 </span>
             </div>
         </fieldset>
@@ -37,9 +36,8 @@
 </div>
 
 <div class="support--form" data-ng-if="!common.user">
-    <p>Para poder proporcionarle un soporte mas personalizado,
-        <strong>necesitamos que se ponga en contacto</strong> con nuestros técnicos enviando un mail a <a href="mailto:soporte.bitbloq@bq.com" target="_blank" class="icon--url">soporte.bitbloq@bq.com</a></p>
+    <p>{{'support-view--common-formContent1' | translate}} <a href="mailto:soporte.bitbloq@bq.com" target="_blank" class="icon--url">soporte.bitbloq@bq.com</a></p>
     <p class="icon--check">
-        <strong>Recuerde explicar detalladamente su consulta.</strong>
+        <strong>{{'support-view--common-formContent2' | translate}}</strong>
     </p>
 </div>
