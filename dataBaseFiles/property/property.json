@@ -1,6 +1,6 @@
 [
     {
-        "bitbloqLibsVersion": "1.4.10",
+        "bitbloqLibsVersion": "1.5.1",
         "bloqsSortTree": {
             "advancedClasses": [
                 {
@@ -145,6 +145,12 @@
                 },
                 {
                     "name": "motorSetSpeedAdvanced"
+                },
+                {
+                    "name": "advancedEchidnaRGB"
+                },
+                {
+                    "name": "echidnaBuzzerWithoutPause"
                 }
             ],
             "advancedControls": [
@@ -441,6 +447,24 @@
                 },
                 {
                     "name": "motorSetSpeed"
+                },
+                {
+                    "name": "echidnaReadSensor"
+                },
+                {
+                    "name": "echidnaBuzzer"
+                },
+                {
+                    "name": "echidnaLeds"
+                },
+                {
+                    "name": "echidnaRGB"
+                },
+                {
+                    "name": "echidnaReadJoystickXY"
+                },
+                {
+                    "name": "echidnaReadAccelXY"
                 }
             ],
             "controls": [

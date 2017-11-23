@@ -385,6 +385,22 @@ angular.module('bitbloqApp')
             return result;
         };
 
+        $scope.anyComponentBloq = function () {
+            var result = false;
+            if (currentProjectService.project && currentProjectService.project.hardware) {
+                switch (currentProjectService.project.hardware.board) {
+                    case 'echidna-ArduinoUNO':
+                    case 'echidna-FreaduinoUNO':
+                    case 'echidna-bqZUM':
+                        result = true;
+                        break;
+                }
+            } else {
+                result = false;
+            }
+            return result;
+        };
+
         $scope.showComponents = function (item) {
             var result = false;
             var stopWord = ['analogWrite', 'viewer', 'digitalWrite', 'pinReadAdvanced', 'pinWriteAdvanced', 'turnOnOffAdvanced',
@@ -394,20 +410,7 @@ angular.module('bitbloqApp')
                 var i;
                 if ($scope.currentProject.hardware.board && $scope.currentProject.hardware.components) {
                     var connectedComponents = $scope.currentProject.hardware.components;
-                    if (item === 'hwVariable' && connectedComponents.length !== 0) {
-                        result = true;
-                    } else if (item === 'led') {
-                        result = existComponent(['led'], connectedComponents);
-                    } else if (item === 'readSensor') {
-                        result = existComponent([
-                            'us', 'button', 'limitswitch', 'encoder',
-                            'sound', 'buttons', 'irs', 'irs2',
-                            'joystick', 'ldrs', 'pot', 'mkb_lightsensor', 'mkb_joystick',
-                            'mkb_integrated_lightsensor', 'mkb_integrated_analogPinButton',
-                            'mkb_soundsensor', 'mkb_remote', 'freakscar_integrated_remote',
-                            'freakscar_integrated_lightsensor', 'mkb_pot', 'mkb_4buttonKeyPad'
-                        ], connectedComponents);
-                    } else if (item.indexOf('serial') > -1) {
+                    if (item.indexOf('serial') > -1) {
                         result = existComponent(['bt', 'sp', 'device', 'mkb_bluetooth'], connectedComponents);
                     } else if (item.indexOf('phone') > -1) {
                         result = $scope.currentProject.useBitbloqConnect;
@@ -423,8 +426,6 @@ angular.module('bitbloqApp')
                         }
                     } else if (item.includes('continuousServo')) {
                         result = existComponent(['servocont'], connectedComponents);
-                    } else if ((item === 'servoAttach') || (item === 'servoDetach')) {
-                        result = existComponent(['servo', 'servocont'], connectedComponents);
                     } else if (item.includes('servo')) {
                         i = 0;
                         while (!result && (i < connectedComponents.length)) {
@@ -433,58 +434,124 @@ angular.module('bitbloqApp')
                             }
                             i++;
                         }
-                    } else if (item === 'mBotGetDistance-v2') {
-                        result = existComponent(['mkb_ultrasound'], connectedComponents);
-                    } else if ((item === 'mBotBuzzer-v2') || (item === 'mBotBuzzerAdvanced-v2')) {
-                        result = existComponent(['mkb_integrated_buzz'], connectedComponents);
-                    } else if ((item === 'mBotSetRGBLed') || (item === 'mBotSetRGBLedAdvanced') || (item === 'mBotSetRGBLedAdvancedFull')) {
-                        result = existComponent(['mkb_integrated_RGB'], connectedComponents);
-                    } else if (item === 'makeblockIfNoise') {
-                        result = existComponent(['mkb_soundsensor'], connectedComponents);
-                    } else if (item === 'mBotLedMatrix') {
-                        result = existComponent(['mkb_ledmatrix'], connectedComponents);
-                    } else if (item === 'readJoystickXY') {
-                        result = existComponent(['mkb_joystick'], connectedComponents) || existComponent(['joystick'], connectedComponents);
-                    } else if ((item === 'mBotSetLedMatrixBrightness') || (item === 'mBotSetLedMatrixBrightnessAdvanced') || (item === 'mBotShowNumberOnLedMatrixAdvanced') || (item === 'mBotShowStringOnLedMatrixAdvanced') || (item === 'mBotShowTimeOnLedMatrixAdvanced')) {
-                        result = existComponent(['mkb_ledmatrix'], connectedComponents);
-                    } else if (item === 'ifButtonPushed') {
-                        result = existComponent(['mkb_4buttonKeyPad'], connectedComponents);
-                    } else if (item === 'remoteButtonPushed') {
-                        result = existComponent(['mkb_remote'], connectedComponents);
-                    } else if ((item === 'displayNumber') || (item === 'displayNumberInPosition') || ('item' === 'clear7segment')) {
-                        result = existComponent(['mkb_display7seg'], connectedComponents);
-                    } else if ((item === 'setDisplayBrightness') || (item === 'setDisplayBrightnessAdvanced')) {
-                        result = existComponent(['mkb_display7seg'], connectedComponents);
-                    } else if ((item === 'freakscarBuzzer') || (item === 'freakscarDistance') || (item === 'freakscarLight')) {
-                        result = existComponent(['freakscar_integrated_lightsensor'], connectedComponents);
-                    } else if ((item === 'mkbGyroscope') || (item === 'mkbIntegratedSoundSensor') || (item === 'mkbAccelerometer')) {
-                        result = currentProjectService.project && currentProjectService.project.hardware && (currentProjectService.project.hardware.board === 'meauriga');
-                    } else if ((item === 'motorSetSpeed') || (item === 'motorSetSpeedAdvanced')) {
-                        result = existComponent(['drivegearmotor'], connectedComponents);
-                    } else if ((item === 'robotSetMotorSpeed') || (item === 'robotSetMotorSpeedAdvanced')) {
-                        if (currentProjectService.project && currentProjectService.project.hardware) {
-                            switch (currentProjectService.project.hardware.board) {
-                                case 'meauriga':
-                                    //case 'mcore':
-                                    //case 'meorion':
-                                    result = true;
-                                    break;
-
-                                default:
-                                    result = false;
-                                    break;
-                            }
-                        } else {
-                            result = false;
-                        }
                     } else {
                         switch (item) {
+                            case 'hwVariable':
+                                result = (connectedComponents.length !== 0);
+                                break;
+                            case 'led':
+                                result = existComponent(['led'], connectedComponents);
+                                break;
+                            case 'servoAttach':
+                            case 'servoDetach':
+                                result = existComponent(['servo', 'servocont'], connectedComponents);
+                                break;
+                            case 'readSensor':
+                                result = existComponent([
+                                    'us', 'button', 'limitswitch', 'encoder',
+                                    'sound', 'buttons', 'irs', 'irs2',
+                                    'joystick', 'ldrs', 'pot', 'mkb_lightsensor', 'mkb_joystick',
+                                    'mkb_integrated_lightsensor', 'mkb_integrated_analogPinButton',
+                                    'mkb_soundsensor', 'mkb_remote', 'freakscar_integrated_remote',
+                                    'freakscar_integrated_lightsensor', 'mkb_pot', 'mkb_4buttonKeyPad'
+                                ], connectedComponents);
+                                break;
+                            case 'mBotBuzzer-v2':
+                            case 'mBotBuzzerAdvanced-v2':
+                                result = existComponent(['mkb_integrated_buzz'], connectedComponents);
+                                break;
+                            case 'mBotSetRGBLed':
+                            case 'mBotSetRGBLedAdvanced':
+                            case 'mBotSetRGBLedAdvancedFull':
+                                result = existComponent(['mkb_integrated_RGB'], connectedComponents);
+                                break;
+                            case 'makeblockIfNoise':
+                                result = existComponent(['mkb_soundsensor'], connectedComponents);
+                                break;
+                            case 'mBotLedMatrix':
+                                result = existComponent(['mkb_ledmatrix'], connectedComponents);
+                                break;
+                            case 'readJoystickXY':
+                                result = existComponent(['mkb_joystick'], connectedComponents) || existComponent(['joystick'], connectedComponents);
+                                break;
+                            case 'mBotSetLedMatrixBrightness':
+                            case 'mBotSetLedMatrixBrightnessAdvanced':
+                            case 'mBotShowNumberOnLedMatrixAdvanced':
+                            case 'mBotShowStringOnLedMatrixAdvanced':
+                            case 'mBotShowTimeOnLedMatrixAdvanced':
+                                result = existComponent(['mkb_ledmatrix'], connectedComponents);
+                                break;
+                            case 'ifButtonPushed':
+                                result = existComponent(['mkb_4buttonKeyPad'], connectedComponents);
+                                break;
+                            case 'remoteButtonPushed':
+                                result = existComponent(['mkb_remote'], connectedComponents);
+                                break;
+                            case 'displayNumber':
+                            case 'displayNumberInPosition':
+                            case 'clear7segment':
+                            case 'setDisplayBrightness':
+                            case 'setDisplayBrightnessAdvanced':
+                                result = existComponent(['mkb_remote'], connectedComponents);
+                                break;
+                            case 'freakscarBuzzer':
+                            case 'freakscarDistance':
+                            case 'freakscarLight':
+                                result = existComponent(['freakscar_integrated_lightsensor'], connectedComponents);
+                                break;
+                            case 'mkbGyroscope':
+                            case 'mkbIntegratedSoundSensor':
+                            case 'mkbAccelerometer':
+                                result = currentProjectService.project && currentProjectService.project.hardware && (currentProjectService.project.hardware.board === 'meauriga');
+                                break;
+                            case 'motorSetSpeed':
+                            case 'motorSetSpeedAdvanced':
+                                result = existComponent(['drivegearmotor'], connectedComponents);
+                                break;
+                            case 'robotSetMotorSpeed':
+                            case 'robotSetMotorSpeedAdvanced':
+                                if (currentProjectService.project && currentProjectService.project.hardware) {
+                                    switch (currentProjectService.project.hardware.board) {
+                                        case 'meauriga':
+                                            //case 'mcore':
+                                            //case 'meorion':
+                                            result = true;
+                                            break;
+
+                                        default:
+                                            result = false;
+                                            break;
+                                    }
+                                } else {
+                                    result = false;
+                                }
+                                break;
                             case 'mkbSetExternalRGBLedAdvanced':
                             case 'mkbSetExternalRGBLedAdvancedFull':
                                 result = existComponent(['mkb_RGBLed'], connectedComponents);
                                 break;
                             case 'mkbReadMagneticField':
                                 result = existComponent(['mkb_compass'], connectedComponents);
+                                break;
+                            case 'echidnaBuzzer':
+                            case 'echidnaBuzzerWithoutPause':
+                            case 'echidnaReadSensor':
+                            case 'echidnaLeds':
+                            case 'echidnaRGB':
+                            case 'advancedEchidnaRGB':
+                            case 'echidnaReadJoystickXY':
+                            case 'echidnaReadAccelXY':
+                                if (currentProjectService.project && currentProjectService.project.hardware) {
+                                    switch (currentProjectService.project.hardware.board) {
+                                        case 'echidna-ArduinoUNO':
+                                        case 'echidna-FreaduinoUNO':
+                                        case 'echidna-bqZUM':
+                                            result = true;
+                                            break;
+                                    }
+                                } else {
+                                    result = false;
+                                }
                                 break;
                             default:
                                 i = 0;

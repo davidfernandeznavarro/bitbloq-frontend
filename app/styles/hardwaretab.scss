@@ -439,6 +439,12 @@ $hw_toolbox: 210px;
             height: 300px;
             background-color: transparent;
         }
+        &.echidna-ArduinoUNO {
+            background-image: url("/images/boards/echidna-ArduinoUNO.svg"), url("/images/boards/echidna-ArduinoUNO.png");
+            width: 400px;
+            height: 300px;
+            background-color: transparent;
+        }
     }
 
     .component {
