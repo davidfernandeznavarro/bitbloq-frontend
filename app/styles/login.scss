@@ -216,6 +216,15 @@
 
 .social--button__container {
     float: left;
+    &#authorize-button {
+        float: right;
+    }
+
+    &, ul.row {
+        margin-left: -0.95rem !important;
+        margin-right: -0.95rem !important;
+        background-color: red;
+    } 
 }
 
 .social--buttons__container {
