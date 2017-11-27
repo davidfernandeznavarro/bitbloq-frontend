@@ -100,7 +100,7 @@
                             data-indeterminate-checkbox data-children-checkbox="currentProject.selectedBloqs[key]" />
                     </span>
                 </li>
-                <li ng-show="key==='components' && (!anyComponent() || anyComponentBloq())" class="error--text">{{"no-components-connected" | translate}}</li>
+                <li ng-show="key==='components' && shouldShowNoComponentsText()" class="error--text">{{"no-components-connected" | translate}}</li>
             </ul>
             <!-- mBot V1-->
             <ul class="toolbox--bloqs--container" ng-show="selectedBloqsToolbox==='mbot' && !currentProject.hardware.showRobotImage">

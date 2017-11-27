@@ -8,12 +8,12 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('ExploreCtrl', function($scope, $log, $location, $routeParams, envData, _, projectApi, userApi) {
+    .controller('ExploreCtrl', function ($scope, $log, $location, $routeParams, envData, _, projectApi, userApi) {
 
-        $scope.componentFilter = function(newFilter) {
+        $scope.componentFilter = function (newFilter) {
             if (newFilter === 'without-components' && $scope.componentsFilterOptions[0].value) {
 
-                $scope.componentsFilterOptions.forEach(function(item) {
+                $scope.componentsFilterOptions.forEach(function (item) {
                     item.value = false;
                 });
                 $scope.componentsFilterOptions[0].value = true;
@@ -33,10 +33,10 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.genericFilter = function(newFilter, preventSearch) {
+        $scope.genericFilter = function (newFilter, preventSearch) {
             if (newFilter && (newFilter !== 'bq' && $scope.genericFilterOptions[0].value) || (!$scope.genericFilterOptions[0].value)) {
 
-                $scope.genericFilterOptions.forEach(function(item) {
+                $scope.genericFilterOptions.forEach(function (item) {
                     item.value = false;
                 });
 
@@ -63,8 +63,8 @@ angular.module('bitbloqApp')
         function elementHasBoard(element) {
             return element.board ? element.board : element.option;
         }
-        $scope.boardFilter = function(newFilter, preventSearch) {
-            $scope.boardsFilterOptions.forEach(function(item) {
+        $scope.boardFilter = function (newFilter, preventSearch) {
+            $scope.boardsFilterOptions.forEach(function (item) {
                 if (item.option !== newFilter) {
                     item.value = false;
                 }
@@ -80,12 +80,12 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.sort = function(option) {
+        $scope.sort = function (option) {
             $scope.sortSelected = option;
             $scope.search();
         };
 
-        $scope.search = function() {
+        $scope.search = function () {
             $scope.exploraProjects = [];
             $scope.pageProjects = 0;
             _.extend($scope.filterParams, {
@@ -95,7 +95,7 @@ angular.module('bitbloqApp')
             $scope.getPublicProjects($scope.pagination.explora.current);
         };
 
-        $scope.getPublicProjects = function(page) {
+        $scope.getPublicProjects = function (page) {
             var queryParamsArray = getRequest(),
                 queryParams = queryParamsArray || {},
                 exploraPage = page ? page : 1;
@@ -105,8 +105,8 @@ angular.module('bitbloqApp')
             };
             angular.extend(queryParams, pageParams);
             $log.debug('getPublicProjects', queryParams);
-            projectApi.getPublic(queryParams).then(function(response) {
-                projectApi.getPublicCounter(queryParams).then(function(data) {
+            projectApi.getPublic(queryParams).then(function (response) {
+                projectApi.getPublicCounter(queryParams).then(function (data) {
                     $scope.projectCount = $scope.exploraProjects.length + '/' + data.data.count;
                     $scope.exploraCount = data.data.count;
                     $scope.common.isLoading = false;
@@ -114,14 +114,14 @@ angular.module('bitbloqApp')
                 $scope.exploraProjects = response.data;
                 $location.search('page', exploraPage);
 
-            }, function(error) {
+            }, function (error) {
                 $log.debug('Get public projects error: ' + error);
             });
         };
 
         function _getUrlParams() {
             if ($routeParams.board) {
-                $scope.boardsFilterOptions.forEach(function(board) {
+                $scope.boardsFilterOptions.forEach(function (board) {
                     if (board.option === $routeParams.board) {
                         board.value = true;
                         $scope.boardFilter(board.option, true);
@@ -129,7 +129,7 @@ angular.module('bitbloqApp')
                 });
             }
             if ($routeParams.project) {
-                $scope.genericFilterOptions.forEach(function(generic) {
+                $scope.genericFilterOptions.forEach(function (generic) {
                     if (generic.option === $routeParams.project) {
                         generic.value = false;
                         $scope.genericFilter(generic.option, true);
@@ -139,8 +139,8 @@ angular.module('bitbloqApp')
             }
             if ($routeParams.compo) {
                 $scope.componentsFilters = decodeURIComponent($routeParams.compo).split('+');
-                $scope.componentsFilters.forEach(function(filter) {
-                    $scope.componentsFilterOptions.forEach(function(element) {
+                $scope.componentsFilters.forEach(function (filter) {
+                    $scope.componentsFilterOptions.forEach(function (element) {
                         if (filter === element.option) {
                             element.value = true;
                         }
@@ -214,6 +214,8 @@ angular.module('bitbloqApp')
             if ($scope.boardFilters) {
                 if ($scope.boardFilters === 'Evolution' || $scope.boardFilters === 'Zowi' || $scope.boardFilters === 'mBot' || $scope.boardFilters === 'mRanger') {
                     queryParams.query['hardware.robot'] = $scope.boardFilters.toLowerCase();
+                } else if ($scope.boardFilters === 'Echidna') {
+                    queryParams.query['hardware.board'] = { '$in': ['echidna-ArduinoUNO', 'echidna-bqZUM', 'echidna-FreaduinoUNO'] };
                 } else {
                     queryParams.query['hardware.board'] = $scope.boardFilters;
                 }
@@ -258,8 +260,8 @@ angular.module('bitbloqApp')
 
         function getRequest() {
             var queryParams = {
-                    'query': {}
-                },
+                'query': {}
+            },
                 sortParams = getSortRequest();
             queryParams = getComponentFilterRequest(queryParams);
             queryParams = getGenericFilterRequest(queryParams);
@@ -331,6 +333,9 @@ angular.module('bitbloqApp')
         }, {
             option: 'starter Kit',
             board: 'meorion',
+            value: false
+        }, {
+            option: 'Echidna',
             value: false
         }];
         $scope.componentsFilters = [];
@@ -414,13 +419,13 @@ angular.module('bitbloqApp')
                   $scope.$apply();
               }
           });*/
-        $scope.getPublicPaginated = function(page) {
+        $scope.getPublicPaginated = function (page) {
             $scope.getPublicProjects(page);
         };
 
         $scope.itemsPerPage = 20;
 
-        $scope.$watch('searchText', function(newValue, oldValue) {
+        $scope.$watch('searchText', function (newValue, oldValue) {
             if (newValue !== oldValue) {
                 if (newValue) {
                     $scope.filterParams.search = newValue;
