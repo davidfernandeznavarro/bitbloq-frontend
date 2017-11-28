@@ -237,7 +237,11 @@ angular
                     templateUrl: 'views/support/support.html',
                     controller: 'SupportCtrl'
                 })
-                .when('/support/', {
+                .when('/support/:id?', {
+                    templateUrl: 'views/support/support.html',
+                    controller: 'SupportCtrl'
+                })
+                .when('/support/p/:id?', {
                     templateUrl: 'views/support/support.html',
                     controller: 'SupportCtrl'
                 })
