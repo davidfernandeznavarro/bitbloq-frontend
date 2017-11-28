@@ -1,7 +1,7 @@
 <div class="support--pane">
     <div class="section-header table__header">
         <button class="btn btn--primary btn--small icon--home icon--big support--button--home" data-ng-hide="{{card.dontShowHomeButton}}"
-            data-ng-click="go('index',true)" data-element="support_next_child-{{child._id}}">
+            data-ng-click="go('index')" data-element="support_next_child-{{child._id}}">
             <span>{{'Volver al Inicio' | translate}}</span>
         </button>
         <button class="btn btn--primary btn--small icon--back icon--big support--button--back" data-ng-show="card.permalink !== 'index'"
@@ -14,20 +14,20 @@
         <div class="support--block">
             <div class="support--content">
                 <h1 class="h2 header__title support--centered">{{ card.title | translate }}</h1>
-                <span class="support--card--data" data-ng-if="card.data && !card.extData" data-ng-bind-html="card.data  | translate"></span>
-                <span class="support--card--data" data-ng-if="card.extData" data-ng-include="'views/support/' + card.extData"></span>
+                <span class="support--card--data" data-ng-if="card.data && !card.data.ext" data-ng-bind-html="card.data.body  | translate"></span>
+                <span class="support--card--data" data-ng-if="card.data && card.data.ext" data-ng-include="'views/support/' + card.data.body"></span>
                 <div class="support--next" data-ng-if="card.next.length <= 3">
                     <span class="support--next-child" data-ng-repeat="child in card.next">
-                        <button class="btn" data-ng-class="child.class" data-ng-click="go(child._id)" data-element="support_next_child-{{child._id}}">
-                            <span data-ng-class="child.icon">{{child.response | translate}}</span>
+                        <button class="btn" data-ng-class="(child.class === 'green') ? 'btn--primary' : ((child.class === 'red') ? 'btn--primary btn--no' : 'btn--secondary')" data-ng-click="go(child.permalink)" data-element="support_next_child-{{child._id}}">
+                            <span data-ng-class="(child.icon) ? ('icon--' + child.icon + ' icon--big') : ''">{{child.response | translate}}</span>
                         </button>
                     </span>
                 </div>
                 <div class="support--next big" data-ng-if="card.next.length > 3">
                     <ul>
-                        <a href="" data-ng-repeat="child in card.next" data-ng-click="go(child._id)" data-element="support_next_child-{{child._id}}">
+                        <a href="" data-ng-repeat="child in card.next" data-ng-click="go(child.permalink)" data-element="support_next_child-{{child.id}}">
                             <li>
-                                <span data-ng-class="child.icon">{{child.response | translate}}</span>
+                                <span data-ng-class="(child.icon) ? ('icon--' + child.icon + ' icon--big') : ''">{{child.response | translate}}</span>
                             </li>
                         </a>
                     </ul>
