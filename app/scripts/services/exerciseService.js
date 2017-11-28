@@ -159,7 +159,8 @@ angular.module('bitbloqApp')
                                 group: group._id,
                                 exercise: project._id,
                                 initDate: group.calendar.from.date,
-                                endDate: group.calendar.to.date
+                                endDate: group.calendar.to.date,
+                                hideUntilDate: group.hideUntilDate
                             });
                         }
                     });
@@ -284,7 +285,8 @@ angular.module('bitbloqApp')
                     rejectAction: defered.reject,
                     confirmAction: confirmAction,
                     modalButtons: true,
-                    clickGroupHandler: clickGroupHandler
+                    clickGroupHandler: clickGroupHandler,
+                    scroll: true
                 });
 
                 allCheckWatchers(modalOptions.groups);

@@ -48,6 +48,13 @@
                     </svg>
                 </button>
             </li>
+            <li ng-show="boardsMap[currentProject.hardware.board].shields.length > 0" class="tabs__header__item--vertical" ng-class="{'selected--tab': selectedToolbox==='shields'}">
+                <button class="btn-svg" ng-click="changeToolbox('shields')" data-element="toolbox-shields">
+                    <svg class="svg-icon">
+                        <use xlink:href="#robot"></use>
+                    </svg>
+                </button>
+            </li>
         </ul>
     </aside>
     <div class="toolbox__menu" ng-show="selectedToolbox===''">
@@ -79,6 +86,14 @@
             <li class="toolbox__item" ng-show="envData.robotComponents[currentProject.hardware.robot]">
                 <button class="btn btn-text" ng-click="changeToolbox('robotsComponents')">
                     {{'robotsComponents' | translate}}
+                    <svg class="svg-icon svg-icon--right">
+                        <use xlink:href="#arrow"></use>
+                    </svg>
+                </button>
+            </li>
+            <li class="toolbox__item" ng-show="boardsMap[currentProject.hardware.board].shields.length > 0">
+                <button class="btn btn-text" ng-click="changeToolbox('shields')">
+                    {{'shields' | translate}}
                     <svg class="svg-icon svg-icon--right">
                         <use xlink:href="#arrow"></use>
                     </svg>
@@ -138,6 +153,15 @@
                 <h1 class="list-name">{{robotComponent.name}}</h1>
                 <img draggable dragid="{{robotComponent.id}}" dragtype="robotsComponents" ng-src="/images/robotscomponents/{{robotComponent.uuid}}.svg"
                     ng-style="{width:robotComponent.width + 'px'}">
+            </li>
+        </ul>
+    </div>
+    <div class="toolbox__content" ng-show="selectedToolbox==='shields' && boardsMap[currentProject.hardware.board].shields.length > 0">
+        <h1 class="h3 submenu__title">{{'shields' | translate}}</h1>
+        <ul class="toolbox__content-container">
+            <li class="toolbox__content__list" ng-repeat="shield in boardsMap[currentProject.hardware.board].shields" data-ng-click="drop({type:'board', uuid:shield})">
+                <h1 class="list-name">{{shield | translate}}</h1>
+                <img draggable dragid="{{shield}}" data-element="board-{{shield}}" dragtype="boards" ng-src="/images/boards/{{shield}}.png">
             </li>
         </ul>
     </div>
