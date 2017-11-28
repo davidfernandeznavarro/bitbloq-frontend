@@ -35,7 +35,6 @@ angular
         $scope.translate = $translate;
         var sessionStorage = $window.sessionStorage
 
-
         $scope.goBack = function() {
             $window.history.back();
         };
