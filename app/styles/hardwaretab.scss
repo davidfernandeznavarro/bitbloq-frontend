@@ -439,6 +439,24 @@ $hw_toolbox: 210px;
             height: 300px;
             background-color: transparent;
         }
+        &.echidna-ArduinoUNO {
+            background-image: url("/images/boards/echidna-ArduinoUNO.svg"), url("/images/boards/echidna-ArduinoUNO.png");
+            width: 400px;
+            height: 300px;
+            background-color: transparent;
+        }
+        &.echidna-bqZUM {
+            background-image: url("/images/boards/echidna-bqZUM.svg"), url("/images/boards/echidna-bqZUM.png");
+            width: 400px;
+            height: 300px;
+            background-color: transparent;
+        }
+        &.echidna-FreaduinoUNO {
+            background-image: url("/images/boards/echidna-FreaduinoUNO.svg"), url("/images/boards/echidna-FreaduinoUNO.png");
+            width: 400px;
+            height: 300px;
+            background-color: transparent;
+        }
     }
 
     .component {

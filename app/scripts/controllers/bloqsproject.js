@@ -35,6 +35,20 @@ angular.module('bitbloqApp')
             return projectService.project.useBitbloqConnect || projectService.project.hardware.board === 'freakscar' || (componentList.length > 0);
         };
 
+        $scope.shouldShowNoComponentsText = function () {
+            var result = true;
+            if (projectService.project.useBitbloqConnect ||
+                (projectService.project.hardware.board === 'freakscar') ||
+                (projectService.project.hardware.board === 'echidna-ArduinoUNO') ||
+                (projectService.project.hardware.board === 'echidna-FreaduinoUNO') ||
+                (projectService.project.hardware.board === 'echidna-bqZUM') ||
+                (projectService.project.hardware.components.length > 0)
+            ) {
+                result = false;
+            }
+            return result;
+        };
+
         $scope.anyExternalComponent = function () {
             var connectedComponents = _.filter(projectService.project.hardware.components, function (item) {
                 return (item.uuid.indexOf('integrated') === -1);

@@ -13,7 +13,12 @@ li[class^="icon"]:before { margin-right: 3px; }
 }
 
 .icon--pointer {
-  cursor: pointer;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+.icon--context {
+  cursor: context-menu !important;
   pointer-events: auto !important;
 }
 

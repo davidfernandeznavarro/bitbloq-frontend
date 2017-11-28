@@ -2062,8 +2062,10 @@ angular
             // ).reverse();
             return common.supportSteps.join('</li><li>');
         };
-        $scope.send = function() {
+        $scope.sendIsBlocked = false;
+        $scope.send = function () {
             var str = '';
+            $scope.sendIsBlocked = true;
             // message
             // /r/n -> <br />
             if ($scope.response.message.length > 0) {
@@ -2134,6 +2136,8 @@ angular
                         type: 'ok',
                         time: 5000
                     });
+                    $scope.sendIsBlocked = false;
+                    $scope.go('end', true)
                 })
                 .error(function() {
                     alertsService.add({
@@ -2141,6 +2145,7 @@ angular
                         id: 'modal-comments',
                         type: 'warning'
                     });
+                    $scope.sendIsBlocked = false;
                 });
         };
 

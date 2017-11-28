@@ -487,6 +487,14 @@ angular.module('bitbloqApp')
                         newtab.location = (type === 'project' ? '#/bloqsproject/' : '#/exercise/') + newProjectId.data;
                     }
                     defered.resolve(newProjectId.data);
+                }, function (error) {
+                    alertsService.add({
+                        text: 'make-clone-project-error',
+                        id: 'clone-project',
+                        type: 'error'
+                    });
+
+                    defered.reject(error);
                 });
                 return true;
             }
