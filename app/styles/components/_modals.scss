@@ -497,8 +497,7 @@
       }
     }
     .modal--buttons {
-        padding-bottom: 20px;
-        padding-top: 20px;
+        padding: 20px;
     }
 }
 
@@ -589,31 +588,8 @@
         button {
             margin: 0 10px;
         }
-        padding-bottom: 30px;
-        display: flex;
-        justify-content: center;
-    }
-
-    &.modal__scroll {
-        .modal__body {
-          height: 500px;
-          overflow-y: auto;
-          &::-webkit-scrollbar {
-              width: 6px;
-            }
-          &::-webkit-scrollbar-thumb {
-              background-color: $black;
-          }
-          &::-webkit-scrollbar-track {
-              background-color: transparent;
-              border-left: 1px solid $grey-light;
-              border-bottom: 1px solid $grey-light;
-          }
-        }
-        .modal--buttons {
-            padding-bottom: 20px;
-            padding-top: 20px;
-        }
+        padding-left: 20px;
+        padding-bottom: 20px;
     }
 }
 
