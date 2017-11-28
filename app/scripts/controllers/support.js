@@ -9,7 +9,7 @@
  */
 angular
     .module('bitbloqApp')
-    .controller('SupportCtrl', function(
+    .controller('SupportCtrl', function (
         $translate,
         $scope,
         $location,
@@ -35,14 +35,14 @@ angular
         $scope.translate = $translate;
         var sessionStorage = $window.sessionStorage
 
-        $scope.goBack = function() {
+        $scope.goBack = function () {
             $window.history.back();
         };
 
         // switches
-        common.itsUserLoaded().then(function() {
+        common.itsUserLoaded().then(function () {
             $scope.user = common.user;
-            $scope.switchUserChromeAppMode = function() {
+            $scope.switchUserChromeAppMode = function () {
                 userApi.update({
                     chromeapp: common.user.chromeapp
                 });
@@ -51,16 +51,16 @@ angular
 
         // lists
 
-        $scope.getSVG = function(item) {
+        $scope.getSVG = function (item) {
             if (item.svg === '') {
                 $http
                     .get(
-                        'images/components/' +
-                            utils.getTimestampPrefix() +
-                            item.uuid +
-                            '.svg'
+                    'images/components/' +
+                    utils.getTimestampPrefix() +
+                    item.uuid +
+                    '.svg'
                     )
-                    .then(function(res) {
+                    .then(function (res) {
                         //we want to delete all height and width atributes form the original svg files
                         item.svg = _.replace(
                             res.data,
@@ -71,13 +71,13 @@ angular
             }
         };
 
-        $scope.renderSVG = function(item) {
+        $scope.renderSVG = function (item) {
             return $sce.trustAsHtml(item.svg); // all of this for the svg animations to fly! :)
         };
 
         // imgModal
 
-        $scope.imgModal = function(img) {
+        $scope.imgModal = function (img) {
             console.log('dentro');
             var parent = $rootScope,
                 modalOptions = parent.$new();
@@ -95,7 +95,7 @@ angular
 
         // hw test
         $scope.hwTestTries = 0;
-        $scope.hwTestStart = function(component, board) {
+        $scope.hwTestStart = function (component, board) {
             switch (component) {
                 case 'led':
                     if (board === 'bqzum') {
@@ -106,10 +106,10 @@ angular
                                 },
                                 hex: $scope.card.data.scope.programHex.bt328
                             })
-                            .then(function() {
+                            .then(function () {
                                 $scope.go('hardLEDsTestEnd', true);
                             })
-                            .catch(function() {
+                            .catch(function () {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('form', true);
                                 } else {
@@ -124,10 +124,10 @@ angular
                                 },
                                 hex: $scope.card.data.scope.programHex.uno
                             })
-                            .then(function() {
+                            .then(function () {
                                 $scope.go('hardLEDsTestEnd', true);
                             })
-                            .catch(function() {
+                            .catch(function () {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('hard2forum', true);
                                 } else {
@@ -145,10 +145,10 @@ angular
                                 },
                                 hex: $scope.card.data.scope.programHex.bt328
                             })
-                            .then(function() {
+                            .then(function () {
                                 $scope.go('hardBuzzTestEnd', true);
                             })
-                            .catch(function() {
+                            .catch(function () {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('form', true);
                                 } else {
@@ -163,10 +163,10 @@ angular
                                 },
                                 hex: $scope.card.data.scope.programHex.uno
                             })
-                            .then(function() {
+                            .then(function () {
                                 $scope.go('hardBuzzTestEnd', true);
                             })
-                            .catch(function() {
+                            .catch(function () {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('hard2forum', true);
                                 } else {
@@ -184,10 +184,10 @@ angular
                                 },
                                 hex: $scope.card.data.scope.programHex.bt328
                             })
-                            .then(function() {
+                            .then(function () {
                                 $scope.go('hardLCDsTestEnd', true);
                             })
-                            .catch(function() {
+                            .catch(function () {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('form', true);
                                 } else {
@@ -202,10 +202,10 @@ angular
                                 },
                                 hex: $scope.card.data.scope.programHex.uno
                             })
-                            .then(function() {
+                            .then(function () {
                                 $scope.go('hardLCDsTestEnd', true);
                             })
-                            .catch(function() {
+                            .catch(function () {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('hard2forum', true);
                                 } else {
@@ -223,10 +223,10 @@ angular
                                 },
                                 hex: $scope.card.data.scope.programHex.bt328
                             })
-                            .then(function() {
+                            .then(function () {
                                 $scope.go('hardUSTestEnd', true);
                             })
-                            .catch(function() {
+                            .catch(function () {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('form', true);
                                 } else {
@@ -241,10 +241,10 @@ angular
                                 },
                                 hex: $scope.card.data.scope.programHex.uno
                             })
-                            .then(function() {
+                            .then(function () {
                                 $scope.go('hardUSTestEnd', true);
                             })
-                            .catch(function() {
+                            .catch(function () {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('hard2forum', true);
                                 } else {
@@ -262,10 +262,10 @@ angular
                                 },
                                 hex: $scope.card.data.scope.programHex.bt328
                             })
-                            .then(function() {
+                            .then(function () {
                                 $scope.go('hardButtonTestEnd', true);
                             })
-                            .catch(function() {
+                            .catch(function () {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('form', true);
                                 } else {
@@ -280,10 +280,10 @@ angular
                                 },
                                 hex: $scope.card.data.scope.programHex.uno
                             })
-                            .then(function() {
+                            .then(function () {
                                 $scope.go('hardButtonTestEnd', true);
                             })
-                            .catch(function() {
+                            .catch(function () {
                                 if ($scope.hwTestTries > 2) {
                                     $scope.go('hard2forum', true);
                                 } else {
@@ -296,13 +296,13 @@ angular
         };
 
         $scope.boards = [];
-        $scope.getBoards = function() {
+        $scope.getBoards = function () {
             //then lets load the ports
             chromeAppApi
                 .getPorts()
-                .then(function(response) {
+                .then(function (response) {
                     $scope.ports = filterPortsByOS(response.ports);
-                    hardwareService.itsHardwareLoaded().then(function() {
+                    hardwareService.itsHardwareLoaded().then(function () {
                         utils.getPortsPrettyNames(
                             $scope.ports,
                             hardwareService.hardware.boards
@@ -316,13 +316,13 @@ angular
                         $scope.boards = $scope.portNames;
                     });
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.log('error SerialMonitorCtrl', error);
                 });
         };
 
         // dc function to free the serial port
-        $scope.dc = function() {
+        $scope.dc = function () {
             chromeAppApi.stopSerialCommunication();
             if (serialEvent) {
                 serialEvent();
@@ -343,14 +343,14 @@ angular
             return result;
         }
         $scope.selected = false;
-        $scope.selectBoardUS = function(item) {
+        $scope.selectBoardUS = function (item) {
             $scope.selected = true;
             var port = _.find($scope.ports, {
                 portName: item
             });
             $scope.selectedPort = port;
             chromeAppApi.getSerialData($scope.selectedPort);
-            serialEvent = $rootScope.$on('serial', function(event, msg) {
+            serialEvent = $rootScope.$on('serial', function (event, msg) {
                 // maybe we recieve more than one metric on the same package
                 var piece = msg.split(/\s+/)[0].slice(0, -3);
 
@@ -364,8 +364,8 @@ angular
 
                 $scope.serialMsg = $sce.trustAsHtml(
                     '<span>' +
-                        (piece + 'cm').split(/(?!^)/).join('</span><span>') +
-                        '</span>'
+                    (piece + 'cm').split(/(?!^)/).join('</span><span>') +
+                    '</span>'
                 );
                 utils.apply($scope);
             });
@@ -387,7 +387,7 @@ angular
         };
         // sometimes the user go back and forth...
         // lets clean the steps!
-        $scope.getSteps = function() {
+        $scope.getSteps = function () {
             // only if we donesn't want duplicates
             // common.supportSteps = _.uniqBy(
             //     common.supportSteps.reverse()
@@ -461,7 +461,7 @@ angular
 
             feedbackApi
                 .send(res)
-                .success(function() {
+                .success(function () {
                     alertsService.add({
                         text: 'modal-comments-done',
                         id: 'modal-comments',
@@ -471,7 +471,7 @@ angular
                     $scope.sendIsBlocked = false;
                     $scope.go('end', true)
                 })
-                .error(function() {
+                .error(function () {
                     alertsService.add({
                         text: 'modal-comments-error',
                         id: 'modal-comments',
@@ -481,7 +481,7 @@ angular
                 });
         };
 
-        var unHTMLfy = function(str) {
+        var unHTMLfy = function (str) {
             return str
                 .replace(/(?:&)/g, '&amp;')
                 .replace(/(?:<)/g, '&lt;')
@@ -500,92 +500,92 @@ angular
         var cards = []
 
         function _init() {
-          if (id) {
-            getFromSS(id, isPermalink).then(function(item) {
-              if(item) {
-                $scope.card = item
-              } else {
-                $location.path('/support/p/404');
-              }
-            });
-          } else {
-            getFromSS('index', true).then(function(item) {
-              if(item) {
-                $scope.card = item
-              } else {
-                $location.path('/support/p/index');
-              }
-            });
-          }
+            if (id) {
+                getFromSS(id, isPermalink).then(function (item) {
+                    if (item) {
+                        $scope.card = item
+                    } else {
+                        $location.path('/support/p/404');
+                    }
+                });
+            } else {
+                getFromSS('index', true).then(function (item) {
+                    if (item) {
+                        $scope.card = item
+                    } else {
+                        $location.path('/support/p/index');
+                    }
+                });
+            }
         }
 
-        function getFromSS (id, isPermalink) {
-          var item = null
-          if (sessionStorage.supportCards) {
-              cards = JSON.parse(sessionStorage.supportCards);
-              item = cards.filter(function(item) {
-                return ((isPermalink) ? item.permalink : item._id) === id;
-              })
-          }
-          var defered = $q.defer();
-          // is in ss?
-          if (item && item.length) {
-            defered.resolve(item[0]);
-          } else {
-            // if not, load from api and push to ss
-             supportApi.getId(id, isPermalink)
-              .then(
-                function (res) {
-                  item = res.data[0];
-                  saveStep(item.permalink);
-                  cards.push(item);
-                  sessionStorage.setItem('supportCards', JSON.stringify(cards));
-                  defered.resolve(item);
-                },
-                function() {
-                  // if doesn't exists, return 404
-                  var exit404 = false
-                  if (!exit404) {
-                    exit404 = true;
-                    getFromSS('404', true)
-                      .then(
-                        function(item) {
-                          defered.resolve(item)
-                        },
-                        function(err) {
-                          defered.reject()
-                        });
-                    }
+        function getFromSS(id, isPermalink) {
+            var item = null
+            if (sessionStorage.supportCards) {
+                cards = JSON.parse(sessionStorage.supportCards);
+                item = cards.filter(function (item) {
+                    return ((isPermalink) ? item.permalink : item._id) === id;
                 })
-          }
-          return defered.promise;
+            }
+            var defered = $q.defer();
+            // is in ss?
+            if (item && item.length) {
+                defered.resolve(item[0]);
+            } else {
+                // if not, load from api and push to ss
+                supportApi.getId(id, isPermalink)
+                    .then(
+                    function (res) {
+                        item = res.data[0];
+                        saveStep(item.permalink);
+                        cards.push(item);
+                        sessionStorage.setItem('supportCards', JSON.stringify(cards));
+                        defered.resolve(item);
+                    },
+                    function () {
+                        // if doesn't exists, return 404
+                        var exit404 = false
+                        if (!exit404) {
+                            exit404 = true;
+                            getFromSS('404', true)
+                                .then(
+                                function (item) {
+                                    defered.resolve(item)
+                                },
+                                function () {
+                                    defered.reject()
+                                });
+                        }
+                    })
+            }
+            return defered.promise;
         }
 
         function saveStep(permalink) {
-          if (_.last(common.supportSteps) !== permalink &&
-            permalink !== 'index') {
-            common.supportSteps.push(permalink);
-          }
+            if (_.last(common.supportSteps) !== permalink &&
+                permalink !== 'index') {
+                common.supportSteps.push(permalink);
+            }
         }
 
-        $scope.go = function(permalink) {
-          if (permalink === 'index') {
+        $scope.go = function (permalink) {
+            if (permalink === 'index') {
                 $location.path('/support/');
-          } else {
-              getFromSS(permalink, true).then(function(item) {
-                if(item) {
-                  $location.path('/support/' + item._id);
-                } else {
-                  $log.log(permalink + ' -> 404');
-                  $location.path('/support/p/404');
-                }
-              })
-          }
+            } else {
+                getFromSS(permalink, true).then(function (item) {
+                    if (item) {
+                        $location.path('/support/' + item._id);
+                    } else {
+                        $log.log(permalink + ' -> 404');
+                        $location.path('/support/p/404');
+                    }
+                })
+            }
         };
 
 
         $window.onbeforeunload = $scope.dc();
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
             $scope.dc();
         });
 
