@@ -1,7 +1,7 @@
 <div class="section-header table__header center-mode__header">
     <div class="breadcrumb header__title col-vsmall-7" ng-class="{'breadcrumb-longer':!student.average, 'second-level':secondaryBreadcrumb || tertiaryBreadcrumb}" data-element="centerMode-header-breadcrumb">
         <h1><a href="#/classes">{{'header_tab_myClass' | translate}}</a></h1>
-        <a class="center-mode__header_editable icon--pointer" ng-click="changeNameModal()" ng-if="secondaryBreadcrumb || tertiaryBreadcrumb" ng-class="{'breadcrumb--secondary': secondaryBreadcrumb, 'breadcrumb__item': tertiaryBreadcrumb}" ng-href="#/class/{{group._id}}">
+        <a class="center-mode__header_editable icon--pointer" ng-click="changeNameModal()" ng-if="secondaryBreadcrumb || tertiaryBreadcrumb" ng-class="{'breadcrumb--secondary': secondaryBreadcrumb, 'breadcrumb__item': tertiaryBreadcrumb}">
           <span>{{group.name}}</span>
         </a>
         <div class="color-swatch" ng-if="!tertiaryBreadcrumb">
@@ -13,7 +13,9 @@
                 <button class="btn btn--primary btn--small" ng-click="changeGroupColor()">{{'save' | translate}}</button>
             </div>
         </div>
-        <p class="breadcrumb--subtext" ng-if="!tertiaryBreadcrumb" data-element="breadcrumb-subtext">{{group.accessId}}</p>
+        <p class="breadcrumb--subtext icon--context" ng-if="!tertiaryBreadcrumb" data-element="breadcrumb-subtext" ng-click="showGroupId()">
+            {{group.accessId}}
+        </p>
         <a ng-if="tertiaryBreadcrumb" class="breadcrumb--secondary" ng-href="#/class/{{group._id}}">
       {{student.firstName? student.firstName + ' ' + student.lastName : student.username}}
     </a>

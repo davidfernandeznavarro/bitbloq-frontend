@@ -473,6 +473,11 @@
             margin-bottom: 0;
         }
     }
+
+    &.modal--bigText {
+        text-align: center;
+        font-size: -webkit-xxx-large;
+    }
 }
 
 .modal__scroll {

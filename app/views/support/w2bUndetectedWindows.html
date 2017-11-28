@@ -1,36 +1,33 @@
-<p>
-    <strong>¿Están las claves que lanzan Web2board desde la web en el <i>editor de registro</i>?</strong>
-</p>
-<p>
-    Cuando el navegador recibe una llamada a través del protocolo <i class="text--secondary">web2board://</i>, tiene que lanzar Web2board; para que funcione, se tiene que añadir una clave en el registro de Windows.
-    <br> Para ver el registro de windows, pulsar las teclas
+<p>{{'support-view--w2bUndetectedWindows-content1' | translate}}</p>
+<p>{{'support-view--w2bUndetectedWindows-content2-a' | translate}} <i class="text--secondary">web2board://</i>, {{'support-view--w2bUndetectedWindows-content2-b' | translate}}<br>
+    {{'support-view--w2bUndetectedWindows-content3-a' | translate}}
     <span class="common--icon-keycap-fx">Windows</span> +
-    <span class="common--icon-keycap-fx">R</span> para que se abra el menu de ejecutar, y escribir "regedit. Eso nos abre el editor del registro.
+    <span class="common--icon-keycap-fx">R</span> {{'support-view--w2bUndetectedWindows-content3-b' | translate}} <span class="common--text-term-fx little">regedit</span>
 </p>
 <p>
-    Las claves que hay que revisar que están son:
+    {{'support-view--w2bUndetectedWindows-content4' | translate}}
     <ol class="common--text-editor-fx">
         <li>HKEY_CLASSES_ROOT\web2board</li>
         <li>HKEY_CLASSES_ROOT\web2board\shell</li>
         <li>HKEY_CLASSES_ROOT\web2board\shell\open</li>
         <li>HKEY_CLASSES_ROOT\web2board\shell\open\command</li>
     </ol>
-    A la última cadena en windows de 32b ha de tener el valor:
+    {{'support-view--w2bUndetectedWindows-content5' | translate}}
     <ul>
         <li class="common--text-term-fx">C:\\Program Files\\Web2board\\web2boardLink.exe</li>
     </ul>
-    En windows de 64b ha de tener el valor:
+    {{'support-view--w2bUndetectedWindows-content6' | translate}}
     <ul>
         <li class="common--text-term-fx">C:\\Program Files (x86)\\Web2board\\web2boardLink.exe</ul>
     </li>
 </p>
 <p>
-  <strong>Si no tiene las claves en el registro</strong>, descargue y ejecute el archivo correspondiente a su versión:
+  {{'support-view--w2bUndetectedWindows-content7' | translate}}
   <ul>
     <li class="icon--windows"> Windows 32b: <a href="https://github.com/bq/web2board/blob/master/res/windows/web2boardTo32.reg" target="_blank" class="icon--url">web2boardTo32.reg</a></li>
     <li class="icon--windows"> Windows 64b: <a href="https://github.com/bq/web2board/blob/master/res/windows/web2board.reg" target="_blank" class="icon--url">web2board.reg</a></li>
   </ul>
 </p>
 <p class="support--center">
-    <strong>¿Ha solucionado su consulta?</strong>
+    <strong>{{'support-view--common-solucionado' | translate}}</strong>
 </p>
