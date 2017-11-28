@@ -137,6 +137,10 @@ $support-width: 900px;
     min-height: 100%;
     height: 100%;
 
+    .support--color-orange {
+        color: $toolbox-software-functions;
+    }
+
     .support--button--home {
         float: right;
         margin-top: -5px;
@@ -591,6 +595,7 @@ $support-width: 900px;
         p {
             // width: -webkit-fill-available;
             width: fill;
+            width: -webkit-fill-available;
         }
     }
     // hardware test loader
@@ -848,5 +853,8 @@ $support-width: 900px;
                 }
             }
         }
+    }
+    .support--bootloader-col {
+      padding: 0px 5px 0px 5px;
     }
 }

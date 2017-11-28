@@ -1,4 +1,4 @@
-<p class="support--centered"><i class="text--secondary" data-ng-hide="checked">Selecciona tu placa:</i></p>
+<p class="support--centered"><i class="text--secondary" data-ng-hide="checked">{{'make-hardware-select-board' | translate}}:</i></p>
 <p>
     <ul class="support--center" id="support--hw-test">
         <li data-ng-mouseover="hovered = 'bqzum'" data-ng-mouseleave="hovered = null" data-ng-hide="checked === 'otras'">
@@ -12,15 +12,15 @@
           </li>
         <li data-ng-mouseover="hovered = 'otras'" data-ng-mouseleave="hovered = null" data-ng-hide="checked === 'bqzum'">
             <a href="" data-ng-click="checked = (checked) ? null : 'otras'"><img id="otras" src="/images/boards/ArduinoUNO.svg" alt="Otras" data-ng-class="{noHover: hovered && hovered !== 'otras', isHover: checked  === 'otras' || hovered === 'otras'}" />
-            <span id="otras" data-ng-show=" checked  === 'otras' || hovered === 'otras'">Otras placas</span></a>
+            <span id="otras" data-ng-show=" checked  === 'otras' || hovered === 'otras'">{{'support-view--common-otherboards' | translate}}</span></a>
         </li>
     </ul>
 </p>
 <p class="support--centered" data-ng-show="checked">
-  Vamos a instalar un programa en su placa, con el que probaremos su componente Sensor de Ultrasonidos.
+  {{'support-view--common-installInfo' | translate}} {{'mkb_ultrasound' | translate}}.
 </p>
 <p class="support--centered" data-ng-show="checked">
-  <button class="btn btn--primary" data-ng-click="hwTestStart('us',checked)" data-element="hw_test_led_start">
-      <span class="icon--big icon--ok">Cargar el programa</span>
+  <button class="btn btn--primary" data-ng-click="hwTestStart('us',checked)" data-element="hw_test_us_start">
+      <span class="icon--big icon--ok">{{'support-view--common-load' | translate}}</span>
   </button>
 </p>
