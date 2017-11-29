@@ -185,7 +185,7 @@
                 </li>
             </ul>
             <div class="form--section edit-classes">
-                <button type="button" ng-class="{'btn':true, 'btn--primary':true, 'btn--small':true, 'btn--disabled':!common.user}" data-ng-click="editGroups(currentProject, groups);"
+                <button type="button" ng-class="{'btn':true, 'btn--primary':true, 'btn--small':true, 'btn--disabled':!common.user, 'btn--disabled':!groups}" data-ng-click="editGroups(currentProject, groups);"
                     data-element="exercise_button_editGroups">
                     {{ 'centerMode_assignToClasses' | translate }}
                 </button>
