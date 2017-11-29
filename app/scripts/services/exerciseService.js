@@ -248,10 +248,11 @@ angular.module('bitbloqApp')
                     });
                 }
 
-                function deleteAllWatchers() {
+                function deleteAllWatchersAndReject() {
                     _.forEach(checkWatchers, function (watcher) {
                         watcher();
                     });
+                    defered.reject();
                 }
 
                 function clickGroupHandler(group) {
@@ -294,7 +295,7 @@ angular.module('bitbloqApp')
                 assignModal = ngDialog.open({
                     template: '/views/modals/modal.html',
                     className: 'modal--container modal--assign-group',
-                    preCloseCallback: deleteAllWatchers,
+                    preCloseCallback: deleteAllWatchersAndReject,
                     scope: modalOptions
                 });
             });
