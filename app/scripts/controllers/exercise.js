@@ -21,7 +21,7 @@ angular.module('bitbloqApp')
             settingBoardAlert,
             serialMonitorAlert;
 
-        $scope.groups = [];
+        $scope.groups = null;
 
         $scope.hardware = {
             componentList: null,
@@ -52,6 +52,7 @@ angular.module('bitbloqApp')
 
         $scope.getGroups = function () {
             centerModeApi.getGroupsByExercise($routeParams.id).then(function (response) {
+
                 $scope.groups = response.data;
                 if ($scope.currentProject.hardware.showRobotImage) {
                     $scope.isRobotActivatedInCenter();
