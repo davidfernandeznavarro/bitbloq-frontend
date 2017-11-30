@@ -53,21 +53,15 @@ angular
 
         $scope.getSVG = function (item) {
             if (item.svg === '') {
-                $http
-                    .get(
-                    'images/components/' +
-                    utils.getTimestampPrefix() +
-                    item.uuid +
-                    '.svg'
-                    )
-                    .then(function (res) {
+                $http.get($scope.setTimestampToURL('images/components/', item.uuid + '.svg'))
+                      .then(function (res) {
                         //we want to delete all height and width atributes form the original svg files
-                        item.svg = _.replace(
-                            res.data,
-                            /\b(width|height)="+[a-zA-Z1-9]+" ?\b/gi,
-                            ''
-                        );
-                    });
+                          item.svg = _.replace(
+                              res.data,
+                              /\b(width|height)="+[a-zA-Z1-9]+" ?\b/gi,
+                              ''
+                          );
+                      });
             }
         };
 
@@ -78,7 +72,6 @@ angular
         // imgModal
 
         $scope.imgModal = function (img) {
-            console.log('dentro');
             var parent = $rootScope,
                 modalOptions = parent.$new();
 
@@ -581,6 +574,10 @@ angular
                     }
                 })
             }
+        };
+
+        $scope.setTimestampToURL = function (pre, post) {
+          return pre + utils.getTimestampPrefix() + post;
         };
 
 

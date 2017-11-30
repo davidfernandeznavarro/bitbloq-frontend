@@ -402,6 +402,7 @@ module.exports = function (grunt) {
                         'styles/ajax-loader.gif',
                         'styles/fonts/{,*/}*.*',
                         'res/locales/*.*',
+                        'res/support/{,*/}*.*',
                         'res/config/{,*/}*.*',
                         'static/*.json',
                         'images/**/*.{webp,svg,jpg,png,gif,ico}'
