@@ -271,7 +271,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-port-found',
                     id: 'web2board',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             } else {
                 alertsService.add({
@@ -516,7 +518,9 @@ angular.module('bitbloqApp')
                         alertsService.add({
                             text: 'alert-web2board-no-port-found',
                             id: 'web2board',
-                            type: 'warning'
+                            type: 'warning',
+                            link: function () { $location.url('support/p/noBoard'); },
+                            linkText: $translate.instant('support-go-to')
                         });
                         console.error(error);
                     })
@@ -550,7 +554,9 @@ angular.module('bitbloqApp')
                         alertsService.add({
                             text: 'alert-web2board-no-port-found',
                             id: 'web2board',
-                            type: 'warning'
+                            type: 'warning',
+                            link: function () { $location.url('support/p/noBoard'); },
+                            linkText: $translate.instant('support-go-to')
                         });
                         console.error(error);
                     })

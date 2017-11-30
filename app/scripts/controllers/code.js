@@ -8,7 +8,7 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('CodeCtrl', function($scope, $q, projectApi, $routeParams, _, alertsService, $timeout, utils, $location, web2board, $window, $rootScope, commonModals, $route, web2boardOnline, compilerApi, hardwareService, projectService) {
+    .controller('CodeCtrl', function($scope, $q, projectApi, $routeParams, _, alertsService, $timeout, utils, $location, web2board, $window, $rootScope, commonModals, $route, web2boardOnline, compilerApi, hardwareService, projectService, $translate) {
 
         var editInfo, editorRef,
             compilingAlert,
@@ -320,7 +320,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
         }
@@ -334,7 +336,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
         }
@@ -557,7 +561,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
 
@@ -583,7 +589,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
 
             }
@@ -598,7 +606,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
         }
@@ -723,7 +733,9 @@ angular.module('bitbloqApp')
             alertsService.add({
                 text: 'alert-web2board-no-port-found',
                 id: 'upload',
-                type: 'warning'
+                type: 'warning',
+                link: function () { $location.url('support/p/noBoard'); },
+                linkText: $translate.instant('support-go-to')
             });
         });
 
