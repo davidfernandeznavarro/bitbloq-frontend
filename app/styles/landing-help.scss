@@ -6,6 +6,7 @@
         padding-top     : 100px;
         text-align      : center;
         border-top      : 3px solid $green;
+        margin-bottom   : 60px;
 
         .max-width {
             & > .svg-icon {
@@ -31,21 +32,21 @@
             font-weight: 400;
             margin     : auto;
             margin-top: 20px;
+            margin-bottom      : 40px;
         }
 
-        .contact__container {
+        .main__container {
             display: table;
             height : 100px;
             margin : 0 auto;
-            cursor : default;
+            cursor : pointer;
 
             & > * {
-                width           : 380px;
+                width           : 500px;
                 background-color: $grey-lighter;
                 border-radius   : 4px;
                 float           : left;
                 margin          : 5px;
-                margin-top: 40px;
                 height          : 100px;
                 padding-top     : 15px;
                 text-align      : left;
@@ -80,14 +81,15 @@
                 }
             }
 
-            .contact-by-email, .contact-by-phone {
+            .support_block {
                 .svg-icon {
                     width : 40px;
                     height: 58px;
+                    margin-top: 4px;
                 }
 
                 div{
-                    max-width: 295px;
+                    max-width: 355px;
                 }
 
                 a:hover {
@@ -97,9 +99,9 @@
         }
     }
 
-    .landing--section__heading {
+    .landing--section__heading, .contact--section__heading {
         & > h2 {
-            margin-top   : 60px;
+            margin-top   : 0px;
             margin-bottom: 30px;
         }
 
@@ -115,7 +117,7 @@
     }
 
     .landing--section {
-        margin-bottom: 80px;
+        margin-bottom: 10px;
         text-align   : center;
 
         .sec {
@@ -175,6 +177,143 @@
                 font-weight    : 400;
 
                 &:hover {
+                  text-decoration: underline;
+                }
+            }
+        }
+
+        .contact__container {
+            background-image: url("../images/landing/home_background.jpg");
+            background-size : cover;
+            display: table;
+            height : 100px;
+            margin : 0 auto;
+            cursor : default;
+
+            & > * {
+                width           : 460px;
+                background-color: $grey-lighter;
+                border-radius   : 4px;
+                float           : left;
+                margin          : 5px;
+                margin-top: 40px;
+                height          : 100px;
+                padding-top     : 15px;
+                text-align      : left;
+
+                .svg-icon {
+                    float       : left;
+                    margin-left : 20px;
+                    margin-right: 20px;
+                    fill: #3E424B;
+                }
+
+                div {
+                    display: inline-block;
+
+                    h2 {
+                        color      : $black-light;
+                        font-size  : 25px;
+                        font-weight: 400;
+                    }
+
+                    span {
+                        font-size      : 16px;
+                        font-weight    : 400;
+                        color          : #73757c;
+                        text-decoration: none;
+
+                        a {
+                            color          : $green;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+
+            .contact-by-email, .contact-by-phone {
+                .svg-icon {
+                    width : 40px;
+                    height: 58px;
+                }
+
+                div{
+                    max-width: 295px;
+                }
+
+                a:hover {
+                  text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .contact--section {
+        margin-bottom: 80px;
+        text-align   : center;
+
+        .sec {
+            display: inline-table;
+        }
+
+        .contact__container {
+            display: table;
+            height : 100px;
+            margin : 0 auto;
+            cursor : default;
+
+            & > * {
+                width           : 460px;
+                background-color: $grey-lighter;
+                border-radius   : 4px;
+                float           : left;
+                margin          : 5px;
+                margin-top      : 0px;
+                height          : 100px;
+                padding-top     : 15px;
+                text-align      : left;
+
+                .svg-icon {
+                    float       : left;
+                    margin-left : 20px;
+                    margin-right: 20px;
+                    fill: #3E424B;
+                }
+
+                div {
+                    display: inline-block;
+
+                    h2 {
+                        color        : $black-light;
+                        font-size    : 25px;
+                        font-weight  : 400;
+                    }
+
+                    span {
+                        font-size      : 16px;
+                        font-weight    : 400;
+                        color          : #73757c;
+                        text-decoration: none;
+
+                        a {
+                            color          : $green;
+                            text-decoration: none;
+                        }
+                    }
+                }
+            }
+
+            .contact-by-email, .contact-by-phone {
+                .svg-icon {
+                    width : 40px;
+                    height: 58px;
+                }
+
+                div{
+                    max-width: 295px;
+                }
+
+                a:hover {
                   text-decoration: underline;
                 }
             }
