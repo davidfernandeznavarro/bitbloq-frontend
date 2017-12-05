@@ -461,6 +461,12 @@
                     "name": "echidnaRGB"
                 },
                 {
+                    "name": "echidnaRGBFull"
+                },
+                {
+                    "name": "echidnaRGBOff"
+                },
+                {
                     "name": "echidnaReadJoystickXY"
                 },
                 {

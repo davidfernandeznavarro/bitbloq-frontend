@@ -541,6 +541,8 @@ angular.module('bitbloqApp')
                             case 'advancedEchidnaRGB':
                             case 'echidnaReadJoystickXY':
                             case 'echidnaReadAccelXY':
+                            case 'echidnaRGBFull':
+                            case 'echidnaRGBOff':
                                 if (currentProjectService.project && currentProjectService.project.hardware) {
                                     switch (currentProjectService.project.hardware.board) {
                                         case 'echidna-ArduinoUNO':
