@@ -8,7 +8,7 @@
  * Service in the bitbloqApp.
  */
 angular.module('bitbloqApp')
-    .service('web2boardOnline', function(compilerApi, chromeAppApi, alertsService, utils, $q, $translate, envData, $rootScope, web2board, $timeout) {
+    .service('web2boardOnline', function(compilerApi, chromeAppApi, alertsService, utils, $q, $translate, envData, $rootScope, web2board, $timeout, $location) {
         var exports = {
             compile: compile,
             upload: upload,
@@ -229,16 +229,20 @@ angular.module('bitbloqApp')
 
                     uploadDefer.resolve(uploadHexResponse);
                 }).catch(function(error) {
-                    var text;
+                    var text, link, linkText;
                     if (error.error.search('no Arduino') !== -1) {
                         text = 'alert-web2board-no-port-found';
+                        link = function () { $location.url('support/p/noBoard'); };
+                        linkText = $translate.instant('support-go-to');
                     } else {
                         text = getReadableErrorMessage(error);
                     }
                     alertsService.add({
                         text: text,
                         id: 'upload',
-                        type: 'error'
+                        type: 'error',
+                        link: link,
+                        linkText: linkText
                     });
                     web2board.setInProcess(false);
                     uploadDefer.reject(error);

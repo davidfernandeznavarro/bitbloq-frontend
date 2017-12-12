@@ -267,8 +267,13 @@
             {{'help' | translate}}
         </button>
         <ul data-ng-class="{actions__menu__dropdown:true, 'actions--file':help, hidden:dropdown !== 'help', 'actions__menu--selected':dropdown === 'help'}">
-            <li class="dropdown__item" data-element="makeactions-menuhelp-faq">
-                <a href="#/forum/Preguntas%20frecuentes" target="_blank">{{'faq' | translate}}</a>
+            <li class="dropdown__item" data-element="makeactions-menuhelp-support">
+                <a href="#/support/" target="_blank">
+                  <svg class="svg-icon svg-icon--text svg-icon--menu">
+                      <use xlink:href="#build"></use>
+                  </svg>
+                  {{'support-title-min' | translate}}
+                </a>
             </li>
             <li class="dropdown__item" data-element="makeactions-menuhelp-tutorial">
                 <a href="#/learn" target="_blank">{{'basic-tutorials' | translate}}</a>
@@ -296,6 +301,9 @@
                     </svg>
                     {{'goto-bitbloq-forum' | translate}}
                 </a>
+            </li>
+            <li class="dropdown__item" data-element="makeactions-menuhelp-faq">
+                <a href="#/forum/Preguntas%20frecuentes" target="_blank">{{'faq' | translate}}</a>
             </li>
         </ul>
     </li>

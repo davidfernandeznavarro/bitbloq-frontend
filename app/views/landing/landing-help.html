@@ -7,28 +7,18 @@
             </svg>
             <h1 class="h1">{{ 'do-you-need-help' | translate }}</h1>
             <p>{{ 'landing_help_masthead_subtitle' | translate }}</p>
-            <div class="contact__container">
-                <div class="contact-by-phone">
+            <div class="main__container">
+              <a href="#/support" target="_blank">
+                <div class="support_block">
                     <svg class="svg-icon">
-                        <use xlink:href="#phone"></use>
+                        <use xlink:href="#build"></use>
                     </svg>
                     <div>
-                        <h2>{{ 'landing_help_contact_byphone' | translate }}</h2>
-                        <span>{{ 'call-us-to' | translate }}
-                            <a href="tel:+34902676061"></a>+34 902 676 061</span>
+                        <h2>{{ 'support-title' | translate }} <strong>Bitbloq</strong></h2>
+                        <span>{{ 'support-info' | translate }}</span>
                     </div>
                 </div>
-                <div class="contact-by-email">
-                    <svg class="svg-icon">
-                        <use xlink:href="#mailSquare"></use>
-                    </svg>
-                    <div>
-                        <h2>{{ 'by-mail' | translate }}</h2>
-                        <span>{{ 'write-us-an-email' | translate }}
-                            <span ng-if="common.user" data-ng-click="commonModals.sendCommentsModal()" class="contact-us-link" data-element="help-contact-us-link"><a href="">{{ 'from-here' | translate }}</a></span>
-                            <a ng-if="!common.user" href="mailto:{{'support_email' | translate}}" target="_blank" data-element="help-contact-us-link">{{ 'from-here' | translate }}</a></span>
-                    </div>
-                </div>
+              </a>
             </div>
         </div>
     </div>
@@ -66,6 +56,39 @@
                             <h2 class="h2">DIWO</h2>
                             <p>{{ 'landing_help_diwo_text' | translate }}</p>
                             <a href="http://diwo.bq.com/" target="_blank">{{ 'goto-diwo' | translate }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+      </div>
+      <div class="contact--section">
+          <div class="max-width">
+            <div class="contact--section__heading">
+                <h2 class="h1">{{ 'landing_other-contact-methods' | translate }}</h2>
+                <p class="landing--text--big">{{ 'landing_other-contact-methods_subheader' | translate }}</p>
+            </div>
+            <div class="contact--section__contact">
+                <div class="contact__container">
+                    <div class="contact-by-phone">
+                        <svg class="svg-icon">
+                            <use xlink:href="#phone"></use>
+                        </svg>
+                        <div>
+                            <h2>{{ 'landing_help_contact_byphone' | translate }}</h2>
+                            <span>{{ 'call-us-to' | translate }}
+                                <a href="tel:+34902676061"></a>+34 902 676 061</span>
+                        </div>
+                    </div>
+                    <div class="contact-by-email">
+                        <svg class="svg-icon">
+                            <use xlink:href="#mailSquare"></use>
+                        </svg>
+                        <div>
+                            <h2>{{ 'by-mail' | translate }}</h2>
+                            <span>{{ 'write-us-an-email' | translate }}
+                                <span ng-if="common.user" data-ng-click="commonModals.sendCommentsModal()" class="contact-us-link" data-element="help-contact-us-link"><a href="">{{ 'from-here' | translate }}</a></span>
+                                <a ng-if="!common.user" href="mailto:{{'support_email' | translate}}" target="_blank" data-element="help-contact-us-link">{{ 'from-here' | translate }}</a></span>
                         </div>
                     </div>
                 </div>

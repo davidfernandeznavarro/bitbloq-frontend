@@ -9,7 +9,7 @@
  */
 
 angular.module('bitbloqApp')
-    .controller('MakeActionsCtrl', function($rootScope, $scope, $log, $location, $window, $document, alertsService, bloqs, ngDialog, projectApi, exerciseApi, _, $route, commonModals, clipboard, projectService) {
+    .controller('MakeActionsCtrl', function($rootScope, $scope, $log, $location, $window, $document, alertsService, bloqs, ngDialog, projectApi, exerciseApi, _, $route, commonModals, clipboard, projectService, $translate) {
 
         $scope.defaultZoom = 1;
         $scope.modal = {
@@ -289,7 +289,9 @@ angular.module('bitbloqApp')
                     $scope.alertsService.add({
                         text: 'alert-web2board-no-board-serial',
                         id: 'serialmonitor',
-                        type: 'warning'
+                        type: 'warning',
+                        link: function () { $location.url('support/p/noBoard'); },
+                        linkText: $translate.instant('support-go-to')
                     });
                 }
                 show = false;

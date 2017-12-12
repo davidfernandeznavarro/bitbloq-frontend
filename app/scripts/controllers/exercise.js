@@ -11,7 +11,7 @@
 angular.module('bitbloqApp')
     .controller('ExerciseCtrl', function ($rootScope, $route, $scope, $log, $timeout, $routeParams, $document, $window, $location,
         $q, web2board, alertsService, ngDialog, _, bloqs, bloqsUtils, utils, userApi, commonModals, hw2Bloqs, web2boardOnline,
-        exerciseService, hardwareConstants, chromeAppApi, centerModeApi, exerciseApi, hardwareService) {
+        exerciseService, hardwareConstants, chromeAppApi, centerModeApi, exerciseApi, hardwareService, $translate) {
 
         /*************************************************
          Exercise settings
@@ -799,7 +799,9 @@ angular.module('bitbloqApp')
             alertsService.add({
                 text: 'alert-web2board-no-port-found',
                 id: 'upload',
-                type: 'warning'
+                type: 'warning',
+                link: function () { $location.url('support/p/noBoard'); },
+                linkText: $translate.instant('support-go-to')
             });
         });
 
@@ -903,7 +905,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
 
             }
@@ -918,7 +922,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
         }
@@ -943,7 +949,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
 
             }
@@ -958,7 +966,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
         }
@@ -1179,7 +1189,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
         };
@@ -1193,7 +1205,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
         };
@@ -1219,7 +1233,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
 

@@ -11,7 +11,7 @@
 angular.module('bitbloqApp')
     .controller('BloqsprojectCtrl', function ($rootScope, $route, $scope, $log, $timeout, $routeParams, $document, $window, $location,
         $q, web2board, alertsService, ngDialog, _, projectApi, bloqs, bloqsUtils, utils, userApi, hw2Bloqs, web2boardOnline, commonModals,
-        projectService, hardwareConstants, chromeAppApi) {
+        projectService, hardwareConstants, chromeAppApi, $translate) {
 
         /*************************************************
          Project save / edit
@@ -179,7 +179,9 @@ angular.module('bitbloqApp')
             alertsService.add({
                 text: 'alert-web2board-no-port-found',
                 id: 'upload',
-                type: 'warning'
+                type: 'warning',
+                link: function () { $location.url('support/p/noBoard'); },
+                linkText: $translate.instant('support-go-to')
             });
         });
 
@@ -284,7 +286,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
 
             }
@@ -299,7 +303,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
         }
@@ -324,7 +330,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
 
             }
@@ -339,7 +347,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
         }
@@ -712,7 +722,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
         };
@@ -726,7 +738,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
         };
@@ -752,7 +766,9 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
-                    type: 'warning'
+                    type: 'warning',
+                    link: function () { $location.url('support/p/noBoard'); },
+                    linkText: $translate.instant('support-go-to')
                 });
             }
 
