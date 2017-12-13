@@ -287,7 +287,7 @@ angular.module('bitbloqApp')
                     confirmAction: confirmAction,
                     modalButtons: true,
                     clickGroupHandler: clickGroupHandler,
-                    scroll: true
+                    scroll: false // [SWBIT-2756]
                 });
 
                 allCheckWatchers(modalOptions.groups);
