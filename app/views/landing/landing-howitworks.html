@@ -17,27 +17,27 @@
                 <h2>{{ 'landing_howitworks_oval_3' | translate }}</h2>
             </div>
         </div>
-        <a class="download-button" ng-if="common.os === 'Mac'" data-ng-href="{{envData.config.web2boardLinkMac}}">
+        <a class="download-button" ng-if="common.os === 'Mac'" data-ng-href="{{envData.config.web2boardLinkMac}}"  data-element="macBtn">
             <button class="btn btn--quaternary btn--medium">
                 {{ 'landing_link_download' | translate }} Mac OS X
             </button>
         </a>
-        <a class="download-button" ng-if="common.os === 'Windows'" data-ng-href="{{envData.config.web2boardLinkWindows}}">
+        <a class="download-button" ng-if="common.os === 'Windows'" data-ng-href="{{envData.config.web2boardLinkWindows}}"  data-element="windowsBtn">
             <button class="btn btn--quaternary btn--medium">
                 {{ 'landing_link_download' | translate }} Windows 32/64 bits
             </button>
         </a>
-        <a class="download-button" ng-if="common.os === 'Linux'" data-ng-href="{{envData.config.web2boardLinkLinux}}">
+        <a class="download-button" ng-if="common.os === 'Linux'" data-ng-href="{{envData.config.web2boardLinkLinux}}" data-element="linux64Btn">
             <button class="btn btn--quaternary btn--medium">
                 {{ 'landing_link_download' | translate }} Linux 64-bits
             </button>
         </a>
-        <a class="download-button" ng-if="common.os === 'Linux'" data-ng-href="{{envData.config.web2boardLinkLinux32}}">
+        <a class="download-button" ng-if="common.os === 'Linux'" data-ng-href="{{envData.config.web2boardLinkLinux32}}"  data-element="linux32Btn">
             <button class="btn btn--quaternary btn--medium">
                 {{ 'landing_link_download' | translate }} Linux 32-bits
             </button>
         </a>
-        <div class="download-button" ng-if="common.os === 'ChromeOS'" ng-click="installChromeApp()">
+        <div class="download-button" ng-if="common.os === 'ChromeOS'" ng-click="installChromeApp()"  data-element="chromeBtn">
             <button class="btn btn--quaternary btn--medium">
                 {{ 'landing_link_download' | translate }} Chrome OS
             </button>
@@ -50,33 +50,33 @@
                 <i class="fa fa-windows"></i>
                 <h3>Windows</h3>
                 <div class="download--link medium">
-                    <a class="landing--link--small" data-ng-href="{{envData.config.web2boardLinkWindows}}">{{ 'download' | translate }} Web2Board 32/64 bits</a>
+                    <a class="landing--link--small" data-ng-href="{{envData.config.web2boardLinkWindows}}" data-element="windows">{{ 'download' | translate }} Web2Board 32/64 bits</a>
                 </div>
             </li>
             <li class="col-medium-3">
                 <i class="fa fa-linux"></i>
                 <h3>Linux</h3>
                 <div class="download--link medium">
-                    <a class="landing--link--small" data-ng-href="{{envData.config.web2boardLinkLinux}}">{{ 'download' | translate }} Web2Board 64-bits</a>
-                    <a class="landing--link--small" data-ng-href="{{envData.config.web2boardLinkLinux32}}">{{ 'download' | translate }} Web2Board 32-bits</a>
+                    <a class="landing--link--small" data-ng-href="{{envData.config.web2boardLinkLinux}}" data-element="linux64">{{ 'download' | translate }} Web2Board 64-bits</a>
+                    <a class="landing--link--small" data-ng-href="{{envData.config.web2boardLinkLinux32}}" data-element="linux32">{{ 'download' | translate }} Web2Board 32-bits</a>
                 </div>
             </li>
             <li class="col-medium-3">
                 <i class="fa fa-apple"></i>
                 <h3>Mac OS 10.10</h3>
                 <div class="download--link medium">
-                    <a class="landing--link--small" data-ng-href="{{envData.config.web2boardLinkMac}}">{{ 'download' | translate }} Web2Board</a>
+                    <a class="landing--link--small" data-ng-href="{{envData.config.web2boardLinkMac}}" data-element="mac">{{ 'download' | translate }} Web2Board</a>
                 </div>
             </li>
             <li class="col-medium-3">
                 <i class="fa fa-chrome"></i>
                 <h3>Chrome OS</h3>
                 <div class="download--link medium">
-                    <div class="landing--link--small handcursor" ng-click="installChromeApp()">{{ 'install-chrome-extension' | translate}}</div>
+                    <div class="landing--link--small handcursor" ng-click="installChromeApp()" data-element="chrome">{{ 'install-chrome-extension' | translate}}</div>
                 </div>
             </li>
         </ul>
-        <div class="landing--requirements">
+        <div class="landing--requirements" data-element="requirements">
             <span class="h3">
                 {{ 'landing_requirements' | translate }}
             </span>
