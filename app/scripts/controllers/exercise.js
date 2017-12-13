@@ -800,7 +800,12 @@ angular.module('bitbloqApp')
                 text: 'alert-web2board-no-port-found',
                 id: 'upload',
                 type: 'warning',
-                link: function () { $location.url('support/p/noBoard'); },
+                link: function () { var tempA = document.createElement('a');
+tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('target', '_blank');
+document.body.appendChild(tempA);
+tempA.click();
+document.body.removeChild(tempA); },
                 linkText: $translate.instant('support-go-to')
             });
         });
@@ -906,7 +911,12 @@ angular.module('bitbloqApp')
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { $location.url('support/p/noBoard'); },
+                    link: function () { var tempA = document.createElement('a');
+tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('target', '_blank');
+document.body.appendChild(tempA);
+tempA.click();
+document.body.removeChild(tempA); },
                     linkText: $translate.instant('support-go-to')
                 });
 
@@ -923,7 +933,12 @@ angular.module('bitbloqApp')
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { $location.url('support/p/noBoard'); },
+                    link: function () { var tempA = document.createElement('a');
+tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('target', '_blank');
+document.body.appendChild(tempA);
+tempA.click();
+document.body.removeChild(tempA); },
                     linkText: $translate.instant('support-go-to')
                 });
             }
@@ -950,7 +965,12 @@ angular.module('bitbloqApp')
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { $location.url('support/p/noBoard'); },
+                    link: function () { var tempA = document.createElement('a');
+tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('target', '_blank');
+document.body.appendChild(tempA);
+tempA.click();
+document.body.removeChild(tempA); },
                     linkText: $translate.instant('support-go-to')
                 });
 
@@ -967,7 +987,12 @@ angular.module('bitbloqApp')
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { $location.url('support/p/noBoard'); },
+                    link: function () { var tempA = document.createElement('a');
+tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('target', '_blank');
+document.body.appendChild(tempA);
+tempA.click();
+document.body.removeChild(tempA); },
                     linkText: $translate.instant('support-go-to')
                 });
             }
@@ -1190,7 +1215,12 @@ angular.module('bitbloqApp')
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { $location.url('support/p/noBoard'); },
+                    link: function () { var tempA = document.createElement('a');
+tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('target', '_blank');
+document.body.appendChild(tempA);
+tempA.click();
+document.body.removeChild(tempA); },
                     linkText: $translate.instant('support-go-to')
                 });
             }
@@ -1206,7 +1236,12 @@ angular.module('bitbloqApp')
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { $location.url('support/p/noBoard'); },
+                    link: function () { var tempA = document.createElement('a');
+tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('target', '_blank');
+document.body.appendChild(tempA);
+tempA.click();
+document.body.removeChild(tempA); },
                     linkText: $translate.instant('support-go-to')
                 });
             }
@@ -1234,7 +1269,12 @@ angular.module('bitbloqApp')
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { $location.url('support/p/noBoard'); },
+                    link: function () { var tempA = document.createElement('a');
+tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('target', '_blank');
+document.body.appendChild(tempA);
+tempA.click();
+document.body.removeChild(tempA); },
                     linkText: $translate.instant('support-go-to')
                 });
             }

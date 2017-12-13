@@ -232,7 +232,12 @@ angular.module('bitbloqApp')
                     var text, link, linkText;
                     if (error.error.search('no Arduino') !== -1) {
                         text = 'alert-web2board-no-port-found';
-                        link = function () { $location.url('support/p/noBoard'); };
+                        link = function () { var tempA = document.createElement('a');
+tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('target', '_blank');
+document.body.appendChild(tempA);
+tempA.click();
+document.body.removeChild(tempA); };
                         linkText = $translate.instant('support-go-to');
                     } else {
                         text = getReadableErrorMessage(error);
