@@ -8,7 +8,7 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('InfoTabCtrl', function ($scope, $rootScope, $log, alertsService, _, utils, projectService, $timeout) {
+    .controller('InfoTabCtrl', function ($scope, $rootScope, $routeParams, $log, alertsService, _, utils, projectService, $timeout) {
 
         var generateImageEvent,
             currentProjectService = $scope.currentProjectService || projectService;
@@ -106,6 +106,8 @@ angular.module('bitbloqApp')
             });
         };
 
+        $scope.isNewProject = !$routeParams.id;
+        $scope.modalOpened = false;
         $scope.editGroups = function (currentProject, groups) {
             $scope.modalOpened = true;
             $scope.currentProjectService.assignGroup(currentProject, $scope.common.user._id, groups).then(
