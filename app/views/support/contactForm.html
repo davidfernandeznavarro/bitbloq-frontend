@@ -7,7 +7,7 @@
         <fieldset>
             <!-- Message -->
             <div class="form-control">
-                <legend class="icon--check">{{'support-view--contactForm-info' | translate}}</legend>
+                <legend><strong>{{'support-view--contactForm-info' | translate}}</strong></legend>
                 <span class="form--input  common--textarea" data-ng-class="{'input--focused':focus === 'message'}">
                     <textarea ng-model="response.message" rows="5" class="msd-elastic" ng-model="response.message" placeholder="{{ 'modal-inform-error-textarea-placeholder' | translate }}"
                         data-ng-focus="focus = 'message'" data-ng-blur="focus = false" data-element="modal-send-comments-textarea-placeholder"></textarea>
@@ -27,7 +27,7 @@
       {{'support-view--contactForm-contentmail' | translate}}
       <a href="mailto:soporte.bitbloq@bq.com" target="_blank" class="icon--url">soporte.bitbloq@bq.com</a>
     </p>
-    <p class="icon--check support--centered">
+    <p class="support--centered">
         <strong>{{'support-view--common-formContent2' | translate}}</strong>
     </p>
 </div>
