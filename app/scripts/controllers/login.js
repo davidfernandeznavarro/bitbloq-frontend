@@ -549,18 +549,18 @@ angular.module('bitbloqApp')
         }
 
         function _transitionForm(item) {
-            item.addClass('form--login__container--transition-down');
-            item.bind('webkitAnimationEnd', function() {
-                $(this).addClass('hide-container');
-                $(this).removeClass('form--login__container--transition-down');
-            });
-            var $loginContainer = angular.element('#loginContainer');
-            $loginContainer.addClass('form--login__container--transition-up');
-            $loginContainer.removeClass('hide-container');
-            $loginContainer.bind('webkitAnimationEnd', function() {
-                $(this).removeClass('form--login__container--transition-up');
-                $(this).removeClass('hide-container');
-            });
+            // item.addClass('form--login__container--transition-down');
+            // item.bind('webkitAnimationEnd', function() {
+            //     $(this).addClass('hide-container');
+            //     $(this).removeClass('form--login__container--transition-down');
+            // });
+            // var $loginContainer = angular.element('#loginContainer');
+            // $loginContainer.addClass('form--login__container--transition-up');
+            // $loginContainer.removeClass('hide-container');
+            // $loginContainer.bind('webkitAnimationEnd', function() {
+            //     $(this).removeClass('form--login__container--transition-up');
+            //     $(this).removeClass('hide-container');
+            // });
         }
 
         function fireShakeEffect() {
@@ -670,6 +670,9 @@ angular.module('bitbloqApp')
         var punisherTimeoutFunc = null
 
         $scope.formForgotPass.init = function() {
+            if (punisherTimeoutFunc) {
+              $timeout.cancel(punisherTimeoutFunc)
+            }
             if ($localStorage.formForgotPassWhen) {
                 diff = $scope.formForgotPass.diff()
                 if (diff[0]) {
@@ -695,6 +698,7 @@ angular.module('bitbloqApp')
             } else {
                 $localStorage.formForgotPassTimeouts = 1
             }
+            fireShakeEffect();
         }
 
         $scope.formForgotPass.diff = function() {
