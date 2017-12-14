@@ -35,19 +35,7 @@ angular.module('bitbloqApp')
             return projectService.project.useBitbloqConnect || projectService.project.hardware.board === 'freakscar' || (componentList.length > 0);
         };
 
-        $scope.shouldShowNoComponentsText = function () {
-            var result = true;
-            if (projectService.project.useBitbloqConnect ||
-                (projectService.project.hardware.board === 'freakscar') ||
-                (projectService.project.hardware.board === 'echidna-ArduinoUNO') ||
-                (projectService.project.hardware.board === 'echidna-FreaduinoUNO') ||
-                (projectService.project.hardware.board === 'echidna-bqZUM') ||
-                (projectService.project.hardware.components.length > 0)
-            ) {
-                result = false;
-            }
-            return result;
-        };
+
 
         $scope.anyExternalComponent = function () {
             var connectedComponents = _.filter(projectService.project.hardware.components, function (item) {
@@ -180,12 +168,14 @@ angular.module('bitbloqApp')
                 text: 'alert-web2board-no-port-found',
                 id: 'upload',
                 type: 'warning',
-                link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                link: function () {
+                    var tempA = document.createElement('a');
+                    tempA.setAttribute('href', '#/support/p/noBoard');
+                    tempA.setAttribute('target', '_blank');
+                    document.body.appendChild(tempA);
+                    tempA.click();
+                    document.body.removeChild(tempA);
+                },
                 linkText: $translate.instant('support-go-to')
             });
         });
@@ -292,12 +282,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
 
@@ -314,12 +306,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
             }
@@ -346,12 +340,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
 
@@ -368,12 +364,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
             }
@@ -748,12 +746,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
             }
@@ -769,12 +769,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
             }
@@ -802,12 +804,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
             }
