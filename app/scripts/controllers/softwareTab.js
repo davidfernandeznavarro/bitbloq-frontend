@@ -310,6 +310,22 @@ angular.module('bitbloqApp')
             }
         };
 
+        $scope.shouldShowNoComponentsText = function () {
+            var result = true;
+            if ($scope.currentProject && $scope.currentProject.hardware) {
+                if ($scope.currentProject.useBitbloqConnect ||
+                    ($scope.currentProject.hardware.board === 'freakscar') ||
+                    ($scope.currentProject.hardware.board === 'echidna-ArduinoUNO') ||
+                    ($scope.currentProject.hardware.board === 'echidna-FreaduinoUNO') ||
+                    ($scope.currentProject.hardware.board === 'echidna-bqZUM') ||
+                    ($scope.currentProject.hardware.components.length > 0)
+                ) {
+                    result = false;
+                }
+            }
+            return result;
+        };
+
         $scope.showMBotComponents = function (bloqName) {
             var result = false;
             var stopWord = ['mBotMove-v2', 'mBotStop-v2', 'mBotMoveAdvanced-v2'];
@@ -510,8 +526,8 @@ angular.module('bitbloqApp')
                                 break;
                             case 'robotSetMotorSpeed':
                             case 'robotSetMotorSpeedAdvanced':
-                                if (currentProjectService.project && currentProjectService.project.hardware) {
-                                    switch (currentProjectService.project.hardware.board) {
+                                if ($scope.currentProject && $scope.currentProject.hardware) {
+                                    switch ($scope.currentProject.hardware.board) {
                                         case 'meauriga':
                                             //case 'mcore':
                                             //case 'meorion':
@@ -543,8 +559,8 @@ angular.module('bitbloqApp')
                             case 'echidnaReadAccelXY':
                             case 'echidnaRGBFull':
                             case 'echidnaRGBOff':
-                                if (currentProjectService.project && currentProjectService.project.hardware) {
-                                    switch (currentProjectService.project.hardware.board) {
+                                if ($scope.currentProject && $scope.currentProject.hardware) {
+                                    switch ($scope.currentProject.hardware.board) {
                                         case 'echidna-ArduinoUNO':
                                         case 'echidna-FreaduinoUNO':
                                         case 'echidna-bqZUM':
