@@ -1646,16 +1646,10 @@
     },
     "next": [
       {
-        "permalink": "end",
+        "permalink": "hardUSTestIni",
         "class": "green",
         "icon": "ok",
         "response": "support-common-next-yes"
-      },
-      {
-        "permalink": "hardUSTestIni",
-        "class": "red",
-        "icon": "no",
-        "response": "support-common-next-no"
       }
     ]
   },
