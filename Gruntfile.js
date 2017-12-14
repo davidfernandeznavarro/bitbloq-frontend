@@ -86,6 +86,10 @@ module.exports = function (grunt) {
                                 connect.static('./bower_components')
                             ),
                             connect().use(
+                                '/node_modules',
+                                connect.static('./node_modules')
+                            ),
+                            connect().use(
                                 '/dataBaseFiles',
                                 connect.static('./dataBaseFiles')
                             ),
@@ -421,6 +425,11 @@ module.exports = function (grunt) {
                     expand: true,
                     cwd: 'bower_components/jspanel/source/fonts',
                     dest: 'dist/styles/fonts/',
+                    src: '*.*'
+                }, {
+                    expand: true,
+                    cwd: 'node_modules/socket.io-client',
+                    dest: 'dist/node_modules/socket.io-client/',
                     src: '*.*'
                 }]
             }
