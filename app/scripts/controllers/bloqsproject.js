@@ -11,7 +11,7 @@
 angular.module('bitbloqApp')
     .controller('BloqsprojectCtrl', function ($rootScope, $route, $scope, $log, $timeout, $routeParams, $document, $window, $location,
         $q, web2board, alertsService, ngDialog, _, projectApi, bloqs, bloqsUtils, utils, userApi, hw2Bloqs, web2boardOnline, commonModals,
-        projectService, hardwareConstants, chromeAppApi, $translate) {
+        projectService, hardwareConstants, chromeAppApi, $translate, web2boardJS) {
 
         /*************************************************
          Project save / edit
@@ -513,6 +513,15 @@ angular.module('bitbloqApp')
         $scope.isRobotActivated = projectService.isRobotActivated;
 
         $scope.verify = function () {
+            web2boardJS.compile({
+                board: projectService.getBoardMetaData(),
+                code: $scope.getPrettyCode()
+            }).then(function (response) {
+                console.log('verify ok', response);
+            }, function (error) {
+                console.log('verify error', error);
+            });
+            /*
             if (projectService.project.hardware.showRobotImage && !$scope.isRobotActivated()) {
                 alertsService.add({
                     text: 'robots-not-activated-compile',
@@ -540,7 +549,7 @@ angular.module('bitbloqApp')
                         }
                     }
                 }
-            }
+            }*/
         };
 
         var warningShown;
