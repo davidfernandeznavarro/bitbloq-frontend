@@ -3,14 +3,14 @@
         <h1 class="h3">{{ 'enter' | translate }}</h1>
         <span class="form--subtitle">{{ 'login-profiles' | translate }}</span>
         <div class="social--buttons__container">
-            <ul class="row row--collapse">
+            <ul class="row">
                 <li class="social--button__container">
                     <button class="btn btn--social btn__login--facebook" ng-click="authenticate('facebook')">
                         {{ 'facebook' | translate }}
                     </button>
                 </li>
-                <li class="social--button__container">
-                    <button class="btn btn--social btn__login--google" ng-click="authenticate('google')">
+                <li id="authorize-button" class="social--button__container">
+                    <button id="authorize-button" class="btn btn--social btn__login--google" ng-click="authenticate('google')">
                         {{ 'google+' | translate }}
                     </button>
                 </li>
