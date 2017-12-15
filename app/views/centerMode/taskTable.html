@@ -27,7 +27,7 @@
                 </div>
                 <div class="table__block__item col-vsmall-2" ng-if="common.section==='exercise-info'">
                     <span data-element="{{'centerMode-task-mark' + task._id}}">
-                        {{task.status==='corrected'? task.mark || '-' : '-'}}
+                        {{task.status==='corrected'? task.mark || '0' : '-'}}
                     </span>
                 </div>
                 <div class="table__block__item col-vsmall-1">
@@ -37,7 +37,7 @@
                     </span>
                     <span ng-if="common.section!=='exercise-info'" ng-class="{'centerMode_status_delivered': task.status==='delivered', 'status-mark' : task.status==='corrected', 'status-notCorrected': task.status==='notDelivered'}"
                         data-element="centerMode-task-status-{{task.exercise.name}}" data-element2="center-mode-task-status-{{task.student.username}}">
-                        {{task.status==='corrected'? task.mark : task.status==='delivered'? 'centerMode_status_delivered' : task.status==='notDelivered' ? 'centerMode_status_notDelivered' : 'centerMode_status_pending' | translate}}
+                        {{task.status==='corrected'? task.mark || '0' : task.status==='delivered'? 'centerMode_status_delivered' : task.status==='notDelivered' ? 'centerMode_status_notDelivered' : 'centerMode_status_pending' | translate}}
                     </span>
                 </div>
                 <div class="table__block__item col-vsmall-2 col-text-right" ng-if="common.section!=='exercise-info'">

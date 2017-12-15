@@ -11,6 +11,8 @@
     //QUE NO LLAMEIS TAREAS A LOS EJERCICIOS DE UN ALUMNO
     //QUE NO LLAMEIS TAREAS A LOS EJERCICIOS DE UN ALUMNO
     //by Jose
+        //"No me llames Dolores, llámame Lola..."
+        //By Ark ;)
     angular.module('bitbloqApp')
         .controller('TasksCtrl', function ($log, $scope, $rootScope, _, ngDialog, alertsService, centerModeApi, exerciseApi, centerModeService,
             $routeParams, $location, commonModals, $window, exerciseService, $q, moment, common, $translate) {
