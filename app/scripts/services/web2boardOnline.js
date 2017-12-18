@@ -233,7 +233,7 @@ angular.module('bitbloqApp')
                     if (error.error.search('no Arduino') !== -1) {
                         text = 'alert-web2board-no-port-found';
                         link = function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('href', '#/support/p/noBoardLanding');
 tempA.setAttribute('target', '_blank');
 document.body.appendChild(tempA);
 tempA.click();

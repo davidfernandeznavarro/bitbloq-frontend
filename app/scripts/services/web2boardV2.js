@@ -273,7 +273,7 @@ angular.module('bitbloqApp')
                     id: 'web2board',
                     type: 'warning',
                     link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('href', '#/support/p/noBoardLanding');
 tempA.setAttribute('target', '_blank');
 document.body.appendChild(tempA);
 tempA.click();
@@ -525,7 +525,7 @@ document.body.removeChild(tempA); },
                             id: 'web2board',
                             type: 'warning',
                             link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('href', '#/support/p/noBoardLanding');
 tempA.setAttribute('target', '_blank');
 document.body.appendChild(tempA);
 tempA.click();
@@ -566,7 +566,7 @@ document.body.removeChild(tempA); },
                             id: 'web2board',
                             type: 'warning',
                             link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
+tempA.setAttribute('href', '#/support/p/noBoardLanding');
 tempA.setAttribute('target', '_blank');
 document.body.appendChild(tempA);
 tempA.click();

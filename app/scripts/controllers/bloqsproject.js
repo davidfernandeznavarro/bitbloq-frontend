@@ -170,7 +170,7 @@ angular.module('bitbloqApp')
                 type: 'warning',
                 link: function () {
                     var tempA = document.createElement('a');
-                    tempA.setAttribute('href', '#/support/p/noBoard');
+                    tempA.setAttribute('href', '#/support/p/noBoardLanding');
                     tempA.setAttribute('target', '_blank');
                     document.body.appendChild(tempA);
                     tempA.click();
@@ -284,7 +284,7 @@ angular.module('bitbloqApp')
                     type: 'warning',
                     link: function () {
                         var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('href', '#/support/p/noBoardLanding');
                         tempA.setAttribute('target', '_blank');
                         document.body.appendChild(tempA);
                         tempA.click();
@@ -308,7 +308,7 @@ angular.module('bitbloqApp')
                     type: 'warning',
                     link: function () {
                         var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('href', '#/support/p/noBoardLanding');
                         tempA.setAttribute('target', '_blank');
                         document.body.appendChild(tempA);
                         tempA.click();
@@ -342,7 +342,7 @@ angular.module('bitbloqApp')
                     type: 'warning',
                     link: function () {
                         var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('href', '#/support/p/noBoardLanding');
                         tempA.setAttribute('target', '_blank');
                         document.body.appendChild(tempA);
                         tempA.click();
@@ -366,7 +366,7 @@ angular.module('bitbloqApp')
                     type: 'warning',
                     link: function () {
                         var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('href', '#/support/p/noBoardLanding');
                         tempA.setAttribute('target', '_blank');
                         document.body.appendChild(tempA);
                         tempA.click();
@@ -748,7 +748,7 @@ angular.module('bitbloqApp')
                     type: 'warning',
                     link: function () {
                         var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('href', '#/support/p/noBoardLanding');
                         tempA.setAttribute('target', '_blank');
                         document.body.appendChild(tempA);
                         tempA.click();
@@ -771,7 +771,7 @@ angular.module('bitbloqApp')
                     type: 'warning',
                     link: function () {
                         var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('href', '#/support/p/noBoardLanding');
                         tempA.setAttribute('target', '_blank');
                         document.body.appendChild(tempA);
                         tempA.click();
@@ -806,7 +806,7 @@ angular.module('bitbloqApp')
                     type: 'warning',
                     link: function () {
                         var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('href', '#/support/p/noBoardLanding');
                         tempA.setAttribute('target', '_blank');
                         document.body.appendChild(tempA);
                         tempA.click();
