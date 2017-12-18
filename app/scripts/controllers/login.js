@@ -668,6 +668,7 @@ angular.module('bitbloqApp')
         $scope.formForgotPass.lock = false
         $scope.formForgotPass.countdown = '00:00:00'
         var punisherTimeoutFunc = null
+        $timeout.cancel(punisherTimeoutFunc)
 
         $scope.formForgotPass.init = function() {
             if (punisherTimeoutFunc) {
@@ -698,7 +699,6 @@ angular.module('bitbloqApp')
             } else {
                 $localStorage.formForgotPassTimeouts = 1
             }
-            fireShakeEffect();
         }
 
         $scope.formForgotPass.diff = function() {
@@ -720,6 +720,7 @@ angular.module('bitbloqApp')
             if (timeouts < 2 || punishTime < diff) {
                 return [false, null]
             } else {
+                fireShakeEffect();
                 var t = punishTime - diff
                 return [true, (t > max) ? max : t]
             }
@@ -743,6 +744,23 @@ angular.module('bitbloqApp')
                 .startOf('night')
                 .second(timer)
                 .format('H:mm:ss')
+        }
+
+        $scope.resetPunishment = function () {
+          $localStorage.formForgotPassWhen = null;
+          $localStorage.formForgotPassTimeouts = null;
+          $scope.formForgotPass.lock = false;
+          $scope.formForgotPass.countdown = '00:00:00';
+          timer = 0;
+        }
+
+        $scope.clearPunishment = function () {
+            if (envData.config.env !== 'production') {
+              console.log('KONAMI CODE -> clearPunishment()');
+              $scope.resetPunishment()
+              $timeout.cancel(punisherTimeoutFunc);
+              $scope.resetPunishment()
+            }
         }
 
         /***********
