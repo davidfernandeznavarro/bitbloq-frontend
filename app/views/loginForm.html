@@ -136,15 +136,14 @@
             </form>
         </div>
     </div>
-    <div ng-show="recovery.success">
+    <div ng-show="recovery.success" class="form--data--center">
         <h1 class="h3">{{ 'recovery-success-title' | translate }}</h1>
         <span class="form--subtitle">{{ 'recovery-success-explanation' | translate }}</span>
-
-        <div class="form-control">
-            <small>{{ 'recovery-success-spam' | translate }}</small>
-            <button data-ng-click="forgotPassword(formForgot)" class="btn btn--forgot">
-                <small> {{ 'recovery-error-forward' | translate }}</small>
-            </button>
+        <!-- alvaro.almendros@bq.com -->
+        <div class="form-control" id="formForgot" class="form--data--center">
+            <span class="form--subtitle">{{ 'recovery-success-spam' | translate }}</span>
+            <button type="submit" data-ng-if="!formForgotPass.lock" name="submitform" class="btn btn--primary btn__login--submit" ng-click="forgotPassword(formForgot)" data-element="login-email-to-send-button">{{ 'recovery-error-forward' | translate }}</button>
+            <button type="submit" data-ng-if="formForgotPass.lock"  name="submitform" class="btn btn--primary btn--disabled" data-ng-disabled="true" data-element="login-email-to-send-button" data-tooltips="true" data-tooltip="Every time you use the Password Recovering form, you'll have to wait a little longer before being able to try again" data-tooltip-position="bottom"><i class="fa fa-lock" aria-hidden="true"></i>  {{formForgotPass.countdown}}</button>
         </div>
     </div>
     <div ng-show="recovery.error">
