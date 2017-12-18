@@ -659,10 +659,10 @@ angular.module('bitbloqApp')
          **********************/
 
         // AKA: The Punisher
-        var maxPunisher = 30; //const, min, try num 5+
-        var punishments = [10,90,600]; // const, min, try num 2,3,4
+        var maxPunisher = 15; //const, min, try num 5+
+        var punishments = [10,90,300]; // const, seg, try num 2,3,4
         var diff = null;
-        var timer = 0
+        var timer = 0;
 
         $scope.formForgotPass = {}
         $scope.formForgotPass.lock = false
