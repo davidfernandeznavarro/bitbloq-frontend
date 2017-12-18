@@ -216,7 +216,7 @@ angular.module('bitbloqApp')
         }
 
         function _generateMark() {
-            if ($scope.currentProject.mark) {
+            if ($scope.currentProject.mark || $scope.currentProject.mark===0) {
                 var mark = String($scope.currentProject.mark).split('.');
                 $scope.currentProject.newMark[0] = parseInt(mark[0]) || 0;
                 $scope.currentProject.newMark[1] = parseInt(mark[1]) || 0;

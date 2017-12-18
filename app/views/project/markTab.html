@@ -22,8 +22,8 @@
                                    data-ng-focus="focus = 'exerciseMark1'" data-ng-disabled="currentProject.status!=='delivered' && currentProject.status!=='corrected'" data-element="info-exercise-mark1">
                                 </span>
                     </span>
-                    <p ng-class="{'form--show-mark': currentProject.mark && currentProject.status==='corrected'}" ng-if="common.userRole==='student'">
-                        {{currentProject.status==='corrected' && currentProject.mark? currentProject.mark : ('centerMode_task_withoutMark' | translate)}}
+                    <p ng-class="{'form--show-mark': (currentProject.mark || currentProject.mark === 0) && currentProject.status === 'corrected'}" ng-if="common.userRole === 'student'">
+                        {{currentProject.status === 'corrected' && (currentProject.mark || currentProject.mark === 0) ? currentProject.mark : ('centerMode_task_withoutMark' | translate)}}
                     </p>
                 </div>
                 <!-- textarea -->
