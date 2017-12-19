@@ -44,6 +44,36 @@ angular.module('bitbloqApp')
             return sendToWeb2boardJS('compile', params);
         }
 
+        function upload(params) {
+            if (params.viewer) {
+                alertsService.add({
+                    text: 'alert-viewer-reconfigure',
+                    id: 'upload',
+                    type: 'loading'
+                });
+            } else {
+                alertsService.add({
+                    text: 'alert-web2board-uploading',
+                    id: 'upload',
+                    type: 'loading',
+                    time: 'infinite'
+                });
+            }
+            if (!params.board) {
+                params.board = 'bt328';
+            } else {
+                params.board = params.board.mcu;
+            }
+            if (!params.viewer) {
+                alertsService.add({
+                    text: 'alert-web2board-compiling',
+                    id: 'compile',
+                    type: 'loading'
+                });
+            }
+            return sendToWeb2boardJS('upload', params);
+        }
+
         function sendToWeb2boardJS(eventName, data) {
             var defer = $q.defer();
             connectToSocket().then(function () {
@@ -149,25 +179,6 @@ angular.module('bitbloqApp')
             //stk500 timeout.
 
             return message;
-        }
-
-        function upload(params, defer) {
-            if (params.viewer) {
-                alertsService.add({
-                    text: 'alert-viewer-reconfigure',
-                    id: 'upload',
-                    type: 'loading'
-                });
-            } else {
-                alertsService.add({
-                    text: 'alert-web2board-uploading',
-                    id: 'upload',
-                    type: 'loading',
-                    time: 'infinite'
-                });
-            }
-
-            console.log('upload', params);
         }
 
         return exports;

@@ -578,7 +578,15 @@ angular.module('bitbloqApp')
         var warningShown;
 
         $scope.upload = function (code) {
-            if (projectService.project.hardware.showRobotImage && !$scope.isRobotActivated()) {
+            web2boardJS.upload({
+                board: projectService.getBoardMetaData(),
+                code: code || $scope.getPrettyCode()
+            }).then(function (response) {
+                console.log('upload ok', response);
+            }, function (error) {
+                console.log('upload error', error);
+            });
+            /*if (projectService.project.hardware.showRobotImage && !$scope.isRobotActivated()) {
                 alertsService.add({
                     text: 'robots-not-activated-upload',
                     id: 'activatedError',
@@ -674,7 +682,7 @@ angular.module('bitbloqApp')
                         type: 'warning'
                     });
                 }
-            }
+            }*/
         };
 
         function itsABoardWithCompileWarning(board) {
