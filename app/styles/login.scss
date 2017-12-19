@@ -116,7 +116,12 @@
 }
 
 .btn__login--google {
-    background-color: #D92C32;
+    background-color: #ffffff;
+    
+    text-align: right;
+    padding-right: 18px;
+    color: rgba(0, 0, 0, 0.54);
+    position: relative;
     -webkit-border-top-right-radius: .2em;
     -webkit-border-bottom-right-radius: .2em;
     -moz-border-radius-topright: .2em;
@@ -124,12 +129,21 @@
     border-top-right-radius: .2em;
     border-bottom-right-radius: .2em;
 
-    &:hover {
-        background-color: #f93940;
-    }
-
     &:active {
-        background-color: #b8262b;
+        background-color: #d6d6d6;
+    }
+    &:after{
+        content: '';
+        position: absolute;
+        display: block;
+        width: 24px;
+        top: 10px;
+        left: 10px;
+        height: 17px;
+        background-image: url(../images/icons/g.svg);
+        background-repeat: no-repeat;
+        background-size: 17px;
+        background-position: center;
     }
 }
 

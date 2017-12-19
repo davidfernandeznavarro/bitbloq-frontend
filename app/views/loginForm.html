@@ -11,9 +11,7 @@
                     </button>
                 </li>
                 <li class="social--button__container">
-                    <button id="authorize-button" class="btn btn--social btn__login--google" ng-click="authenticate('google')">
-                        {{ 'google+' | translate }}
-                    </button>
+                    <button id="authorize-button" class="btn btn--social btn__login--google" ng-click="authenticate('google')">{{ 'Google' | translate }}</button>
                 </li>
             </ul>
             <span class="form-control form--error" data-ng-show="errors.register.socialEmail">
@@ -42,7 +40,9 @@
                             <svg class="svg-icon form-icon--username icon--form--validating">
                                 <use xlink:href="#user"></use>
                             </svg>
-                            <input type="text" id="emailusername" name="emailusername" data-ng-model="form.emailUserNameModel" data-ng-focus="form.emailusername.submitted=false; focus = 'emailusername'" data-ng-blur="focus = false" maxlength="50" placeholder="{{'login-username-email' | translate}}" autocorrect="off" autocomplete="on" data-element="login-emailusername-intput" required>
+                            <input type="text" id="emailusername" name="emailusername" data-ng-model="form.emailUserNameModel" data-ng-focus="form.emailusername.submitted=false; focus = 'emailusername'"
+                                data-ng-blur="focus = false" maxlength="50" placeholder="{{'login-username-email' | translate}}"
+                                autocorrect="off" autocomplete="on" data-element="login-emailusername-intput" required>
                         </span>
                         <span class="form--error" data-ng-show="form.emailusername.submitted && form.emailusername.$error.required" data-element="show-no-user-and-email">
                             <small>{{ 'login-username-or-email' | translate }}</small>
@@ -50,7 +50,8 @@
                         <span class="form--error" data-ng-show="form.emailusername.submitted && errors.login.emailUserName" data-element="show-no-user-or-email-register">
                             <small>{{ 'login-incorrect-username-email' | translate }}</small>
                             <small>
-                                <input data-ng-click="recovery.emailError=false; isForgotPassword=false; isSocialRegister=false; setRegister()" class="btn btn--forgot btn--forgot-error" tabindex="-1" value="{{ 'login-email-register' | translate }}">
+                                <input data-ng-click="recovery.emailError=false; isForgotPassword=false; isSocialRegister=false; setRegister()" class="btn btn--forgot btn--forgot-error"
+                                    tabindex="-1" value="{{ 'login-email-register' | translate }}">
                             </small>
                         </span>
                     </div>
@@ -62,7 +63,9 @@
                             <svg class="svg-icon">
                                 <use xlink:href="#lock"></use>
                             </svg>
-                            <input type="password" id="password" name="password" autocomplete="off" data-ng-model="user.password" data-ng-focus="form.password.submitted=false; focus = 'password'" data-ng-blur="focus = false" data-ng-minlength="6" maxlength="50" placeholder="{{'password' | translate}}" autocorrect="off" data-element="login-password-input" required>
+                            <input type="password" id="password" name="password" autocomplete="off" data-ng-model="user.password" data-ng-focus="form.password.submitted=false; focus = 'password'"
+                                data-ng-blur="focus = false" data-ng-minlength="6" maxlength="50" placeholder="{{'password' | translate}}"
+                                autocorrect="off" data-element="login-password-input" required>
                         </span>
                         <span class="form--error" data-ng-show="form.password.submitted && form.password.$error.required" data-element="show-no-pass">
                             <small>{{ 'login-enter-password' | translate }}</small>
@@ -76,14 +79,16 @@
                     </div>
                     <!-- Submit Form -->
                     <div class="form-control">
-                        <input type="submit" name="submitform" class="btn btn--primary btn__login--submit" value="{{'enter' | translate}}" data-ng-click="form.password.submitted=true; form.emailusername.submitted=true; loginSubmit(form)" data-element="login-button">
+                        <input type="submit" name="submitform" class="btn btn--primary btn__login--submit" value="{{'enter' | translate}}" data-ng-click="form.password.submitted=true; form.emailusername.submitted=true; loginSubmit(form)"
+                            data-element="login-button">
                     </div>
                 </fieldset>
             </form>
         </div>
         <div class="form-control form--login__footer">
             <p class="form-control text-center">
-                <button data-element="login-forgot-password-button" data-ng-click="setForgotPassword(); isForgotPassword=true; recovery.success=false; recovery.error=false" class="btn btn--forgot">{{ 'login-forgot' | translate }}</button>
+                <button data-element="login-forgot-password-button" data-ng-click="setForgotPassword(); isForgotPassword=true; recovery.success=false; recovery.error=false"
+                    class="btn btn--forgot">{{ 'login-forgot' | translate }}</button>
             </p>
         </div>
     </div>
@@ -96,7 +101,8 @@
         </div>
     </p>
 </div>
-<div id="isForgotPassword" class="login-container" ng-class="{'hide-container': !isForgotPassword, 'form--login__container':true}" data-effect="shake">
+<div id="isForgotPassword" class="login-container" ng-class="{'hide-container': !isForgotPassword, 'form--login__container':true}"
+    data-effect="shake">
     <div ng-show="!recovery.success && !recovery.error">
         <h1 class="h3">{{ 'recovery-title' | translate }}</h1>
         <span class="form--subtitle">{{ 'recovery-explanation' | translate }}</span>
@@ -112,25 +118,34 @@
                             <svg class="svg-icon">
                                 <use xlink:href="#mail"></use>
                             </svg>
-                            <input type="email" id="emailToSend" name="emailToSend" placeholder="{{'email' | translate}}" autocorrect="off" autocomplete="off" data-ng-model="emailToSend" data-ng-focus="formForgot.emailToSend.submitted=false; focus = 'email'" data-ng-blur="focus = false" data-ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/" data-element="login-email-to-send-input" required>
+                            <input type="email" id="emailToSend" name="emailToSend" placeholder="{{'email' | translate}}" autocorrect="off" autocomplete="off"
+                                data-ng-model="emailToSend" data-ng-focus="formForgot.emailToSend.submitted=false; focus = 'email'"
+                                data-ng-blur="focus = false" data-ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/"
+                                data-element="login-email-to-send-input" required>
                         </span>
                         <span class="form--error" data-ng-show="formForgot.emailToSend.submitted && formForgot.emailToSend.$error.required" data-element="show-noemail">
                             <small>{{ 'login-email-empty' | translate }}</small>
                         </span>
-                        <span class="form--error" data-ng-show="formForgot.emailToSend.submitted && (formForgot.emailToSend.$error.email || formForgot.emailToSend.$error.pattern)" data-element="invalid-email">
+                        <span class="form--error" data-ng-show="formForgot.emailToSend.submitted && (formForgot.emailToSend.$error.email || formForgot.emailToSend.$error.pattern)"
+                            data-element="invalid-email">
                             <small>{{ 'login-valid-email' | translate }}</small>
                         </span>
                         <span class="form--error" data-ng-show="formForgot.emailToSend.submitted && recovery.emailError">
                             <small data-element="login-email-not-exist">{{ 'login-email-not-exist' | translate }}</small>
                             <small>
-                                <input data-ng-click="recovery.emailError=false; isForgotPassword=false; isSocialRegister=false; user.email=emailToSend" class="btn btn--forgot btn--forgot-error" tabindex="-1" value="{{ 'login-email-register' | translate }}">
+                                <input data-ng-click="recovery.emailError=false; isForgotPassword=false; isSocialRegister=false; user.email=emailToSend"
+                                    class="btn btn--forgot btn--forgot-error" tabindex="-1" value="{{ 'login-email-register' | translate }}">
                             </small>
                         </span>
                     </div>
                     <!-- Submit Form -->
                     <div class="form-control" id="formForgot">
-                        <button type="submit" data-ng-if="!formForgotPass.lock" name="submitform" class="btn btn--primary btn__login--submit" ng-click="formForgot.emailToSend.submitted=true" data-element="login-email-to-send-button">{{'send' | translate}}</button>
-                        <button type="submit" data-ng-if="formForgotPass.lock"  name="submitform" class="btn btn--primary btn--disabled" data-ng-disabled="true" data-element="login-email-to-send-button" data-tooltips="true" data-tooltip="Every time you use the Password Recovering form, you'll have to wait a little longer before being able to try again" data-tooltip-position="bottom"><i class="fa fa-lock" aria-hidden="true"></i>  {{formForgotPass.countdown}}</button>
+                        <button type="submit" data-ng-if="!formForgotPass.lock" name="submitform" class="btn btn--primary btn__login--submit" ng-click="formForgot.emailToSend.submitted=true"
+                            data-element="login-email-to-send-button">{{'send' | translate}}</button>
+                        <button type="submit" data-ng-if="formForgotPass.lock" name="submitform" class="btn btn--primary btn--disabled" data-ng-disabled="true"
+                            data-element="login-email-to-send-button" data-tooltips="true" data-tooltip="Every time you use the Password Recovering form, you'll have to wait a little longer before being able to try again"
+                            data-tooltip-position="bottom">
+                            <i class="fa fa-lock" aria-hidden="true"></i> {{formForgotPass.countdown}}</button>
                     </div>
                 </fieldset>
             </form>
