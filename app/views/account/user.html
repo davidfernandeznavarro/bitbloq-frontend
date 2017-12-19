@@ -74,10 +74,10 @@
                         </div>
                     </div>
                     <div class="form-control">
-                        <button class="btn btn--social btn__login--google" ng-click="authenticate('google')" ng-if="common.user && !common.user.social.google.id"
-                            data-element="account-social-google-button">{{ 'Google' | translate }}</button>
-                        <button class="btn btn--social btn__login--facebook" ng-click="authenticate('facebook')" ng-if="common.user && !common.user.social.facebook.id"
+                        <button class="btn btn--social btn__login--facebook rounded" ng-click="authenticate('facebook')" ng-if="common.user && !common.user.social.facebook.id"
                             data-element="account-social-facebook-button">{{ 'facebook' | translate }}</button>
+                        <button class="btn btn--social btn__login--google rounded" ng-click="authenticate('google')" ng-if="common.user && !common.user.social.google.id"
+                            data-element="account-social-google-button">{{ 'Google' | translate }}</button>
                     </div>
                 </fieldset>
             </div>

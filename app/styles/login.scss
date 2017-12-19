@@ -106,6 +106,15 @@
     border-top-left-radius: .2em;
     border-bottom-left-radius: .2em;
 
+    &.rounded{
+        -webkit-border-top-right-radius: .2em;
+        -webkit-border-bottom-right-radius: .2em;
+        -moz-border-radius-topright: .2em;
+        -moz-border-radius-bottomright: .2em;
+        border-top-right-radius: .2em;
+        border-bottom-right-radius: .2em;
+    }
+
     &:hover {
         background-color: #5386d4;
     }
@@ -117,7 +126,6 @@
 
 .btn__login--google {
     background-color: #ffffff;
-    
     text-align: right;
     padding-right: 18px;
     color: rgba(0, 0, 0, 0.54);
@@ -128,6 +136,15 @@
     -moz-border-radius-bottomright: .2em;
     border-top-right-radius: .2em;
     border-bottom-right-radius: .2em;
+
+    &.rounded{
+        -webkit-border-top-left-radius: .2em;
+        -webkit-border-bottom-left-radius: .2em;
+        -moz-border-radius-topleft: .2em;
+        -moz-border-radius-bottomleft: .2em;
+        border-top-left-radius: .2em;
+        border-bottom-left-radius: .2em;
+    }
 
     &:active {
         background-color: #d6d6d6;
