@@ -593,7 +593,8 @@ $support-width: 900px;
         }
 
         p {
-            // width: -webkit-fill-available;
+            // stretch is not avaliable for chrome at 2017/12/20
+            /* autoprefixer: off */
             width: fill;
             width: -webkit-fill-available;
         }
