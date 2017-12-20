@@ -548,7 +548,8 @@ angular.module('bitbloqApp')
             }
         }
 
-        function _transitionForm(item) {
+        // FIXME: disabled due to animation bugs
+        function _transitionForm() { // (item)
             // item.addClass('form--login__container--transition-down');
             // item.bind('webkitAnimationEnd', function() {
             //     $(this).addClass('hide-container');
