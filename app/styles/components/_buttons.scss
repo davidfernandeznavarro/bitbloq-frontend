@@ -195,6 +195,9 @@
     height: 38px;
     line-height: 10px;
     transition: background-color 120ms linear;
+    &.btn__social-account {
+        margin: 0.1em;
+    }
 }
 
 .btn--dropdown {
