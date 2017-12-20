@@ -87,6 +87,9 @@
         "getbloqs": "bower uninstall bloqs --save && bower install bloqs --save && grunt getbloqs",
         "getbloqsdev": "bower uninstall bloqs --save && bower install bloqs#dev --save && grunt getbloqs"
     },
+    "prettier": {
+        "singleQuote": true
+    },
     "dependencies": {
         "q": "^1.5.0"
     },
