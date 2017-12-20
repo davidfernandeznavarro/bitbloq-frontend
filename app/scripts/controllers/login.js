@@ -473,22 +473,20 @@ angular
             var validate = false;
             switch (type) {
                 case 'manual':
-                    validate =
-                        !form.email.$invalid &&
-                        !form.password.$invalid &&
-                        !$scope.username.invalid &&
-                        !form.username.$error.required &&
-                        $scope.username.free &&
-                        $scope.user.cookiePolicyAccepted &&
-                        !$scope.errors.register.emptyBirthday &&
-                        !$scope.errors.register.validBirthday &&
-                        (!$scope.userUnder14Years ||
-                            ($scope.userUnder14Years &&
-                                !form.tutorName.$invalid &&
-                                !form.tutorSurname.$invalid &&
-                                !form.tutorEmail.$invalid &&
-                                !form.recoveryMail.$invalid &&
-                                !$scope.errors.register.sameTutorEmail));
+                    validate = !$scope.userUnder14Years
+                        ? !form.email.$invalid &&
+                          !form.password.$invalid &&
+                          !$scope.username.invalid &&
+                          !form.username.$error.required &&
+                          $scope.username.free &&
+                          $scope.user.cookiePolicyAccepted &&
+                          !$scope.errors.register.emptyBirthday &&
+                          !$scope.errors.register.validBirthday
+                        : !form.tutorName.$invalid &&
+                          !form.tutorSurname.$invalid &&
+                          !form.tutorEmail.$invalid &&
+                          !form.recoveryMail.$invalid &&
+                          $scope.user.cookiePolicyAccepted;
                     break;
                 case 'social':
                     validate =
@@ -506,6 +504,7 @@ angular
                                     !form.tutorName.$invalid &&
                                     !form.tutorSurname.$invalid &&
                                     !form.tutorEmail.$invalid &&
+                                    !form.recoveryMail.$invalid &&
                                     !$scope.errors.register.sameTutorEmail));
                     }
                     if ($scope.showEmailForm) {
@@ -517,7 +516,19 @@ angular
                     }
                     break;
             }
+            if (validate) { _cleanRegister(form, type); }
             return validate;
+        }
+
+        function _cleanRegister(form) {
+            form.email = (!$scope.userUnder14Years) ? form.email : null;
+            form.password = (!$scope.userUnder14Years) ? form.password : null;
+            form.username = (!$scope.userUnder14Years) ? form.username : null;
+            form.tutorName = ($scope.userUnder14Years) ? form.email : null;
+            form.tutorSurname = ($scope.userUnder14Years) ? form.tutorSurname : null;
+            form.tutorEmail = ($scope.userUnder14Years) ? form.tutorEmail : null;
+            form.recoveryMail = ($scope.userUnder14Years) ? form.recoveryMail : null;
+            form.newsletter = (!$scope.userUnder14Years) ? form.newsletter : null;
         }
 
         $scope.registerSocial = function(form) {
@@ -532,6 +543,7 @@ angular
                 form.tutorName.submitted = true;
                 form.tutorSurname.submitted = true;
                 form.tutorEmail.submitted = true;
+                form.recoveryMail.submitted = true;
             }
 
             $scope.checkUserName().then(function() {
