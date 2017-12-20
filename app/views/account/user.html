@@ -53,7 +53,7 @@
                         </svg>
                         <span>{{ 'account-connect-to-social-network' | translate }}</span>
                     </legend>
-                    <div class="account__connect">
+                    <div class="account__connect" ng-hide="common.user.social.google.id === '' && common.user.social.facebook.id === ''">
                         <div ng-show="common.user.social.google.id !== ''">
                             <span>{{ 'account-connect-to' | translate }}</span>
                             <span class="connect-to-SN-google">
@@ -65,9 +65,9 @@
                                 Facebook</span>
                         </div>
                     </div>
-                    <div class="form-control">
-                        <button class="btn btn--social btn__login--google rounded" ng-click="authenticate('google')" ng-if="common.user && !common.user.social.google.id" data-element="account-social-google-button">{{ 'Google' | translate }}</button>
-                        <button class="btn btn--social btn__login--facebook rounded" ng-click="authenticate('facebook')" ng-if="common.user && !common.user.social.facebook.id" data-element="account-social-facebook-button">{{ 'facebook' | translate }}</button>
+                    <div class="form-control" ng-show="common.user.social.google.id === '' && common.user.social.facebook.id === ''">
+                                <button class="btn btn--social btn__login--facebook rounded btn__social-account" ng-click="authenticate('facebook')" ng-if="common.user && !common.user.social.facebook.id" data-element="account-social-facebook-button">{{ 'facebook' | translate }}</button>
+                                <button class="btn btn--social btn__login--google rounded btn__social-account" ng-click="authenticate('google')" ng-if="common.user && !common.user.social.google.id" data-element="account-social-google-button">{{ 'Google' | translate }}</button>
                     </div>
                 </fieldset>
             </div>
@@ -91,11 +91,11 @@
                    </span>
                </fieldset>-->
             <fieldset class="user-options-checkbox last">
-                   <span class="input input--checkbox">
-                       <input type="checkbox" id="seeBoardsUnderDevelopmentCheckbox" name="seeBoardsUnderDevelopmentCheckbox" value="common.user.seeBoardsUnderDevelopment" ng-checked="common.user.seeBoardsUnderDevelopment === true" ng-model="common.user.seeBoardsUnderDevelopment" data-element="seeBoardsUnderDevelopment-checkbox">
-                       <label for="seeBoardsUnderDevelopmentCheckbox">{{'account-checkbox-seeboardsunderdevelopment' | translate}}</label>
-                   </span>
-               </fieldset>
+                <span class="input input--checkbox">
+                    <input type="checkbox" id="seeBoardsUnderDevelopmentCheckbox" name="seeBoardsUnderDevelopmentCheckbox" value="common.user.seeBoardsUnderDevelopment" ng-checked="common.user.seeBoardsUnderDevelopment === true" ng-model="common.user.seeBoardsUnderDevelopment" data-element="seeBoardsUnderDevelopment-checkbox">
+                    <label for="seeBoardsUnderDevelopmentCheckbox">{{'account-checkbox-seeboardsunderdevelopment' | translate}}</label>
+                </span>
+            </fieldset>
             <p class="account__delete">{{'account-link-deleteAccount' | translate}}
                 <a href="mailto:{{'support_email' | translate}}">{{'support_email' | translate}}</a>
             </p>
@@ -126,18 +126,18 @@
                 </fieldset>
             </div>
             <div class="form--section">
-                   <fieldset class="last--fieldset">
-                       <legend>
-                           <svg class="svg-icon svg-icon--text">
-                               <use xlink:href="#earth"></use>
-                           </svg>
-                           <span>{{ 'language' | translate }}</span>
-                       </legend>
-                       <div class="form-control">
-                           <common-dropdown class="dropdown--small" data-heading-option="common.user.language | translate" data-options-click="changeLanguage" data-options="test"/>
-                       </div>
-                   </fieldset>
-               </div>
+                <fieldset class="last--fieldset">
+                    <legend>
+                        <svg class="svg-icon svg-icon--text">
+                            <use xlink:href="#earth"></use>
+                        </svg>
+                        <span>{{ 'language' | translate }}</span>
+                    </legend>
+                    <div class="form-control">
+                        <common-dropdown class="dropdown--small" data-heading-option="common.user.language | translate" data-options-click="changeLanguage" data-options="test" />
+                    </div>
+                </fieldset>
+            </div>
         </div>
     </form>
 </div>
