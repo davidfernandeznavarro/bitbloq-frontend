@@ -99,12 +99,12 @@
 
 .btn__login--facebook {
     background-color: #4573ba;
-    -webkit-border-top-left-radius: 0.2em;
-    -webkit-border-bottom-left-radius: 0.2em;
-    -moz-border-radius-topleft: 0.2em;
-    -moz-border-radius-bottomleft: 0.2em;
-    border-top-left-radius: 0.2em;
-    border-bottom-left-radius: 0.2em;
+
+    &.rounded{
+        -webkit-border-radius: .2em;
+        -moz-border-radius: .2em;
+        border-radius: .2em;
+    }
 
     &:hover {
         background-color: #5386d4;
@@ -116,20 +116,34 @@
 }
 
 .btn__login--google {
-    background-color: #D92C32;
-    -webkit-border-top-right-radius: 0.2em;
-    -webkit-border-bottom-right-radius: 0.2em;
-    -moz-border-radius-topright: 0.2em;
-    -moz-border-radius-bottomright: 0.2em;
-    border-top-right-radius: 0.2em;
-    border-bottom-right-radius: 0.2em;
+    background-color: #ffffff;
+    text-align: right;
+    padding-right: 18px;
+    color: rgba(0, 0, 0, 0.54);
+    position: relative;
 
-    &:hover {
-        background-color: #f93940;
+    &.rounded{
+        -webkit-border-radius: .2em;
+        -moz-border-radius: .2em;
+        border-radius: .2em;
     }
 
     &:active {
-        background-color: #b8262b;
+        background-color: #d6d6d6;
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        display: block;
+        width: 24px;
+        top: 10px;
+        left: 10px;
+        height: 17px;
+        background-image: url(../images/icons/g.svg);
+        background-repeat: no-repeat;
+        background-size: 17px;
+        background-position: center;
     }
 }
 
@@ -180,10 +194,10 @@
     color: white;
     margin-top: 1em;
     display: block;
+    text-align: center;
 
     a {
         color: white;
-        margin-left: 8em;
     }
 }
 
@@ -224,7 +238,6 @@
     &, ul.row {
         margin-left: -0.95rem !important;
         margin-right: -0.95rem !important;
-        background-color: red;
     }
 }
 
