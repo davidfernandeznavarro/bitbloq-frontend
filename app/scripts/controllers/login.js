@@ -160,7 +160,11 @@ angular.module('bitbloqApp')
                     var older = new Date();
                     older.setYear(older.getFullYear() - 14);
                     $scope.userUnder14Years = userBirthday >= older && userBirthday <= new Date();
+                } else {
+                    $scope.userUnder14Years = null;
                 }
+            } else {
+                $scope.validBirthday = false;
             }
         };
 

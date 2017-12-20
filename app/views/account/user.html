@@ -65,7 +65,7 @@
                                 Facebook</span>
                         </div>
                     </div>
-                    <div class="form-control" ng-show="common.user.social.google.id === '' && common.user.social.facebook.id === ''">
+                    <div class="form-control" ng-hide="common.user.social.google.id !== '' && common.user.social.facebook.id !== ''">
                                 <button class="btn btn--social btn__login--facebook rounded btn__social-account" ng-click="authenticate('facebook')" ng-if="common.user && !common.user.social.facebook.id" data-element="account-social-facebook-button">{{ 'facebook' | translate }}</button>
                                 <button class="btn btn--social btn__login--google rounded btn__social-account" ng-click="authenticate('google')" ng-if="common.user && !common.user.social.google.id" data-element="account-social-google-button">{{ 'Google' | translate }}</button>
                     </div>
