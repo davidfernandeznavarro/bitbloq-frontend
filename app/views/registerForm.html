@@ -34,8 +34,28 @@
                             {{ 'login-error-disconnect' | translate }}
                         </li>
                     </ul>
+                    <!-- Age -->
+                    <div class="form-control form-birthday">
+                            <label for="birthday">{{ 'login-birth-day' | translate }}</label>
+                            <span id="birthday" data-ng-class="{'input input--date':true, 'input--focused':focus === 'birthday'}">
+                                <div class="input--group--date" ng-init="form.birthday.submitted=false">
+                                    <input data-element="register-day-input" type="text" id="birthdayDayRegister" name="day" autocomplete="off" pattern="[0-9]+" maxlength="2" placeholder="{{'days' | translate}}" data-ng-model="form.birthday.day" data-ng-focus="form.birthday.submitted=false; focusHandler($event)"
+                                           data-ng-blur="focus = false" data-ng-change="checkAge(form)" autocorrect="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57" data-ng-class="{'birthday--error':form.birthday.submitted && (errors.register.emptyBirthday || errors.register.validBirthday)}" required>
+                                    <input data-element="register-month-input" type="text" id="birthdayMonthRegister" name="month" autocomplete="off" pattern="[0-9]+" maxlength="2" placeholder="{{'months' | translate}}" data-ng-model="form.birthday.month" data-ng-focus="form.birthday.submitted=false; focusHandler($event)"
+                                           data-ng-blur="focus = false" data-ng-change="checkAge(form)" autocorrect="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57" data-ng-class="{'birthday--error':form.birthday.submitted && (errors.register.emptyBirthday || errors.register.validBirthday)}" required>
+                                    <input data-element="register-year-input" type="text" id="birthdayYearRegister" name="year" autocomplete="off" pattern="[0-9]+" maxlength="4" minlength="4" placeholder="{{'years' | translate}}" data-ng-model="form.birthday.year" data-ng-focus="form.birthday.submitted=false; focusHandler($event)"
+                                           data-ng-blur="focus = false" data-ng-change="checkAge(form)" autocorrect="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57" data-ng-class="{'birthday--error':form.birthday.submitted && (errors.register.emptyBirthday || errors.register.validBirthday)}" required>
+                                </div>
+                            </span>
+                            <span class="form--error" ng-show="form.birthday.submitted && errors.register.emptyBirthday" data-element="show-no-birthdate">
+                                <small>{{ 'login-introduce-birth-day' | translate }}</small>
+                            </span>
+                            <span class="form--error" ng-show="form.birthday.submitted && errors.register.validBirthday" data-element="show-valid-birthdate">
+                                <small>{{ 'login-valid-birth-day' | translate }}</small>
+                            </span>
+                    </div>
                     <!-- User name -->
-                    <div class="form-control">
+                    <div class="form-control" ng-show="validBirthday && !userUnder14Years">
                         <label for="username">{{ 'login-username' | translate }}</label>
                         <span class="form--input input--default" ng-class="{'input--error':form.username.submitted && (!username.free || username.invalid || form.username.$error.required), 'input--focused':focus === 'username'}">
                             <svg class="svg-icon form-icon--username icon--form--validating">
@@ -61,7 +81,7 @@
                         </span>
                     </div>
                     <!-- Email -->
-                    <div class="form-control" ng-init="emailFocus=false">
+                    <div class="form-control" ng-init="emailFocus=false" ng-show="validBirthday && !userUnder14Years">
                         <label for="email">{{ 'email' | translate }}</label>
                         <span ng-class="{'input input--form--login input--default':true, 'input--focused':focus === 'email', 'input--error':form.email.submitted && (form.email.$invalid || form.email.$error.required || errors.register.email)}">
                             <svg class="svg-icon">
@@ -82,7 +102,7 @@
                     </div>
                     <!-- Password -->
                     <input type="password" class="ng-hide">
-                    <div class="form-control">
+                    <div class="form-control" ng-show="validBirthday && !userUnder14Years">
                         <label for="password">{{ 'password' | translate }}</label>
                         <span data-ng-class="{'input input--form--login input--default':true, 'input--focused':focus === 'password', 'input--error':form.password.submitted && (form.password.$error.required || form.password.$error.minlength || errors.login.password)}">
                             <svg class="svg-icon">
@@ -99,26 +119,6 @@
                         </span>
                         <span class="form--error" data-ng-show="form.password.submitted &&  errors.login.password" data-element="show-incorrect-password">
                             <small>{{ 'login-incorrect-password' | translate }}</small>
-                        </span>
-                    </div>
-                    <!-- Age -->
-                    <div class="form-control form-birthday">
-                        <label for="birthday">{{ 'login-birth-day' | translate }}</label>
-                        <span id="birthday" data-ng-class="{'input input--date':true, 'input--focused':focus === 'birthday'}">
-                            <div class="input--group--date" ng-init="form.birthday.submitted=false">
-                                <input data-element="register-day-input" type="text" id="birthdayDayRegister" name="day" autocomplete="off" pattern="[0-9]+" maxlength="2" placeholder="{{'days' | translate}}" data-ng-model="form.birthday.day" data-ng-focus="form.birthday.submitted=false; focusHandler($event)"
-                                       data-ng-blur="focus = false; checkAge(form)" autocorrect="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57" data-ng-class="{'birthday--error':form.birthday.submitted && (errors.register.emptyBirthday || errors.register.validBirthday)}" required>
-                                <input data-element="register-month-input" type="text" id="birthdayMonthRegister" name="month" autocomplete="off" pattern="[0-9]+" maxlength="2" placeholder="{{'months' | translate}}" data-ng-model="form.birthday.month" data-ng-focus="form.birthday.submitted=false; focusHandler($event)"
-                                       data-ng-blur="focus = false; checkAge(form)" autocorrect="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57" data-ng-class="{'birthday--error':form.birthday.submitted && (errors.register.emptyBirthday || errors.register.validBirthday)}" required>
-                                <input data-element="register-year-input" type="text" id="birthdayYearRegister" name="year" autocomplete="off" pattern="[0-9]+" maxlength="4" minlength="4" placeholder="{{'years' | translate}}" data-ng-model="form.birthday.year" data-ng-focus="form.birthday.submitted=false; focusHandler($event)"
-                                       data-ng-blur="focus = false; checkAge(form)" autocorrect="off" onkeypress="return event.charCode >= 48 && event.charCode <= 57" data-ng-class="{'birthday--error':form.birthday.submitted && (errors.register.emptyBirthday || errors.register.validBirthday)}" required>
-                            </div>
-                        </span>
-                        <span class="form--error" ng-show="form.birthday.submitted && errors.register.emptyBirthday" data-element="show-no-birthdate">
-                            <small>{{ 'login-introduce-birth-day' | translate }}</small>
-                        </span>
-                        <span class="form--error" ng-show="form.birthday.submitted && errors.register.validBirthday" data-element="show-valid-birthdate">
-                            <small>{{ 'login-valid-birth-day' | translate }}</small>
                         </span>
                     </div>
                     <!--Tutor-->
@@ -155,7 +155,7 @@
                             <small>{{ 'insert-surname' | translate }}</small>
                         </span>
                     </div>
-                    <!-- Email -->
+                    <!-- tutorEmail -->
                     <div class="form-control" data-ng-show="userUnder14Years">
                         <label for="tutorEmail">{{ 'login-tutor-email' | translate }}</label>
                         <span ng-class="{'input input--form--login input--default':true, 'input--focused':focus === 'tutorEmail', 'input--error':form.tutorEmail.submitted && (form.tutorEmail.$invalid || form.tutorEmail.$error.required || errors.register.tutorEmail)}">
@@ -175,9 +175,32 @@
                             <small>{{ 'login-tutor-same-email' | translate }}</small>
                         </span>
                     </div>
+                    <!-- recoveryMail -->
+                    <div class="form-control" data-ng-show="userUnder14Years">
+                            <!-- TODO: i18n login-tutor-recoveryMail -->
+                            <label for="recoveryMail">{{ 'login-tutor-recoveryMail' | translate }}</label>
+                            <!-- TODO: recoveryMail submit validators -->
+                            <span ng-class="{'input input--form--login input--default':true, 'input--focused':focus === 'recoveryMail', 'input--error':form.recoveryMail.submitted && (form.recoveryMail.$invalid || form.recoveryMail.$error.required || errors.register.recoveryMail)}">
+                                <svg class="svg-icon">
+                                    <use xlink:href="#mail"></use>
+                                </svg>
+                                <input data-ng-model="user.tutor.recoveryMail" data-ng-focus="form.recoveryMail.submitted=false; focus = 'recoveryMail'" data-ng-blur="focus = false;form.recoveryMail.submitted=true;" id="recoveryMailRegister" name="recoveryMail" type="email"
+                                       data-ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/" placeholder="{{'email' | translate}}" autocorrect="off" autocomplete="off" required data-element="register-tutor-recoveryMail">
+                            </span>
+                            <!-- TODO: recoveryMail error validators -->
+                            <span class="form--error" data-ng-show="form.recoveryMail.submitted && form.recoveryMail.$error.required" data-element="register-show-norecoveryMail">
+                                <small>{{ 'login-email-empty' | translate }}</small>
+                            </span>
+                            <span class="form--error" data-ng-show="form.recoveryMail.submitted && (form.recoveryMail.$error.email || form.recoveryMail.$error.pattern)" data-element="register-invalid-recoveryMail">
+                                <small>{{ 'login-valid-email' | translate }}</small>
+                            </span>
+                            <span class="form--error" data-ng-show="errors.register.sameRecoveryMail" data-element="register-same-email">
+                                <small>{{ 'login-tutor-same-email' | translate }}</small>
+                            </span>
+                        </div>
                     <!--FIN Tutor-->
                     <!-- Newsletter -->
-                    <div class="form-control">
+                    <div class="form-control" ng-show="validBirthday && !userUnder14Years">
                         <span class="input input--checkbox">
                             <input data-element="register-newsletter-teacher-input" ng-model="user.newsletter" type="checkbox" name="newsletter" id="newsletter">
                             <label for="newsletter">
@@ -186,7 +209,7 @@
                         </span>
                     </div>
                     <!-- Service terms -->
-                    <div class="form-control">
+                    <div class="form-control" ng-show="validBirthday && !userUnder14Years">
                         <span data-ng-class="{'input input--checkbox':!form.readServiceTerm.submitted || user.cookiePolicyAccepted, 'input--checkbox--error':form.readServiceTerm.submitted && !user.cookiePolicyAccepted}">
                             <input type="checkbox" id="readServiceTermRegister" name="readServiceTerm" data-ng-model="user.cookiePolicyAccepted" data-ng-focus="form.readServiceTerm.submitted=false" data-ng-blur="focus = false" data-element="register-terms-input">
                             <label for="readServiceTerm">
@@ -202,7 +225,7 @@
                         </span>
                     </div>
                     <!-- Submit Form -->
-                    <div class="form-control">
+                    <div class="form-control" ng-show="validBirthday">
                         <input type="submit" data-ng-click="registerSubmit(form)"  ng-disabled="isRegistering" name="submitform" class="btn btn--primary btn__login--submit" value="{{'general_button_register' | translate}}" ng-disabled="login.password.$dirty && login.password.$invalid || login.email.$dirty && login.email.$invalid" data-element="enter-register">
                     </div>
                 </fieldset>

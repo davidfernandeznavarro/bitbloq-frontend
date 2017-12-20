@@ -153,9 +153,9 @@ angular.module('bitbloqApp')
 
         $scope.checkAge = function(form) {
             if (form.birthday && form.birthday.day && form.birthday.month && form.birthday.year) {
-                var validBirthday = moment(form.birthday.day + ', ' + form.birthday.month + ', ' + form.birthday.year, 'DD, MM, YYYY')
+                $scope.validBirthday = moment(form.birthday.day + ', ' + form.birthday.month + ', ' + form.birthday.year, 'DD, MM, YYYY')
                     .isValid();
-                if (validBirthday) {
+                if ($scope.validBirthday) {
                     var userBirthday = new Date(form.birthday.year, form.birthday.month - 1, form.birthday.day);
                     var older = new Date();
                     older.setYear(older.getFullYear() - 14);
