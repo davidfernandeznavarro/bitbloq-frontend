@@ -272,12 +272,14 @@ angular.module('bitbloqApp')
                     text: 'alert-web2board-no-port-found',
                     id: 'web2board',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
             } else {
@@ -524,12 +526,14 @@ document.body.removeChild(tempA); },
                             text: 'alert-web2board-no-port-found',
                             id: 'web2board',
                             type: 'warning',
-                            link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                            link: function () {
+                                var tempA = document.createElement('a');
+                                tempA.setAttribute('href', '#/support/p/noBoard');
+                                tempA.setAttribute('target', '_blank');
+                                document.body.appendChild(tempA);
+                                tempA.click();
+                                document.body.removeChild(tempA);
+                            },
                             linkText: $translate.instant('support-go-to')
                         });
                         console.error(error);
@@ -565,12 +569,14 @@ document.body.removeChild(tempA); },
                             text: 'alert-web2board-no-port-found',
                             id: 'web2board',
                             type: 'warning',
-                            link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                            link: function () {
+                                var tempA = document.createElement('a');
+                                tempA.setAttribute('href', '#/support/p/noBoard');
+                                tempA.setAttribute('target', '_blank');
+                                document.body.appendChild(tempA);
+                                tempA.click();
+                                document.body.removeChild(tempA);
+                            },
                             linkText: $translate.instant('support-go-to')
                         });
                         console.error(error);

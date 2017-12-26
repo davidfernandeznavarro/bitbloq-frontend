@@ -9,7 +9,7 @@
  */
 angular.module('bitbloqApp')
     .controller('SoftwareTabCtrl', function ($rootScope, $scope, $timeout, $translate, $window, bloqsUtils, bloqs, bloqsApi,
-        $log, $document, _, ngDialog, $location, userApi, alertsService, web2board, robotFirmwareApi, web2boardOnline, projectService,
+        $log, $document, _, ngDialog, $location, userApi, alertsService, web2boardV1, robotFirmwareApi, web2boardOnline, projectService,
         utils) {
 
         var $contextMenu = $('#bloqs-context-menu'),
@@ -266,7 +266,7 @@ angular.module('bitbloqApp')
                         }
                     });
                 } else {
-                    web2board.uploadHex(mcu, result.data);
+                    web2boardV1.uploadHex(mcu, result.data);
                 }
             }, function () {
                 alertsService.add({

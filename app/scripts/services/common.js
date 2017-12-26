@@ -9,7 +9,7 @@
  * Service in the bitbloqApp.
  */
 angular.module('bitbloqApp')
-    .service('common', function($filter, $log, envData, packageData, userApi, User, centerModeApi, $location, $rootScope, $q, _, $sessionStorage, $translate, ngDialog, $http, amMoment, $window, $cookieStore, alertsService, utils, userRobotsApi, hardwareApi) {
+    .service('common', function ($filter, $log, envData, packageData, userApi, User, centerModeApi, $location, $rootScope, $q, _, $sessionStorage, $translate, ngDialog, $http, amMoment, $window, $cookieStore, alertsService, utils, userRobotsApi, hardwareApi) {
 
         var exports = {},
             navigatorLang = $window.navigator.language || $window.navigator.userLanguage;
@@ -77,7 +77,7 @@ angular.module('bitbloqApp')
             loadedRolePromise = $q.defer(),
             loadedPropertyPromise = $q.defer();
 
-        exports.setUser = function(user) {
+        exports.setUser = function (user) {
             if (loadedUserPromise.promise.$$state.status !== 0) {
                 loadedUserPromise = $q.defer();
             }
@@ -97,27 +97,27 @@ angular.module('bitbloqApp')
                 $translate.use(sessionStorage.guestLanguage || navigatorLang);
                 $cookieStore.remove('token');
                 exports.userRole = 'student';
-                hardwareApi.getAll().then(function(response) {
+                hardwareApi.getAll().then(function (response) {
                     exports.userHardware = response.data;
                 }).finally(loadedUserPromise.reject);
             }
         };
 
-        exports.itsUserLoaded = function() {
+        exports.itsUserLoaded = function () {
             return loadedUserPromise.promise;
         };
 
-        exports.itsRoleLoaded = function() {
+        exports.itsRoleLoaded = function () {
             return loadedRolePromise.promise;
         };
 
-        exports.itsPropertyLoaded = function() {
+        exports.itsPropertyLoaded = function () {
             return loadedPropertyPromise.promise;
         };
 
         var md = new MobileDetect(window.navigator.userAgent);
 
-        exports.acceptCookies = function() {
+        exports.acceptCookies = function () {
             if (exports.user) {
                 userApi.update({
                     cookiePolicyAccepted: true
@@ -127,14 +127,14 @@ angular.module('bitbloqApp')
             exports.cookiesAccepted = true;
         };
 
-        exports.goToLogin = function() {
+        exports.goToLogin = function () {
             var url = $location.url();
             $location.path('login').search({
                 init: url
             });
         };
 
-        exports.goToRegister = function() {
+        exports.goToRegister = function () {
             var url = $location.url();
             $location.path('register').search({
                 init: url
@@ -175,7 +175,7 @@ angular.module('bitbloqApp')
         }
 
         function getProperties() {
-            $http.get(envData.config.serverUrl + 'property').success(function(items) {
+            $http.get(envData.config.serverUrl + 'property').success(function (items) {
                 $log.debug('properties', items);
                 exports.properties = items[0];
 
@@ -187,7 +187,7 @@ angular.module('bitbloqApp')
             if (loadedRolePromise.promise.$$state.status !== 0) {
                 loadedRolePromise = $q.defer();
             }
-            centerModeApi.getMyRole().then(function(result) {
+            centerModeApi.getMyRole().then(function (result) {
                 if (result.data && result.data !== '') {
                     exports.userRole = result.data;
                 } else {
@@ -199,14 +199,14 @@ angular.module('bitbloqApp')
 
         if (!exports.user) {
             $log.debug('gettingUSer on common');
-            User.get().$promise.then(function(user) {
+            User.get().$promise.then(function (user) {
                 $log.debug('gettingUSer on common OK');
                 if (user.username) {
                     delete user.$promise;
                     delete user.$resolved;
-                    userRobotsApi.getUserRobots(user._id).then(function(res) {
+                    userRobotsApi.getUserRobots(user._id).then(function (res) {
                         user.thirdPartyRobots = res.data;
-                    }).finally(function() {
+                    }).finally(function () {
                         exports.setUser(user);
                         exports.userIsLoaded = true;
                     });
@@ -214,7 +214,7 @@ angular.module('bitbloqApp')
                     exports.userIsLoaded = true;
                     exports.setUser(null);
                 }
-            }, function() {
+            }, function () {
                 $log.debug('gettingUSer on common KO');
                 exports.userIsLoaded = true;
                 exports.setUser(null);
@@ -232,28 +232,28 @@ angular.module('bitbloqApp')
 
         processRoute();
 
-        exports.itsUserLoaded().finally(function() {
+        exports.itsUserLoaded().finally(function () {
             getProperties();
         });
 
-        $rootScope.$on('$locationChangeSuccess', function() {
+        $rootScope.$on('$locationChangeSuccess', function () {
             processRoute();
         });
 
-        exports.saveUserLanguage = function(newLang) {
+        exports.saveUserLanguage = function (newLang) {
             amMoment.changeLocale(newLang);
             if (exports.user && (exports.user.language !== newLang)) {
                 exports.user.language = newLang;
                 userApi.update({
                     language: newLang
-                }).then(function() {
+                }).then(function () {
                     alertsService.add({
                         text: 'account-saved',
                         id: 'saved-user',
                         type: 'ok',
                         time: 5000
                     });
-                }, function() {
+                }, function () {
                     alertsService.add({
                         text: 'account-saved-error',
                         id: 'saved-user',
@@ -263,7 +263,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        exports.useChromeExtension = function() {
+        exports.useChromeExtension = function () {
             return (exports.os === 'ChromeOS' || (exports.user && exports.user.chromeapp));
         };
 

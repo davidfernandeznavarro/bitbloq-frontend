@@ -8,11 +8,12 @@
  * Service in the bitbloqApp.
  */
 angular.module('bitbloqApp')
-    .service('web2boardJS', function ($log, alertsService, utils, $q, $translate, envData, $rootScope, web2board, $timeout, $location) {
+    .service('web2boardJS', function ($log, alertsService, utils, $q, $translate, envData, $rootScope, web2boardV1, $timeout, $location) {
         var exports = {
             compile: compile,
             upload: upload,
-            compileAndUpload: compileAndUpload
+            compileAndUpload: compileAndUpload,
+            getVersion: getVersion
         };
 
         var compileAndUploadDefer,
@@ -23,25 +24,13 @@ angular.module('bitbloqApp')
         /**
          * [compile description]
          * @param  {object} params {
-         *                         board: board profile,
+         *                         board: board mcu,
          *                         code: code
          *                         }
          * @return {promise}
          */
         function compile(params) {
-            if (!params.board) {
-                params.board = 'bt328';
-            } else {
-                params.board = params.board.mcu;
-            }
-            if (!params.viewer) {
-                alertsService.add({
-                    text: 'alert-web2board-compiling',
-                    id: 'compile',
-                    type: 'loading'
-                });
-            }
-            return sendToWeb2boardJS('compile', params);
+            return _sendToWeb2boardJS('compile', params);
         }
 
         function upload(params) {
@@ -71,14 +60,23 @@ angular.module('bitbloqApp')
                     type: 'loading'
                 });
             }
-            return sendToWeb2boardJS('upload', params);
+            return _sendToWeb2boardJS('upload', params);
         }
 
-        function sendToWeb2boardJS(eventName, data) {
+        function _sendToWeb2boardJS(eventName, data) {
             var defer = $q.defer();
-            connectToSocket().then(function () {
-                socket.emit(eventName, JSON.stringify(data), function (response) {
-                    $log.log('compile response', response);
+            var timeout = setTimeout(function () {
+                defer.reject({
+                    status: -1,
+                    error: 'timeout in contact with web2board'
+                });
+            }, 5000);
+
+            _connectToSocket().then(function () {
+                socket.emit(eventName, data, function (response) {
+                    response = response;
+                    $log.log('web2boardjs response', response);
+                    clearTimeout(timeout);
                     if (response.status === 0) {
                         defer.resolve(response);
                     } else {
@@ -89,7 +87,7 @@ angular.module('bitbloqApp')
             return defer.promise;
         }
 
-        function connectToSocket() {
+        function _connectToSocket() {
             var defer = $q.defer();
             if (!socket) {
                 socket = io('http://localhost:9876');
@@ -124,39 +122,6 @@ angular.module('bitbloqApp')
             return defer.promise;
         }
 
-        function compilerAlerts(compilerPromise) {
-            alertCompile = null;
-
-            compilerPromise.then(function (response) {
-                if (response.data.error) {
-                    alertsService.add({
-                        id: 'compile',
-                        type: 'warning',
-                        translatedText: utils.parseCompileError(response.data.error)
-                    });
-                } else {
-                    alertsService.add({
-                        text: 'alert-web2board-compile-verified',
-                        id: 'compile',
-                        type: 'ok',
-                        time: 5000
-                    });
-                }
-            }).catch(function (response) {
-                alertsService.add({
-                    id: 'compile',
-                    type: 'error',
-                    translatedText: response.data
-                });
-            })
-                .finally(function () {
-                    web2board.setInProcess(false);
-                    completed = true;
-                    alertsService.close(alertCompile);
-                });
-
-        }
-
         /**
          *
          * @param  {object} params {
@@ -169,16 +134,8 @@ angular.module('bitbloqApp')
             console.log('compileAndUpload', params);
         }
 
-        function getReadableErrorMessage(error) {
-            var message = '';
-            if (error.error.indexOf('timeout') >= 0) {
-                message = $translate.instant('modal-inform-error-textarea-placeholder') + ': ' + $translate.instant(JSON.stringify(error.error));
-            } else {
-                message = $translate.instant('modal-inform-error-textarea-placeholder') + ': ' + $translate.instant(JSON.stringify(error.error));
-            }
-            //stk500 timeout.
-
-            return message;
+        function getVersion() {
+            return _sendToWeb2boardJS('version');
         }
 
         return exports;
