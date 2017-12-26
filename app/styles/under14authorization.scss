@@ -70,6 +70,15 @@
                     text-transform: capitalize;
                 }
             }
+            label {
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+            span {
+                label {
+                    white-space: normal;
+                }
+            }
         }
     }
     input, button {
