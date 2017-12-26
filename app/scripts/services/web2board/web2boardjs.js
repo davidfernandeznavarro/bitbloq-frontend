@@ -8,7 +8,7 @@
  * Service in the bitbloqApp.
  */
 angular.module('bitbloqApp')
-    .service('web2boardJS', function ($log, alertsService, utils, $q, $translate, envData, $rootScope, web2boardV1, $timeout, $location) {
+    .service('web2boardJS', function ($log, alertsService, utils, $q, $translate, envData, $rootScope, web2boardV1, $timeout, $location, $window) {
         var exports = {
             compile: compile,
             upload: upload,
@@ -19,7 +19,9 @@ angular.module('bitbloqApp')
         var compileAndUploadDefer,
             completed,
             alertCompile,
-            socket;
+            socket,
+            timeToWaitToOpenWeb2board = 3000,
+            getVersionMaxTrys = 1;
 
         /**
          * [compile description]
@@ -70,6 +72,7 @@ angular.module('bitbloqApp')
                     status: -1,
                     error: 'timeout in contact with web2board'
                 });
+                _closeSocket();
             }, 5000);
 
             _connectToSocket().then(function () {
@@ -87,6 +90,11 @@ angular.module('bitbloqApp')
             return defer.promise;
         }
 
+        function _closeSocket() {
+            socket.close();
+            socket = null;
+        }
+
         function _connectToSocket() {
             var defer = $q.defer();
             if (!socket) {
@@ -98,8 +106,7 @@ angular.module('bitbloqApp')
                     socket.on('disconnect', function (reason) {
                         $log.log('disconnect on socket', reason);
                         defer.reject();
-                        socket.close();
-                        socket = null;
+                        _closeSocket();
                     });
                     defer.resolve();
                 });
@@ -107,14 +114,12 @@ angular.module('bitbloqApp')
                 socket.on('error', function (error) {
                     $log.log('error on socket', error);
                     defer.reject();
-                    socket.close();
-                    socket = null;
+                    _closeSocket();
                 });
                 socket.on('connect_timeout', function (error) {
                     $log.log('connect_timeout on socket', error);
                     defer.reject();
-                    socket.close();
-                    socket = null;
+                    _closeSocket();
                 });
             } else {
                 defer.resolve();
@@ -134,8 +139,42 @@ angular.module('bitbloqApp')
             console.log('compileAndUpload', params);
         }
 
-        function getVersion() {
-            return _sendToWeb2boardJS('version');
+
+        function getVersion(remainigAttempts, defer) {
+            defer = defer || $q.defer();
+            if (!remainigAttempts && (remainigAttempts !== 0)) {
+                remainigAttempts = remainigAttempts || getVersionMaxTrys;
+            }
+
+            startWeb2board().then(function () {
+                _sendToWeb2boardJS('version').then(function (result) {
+                    defer.resolve(result);
+                }, function (error) {
+                    if (remainigAttempts > 0) {
+                        getVersion(remainigAttempts - 1, defer);
+                    } else {
+                        defer.reject(error);
+                    }
+                });
+            });
+            return defer.promise;
+        }
+
+
+        function startWeb2board() {
+            var defer = $q.defer();
+            $log.log('starting Web2board...');
+            var tempA = document.createElement('a');
+            tempA.setAttribute('href', 'web2board://');
+            document.body.appendChild(tempA);
+            tempA.click();
+            document.body.removeChild(tempA);
+
+            $timeout(function () {
+                defer.resolve();
+            }, timeToWaitToOpenWeb2board)
+
+            return defer.promise;
         }
 
         return exports;
