@@ -8,7 +8,7 @@
  * Service in the bitbloqApp.
  */
 angular.module('bitbloqApp')
-    .service('web2boardJS', function ($log, alertsService, utils, $q, $translate, envData, $rootScope, web2boardV1, $timeout, $location, $window) {
+    .service('web2boardJS', function ($log, alertsService, utils, $q, $translate, envData, $rootScope, $timeout, $location, $window) {
         var exports = {
             compile: compile,
             upload: upload,

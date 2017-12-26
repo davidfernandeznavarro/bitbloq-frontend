@@ -50,6 +50,8 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardV2':
+                    //no response, the service manage the states and alerts
+                    web2boardV1.externalVerify(params.board, params.code);
                     break;
                 case 'web2boardOnline':
                     web2boardOnline.compile(params).then(function (result) {
@@ -74,16 +76,17 @@ angular.module('bitbloqApp')
             if (!params.viewer) {
                 alertsService.add({
                     text: 'alert-web2board-compiling',
-                    id: 'compile',
+                    id: 'web2board',
                     type: 'loading'
                 });
             }
             if (params.method) {
                 _compileWith(params.method, params, defer);
+            } else {
+                _detectWeb2boardVersion().then(function (version) {
+                    _compileWith(version, params, defer);
+                });
             }
-            _detectWeb2boardVersion().then(function (version) {
-                _compileWith(version, params, defer);
-            })
 
             return defer.promise;
         }

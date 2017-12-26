@@ -241,26 +241,9 @@ angular.module('bitbloqApp')
             }
         }
 
-        function verifyW2b1() {
-            if ($scope.isWeb2BoardInProgress()) {
-                return false;
-            }
-            web2boardV1.setInProcess(true);
 
-            compilingAlert = alertsService.add({
-                text: 'alert-web2board-compiling',
-                id: 'compile',
-                type: 'loading'
-            });
-            web2boardV1.setInProcess(true);
-            var boardReference = projectService.getBoardMetaData();
-            web2boardV1.verify($scope.getPrettyCode(), boardReference);
-        }
 
-        function verifyW2b2() {
-            var boardReference = projectService.getBoardMetaData();
-            web2boardV1.verify($scope.getPrettyCode(), boardReference);
-        }
+
 
         function serialMonitorW2b1() {
             if ($scope.isWeb2BoardInProgress()) {

@@ -8,7 +8,8 @@
  * Service in the bitbloqApp.
  */
 angular.module('bitbloqApp')
-    .factory('web2boardV1', function ($rootScope, $websocket, $log, $q, ngDialog, _, $timeout, common, envData, web2boardV2, alertsService, $location, commonModals, projectService) {
+    .factory('web2boardV1', function ($rootScope, $websocket, $log, $q, ngDialog, _, $timeout, common, envData, web2boardV2,
+        alertsService, $location, commonModals, projectService) {
 
         /** Variables */
 
@@ -529,11 +530,75 @@ angular.module('bitbloqApp')
 
         web2board.getVersion = function () {
             var defer = $q.defer();
-            if (web2boardV1.isWeb2boardV2()) {
+            if (web2board.isWeb2boardV2()) {
                 verifyW2b2();
             } else {
                 verifyW2b1();
             }
+            return defer.promise;
+        }
+
+
+        web2board.externalVerify = function (boardReference, code) {
+            if (web2board.isWeb2boardV2()) {
+                verifyW2b2(boardReference, code);
+            } else {
+                verifyW2b1(boardReference, code);
+            }
+        }
+
+        function verifyW2b2(boardReference, code) {
+            //var boardReference = projectService.getBoardMetaData();
+            //code = $scope.getPrettyCode()
+            web2board.verify(code, boardReference);
+        }
+
+        function verifyW2b1(boardReference, code) {
+            if (web2board.isInProcess()) {
+                return false;
+            }
+            web2board.setInProcess(true);
+            //var boardReference = projectService.getBoardMetaData();
+            web2board.verify(code, boardReference);
+        }
+
+        web2board.getVersion = function () {
+            var defer = $q.defer(),
+                timeout;
+            var versionWs = $websocket('ws://' + web2board.config.wsHost + ':' + web2board.config.wsPort);
+
+            versionWs.onOpen(function () {
+                if (versionWs.readyState === 1) {
+                    $log.debug('web2board:connected');
+                    versionWs.send('version');
+                    versionWs.send('setBitbloqLibsVersion ' + '0.0.1');
+                }
+            });
+
+            versionWs.onMessage(function (evt) {
+                if (isEvtForNewVersionJson(evt.data)) {
+                    defer.resolve('web2boardV2');
+                } else {
+                    defer.resolve('web2boardV1');
+                }
+                $timeout.cancel(timeout);
+                versionWs.close();
+            });
+
+            versionWs.onError(function (evt) {
+                defer.reject(evt);
+                versionWs.close();
+                $timeout.cancel(timeout);
+            });
+
+            timeout = $timeout(function () {
+                defer.reject({
+                    status: -1,
+                    error: 'timeout on web2boardV1/V2'
+                });
+                versionWs.close();
+            }, TIME_FOR_WEB2BOARD_TO_START * 3);
+
             return defer.promise;
         }
 
