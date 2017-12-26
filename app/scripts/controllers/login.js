@@ -29,7 +29,8 @@ angular
         $rootScope,
         userRobotsApi,
         $localStorage,
-        $timeout
+        $timeout,
+        $sce
     ) {
         $scope.envData = envData;
         $scope.common.isLoading = false;
@@ -702,6 +703,11 @@ angular
             var $loginContainer = angular.element('#loginContainer');
             _transitionForm($loginContainer);
         };
+
+        // Easy Sanitize
+        $scope.html = function (text, translate) {
+            return $sce.trustAsHtml((translate) ? $translate.instant(text) : text);
+        }
 
         /*************************
          *** PRIVATE FUNCTIONS ***

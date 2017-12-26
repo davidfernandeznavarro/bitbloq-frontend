@@ -262,6 +262,14 @@
     text-align: left;
 }
 
+.form--userUnder14YearsInfo{
+    padding: 5px;
+    margin-bottom: 20px;
+    p {
+        margin-bottom: 0px;
+    }
+}
+
 .shake {
     animation-name: shake;
     animation-duration: 250ms;
@@ -345,7 +353,7 @@ iframe[src^="https://apis.google.com"] {
     display: none;
 }
 /* Webkit, Chrome and Safari */
-@-webkit-keyframes fadeout {
+@keyframes fadeout {
     0% {
         opacity: 1;
         -webkit-transform: translate3d(0, 0, 0);
@@ -356,7 +364,7 @@ iframe[src^="https://apis.google.com"] {
         -webkit-transform: translate3d(0, 15%, 0);
     }
 }
-@-webkit-keyframes fadein {
+@keyframes fadein {
     0% {
         opacity: 0;
         -webkit-transform: translate3d(0, 15%, 0);
@@ -372,7 +380,7 @@ iframe[src^="https://apis.google.com"] {
         -webkit-transform: translate3d(0, 0, 0);
     }
 }
-@-webkit-keyframes shake {
+@keyframes shake {
     0% {
         -webkit-transform: translate(2px, 1px) rotate(0deg);
     }

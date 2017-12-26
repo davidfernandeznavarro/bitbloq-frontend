@@ -55,7 +55,7 @@
                             </span>
                     </div>
                     <!-- User name -->
-                    <div class="form-control" ng-show="validBirthday && !userUnder14Years">
+                    <div class="form-control" ng-show="validBirthday">
                         <label for="username">{{ 'login-username' | translate }}</label>
                         <span class="form--input input--default" ng-class="{'input--error':form.username.submitted && (!username.free || username.invalid || form.username.$error.required), 'input--focused':focus === 'username'}">
                             <svg class="svg-icon form-icon--username icon--form--validating">
@@ -101,7 +101,7 @@
                     </div>
                     <!-- Password -->
                     <input type="password" class="ng-hide">
-                    <div class="form-control" ng-show="validBirthday && !userUnder14Years">
+                    <div class="form-control" ng-show="validBirthday">
                         <label for="password">{{ 'password' | translate }}</label>
                         <span class="form--input input--default" data-ng-class="{'input input--form--login input--default':true, 'input--focused':focus === 'password', 'input--error':form.password.submitted && (form.password.$error.required || form.password.$error.minlength || errors.login.password)}">
                             <svg class="svg-icon">
@@ -122,10 +122,13 @@
                     </div>
                     <!--[START] Tutor-->
                     <!--Tutor Info-->
-                    <div data-ng-show="userUnder14Years">
-                        <p class="login-paragraph">{{ 'under14-register-warning-1' | translate }}</p>
+                    <div class="form--userUnder14YearsInfo" data-ng-show="userUnder14Years">
+                        <h3>{{ 'important' | translate }}</h3>
+                        <p class="login-paragraph" ng-bind-html="html('under14-register-warning-1', true)"></p>
                         <p class="login-paragraph">{{ 'under14-register-warning-2' | translate }}</p>
-                        <p class="login-paragraph">{{ 'under14-register-warning-3' | translate }}</p>
+                        <p class="login-paragraph">
+                            <strong>{{ 'under14-register-warning-3' | translate }}</strong>
+                        </p>
                     </div>
                     <!--Tutor Name-->
                     <div class="form-control" data-ng-show="userUnder14Years">
@@ -183,7 +186,7 @@
                             <svg class="svg-icon">
                                 <use xlink:href="#mail"></use>
                             </svg>
-                            <input data-ng-model="user.tutor.recoveryMail" data-ng-focus="form.recoveryMail.submitted=false; focus = 'recoveryMail'" data-ng-blur="focus = false;form.recoveryMail.submitted=true;" id="recoveryMailRegister" name="recoveryMail" type="email"
+                            <input data-ng-model="user.recoveryMail" data-ng-focus="form.recoveryMail.submitted=false; focus = 'recoveryMail'" data-ng-blur="focus = false;form.recoveryMail.submitted=true;" id="recoveryMailRegister" name="recoveryMail" type="email"
                                     data-ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/" placeholder="{{'email' | translate}}" autocorrect="off" autocomplete="off" required data-element="register-tutor-recoveryMail">
                         </span>
                         <!-- TODO: recoveryMail error validators -->
