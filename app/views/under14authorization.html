@@ -1,104 +1,120 @@
-<div class="under14authorization-view" data-ng-show="showForm">
-    <form name="form">
-        <fieldset>
-            <legend>
-                <span>{{ 'user-profile' | translate }}</span>
-            </legend>
-            <!-- Name -->
-            <div class="form-control">
-                <label for="name">{{ 'name' | translate }}</label>
-                <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'name'}">
-                    <input aria-invalid="false" data-element="under14-firstname" data-ng-blur="focus = false" data-ng-focus="focus = 'name'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.firstName" id="name" name="name" placeholder="{{'name' | translate}}" tabindex="0" type="text">
-                </span>
+<div class="section-header table__header">
+    <div class="header__title breadcrumb-longer second-level col-vsmall-7" data-element="">
+        <h1>{{ 'u14authorization--title' | translate }}</h1>
+    </div>
+</div>
+<div class="table__page table__page--with-header">
+    <div class="table__main">
+        <div class="row">
+            <div class="under14authorization-view" data-ng-show="showForm">
+                <div class="legal-container" ng-hide="okLegal">
+                    <h3>{{ 'u14authorization--legal-title' | translate }}</h3>
+                    <div class="legal-info">
+                        <p ng-bind-html="html('u14authorization--legal-content', true)"></p>
+                    </div>
+                    <span class="legal-ok input--checkbox">
+                            <input type="checkbox" class="" id="okLegal" name="okLegal" data-ng-model="okLegal">
+                            <label for="okLegal">
+                                {{ 'u14authorization--legal-ok' | translate }}
+                            </label>
+                    </span>
+                </div>
+                <form name="form" ng-show="okLegal">
+                    <fieldset>
+                        <legend>
+                            <span>{{ 'user-profile' | translate }}</span>
+                        </legend>
+                        <!-- Name -->
+                        <div class="form-control">
+                            <label for="name">{{ 'name' | translate }}</label>
+                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'name'}">
+                                <input aria-invalid="false" data-element="under14-firstname" data-ng-blur="focus = false" data-ng-focus="focus = 'name'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.firstName" id="name" name="name" placeholder="{{'name' | translate}}" tabindex="0" type="text">
+                            </span>
+                        </div>
+                        <!-- Surname -->
+                        <div class="form-control">
+                            <label for="surname">{{ 'surname' | translate }}</label>
+                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'surname'}">
+                                <input aria-invalid="false" data-element="under14-lastname" data-ng-blur="focus = false" data-ng-focus="focus = 'surname'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.lastName" id="surname" name="surname" placeholder="{{'surname' | translate}}" tabindex="0" type="text">
+                            </span>
+                        </div>
+                        <!-- Username -->
+                        <div class="form-control">
+                            <label for="username">{{ 'user-name' | translate }}</label>
+                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'username'}">
+                                <input aria-invalid="false" data-element="under14-username" data-ng-blur="focus = false" data-ng-focus="focus = 'username'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.username" id="username" name="username" placeholder="{{'user-name' | translate}}" tabindex="0" type="text" maxlength="50" disabled>
+                            </span>
+                        </div>
+                        <!-- Email -->
+                        <div class="form-control">
+                            <label for="email">{{ 'email' | translate }}</label>
+                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'email'}">
+                                <input aria-invalid="false" data-element="under14-email" data-ng-blur="focus = false" data-ng-focus="focus = 'email'" data-ng-model="user.email" disabled id="email" name="email" placeholder="mail@mail.com" tabindex="0" type="email" disabled>
+                            </span>
+                        </div>
+                        <!-- legalOK -->
+                        <div class="form-control">
+                            <span class="input input--checkbox">
+                                <input type="checkbox" class="" id="okLegal" name="okLegal" data-ng-model="okLegal">
+                                <label for="okLegal">
+                                    {{ 'u14authorization--legal-ok' | translate }}
+                                </label>
+                            </span>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>
+                            <span>{{ 'tutor-profile' | translate }}</span>
+                        </legend>
+                        <!-- Name -->
+                        <div class="form-control">
+                            <label for="tutorName">{{ 'login-tutor-name' | translate }}</label>
+                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorName', 'input--error': form.tutorName.$error.required}">
+                                <input aria-invalid="false" data-element="under14-tutor-name" data-ng-blur="focus = false" data-ng-focus="focus = 'tutorName'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.tutor.firstName" id="tutorName" name="tutorName" placeholder="{{'name' | translate}}" tabindex="0" type="text" required>
+                            </span>
+                        </div>
+                        <!-- Surname -->
+                        <div class="form-control">
+                            <label for="tutorSurname">{{ 'login-tutor-surname' | translate }}</label>
+                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorSurname', 'input--error': form.tutorSurname.$error.required}">
+                                <input aria-invalid="false" data-element="under14-tutor-surname" data-ng-blur="focus = false" data-ng-focus="focus = 'tutorSurname'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.tutor.lastName" id="tutorSurname" name="tutorSurname" placeholder="{{'surname' | translate}}" tabindex="0" type="text" required>
+                            </span>
+                        </div>
+                        <!-- DNI -->
+                        <div class="form-control">
+                            <label for="tutorDNI">{{ 'login-tutor-dni' | translate }}</label>
+                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorDNI', 'input--error': form.tutorDNI.$error.required}">
+                                <input aria-invalid="false" data-element="under14-tutor-dni" data-ng-blur="focus = false" data-ng-focus="focus = 'tutorDNI'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.tutor.dni" id="tutorDNI" name="tutorDNI" placeholder="{{'dni' | translate}}" tabindex="0" type="text" required>
+                            </span>
+                        </div>
+                        <!-- email -->
+                        <div class="form-control">
+                            <label for="tutorEmail">{{ 'login-tutor-email' | translate }}</label>
+                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorEmail', 'input--error': form.tutorEmail.$error.required}">
+                                <input aria-invalid="false" data-element="under14-tutor-email" data-ng-blur="focus = false" data-ng-focus="focus = 'tutorEmail'" data-ng-model="user.tutor.email" id="tutorEmail" name="tutorEmail" placeholder="mail@mail.com" tabindex="0" type="email" required>
+                            </span>
+                        </div>
+                        <!-- Service terms -->
+                        <div class="form-control">
+                            <span data-ng-class="{'input input--checkbox':!form.readServiceTerm.submitted || user.cookiePolicyAccepted, 'input--checkbox--error':form.readServiceTerm.submitted && !user.cookiePolicyAccepted}">
+                                <input type="checkbox" id="readServiceTerm" name="readServiceTerm" data-ng-model="user.cookiePolicyAccepted" data-ng-focus="form.readServiceTerm.submitted=false" data-ng-blur="focus = false" data-element="under14-terms-input" required>
+                                <label for="readServiceTerm">
+                                    {{ 'register-read-service-term' | translate }}
+                                    <a href="#/terms" target="_blank">{{ 'register-read-general-conditions' | translate}}</a> {{ 'text-join' | translate }}
+                                    <a href="#/cookies" target="_blank">{{ 'register-read-policies-privacy' | translate }}</a>
+                                </label>
+                            </span>
+                            <span class="form--error" ng-show="form.readServiceTerm.submitted && !user.cookiePolicyAccepted" data-element="under14-show-no-check">
+                                <small>{{ 'login-conditions' | translate }}</small>
+                            </span>
+                        </div>
+                    </fieldset>
+                </form>
+                <div class="form-control submit" ng-show="okLegal">
+                    <input type="submit" data-ng-disabled="!user.cookiePolicyAccepted || !form.$valid" data-ng-click="acceptSubmit(form)" name="submitform" class="btn btn--primary btn__login--submit" value="{{'accept' | translate}}">
+                    <button data-ng-click="cancelSubmit(form)" name="cancelform" class="btn btn--secondary btn__login--submit">{{'cancel' | translate}}</button>
+                </div>
             </div>
-            <!-- Surname -->
-            <div class="form-control">
-                <label for="surname">{{ 'surname' | translate }}</label>
-                <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'surname'}">
-                    <input aria-invalid="false" data-element="under14-lastname" data-ng-blur="focus = false" data-ng-focus="focus = 'surname'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.lastName" id="surname" name="surname" placeholder="{{'surname' | translate}}" tabindex="0"
-                           type="text">
-                </span>
-            </div>
-            <!-- Username -->
-            <div class="form-control">
-                <label for="username">{{ 'user-name' | translate }}</label>
-                <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'username'}">
-                    <input aria-invalid="false" data-element="under14-username" data-ng-blur="focus = false" data-ng-focus="focus = 'username'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.username" id="username" name="username" placeholder="{{'user-name' | translate}}" tabindex="0"
-                           type="text"
-                           maxlength="50" disabled>
-                </span>
-            </div>
-            <!-- Email -->
-            <div class="form-control">
-                <label for="email">{{ 'email' | translate }}</label>
-                <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'email'}">
-                    <input aria-invalid="false" data-element="under14-email" data-ng-blur="focus = false" data-ng-focus="focus = 'email'" data-ng-model="user.email" disabled id="email" name="email" placeholder="mail@mail.com" tabindex="0" type="email" disabled>
-                </span>
-            </div>
-        </fieldset>
-        <div class="form-control">
-            <span class="input input--checkbox">
-                <input data-element="under14-newsletter-checkbox" id="newsletterCheckbox" name="newsletterCheckbox" ng-checked="user.newsletter === true" ng-model="user.newsletter" type="checkbox" value="user.newsletter">
-                <label for="newsletterCheckbox">{{'under14validation-newsletter-checkbox' | translate}}</label>
-            </span>
         </div>
-        <legend>
-            <span>{{ 'tutor-profile' | translate }}</span>
-        </legend>
-        <!-- DNI -->
-        <div class="form-control">
-            <label for="tutorDNI">{{ 'login-tutor-dni' | translate }}</label>
-            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorDNI', 'input--error': form.tutorDNI.$error.required}">
-                <input aria-invalid="false" data-element="under14-tutor-dni" data-ng-blur="focus = false" data-ng-focus="focus = 'tutorDNI'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.tutor.dni" id="tutorDNI" name="tutorDNI" placeholder="{{'dni' | translate}}" tabindex="0" type="text"
-                       required>
-            </span>
-        </div>
-        <!-- Name -->
-        <div class="form-control">
-            <label for="tutorName">{{ 'login-tutor-name' | translate }}</label>
-            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorName', 'input--error': form.tutorName.$error.required}}">
-                <input aria-invalid="false" data-element="under14-tutor-name" data-ng-blur="focus = false" data-ng-focus="focus = 'tutorName'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.tutor.firstName" id="tutorName" name="tutorName" placeholder="{{'name' | translate}}" tabindex="0"
-                       type="text"
-                       required>
-            </span>
-        </div>
-        <!-- Surname -->
-        <div class="form-control">
-            <label for="tutorSurname">{{ 'login-tutor-surname' | translate }}</label>
-            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorSurname', 'input--error': form.tutorSurname.$error.required}}">
-                <input aria-invalid="false" data-element="under14-tutor-surname" data-ng-blur="focus = false" data-ng-focus="focus = 'tutorSurname'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.tutor.lastName" id="tutorSurname" name="tutorSurname" placeholder="{{'surname' | translate}}"
-                       tabindex="0" type="text" required>
-            </span>
-        </div>
-        <div class="form-control">
-            <label for="tutorEmail">{{ 'login-tutor-email' | translate }}</label>
-            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorEmail', 'input--error': form.tutorEmail.$error.required}}">
-                <input aria-invalid="false" data-element="under14-tutor-email" data-ng-blur="focus = false" data-ng-focus="focus = 'tutorEmail'" data-ng-model="user.tutor.email" disabled id="tutorEmail" name="tutorEmail" placeholder="mail@mail.com" tabindex="0" type="email">
-            </span>
-        </div>
-        <!-- Service terms -->
-        <div class="form-control">
-            <span data-ng-class="{'input input--checkbox':!form.readServiceTerm.submitted || user.cookiePolicyAccepted, 'input--checkbox--error':form.readServiceTerm.submitted && !user.cookiePolicyAccepted}">
-                <input type="checkbox" id="readServiceTerm" name="readServiceTerm" data-ng-model="user.cookiePolicyAccepted" data-ng-focus="form.readServiceTerm.submitted=false" data-ng-blur="focus = false" data-element="under14-terms-input" required>
-                <label for="readServiceTerm">
-                    {{ 'register-read-service-term' | translate }}
-                    <a href="#/terms" target="_blank">
-                        {{ 'register-read-general-conditions' | translate}}
-                    </a>
-                    {{ 'text-join' | translate }}
-                    <a href="#/cookies" target="_blank">
-                        {{ 'register-read-policies-privacy' | translate }}
-                    </a>
-                </label>
-            </span>
-            <span class="form--error" ng-show="form.readServiceTerm.submitted && !user.cookiePolicyAccepted" data-element="under14-show-no-check">
-                <small>{{ 'login-conditions' | translate }}</small>
-            </span>
-        </div>
-    </form>
-    <div class="form-control submit">
-        <input type="submit" data-ng-disabled="!user.cookiePolicyAccepted || !form.$valid" data-ng-click="acceptSubmit(form)" name="submitform"
-            class="btn btn--primary btn__login--submit" value="{{'accept' | translate}}">
-        <button data-ng-click="cancelSubmit(form)" name="cancelform" class="btn btn--secondary btn__login--submit">{{'cancel' | translate}}</button>
     </div>
 </div>

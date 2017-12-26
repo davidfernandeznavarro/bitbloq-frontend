@@ -523,8 +523,9 @@ angular
 
         function _cleanRegister(form) {
             form.email = (!$scope.userUnder14Years) ? form.email : null;
-            form.password = (!$scope.userUnder14Years) ? form.password : null;
-            form.username = (!$scope.userUnder14Years) ? form.username : null;
+            // user and pass needed for u14
+            //form.password = (!$scope.userUnder14Years) ? form.password : null;
+            //form.username = (!$scope.userUnder14Years) ? form.username : null;
             form.tutorName = ($scope.userUnder14Years) ? form.email : null;
             form.tutorSurname = ($scope.userUnder14Years) ? form.tutorSurname : null;
             form.tutorEmail = ($scope.userUnder14Years) ? form.tutorEmail : null;

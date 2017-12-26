@@ -8,7 +8,7 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('Under14AuthorizationCtrl', function ($scope, $routeParams, _, userApi, alertsService, $translate, $location) {
+    .controller('Under14AuthorizationCtrl', function ($scope, $routeParams, _, userApi, alertsService, $translate, $location, $sce) {
 
         function goToSupport() {
 
@@ -77,6 +77,11 @@ angular.module('bitbloqApp')
             });
         };
 
+        // Easy Sanitize
+        $scope.html = function (text, translate) {
+            return $sce.trustAsHtml((translate) ? $translate.instant(text) : text);
+        }
+
         var alertId,
             updateUserToken = $routeParams.token;
 
@@ -92,6 +97,11 @@ angular.module('bitbloqApp')
             $scope.showForm = true;
 
             $scope.user = response.data;
+            
+            // ...just to be sure
+            $scope.user.cookiePolicyAccepted = false;
+            $scope.user.newsletter = false;
+
             alertsService.closeByTag('under14-auth');
         }).catch(function (error) {
             console.log(error.data);

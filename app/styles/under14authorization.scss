@@ -1,11 +1,62 @@
 .under14authorization-view {
     height: 100%;
     overflow: auto;
-    form {
-        max-width: 1024px;
+    .legal-container {
         width: 90%;
         margin: 0 auto;
-        margin-top: 100px;
+        display: flex;
+        padding: 5px;
+        flex-direction: column;
+        .legal-ok, .legal-info {
+            display: block;
+        }
+        .legal-info {
+            margin-top: 10px;
+            margin-bottom: 15px;
+            padding: 10px 25px 10px;
+            border: 1px solid $grey-border;
+            background: $white;
+            max-height: 500px;
+            overflow-y: scroll;
+            &::-webkit-scrollbar {
+                width: 6px;
+              }
+            &::-webkit-scrollbar-thumb {
+                background-color: $black;
+            }
+            &::-webkit-scrollbar-track {
+                background-color: transparent;
+                border-left: 1px solid $grey-light;
+                border-bottom: 1px solid $grey-light;
+            }
+        }
+        .legal-ok {
+            align-self: center;
+            vertical-align: text-top;
+            position: relative;
+            height: 1.3em;
+            width: auto;
+            display: block;
+            label {
+                font-size: 0.8125em;
+                position: relative;
+                top: -3px;
+                left: 3px;
+            }
+        }
+    }
+    form {
+        //max-width: 1024px;
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+        padding: 5px;
+        fieldset {
+            display: block;
+            width: 50%;
+            margin: 2px;
+        }
+        //margin-top: 100px;
         .form-control {
             &:last-child {
                 text-align: left;
