@@ -12,26 +12,38 @@
                     <div class="form-control">
                         <label for="name">{{ 'name' | translate }}</label>
                         <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'name'}">
-                            <input type="text" id="name" name="name" placeholder="{{'name' | translate}}" tabindex="0" aria-invalid="false" data-ng-blur="focus = false" data-ng-focus="focus = 'name'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="common.user.firstName" data-element="firstname">
+                            <input type="text" id="name" name="name" placeholder="{{'name' | translate}}" tabindex="0" aria-invalid="false" data-ng-blur="focus = false" data-ng-focus="focus = 'name'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="common.user.firstName" data-element="firstname" data-ng-disabled="isUnder14">
                         </span>
                     </div>
                     <div class="form-control">
                         <label for="surname">{{ 'surname' | translate }}</label>
                         <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'surname'}">
-                            <input type="text" id="surname" name="surname" placeholder="{{'surname' | translate}}" tabindex="0" aria-invalid="false" data-ng-blur="focus = false" data-ng-focus="focus = 'surname'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="common.user.lastName" data-element="lastname">
+                            <input type="text" id="surname" name="surname" placeholder="{{'surname' | translate}}" tabindex="0" aria-invalid="false" data-ng-blur="focus = false" data-ng-focus="focus = 'surname'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="common.user.lastName" data-element="lastname" data-ng-disabled="isUnder14">
                         </span>
                     </div>
                     <div class="form-control">
                         <label for="username">{{ 'user-name' | translate }}</label>
                         <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'username'}">
-                            <input type="text" id="username" name="username" placeholder="{{'user-name' | translate}}" tabindex="0" maxlength="50" aria-invalid="false" data-ng-blur="focus = false" data-ng-focus="focus = 'username'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="common.user.username" data-element="username">
+                            <input type="text" id="username" name="username" placeholder="{{'user-name' | translate}}" tabindex="0" maxlength="50" aria-invalid="false" data-ng-blur="focus = false" data-ng-focus="focus = 'username'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="common.user.username" data-element="username"  data-ng-disabled="isUnder14">
                         </span>
                     </div>
                     <div class="form-control">
                         <label for="email">{{ 'email' | translate }}</label>
                         <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'email'}">
-                            <input type="email" id="email" name="email" placeholder="mail@mail.com" tabindex="0" aria-invalid="false" data-ng-blur="focus = false" data-ng-focus="focus = 'email'" data-ng-model="common.user.email" data-element="email" disabled>
+                            <input type="email" id="email" name="email" placeholder="mail@mail.com" tabindex="0" aria-invalid="false" data-ng-blur="focus = false" data-ng-focus="focus = 'email'" data-ng-model="common.user.email" data-element="email" data-ng-disabled="true">
                         </span>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>
+                        <svg class="svg-icon svg-icon--text">
+                            <use xlink:href="#eye"></use>
+                        </svg>
+                        <span>{{ 'account-tutor-info' | translate }}</span>
+                    </legend>
+                    <div class="form-control">
+                        <label>{{ 'account-tutor-title' | translate }}</label>
+                        <input type="button" id="contactTutor" value="{{ 'more-info' | translate }}" class="btn btn--tertiary btn--small btn--account--contactTutor" data-ng-click="contactTutor($event)" data-element="account-tutor-contactmodal" />
                     </div>
                 </fieldset>
                 <fieldset>
@@ -41,6 +53,12 @@
                         </svg>
                         <span>{{ 'password' | translate }}</span>
                     </legend>
+                    <div class="form-control" ng-show="isUnder14">
+                        <label>{{ 'account-change-recoveryMail' | translate }}</label>
+                        <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'recoveryMail'}">
+                            <input type="text" id="recoveryMail" name="recoveryMail" placeholder="{{'recoveryMail' | translate}}" tabindex="0" aria-invalid="false" data-ng-blur="focus = false" data-ng-focus="focus = 'recoveryMail'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="common.user.recoveryMail" data-element="recoveryMail">
+                        </span>
+                    </div>
                     <div class="form-control">
                         <label>{{ 'account-change-password' | translate }}</label>
                         <input type="button" id="password" value="{{ 'account-restore-password' | translate }}" class="btn btn--tertiary btn--small btn--account--password" data-ng-click="changePassword($event)" data-element="account-reset-password-button" />
@@ -73,7 +91,7 @@
             </div>
             <fieldset class="user-options-checkbox">
                 <span class="input input--checkbox">
-                    <input type="checkbox" id="teacherCheckbox" name="teacherCheckbox" value="common.user.newsletter" ng-checked="common.user.newsletter === true" ng-model="common.user.newsletter" data-element="teacher-checkbox">
+                    <input type="checkbox" id="teacherCheckbox" name="teacherCheckbox" value="common.user.newsletter" ng-checked="common.user.newsletter === true" ng-model="common.user.newsletter" data-element="teacher-checkbox" data-ng-disabled="isUnder14">
                     <label for="teacherCheckbox">{{'account-checkbox-teacher' | translate}}</label>
                 </span>
             </fieldset>

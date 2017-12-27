@@ -11,6 +11,7 @@
 angular.module('bitbloqApp')
     .controller('AccountCtrl', function($scope, $rootScope, $timeout, $translate, $location, $q, $auth, User, envData, imageApi, userApi, _, alertsService, ngDialog, utils, common, commonModals, hardwareService) {
 
+        //$scope.moment = moment;
         $scope.common.oldTempAvatar = {};
         $scope.test = envData.config.supportedLanguages;
         $scope.translate = $translate;
@@ -101,6 +102,38 @@ angular.module('bitbloqApp')
             });
         };
 
+        $scope.contactTutor = function() {
+            var dialog,
+                modalScope = $rootScope.$new(),
+                confirmAction = function(form) {
+                    $scope.common.user.tutor = {
+                        'firstName': form.tutorName,
+                        'lastName': form.tutorSurname,
+                        'email': form.tutorMail,
+                    }
+                    
+                };
+
+            _.extend(modalScope, {
+                title: 'account-tutor-title',
+                confirmButton: 'send',
+                contentTemplate: 'views/modals/contactTutor.html',
+                confirmAction: confirmAction,
+                submitted: false,
+                errorPassword: false
+            });
+
+            dialog = ngDialog.open({
+                template: '/views/modals/modal.html',
+                className: 'modal--container password-reset--modal',
+                scope: modalScope
+            });
+
+            $('textarea.msd-elastic').autogrow({
+                onInitialize: true
+            });
+        };
+
         $scope.saveProfile = function() {
             var defered = $q.defer();
 
@@ -155,6 +188,16 @@ angular.module('bitbloqApp')
             });
             return defered.promise;
         };
+
+        $scope.isUnder14 = function() {
+            if ($scope.common.user) {
+                var bday = moment($scope.common.user.birthday);
+                var date14 = moment().subtract(14, 'years');
+                return bday.isAfter(date14);
+            } else {
+                return true; // default lock
+            }
+        }
 
         $scope.selectHardware = function() {
             $scope.common.itsUserLoaded().then(function() {
@@ -253,12 +296,17 @@ angular.module('bitbloqApp')
         /*************************
          *********** INIT *********
          **************************/
-
+        $scope.isUnder14 = true; // default lock
         $scope.common.itsUserLoaded().then(function() {
             usernameBackup = $scope.common.user.username;
             hardwareService.getUserHardware().then(function(res) {
                 $scope.userHardware = res;
             });
+
+            $scope.isUnder14 = moment($scope.common.user.birthday).isAfter(
+                moment().subtract(14, 'years')
+            );
+
             $scope.$watch('common.userHardware', function(oldValue, newValue) {
                 if (oldValue && oldValue !== newValue) {
                     hardwareService.getUserHardware().then(function(res) {
@@ -280,6 +328,12 @@ angular.module('bitbloqApp')
 
             $scope.$watch('common.user.username', function(newValue, oldValue) {
                 if (oldValue && newValue && oldValue !== newValue) {
+                    $scope.validateProfile();
+                }
+            });
+
+            $scope.$watch('common.user.recoveryMail', function(oldValue, newValue) {
+                if (oldValue && oldValue !== newValue) {
                     $scope.validateProfile();
                 }
             });

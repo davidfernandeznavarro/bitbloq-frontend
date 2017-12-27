@@ -1,0 +1,58 @@
+<div class="modal_contactTutor">
+    <div class="form">
+        <form name="form" class="form--contactTutor" autocomplete="off" ng-submit="confirmAction(form)" novalidate>
+            <fieldset>
+                <legend class="invisible">contactTutor Form</legend>
+                <div class="form-control">
+                    <label for="tutorName">{{ 'login-tutor-name' | translate }}</label>
+                    <span class="form--input input--default" ng-class="{'input input--form--login input--default':true, 'input--error':form.tutorName.submitted && form.tutorName.$error.required, 'input--focused':focus === 'tutorName'}">
+                        <svg class="svg-icon form-icon--username icon--form--validating">
+                            <use xlink:href="#user"></use>
+                        </svg>
+                        <input ng-class="{'input--login--username':true}" ng-model="user.tutor.firstName" ng-focus="form.tutorName.submitted = false; focus = 'tutorName'" ng-blur="form.tutorName.submitted = true;focus = false" id="tutorNameRegister" name="tutorName" type="text" maxlength="50" placeholder="{{'name' | translate}}"
+                               autocorrect="off" autocomplete="off" required data-element="register-tutor-name">
+                    </span>
+                    <span class="form--error" data-ng-show="form.tutorName.submitted && form.tutorName.$error.required" data-element="show-nonametutor">
+                        <small>{{ 'insert-name' | translate }}</small>
+                    </span>
+                </div>
+                <!--Tutor Surname-->
+                <div class="form-control">
+                    <label for="tutorSurname">{{ 'login-tutor-surname' | translate }}</label>
+                    <span class="form--input input--default" ng-class="{'input input--form--login input--default':true, 'input--error':form.tutorSurname.submitted && form.tutorSurname.$error.required, 'input--focused':focus === 'tutorSurname'}">
+                        <svg class="svg-icon form-icon--username icon--form--validating">
+                            <use xlink:href="#user"></use>
+                        </svg>
+                        <input ng-class="{'input--login--username':true}" ng-model="user.tutor.lastName" ng-focus="form.tutorSurname.submitted = false; focus = 'tutorSurname'" ng-blur="form.tutorSurname.submitted = true;focus = false" id="tutorSurnameRegister" name="tutorSurname" type="text" maxlength="50"
+                               placeholder="{{'surname' | translate}}" autocorrect="off" autocomplete="off" required data-element="register-tutor-lastname">
+                    </span>
+                    <span class="form--error" data-ng-show="form.tutorSurname.submitted && form.tutorSurname.$error.required" data-element="show-nosurname">
+                        <small>{{ 'insert-surname' | translate }}</small>
+                    </span>
+                </div>
+                <!--Tutor Email -->
+                <div class="form-control">
+                    <label for="tutorEmail">{{ 'login-tutor-email' | translate }}</label>
+                    <span class="form--input input--default" ng-class="{'input input--form--login input--default':true, 'input--focused':focus === 'tutorEmail', 'input--error':form.tutorEmail.submitted && (form.tutorEmail.$invalid || form.tutorEmail.$error.required || errors.register.tutorEmail)}">
+                        <svg class="svg-icon">
+                            <use xlink:href="#mail"></use>
+                        </svg>
+                        <input data-ng-model="user.tutor.email" data-ng-focus="form.tutorEmail.submitted=false; focus = 'tutorEmail'" data-ng-blur="focus = false;form.tutorEmail.submitted=true;" id="tutorEmailRegister" name="tutorEmail" type="email"
+                               data-ng-pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)+$/" placeholder="{{'email' | translate}}" autocorrect="off" autocomplete="off" required data-element="register-tutor-email">
+                    </span>
+                    <span class="form--error" data-ng-show="form.tutorEmail.submitted && form.tutorEmail.$error.required" data-element="register-show-notutoremail">
+                        <small>{{ 'login-email-empty' | translate }}</small>
+                    </span>
+                    <span class="form--error" data-ng-show="form.tutorEmail.submitted && (form.tutorEmail.$error.email || form.tutorEmail.$error.pattern)" data-element="register-invalid-tutoremail">
+                        <small>{{ 'login-valid-email' | translate }}</small>
+                    </span>
+                </div>
+
+
+                <div>
+                    <button data-element="modal-contactTutor-ok-button" ng-click="form.passwordMain.submitted=true; form.passwordRepeat.submitted=true" class="btn btn--primary btn__modal--footer btn--confirm" data-element="modal-confirm-only" data-ng-disabled="form.tutorName.$error.required || form.tutorSurname.$error.required || form.tutorEmail.$error.required || form.tutorEmail.$error.pattern">{{confirmButton | translate}}</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
