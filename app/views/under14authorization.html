@@ -27,28 +27,28 @@
                         <!-- Name -->
                         <div class="form-control">
                             <label for="name">{{ 'name' | translate }}</label>
-                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'name'}">
-                                <input aria-invalid="false" data-element="under14-firstname" data-ng-blur="focus = false" data-ng-focus="focus = 'name'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.firstName" id="name" name="name" placeholder="{{'name' | translate}}" tabindex="0" type="text">
+                            <span data-ng-class="{'form--input':true, 'input--focused':focus === 'name', 'input--error': form.name.$error.required}">
+                                <input aria-invalid="false" data-element="under14-firstname" data-ng-blur="focus = false" data-ng-focus="focus = 'name'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.firstName" id="name" name="name" placeholder="{{'name' | translate}}" tabindex="0" type="text" required>
                             </span>
                         </div>
                         <!-- Surname -->
                         <div class="form-control">
                             <label for="surname">{{ 'surname' | translate }}</label>
-                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'surname'}">
-                                <input aria-invalid="false" data-element="under14-lastname" data-ng-blur="focus = false" data-ng-focus="focus = 'surname'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.lastName" id="surname" name="surname" placeholder="{{'surname' | translate}}" tabindex="0" type="text">
+                            <span data-ng-class="{'form--input':true, 'input--focused':focus === 'surname', 'input--error': form.surname.$error.required}">
+                                <input aria-invalid="false" data-element="under14-lastname" data-ng-blur="focus = false" data-ng-focus="focus = 'surname'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.lastName" id="surname" name="surname" placeholder="{{'surname' | translate}}" tabindex="0" type="text" required>
                             </span>
                         </div>
                         <!-- Username -->
                         <div class="form-control">
                             <label for="username">{{ 'user-name' | translate }}</label>
-                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'username'}">
+                            <span data-ng-class="{'form--input':true, 'input--focused':focus === 'username'}">
                                 <input aria-invalid="false" data-element="under14-username" data-ng-blur="focus = false" data-ng-focus="focus = 'username'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.username" id="username" name="username" placeholder="{{'user-name' | translate}}" tabindex="0" type="text" maxlength="50" disabled>
                             </span>
                         </div>
                         <!-- Email -->
                         <div class="form-control">
                             <label for="email">{{ 'email' | translate }}</label>
-                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'email'}">
+                            <span data-ng-class="{'form--input':true, 'input--focused':focus === 'email'}">
                                 <input aria-invalid="false" data-element="under14-email" data-ng-blur="focus = false" data-ng-focus="focus = 'email'" data-ng-model="user.email" disabled id="email" name="email" placeholder="mail@mail.com" tabindex="0" type="email" disabled>
                             </span>
                         </div>
@@ -69,28 +69,28 @@
                         <!-- Name -->
                         <div class="form-control">
                             <label for="tutorName">{{ 'login-tutor-name' | translate }}</label>
-                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorName', 'input--error': form.tutorName.$error.required}">
+                            <span data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorName', 'input--error': form.tutorName.$error.required}">
                                 <input aria-invalid="false" data-element="under14-tutor-name" data-ng-blur="focus = false" data-ng-focus="focus = 'tutorName'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.tutor.firstName" id="tutorName" name="tutorName" placeholder="{{'name' | translate}}" tabindex="0" type="text" required>
                             </span>
                         </div>
                         <!-- Surname -->
                         <div class="form-control">
                             <label for="tutorSurname">{{ 'login-tutor-surname' | translate }}</label>
-                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorSurname', 'input--error': form.tutorSurname.$error.required}">
+                            <span data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorSurname', 'input--error': form.tutorSurname.$error.required}">
                                 <input aria-invalid="false" data-element="under14-tutor-surname" data-ng-blur="focus = false" data-ng-focus="focus = 'tutorSurname'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.tutor.lastName" id="tutorSurname" name="tutorSurname" placeholder="{{'surname' | translate}}" tabindex="0" type="text" required>
                             </span>
                         </div>
                         <!-- DNI -->
                         <div class="form-control">
                             <label for="tutorDNI">{{ 'login-tutor-dni' | translate }}</label>
-                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorDNI', 'input--error': form.tutorDNI.$error.required}">
+                            <span class="capitalize" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorDNI', 'input--error': form.tutorDNI.$error.required}">
                                 <input aria-invalid="false" data-element="under14-tutor-dni" data-ng-blur="focus = false" data-ng-focus="focus = 'tutorDNI'" data-ng-model-options="{ debounce: { 'default': 2000, 'blur': 0 } }" data-ng-model="user.tutor.dni" id="tutorDNI" name="tutorDNI" placeholder="{{'dni' | translate}}" tabindex="0" type="text" required>
                             </span>
                         </div>
                         <!-- email -->
                         <div class="form-control">
                             <label for="tutorEmail">{{ 'login-tutor-email' | translate }}</label>
-                            <span class="form--input" data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorEmail', 'input--error': form.tutorEmail.$error.required}">
+                            <span data-ng-class="{'form--input':true, 'input--focused':focus === 'tutorEmail', 'input--error': form.tutorEmail.$error.required}">
                                 <input aria-invalid="false" data-element="under14-tutor-email" data-ng-blur="focus = false" data-ng-focus="focus = 'tutorEmail'" data-ng-model="user.tutor.email" id="tutorEmail" name="tutorEmail" placeholder="mail@mail.com" tabindex="0" type="email" required>
                             </span>
                         </div>

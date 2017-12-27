@@ -32,7 +32,6 @@
         }
         .legal-ok {
             align-self: center;
-            vertical-align: text-top;
             position: relative;
             height: 1.3em;
             width: auto;
@@ -81,7 +80,7 @@
             }
         }
     }
-    input, button {
+    .capitalize {
         text-transform: capitalize;
     }
 }

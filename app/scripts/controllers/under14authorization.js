@@ -28,6 +28,7 @@ angular.module('bitbloqApp')
                 $scope.user.tutor.validation = {
                     result: true
                 };
+                console.log($scope.user);
                 userApi.authorizeUnder14User(updateUserToken, $scope.user).then(function () {
                     alertsService.add({
                         text: 'under14-auth-done',
@@ -97,7 +98,7 @@ angular.module('bitbloqApp')
             $scope.showForm = true;
 
             $scope.user = response.data;
-            
+
             // ...just to be sure
             $scope.user.cookiePolicyAccepted = false;
             $scope.user.newsletter = false;
