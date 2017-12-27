@@ -10,7 +10,7 @@
 
 angular.module('bitbloqApp')
     .controller('BloqsprojectCtrl', function ($rootScope, $route, $scope, $log, $timeout, $routeParams, $document, $window, $location,
-        $q, web2boardV1, alertsService, ngDialog, _, projectApi, bloqs, bloqsUtils, utils, userApi, hw2Bloqs, web2boardOnline, commonModals,
+        $q, web2boardV1, web2boardjs, alertsService, ngDialog, _, projectApi, bloqs, bloqsUtils, utils, userApi, hw2Bloqs, web2boardOnline, commonModals,
         projectService, hardwareConstants, chromeAppApi, $translate, web2board) {
 
         /*************************************************
@@ -46,46 +46,6 @@ angular.module('bitbloqApp')
 
 
         $scope.isWeb2BoardInProgress = web2boardV1.isInProcess;
-
-
-        function uploadW2b1(code) {
-            $scope.$emit('uploading');
-            if ($scope.isWeb2BoardInProgress()) {
-                return false;
-            }
-            if (projectService.project.hardware.board) {
-                web2boardV1.setInProcess(true);
-                var boardReference = projectService.getBoardMetaData();
-                settingBoardAlert = alertsService.add({
-                    text: 'alert-web2board-settingBoard',
-                    id: 'upload',
-                    type: 'loading'
-                });
-
-                web2boardV1.upload(boardReference, $scope.getPrettyCode(code));
-            } else {
-                $scope.currentTab = 0;
-                $scope.levelOne = 'boards';
-                alertsService.add({
-                    text: 'alert-web2board-boardNotReady',
-                    id: 'upload',
-                    type: 'warning'
-                });
-            }
-        }
-
-        function uploadW2b2(code) {
-            if (projectService.project.hardware.board) {
-                web2boardV1.upload(projectService.getBoardMetaData().mcu, $scope.getPrettyCode(code));
-            } else {
-                $scope.currentTab = 'info';
-                alertsService.add({
-                    text: 'alert-web2board-boardNotReady',
-                    id: 'upload',
-                    type: 'warning'
-                });
-            }
-        }
 
 
 
@@ -383,14 +343,32 @@ angular.module('bitbloqApp')
         var warningShown;
 
         $scope.upload = function (code) {
-            web2board.upload({
-                board: projectService.getBoardMetaData(),
-                code: code || $scope.getPrettyCode()
-            }).then(function (response) {
-                console.log('upload ok', response);
-            }, function (error) {
-                console.log('upload error', error);
-            });
+            if (projectService.project.hardware.showRobotImage && !$scope.isRobotActivated()) {
+                alertsService.add({
+                    text: 'robots-not-activated-upload',
+                    id: 'activatedError',
+                    type: 'error',
+                    time: 'infinite'
+                });
+            } else {
+                if (_showCompileWarning(projectService.project) && !warningShown) {
+                    alertsService.add({
+                        text: 'connect_alert_01',
+                        id: 'connect-error',
+                        type: 'warning',
+                    });
+                    warningShown = true;
+                }
+                web2board.upload({
+                    board: projectService.getBoardMetaData(),
+                    code: code || $scope.getPrettyCode(),
+                }).then(function (response) {
+                    console.log('upload ok', response);
+                }, function (error) {
+                    console.log('upload error', error);
+                });
+            }
+
             /*if (projectService.project.hardware.showRobotImage && !$scope.isRobotActivated()) {
                 alertsService.add({
                     text: 'robots-not-activated-upload',
@@ -429,14 +407,7 @@ angular.module('bitbloqApp')
                             }
                         }
                     } else {
-                        if (_showCompileWarning(projectService.project) && !warningShown) {
-                            alertsService.add({
-                                text: 'connect_alert_01',
-                                id: 'connect-error',
-                                type: 'warning',
-                            });
-                            warningShown = true;
-                        }
+                        
                         if ($scope.common.useChromeExtension()) {
                             if ($scope.thereIsSerialBlock($scope.getPrettyCode())) {
                                 web2boardOnline.compileAndUpload({
@@ -538,17 +509,14 @@ angular.module('bitbloqApp')
             return result;
         };
 
-        function uploadWithWeb2board(code) {
-            if (web2boardV1.isWeb2boardV2()) {
-                uploadW2b2(code);
-            } else {
-                uploadW2b1(code);
-            }
-        }
-
         $scope.serialMonitor = function () {
             if (projectService.project.hardware.board) {
-                if ($scope.common.useChromeExtension()) {
+                web2boardjs.getPorts().then(function (ports) {
+                    console.log('ports', ports);
+                }, function (err) {
+                    console.log('err', err);
+                });
+                /*if ($scope.common.useChromeExtension()) {
                     commonModals.launchSerialWindow(projectService.getBoardMetaData());
                 } else {
                     if (projectService.project.hardware.board === 'freakscar') {
@@ -560,23 +528,14 @@ angular.module('bitbloqApp')
                             serialMonitorW2b1();
                         }
                     }
-                }
+                }*/
             } else {
                 $scope.currentTab = 0;
                 $scope.levelOne = 'boards';
                 alertsService.add({
-                    text: 'alert-web2board-no-board-serial',
+                    text: 'bloqs-project_alert_no-board',
                     id: 'serialmonitor',
-                    type: 'warning',
-                    link: function () {
-                        var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
-                        tempA.setAttribute('target', '_blank');
-                        document.body.appendChild(tempA);
-                        tempA.click();
-                        document.body.removeChild(tempA);
-                    },
-                    linkText: $translate.instant('support-go-to')
+                    type: 'warning'
                 });
             }
         };
@@ -1022,7 +981,7 @@ angular.module('bitbloqApp')
                         $scope.$apply(function () {
                             $scope.tourCurrentStep = 7;
                         });
-                        var endTour = $scope.$on('uploading', function () {
+                        var endTour = $rootScope.$on('uploading', function () {
                             $scope.tourDone();
                             endTour();
                         });

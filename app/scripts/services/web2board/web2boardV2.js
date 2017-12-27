@@ -243,7 +243,7 @@ angular.module('bitbloqApp')
         function handleCompileError(error) {
             var errorStr = error,
                 alertParams = {
-                    id: 'web2board',
+                    id: 'compile',
                     type: 'warning'
                 };
             if ((typeof (error) === 'object') && error.forEach) {
@@ -270,7 +270,7 @@ angular.module('bitbloqApp')
             } else if (error.title === 'BOARD_NOT_READY') {
                 alertsService.add({
                     text: 'alert-web2board-no-port-found',
-                    id: 'web2board',
+                    id: 'upload',
                     type: 'warning',
                     link: function () {
                         var tempA = document.createElement('a');
@@ -285,7 +285,7 @@ angular.module('bitbloqApp')
             } else {
                 alertsService.add({
                     text: 'alert-web2board-upload-error',
-                    id: 'web2board',
+                    id: 'upload',
                     type: 'warning',
                     value: error
                 });
@@ -336,7 +336,7 @@ angular.module('bitbloqApp')
         function updateSuccessfullyFinished(port) {
             alertsService.add({
                 text: 'alert-web2board-code-uploaded',
-                id: 'web2board',
+                id: 'upload',
                 type: 'ok',
                 time: 5000,
                 value: port
@@ -375,7 +375,7 @@ angular.module('bitbloqApp')
         api.CodeHub.client.isCompiling = function () {
             alertsService.add({
                 text: 'alert-web2board-compiling',
-                id: 'web2board',
+                id: 'compile',
                 type: 'loading'
             });
         };
@@ -383,7 +383,7 @@ angular.module('bitbloqApp')
         api.CodeHub.client.isUploading = function (port) {
             alertsService.add({
                 text: 'alert-web2board-uploading',
-                id: 'web2board',
+                id: 'upload',
                 type: 'loading',
                 value: port
             });
@@ -405,7 +405,7 @@ angular.module('bitbloqApp')
                     return api.CodeHub.server.compile(code).then(function () {
                         alertsService.add({
                             text: 'alert-web2board-compile-verified',
-                            id: 'web2board',
+                            id: 'compile',
                             type: 'ok',
                             time: 5000
                         });
@@ -422,7 +422,7 @@ angular.module('bitbloqApp')
                 if (!code || !boardMcu) {
                     alertsService.add({
                         text: 'alert-web2board-boardNotReady',
-                        id: 'web2board',
+                        id: 'upload',
                         type: 'warning'
                     });
                     return;
@@ -431,7 +431,7 @@ angular.module('bitbloqApp')
                 openCommunication(function () {
                     alertsService.add({
                         text: 'alert-web2board-settingBoard',
-                        id: 'web2board',
+                        id: 'upload',
                         type: 'loading'
                     });
                     return api.CodeHub.server.upload(code, boardMcu)
@@ -524,7 +524,7 @@ angular.module('bitbloqApp')
                     }, function (error) {
                         alertsService.add({
                             text: 'alert-web2board-no-port-found',
-                            id: 'web2board',
+                            id: 'upload',
                             type: 'warning',
                             link: function () {
                                 var tempA = document.createElement('a');
@@ -629,7 +629,7 @@ angular.module('bitbloqApp')
             openCommunication(function () {
                 alertsService.add({
                     text: 'alert-web2board-settingBoard',
-                    id: 'web2board',
+                    id: 'upload',
                     type: 'loading'
                 });
                 api.CodeHub.server.uploadHex(hexText, boardMcu)

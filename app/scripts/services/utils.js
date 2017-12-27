@@ -552,24 +552,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        exports.parseCompileError = function (errors) {
-            var translatedErrors = [],
-                line = $translate.instant('line').toUpperCase(),
-                column = $translate.instant('column').toUpperCase(),
-                error = $translate.instant('error').toUpperCase(),
-                translatedError;
 
-            for (var i = 0; i < errors.length; i++) {
-                translatedError = error + ': ' + errors[i].error + ' ' +
-                    line + ': ' + errors[i].line + ' ';
-                if (errors[i].column) {
-                    translatedError += column + ': ' + errors[i].column;
-                }
-                translatedErrors.push(translatedError);
-            }
-
-            return translatedErrors.join('<br>');
-        };
 
         exports.clone = function (object) {
             return JSON.parse(JSON.stringify(object));
@@ -686,6 +669,16 @@ angular.module('bitbloqApp')
             }
             return result;
         };
+
+        exports.goToUsingLink = function (href, target) {
+            target = target || '_blank';
+            var link = document.createElement('a');
+            link.setAttribute('href', href);
+            link.setAttribute('target', target);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
 
         return exports;
     });

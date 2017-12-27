@@ -8,18 +8,15 @@
  * Service in the bitbloqApp.
  */
 angular.module('bitbloqApp')
-    .service('web2boardJS', function ($log, alertsService, utils, $q, $translate, envData, $rootScope, $timeout, $location, $window) {
+    .service('web2boardJS', function ($log, alertsService, utils, $q, $translate, envData, $rootScope, $timeout) {
         var exports = {
             compile: compile,
             upload: upload,
-            compileAndUpload: compileAndUpload,
-            getVersion: getVersion
+            getVersion: getVersion,
+            getPorts: getPorts
         };
 
-        var compileAndUploadDefer,
-            completed,
-            alertCompile,
-            socket,
+        var socket,
             timeToWaitToOpenWeb2board = 3000,
             getVersionMaxTrys = 1;
 
@@ -36,36 +33,31 @@ angular.module('bitbloqApp')
         }
 
         function upload(params) {
-            if (params.viewer) {
-                alertsService.add({
-                    text: 'alert-viewer-reconfigure',
-                    id: 'upload',
-                    type: 'loading'
-                });
-            } else {
-                alertsService.add({
-                    text: 'alert-web2board-uploading',
-                    id: 'upload',
-                    type: 'loading',
-                    time: 'infinite'
-                });
-            }
-            if (!params.board) {
-                params.board = 'bt328';
-            } else {
-                params.board = params.board.mcu;
-            }
-            if (!params.viewer) {
-                alertsService.add({
-                    text: 'alert-web2board-compiling',
-                    id: 'compile',
-                    type: 'loading'
-                });
-            }
             return _sendToWeb2boardJS('upload', params);
         }
 
-        function _sendToWeb2boardJS(eventName, data) {
+        function _sendToWeb2boardJS(eventName, data, avoidStartWeb2board) {
+            var defer = $q.defer();
+            if (avoidStartWeb2board) {
+                _sendToSocket(eventName, data).then(function (res) {
+                    defer.resolve(res);
+                }, function (err) {
+                    defer.reject(err);
+                });
+            } else {
+                startWeb2board().then(function () {
+                    _sendToSocket(eventName, data).then(function (response) {
+                        defer.resolve(response);
+                    }, function (err) {
+                        defer.reject(err);
+                    });
+                }, function (err) {
+                    defer.reject(err)
+                });
+            }
+            return defer.promise;
+        }
+        function _sendToSocket(eventName, data) {
             var defer = $q.defer();
             var timeout = setTimeout(function () {
                 defer.reject({
@@ -127,20 +119,7 @@ angular.module('bitbloqApp')
             return defer.promise;
         }
 
-        /**
-         *
-         * @param  {object} params {
-         *                         board: board profile,
-         *                         code: code
-         *                         }
-         * @return {promise} request promise
-         */
-        function compileAndUpload(params) {
-            console.log('compileAndUpload', params);
-        }
-
-
-        function getVersion(remainigAttempts, defer) {
+        function getVersionOld(remainigAttempts, defer) {
             defer = defer || $q.defer();
             if (!remainigAttempts && (remainigAttempts !== 0)) {
                 remainigAttempts = remainigAttempts || getVersionMaxTrys;
@@ -160,9 +139,17 @@ angular.module('bitbloqApp')
             return defer.promise;
         }
 
+        function getVersion() {
+            return _sendToWeb2boardJS('version');
+        }
 
-        function startWeb2board() {
-            var defer = $q.defer();
+        function startWeb2board(remainigAttempts, defer) {
+            defer = defer || $q.defer();
+
+            if (!remainigAttempts && (remainigAttempts !== 0)) {
+                remainigAttempts = remainigAttempts || getVersionMaxTrys;
+            }
+
             $log.log('starting Web2board...');
             var tempA = document.createElement('a');
             tempA.setAttribute('href', 'web2board://');
@@ -171,10 +158,23 @@ angular.module('bitbloqApp')
             document.body.removeChild(tempA);
 
             $timeout(function () {
-                defer.resolve();
+                //check that is open
+                _sendToWeb2boardJS('version', true).then(function (result) {
+                    defer.resolve(result);
+                }, function (error) {
+                    if (remainigAttempts > 0) {
+                        startWeb2board(remainigAttempts - 1, defer);
+                    } else {
+                        defer.reject(error);
+                    }
+                });
             }, timeToWaitToOpenWeb2board)
 
             return defer.promise;
+        }
+
+        function getPorts() {
+            return _sendToWeb2boardJS('getports');
         }
 
         return exports;

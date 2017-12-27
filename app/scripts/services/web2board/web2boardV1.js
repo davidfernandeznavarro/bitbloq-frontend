@@ -265,7 +265,7 @@ angular.module('bitbloqApp')
                         var ports = JSON.parse(msgParsed);
                         if (ports.length > 0) {
                             web2board.serialPort = ports[0];
-                            $log.debug('web2board', web2board.serialPort);
+                            $log.debug('upload', web2board.serialPort);
                         }
                         $rootScope.$emit('web2board:boardReady', msgParsed);
                         break;
@@ -561,6 +561,52 @@ angular.module('bitbloqApp')
             //var boardReference = projectService.getBoardMetaData();
             web2board.verify(code, boardReference);
         }
+
+        web2board.externalUpload = function (boardReference, code) {
+            //uploadWithWeb2board(code) {
+            if (web2board.isWeb2boardV2()) {
+                uploadW2b2(boardReference, code);
+            } else {
+                uploadW2b1(boardReference, code);
+            }
+        }
+
+        function uploadW2b1(boardReference, code) {
+            $rootScope.$emit('uploading');
+            if (web2board.isInProcess()) {
+                return false;
+            }
+            if (boardReference) {
+                web2board.setInProcess(true);
+
+                alertsService.add({
+                    text: 'alert-web2board-settingBoard',
+                    id: 'upload',
+                    type: 'loading'
+                });
+
+                web2board.upload(boardReference, code);
+            } else {
+                alertsService.add({
+                    text: 'alert-web2board-boardNotReady',
+                    id: 'upload',
+                    type: 'warning'
+                });
+            }
+        }
+
+        function uploadW2b2(boardReference, code) {
+            if (boardReference) {
+                web2board.upload(boardReference.mcu, code);
+            } else {
+                alertsService.add({
+                    text: 'alert-web2board-boardNotReady',
+                    id: 'upload',
+                    type: 'warning'
+                });
+            }
+        }
+
 
         web2board.getVersion = function () {
             var defer = $q.defer(),

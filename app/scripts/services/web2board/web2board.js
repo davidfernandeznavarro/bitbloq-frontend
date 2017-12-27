@@ -14,9 +14,11 @@ angular.module('bitbloqApp')
             compile: compile,
             upload: upload,
             compileAndUpload: compileAndUpload,
-            compilationInProcess: false
+            compilationInProcess: false,
+            uploadInProcess: false
         };
-        var _detectWeb2boardPromise;
+        var _detectWeb2boardPromise,
+            _web2boardV2ListeneresAdded = false;
 
         function _detectWeb2boardVersion() {
             if (!_detectWeb2boardPromise || _detectWeb2boardPromise.promise.$$state.status === 2) {
@@ -41,8 +43,8 @@ angular.module('bitbloqApp')
             return _detectWeb2boardPromise.promise;
         }
 
-        function _compileWith(version, params, promise) {
-            switch (version) {
+        function _compileWith(w2bVersion, params, promise) {
+            switch (w2bVersion) {
                 case 'web2boardJS':
                     web2boardJS.compile(params).then(function (result) {
                         _finalizeCompiling(null, result, promise);
@@ -51,6 +53,9 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardV2':
+                    if (!_web2boardV2ListeneresAdded) {
+                        addWeb2boardV2Listeners();
+                    }
                     //no response, the service manage the states and alerts
                     web2boardV1.externalVerify(params.board, params.code);
                     break;
@@ -62,7 +67,11 @@ angular.module('bitbloqApp')
                     });
                     break;
                 default:
-                    $log.error('web2board version not defined');
+                    $log.error('w2bVersion not defined');
+                    promise.reject({
+                        status: -1,
+                        error: 'w2bVersion-not-defined-compiling'
+                    });
             }
         }
 
@@ -70,9 +79,9 @@ angular.module('bitbloqApp')
             var defer = $q.defer();
             exports.compilationInProcess = true;
             if (!params.board) {
-                params.board = 'bt328';
-            } else {
-                params.board = params.board.mcu;
+                params.board = {
+                    mcu: 'bt328'
+                };
             }
             if (!params.viewer) {
                 alertsService.add({
@@ -81,8 +90,8 @@ angular.module('bitbloqApp')
                     type: 'loading'
                 });
             }
-            if (params.method) {
-                _compileWith(params.method, params, defer);
+            if (params.compileWith) {
+                _compileWith(params.compileWith, params, defer);
             } else {
                 _detectWeb2boardVersion().then(function (version) {
                     _compileWith(version, params, defer);
@@ -97,7 +106,7 @@ angular.module('bitbloqApp')
                 alertsService.add({
                     id: 'compile',
                     type: 'warning',
-                    translatedText: utils.parseCompileError(error)
+                    translatedText: parseCompileError(error)
                 });
                 if (promise) {
                     promise.reject(error);
@@ -116,8 +125,130 @@ angular.module('bitbloqApp')
             }
         }
 
-        function upload() {
+        function upload(params) {
+            var defer = $q.defer();
 
+            alertsService.add({
+                text: 'alert-web2board-uploading',
+                id: 'upload',
+                type: 'loading',
+                time: 'infinite'
+            });
+            exports.uploadInProcess = true;
+            if (params.board) {
+                if (params.uploadWith) {
+                    _uploadWith(params.uploadWith, params, defer);
+                } else {
+                    _detectWeb2boardVersion().then(function (version) {
+                        _uploadWith(version, params, defer);
+                    });
+                }
+            } else {
+                defer.reject({
+                    status: -1,
+                    error: 'no-board'
+                });
+            }
+            return defer.promise;
+        }
+
+        function _uploadWith(w2bVersion, params, promise) {
+            switch (w2bVersion) {
+                case 'web2boardJS':
+                    web2boardJS.upload(params).then(function (result) {
+                        _finalizeUploading(null, result, promise);
+                    }, function (error) {
+                        _finalizeUploading(error, null, promise);
+                    });
+                    break;
+                case 'web2boardV2':
+                    if (!_web2boardV2ListeneresAdded) {
+                        addWeb2boardV2Listeners();
+                    }
+                    //no response, the service manage the states and alerts
+                    web2boardV1.externalUpload(params.board, params.code);
+                    break;
+                case 'web2boardOnline':
+                    /*web2boardOnline.compile(params).then(function (result) {
+                        _finalizeCompiling(null, result, promise);
+                    }, function (error) {
+                        _finalizeCompiling(error, null, promise);
+                    });*/
+                    break;
+                default:
+                    $log.error('w2bVersion not defined');
+                    promise.reject({
+                        status: -1,
+                        error: 'w2bVersion-not-defined-uploading'
+                    });
+            }
+        }
+
+        function _finalizeUploading(error, result, promise) {
+            exports.uploadInProcess = false;
+            if (error) {
+                var text, link, linkText;
+                if (error.error.search('no Arduino') !== -1) {
+                    text = 'alert-web2board-no-port-found';
+                    link = function () {
+                        utils.goToUsingLink('#/support/p/noBoard', '_blank');
+                    };
+                    linkText = $translate.instant('support-go-to');
+                } else {
+                    text = parseUploadingError(error);
+                }
+                alertsService.add({
+                    text: text,
+                    id: 'upload',
+                    type: 'error',
+                    link: link,
+                    linkText: linkText
+                });
+                if (promise) {
+                    promise.reject(error);
+                }
+            } else {
+                alertsService.add({
+                    text: 'alert-web2board-code-uploaded',
+                    id: 'upload',
+                    type: 'ok',
+                    time: 5000
+                });
+                if (promise) {
+                    promise.resolve(result);
+                }
+            }
+        }
+
+        function parseCompileError(errors) {
+            var translatedErrors = [],
+                line = $translate.instant('line').toUpperCase(),
+                column = $translate.instant('column').toUpperCase(),
+                error = $translate.instant('error').toUpperCase(),
+                translatedError;
+
+            for (var i = 0; i < errors.length; i++) {
+                translatedError = error + ': ' + errors[i].error + ' ' +
+                    line + ': ' + errors[i].line + ' ';
+                if (errors[i].column) {
+                    translatedError += column + ': ' + errors[i].column;
+                }
+                translatedErrors.push(translatedError);
+            }
+
+            return translatedErrors.join('<br>');
+        }
+
+        function parseUploadingError(errors) {
+            var message = '';
+            if (errors.error.indexOf('timeout') >= 0) {
+                message = $translate.instant('modal-inform-error-textarea-placeholder') + ': ' + $translate.instant(JSON.stringify(errors.error));
+            } else {
+                message = $translate.instant('modal-inform-error-textarea-placeholder') + ': ' + $translate.instant(JSON.stringify(errors.error));
+            }
+            //stk500 timeout.
+
+            return message;
         }
 
         function compileAndUpload() {
@@ -130,6 +261,7 @@ angular.module('bitbloqApp')
             _web2boardV2Listeners = {};
             _web2boardV2Listeners.w2bDisconnectedEvent = $rootScope.$on('web2board:disconnected', function () {
                 web2boardV1.setInProcess(false);
+                removeWeb2boardV2Listeners();
             });
 
             _web2boardV2Listeners.w2bVersionEvent = $rootScope.$on('web2board:wrong-version', function () {
@@ -253,10 +385,11 @@ angular.module('bitbloqApp')
                 alertsService.closeByTag('serialmonitor');
                 web2boardV1.setInProcess(false);
             });
+            _web2boardV2ListeneresAdded = true;
         }
 
         function removeWeb2boardV2Listeners() {
-            if (_web2boardV2Listeners) {
+            if (_web2boardV2Listeners && _web2boardV2ListeneresAdded) {
                 _web2boardV2Listeners.w2bDisconnectedEvent();
                 _web2boardV2Listeners.w2bVersionEvent();
                 _web2boardV2Listeners.w2bNow2bEvent();
@@ -269,6 +402,7 @@ angular.module('bitbloqApp')
                 _web2boardV2Listeners.w2bUploadErrorEvent();
                 _web2boardV2Listeners.w2bNoPortFoundEvent();
                 _web2boardV2Listeners.w2bSerialOpenedEvent();
+                _web2boardV2ListeneresAdded = false;
             }
         }
 
