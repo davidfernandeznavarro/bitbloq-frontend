@@ -13,12 +13,16 @@ angular.module('bitbloqApp')
             compile: compile,
             upload: upload,
             getVersion: getVersion,
-            getPorts: getPorts
+            getPorts: getPorts,
+            openSerialPort: openSerialPort,
+            closeSerialPort: closeSerialPort,
+            startWeb2board: startWeb2board
         };
 
         var socket,
             timeToWaitToOpenWeb2board = 3000,
-            getVersionMaxTrys = 1;
+            getVersionMaxTrys = 1,
+            _web2boardLaunched = false;
 
         /**
          * [compile description]
@@ -34,6 +38,22 @@ angular.module('bitbloqApp')
 
         function upload(params) {
             return _sendToWeb2boardJS('upload', params);
+        }
+
+        function getPorts() {
+            return _sendToWeb2boardJS('getports');
+        }
+
+        function getVersion() {
+            return _sendToWeb2boardJS('version');
+        }
+
+        function openSerialPort(params) {
+            return _sendToWeb2boardJS('openserialport', params);
+        }
+
+        function closeSerialPort(params) {
+            return _sendToWeb2boardJS('closeserialport', params);
         }
 
         function _sendToWeb2boardJS(eventName, data, avoidStartWeb2board) {
@@ -93,8 +113,15 @@ angular.module('bitbloqApp')
                 socket = io('http://localhost:9876');
                 socket.on('connect', function () {
                     socket.on('message', function (msg) {
-                        console.log(msg);
+                        console.log('msg', msg);
                     });
+                    socket.on('serialportdata', function (data) {
+                        console.log('serialport data' + data);
+                    });
+                    socket.on('serialportclosed', function () {
+                        console.log('serialportclosed');
+                    });
+
                     socket.on('disconnect', function (reason) {
                         $log.log('disconnect on socket', reason);
                         defer.reject();
@@ -119,63 +146,41 @@ angular.module('bitbloqApp')
             return defer.promise;
         }
 
-        function getVersionOld(remainigAttempts, defer) {
-            defer = defer || $q.defer();
-            if (!remainigAttempts && (remainigAttempts !== 0)) {
-                remainigAttempts = remainigAttempts || getVersionMaxTrys;
-            }
-
-            startWeb2board().then(function () {
-                _sendToWeb2boardJS('version').then(function (result) {
-                    defer.resolve(result);
-                }, function (error) {
-                    if (remainigAttempts > 0) {
-                        getVersion(remainigAttempts - 1, defer);
-                    } else {
-                        defer.reject(error);
-                    }
-                });
-            });
-            return defer.promise;
-        }
-
-        function getVersion() {
-            return _sendToWeb2boardJS('version');
-        }
-
         function startWeb2board(remainigAttempts, defer) {
             defer = defer || $q.defer();
+            if (!_web2boardLaunched) {
+                if (!remainigAttempts && (remainigAttempts !== 0)) {
+                    remainigAttempts = remainigAttempts || getVersionMaxTrys;
+                }
 
-            if (!remainigAttempts && (remainigAttempts !== 0)) {
-                remainigAttempts = remainigAttempts || getVersionMaxTrys;
+                $log.log('starting Web2board...');
+                var tempA = document.createElement('a');
+                tempA.setAttribute('href', 'web2board://');
+                document.body.appendChild(tempA);
+                tempA.click();
+                document.body.removeChild(tempA);
+
+                $timeout(function () {
+                    //check that is open
+                    _sendToWeb2boardJS('version', null, true).then(function (result) {
+                        _web2boardLaunched = true;
+                        defer.resolve(result);
+                    }, function (error) {
+                        if (remainigAttempts > 0) {
+                            startWeb2board(remainigAttempts - 1, defer);
+                        } else {
+                            defer.reject(error);
+                        }
+                    });
+                }, timeToWaitToOpenWeb2board);
+            } else {
+                defer.resolve();
             }
-
-            $log.log('starting Web2board...');
-            var tempA = document.createElement('a');
-            tempA.setAttribute('href', 'web2board://');
-            document.body.appendChild(tempA);
-            tempA.click();
-            document.body.removeChild(tempA);
-
-            $timeout(function () {
-                //check that is open
-                _sendToWeb2boardJS('version', true).then(function (result) {
-                    defer.resolve(result);
-                }, function (error) {
-                    if (remainigAttempts > 0) {
-                        startWeb2board(remainigAttempts - 1, defer);
-                    } else {
-                        defer.reject(error);
-                    }
-                });
-            }, timeToWaitToOpenWeb2board)
 
             return defer.promise;
         }
 
-        function getPorts() {
-            return _sendToWeb2boardJS('getports');
-        }
+
 
         return exports;
     });

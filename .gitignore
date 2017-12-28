@@ -35,3 +35,4 @@ sendToTranslate
 
 package-lock\.json
 makeConfig.js
+launch.json

@@ -603,18 +603,13 @@ angular.module('bitbloqApp')
         };
 
         exports.portOwnBoard = function (port, board) {
-            console.log('portOwnBoard');
-            console.log(port.comName, port.productId, port.vendorId);
-            console.log(board.name, board.productIds, board.vendorIds);
             var result;
+
             result = board.vendorIds.indexOf(port.vendorId);
-            console.log('result', result);
 
             if (result !== -1) {
                 result = board.productIds.indexOf(port.productId);
             }
-
-            console.log('result', result);
             return result;
         };
 

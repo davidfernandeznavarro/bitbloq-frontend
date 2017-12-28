@@ -1,5 +1,5 @@
 <div data-ng-controller="SerialMonitorCtrl" class="form serial--panel">
-    <div class="form-control ports" data-ng-show="showPorts">
+    <div class="form-control ports" data-ng-show="web2board.web2boardVersion!== 'web2boardV2'">
         <common-dropdown options="portNames" class="ports--sort-dropdown" direction="down" shown-option="selectedPort.portName" options-click="setPort"></common-dropdown>
         <button class="btn refresh" data-ng-click="getPorts()">
             <svg class="svg-icon svg-icon--text">
@@ -9,7 +9,8 @@
     </div>
     <div class="form-control">
         <span class="serial--send--content">
-            <input class="serial--send--input" type="text" data-ng-model="serial.input" placeholder="Send text to board" data-element="login-emailusername-intput" ng-keypress="onKeyPressedInInput($event)">
+            <input class="serial--send--input" type="text" data-ng-model="serial.input" placeholder="Send text to board" data-element="login-emailusername-intput"
+                ng-keypress="onKeyPressedInInput($event)">
             <button class="btn btn--tertiary btn--small" ng-click="send()">{{'serial-send' | translate}}</button>
         </span>
     </div>
@@ -20,6 +21,7 @@
     <div>
         <button class="btn btn--tertiary btn--small" ng-click="onPause()">{{pauseText}}</button>
         <button class="btn btn--tertiary btn--small" ng-click="onClear()">{{'serial-clear' | translate}}</button>
-        <common-dropdown id="serialmonitor--dropdown--baudrate" options="baudrateOptions" class="right" direction="up" heading-option="serial.baudrate" options-click="onBaudrateChanged"></common-dropdown>
+        <common-dropdown id="serialmonitor--dropdown--baudrate" options="baudrateOptions" class="right" direction="up" heading-option="serial.baudrate"
+            options-click="onBaudrateChanged"></common-dropdown>
     </div>
 </div>

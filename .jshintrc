@@ -1,7 +1,7 @@
 {
     "node": true,
     "browser": true,
-    "asi" : true,
+    "asi": true,
     "bitwise": true,
     "camelcase": true,
     "curly": true,
@@ -22,6 +22,7 @@
         "angular": false,
         "$": false,
         "chrome": false,
-        "moment": false
+        "moment": false,
+        "io": false
     }
 }

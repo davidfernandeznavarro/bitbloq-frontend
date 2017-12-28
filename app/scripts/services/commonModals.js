@@ -669,18 +669,18 @@ angular.module('bitbloqApp')
             viewerMonitorPanel.scope = scope;
         };
 
-        exports.launchSerialWindow = function (board, useChromeExtension) {
+        exports.launchSerialWindow = function (currentProject) {
             if (serialMonitorPanel) {
                 serialMonitorPanel.normalize();
                 serialMonitorPanel.reposition('center');
                 return;
             }
             var scope = $rootScope.$new();
-            scope.board = board;
-            scope.forceChromeExtension = useChromeExtension;
-            scope.setOnUploadFinished = function (callback) {
+            scope.currentProject = currentProject;
+            //scope.forceChromeExtension = useChromeExtension;
+            /*scope.setOnUploadFinished = function (callback) {
                 scope.uploadFinished = callback;
-            };
+            };*/
             serialMonitorPanel = $.jsPanel({
                 position: 'center',
                 size: {
@@ -701,6 +701,7 @@ angular.module('bitbloqApp')
             });
             serialMonitorPanel.scope = scope;
         };
+
         exports.noAddTeachers = function (teachers) {
             var noShareModal,
                 modalScope = $rootScope.$new();

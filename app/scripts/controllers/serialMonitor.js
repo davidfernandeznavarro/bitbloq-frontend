@@ -9,28 +9,29 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('SerialMonitorCtrl', function($scope, _, web2boardV2, $translate, $timeout, $element, chromeAppApi, common, $rootScope, web2board, hardwareService, utils) {
+    .controller('SerialMonitorCtrl', function ($scope, _, web2boardV2, $translate, $timeout, $element, chromeAppApi, common,
+        $rootScope, web2board, hardwareService, utils) {
         /*Private vars*/
-        var serialHub = web2boardV2.api.SerialMonitorHub,
-            textArea = $element.find('#serialData'),
+        //var serialHub = web2boardV2.api.SerialMonitorHub,
+        var textArea = $element.find('#serialData'),
             textAreaMaxLength = 20000;
         //its setted when the windows its open
         //$scope.board
 
         /*Private functions*/
         function scrollTextAreaToBottom() {
-            $timeout(function() {
+            $timeout(function () {
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
             }, 0);
         }
 
         /*Set up web2board api*/
         //when web2board tries to call a client function but it is not defined
-        web2boardV2.api.onClientFunctionNotFound = function(hub, func) {
+        /*web2boardV2.api.onClientFunctionNotFound = function (hub, func) {
             console.error(hub, func);
-        };
+        };*/
 
-        serialHub.client.received = function(port, data) {
+        /*serialHub.client.received = function (port, data) {
             if (port === $scope.port && !$scope.pause && angular.isString(data)) {
                 $scope.serial.dataReceived += data;
                 var dataLen = $scope.serial.dataReceived.length;
@@ -39,7 +40,7 @@ angular.module('bitbloqApp')
                 }
                 scrollTextAreaToBottom();
             }
-        };
+        };*/
 
         // function called when someone writes in serial (including ourselves)
         // serialHub.client.written = function (message) {
@@ -47,12 +48,15 @@ angular.module('bitbloqApp')
         // };
 
         /*public vars*/
+        $scope.web2board = web2board;
         $scope.baudrateOptions = [300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200];
-        $scope.serial = {
+        $scope.currentBaudrate = 9600;
+        $scope.serialPortData = '';
+        /*$scope.serial = {
             dataReceived: '',
             input: '',
             baudrate: 9600
-        };
+        };*/
         $scope.portNames = [];
         $scope.ports = [];
 
@@ -61,48 +65,52 @@ angular.module('bitbloqApp')
         $scope.pauseText = $translate.instant('serial-pause');
 
         /*Public functions*/
-        $scope.send = function() {
-            if (common.useChromeExtension() || $scope.forceChromeExtension) {
+        $scope.send = function () {
+            /*if (common.useChromeExtension() || $scope.forceChromeExtension) {
                 chromeAppApi.sendSerialData($scope.serial.input);
             } else {
                 serialHub.server.write($scope.port, $scope.serial.input);
             }
-            $scope.serial.input = '';
+            $scope.serial.input = '';*/
+
+            web2board.sendToSerialPort();
         };
 
-        $scope.onKeyPressedInInput = function(event) {
+        $scope.onKeyPressedInInput = function (event) {
             if (event.which === 13) {
                 $scope.send();
             }
         };
 
-        $scope.onBaudrateChanged = function(baudrate) {
-            $scope.serial.baudrate = baudrate;
-            if (common.useChromeExtension() || $scope.forceChromeExtension) {
+        $scope.onBaudrateChanged = function (baudRate) {
+            $scope.currentBaudRate = baudRate;
+            /*if (common.useChromeExtension() || $scope.forceChromeExtension) {
                 chromeAppApi.changeBaudrate(baudrate);
             } else {
                 serialHub.server.changeBaudrate($scope.port, baudrate);
-            }
+            }*/
+            web2board.setSerialPortBaudRate(baudRate);
         };
 
-        $scope.onPause = function() {
+        $scope.onPause = function () {
             $scope.pause = !$scope.pause;
             if ($scope.pause) {
-                $scope.serial.dataReceived += '\n\nSerial Monitor paused\n\n';
+                //$scope.serial.dataReceived += '\n\nSerial Monitor paused\n\n';
+                $scope.serialPortData += '\n\n' + $translate.instant('serial-pause') + '\n\n';
                 scrollTextAreaToBottom();
             }
             $scope.pauseText = $scope.pause ? $translate.instant('serial-play') : $translate.instant('serial-pause');
         };
 
-        $scope.onClear = function() {
-            $scope.serial.dataReceived = '';
+        $scope.onClear = function () {
+            $scope.serialPortData = '';
         };
 
-        $scope.getPorts = function() {
-            chromeAppApi.getPorts().then(function(response) {
+        $scope.getPorts = function () {
+            /*chromeAppApi.getPorts().then(function (response) {
                 console.log('ports SerialMonitorCtrl', response);
                 $scope.ports = filterPortsByOS(response.ports);
-                hardwareService.itsHardwareLoaded().then(function() {
+                hardwareService.itsHardwareLoaded().then(function () {
                     utils.getPortsPrettyNames($scope.ports, hardwareService.hardware.boards);
                     $scope.portNames = [];
 
@@ -116,38 +124,53 @@ angular.module('bitbloqApp')
                     }
                 });
 
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log('error SerialMonitorCtrl', error);
+            });*/
+            web2board.getPorts().then(function (response) {
+                var ports = response.data;
+                console.log('ports SerialMonitorCtrl', ports);
+                $scope.ports = ports;
+
+                hardwareService.itsHardwareLoaded().then(function () {
+                    utils.getPortsPrettyNames($scope.ports, hardwareService.hardware.boards);
+                    $scope.portNames = [];
+
+                    for (var i = 0; i < $scope.ports.length; i++) {
+                        $scope.portNames.push($scope.ports[i].portName);
+                    }
+
+                    var portWithUserSelectedBoard = utils.getPortByBoard($scope.ports, hardwareService.boardsMap[$scope.currentProject.hardware.board]);
+                    if (portWithUserSelectedBoard) {
+                        $scope.setPort(portWithUserSelectedBoard.portName);
+                    }
+                });
             });
         };
 
-        $scope.setPort = function(portName) {
+        $scope.setPort = function (portName) {
             var port = _.find($scope.ports, {
                 portName: portName
             });
 
             $scope.selectedPort = port;
 
-            chromeAppApi.getSerialData($scope.selectedPort);
+            web2board.openSerialPort({
+                port: $scope.selectedPort.comName,
+                baudRate: $scope.currentBaudrate
+            }).then(function (response) {
+                console.log('ok openSerialPort', response);
+            }, function (error) {
+                console.log('error openSerialPort', error);
+            });
+            // chromeAppApi.getSerialData($scope.selectedPort);
         };
 
-        function filterPortsByOS(ports) {
-            var result = [];
-            if (common.os === 'Mac') {
-                for (var i = 0; i < ports.length; i++) {
-                    if (ports[i].comName.indexOf('/dev/cu') !== -1) {
-                        result.push(ports[i]);
-                    }
-                }
-            } else {
-                result = ports;
-            }
-            return result;
-        }
 
         /*Init functions*/
 
-        if (common.useChromeExtension() || $scope.forceChromeExtension) {
+        $scope.getPorts();
+        /*if (common.useChromeExtension() || $scope.forceChromeExtension) {
             console.log($scope.board);
             $scope.showPorts = true;
             $scope.getPorts();
@@ -155,7 +178,7 @@ angular.module('bitbloqApp')
             serialHub.server.subscribeToPort($scope.port);
 
             serialHub.server.startConnection($scope.port, $scope.serial.baudrate)
-                .catch(function(error) {
+                .catch(function (error) {
                     if (error.error.indexOf('already in use') > -1) {
                         $scope.onBaudrateChanged($scope.serial.baudrate);
                     } else {
@@ -163,12 +186,12 @@ angular.module('bitbloqApp')
                     }
                 });
 
-            $scope.setOnUploadFinished(function() {
+            $scope.setOnUploadFinished(function () {
                 $scope.onBaudrateChanged($scope.serial.baudrate);
             });
         }
 
-        var serialEvent = $rootScope.$on('serial', function(event, msg) {
+        var serialEvent = $rootScope.$on('serial', function (event, msg) {
             if (!$scope.pause && angular.isString(msg)) {
                 $scope.serial.dataReceived += msg;
                 var dataLen = $scope.serial.dataReceived.length;
@@ -178,17 +201,22 @@ angular.module('bitbloqApp')
                 scrollTextAreaToBottom();
             }
         });
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
             if (common.useChromeExtension() || $scope.forceChromeExtension) {
                 chromeAppApi.stopSerialCommunication();
                 web2board.setInProcess(false);
             } else {
                 serialHub.server.unsubscribeFromPort($scope.port)
-                    .then(function() {
+                    .then(function () {
                         return serialHub.server.closeUnusedConnections();
                     });
             }
             serialEvent();
 
+        })
+        ;*/
+        $scope.$on('$destroy', function () {
+            console.log('$destroy');
+            web2board.closeSerialPort();
         });
     });

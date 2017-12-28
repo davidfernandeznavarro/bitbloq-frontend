@@ -10,7 +10,7 @@
 
 angular.module('bitbloqApp')
     .controller('BloqsprojectCtrl', function ($rootScope, $route, $scope, $log, $timeout, $routeParams, $document, $window, $location,
-        $q, web2boardV1, web2boardjs, alertsService, ngDialog, _, projectApi, bloqs, bloqsUtils, utils, userApi, hw2Bloqs, web2boardOnline, commonModals,
+        $q, web2boardV1, web2boardJS, alertsService, ngDialog, _, projectApi, bloqs, bloqsUtils, utils, userApi, hw2Bloqs, web2boardOnline, commonModals,
         projectService, hardwareConstants, chromeAppApi, $translate, web2board) {
 
         /*************************************************
@@ -67,21 +67,6 @@ angular.module('bitbloqApp')
             } else {
                 $scope.currentTab = 0;
                 $scope.levelOne = 'boards';
-                alertsService.add({
-                    text: 'alert-web2board-no-board-serial',
-                    id: 'serialmonitor',
-                    type: 'warning',
-                    link: function () {
-                        var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
-                        tempA.setAttribute('target', '_blank');
-                        document.body.appendChild(tempA);
-                        tempA.click();
-                        document.body.removeChild(tempA);
-                    },
-                    linkText: $translate.instant('support-go-to')
-                });
-
             }
         }
 
@@ -91,20 +76,6 @@ angular.module('bitbloqApp')
             } else {
                 $scope.currentTab = 0;
                 $scope.levelOne = 'boards';
-                alertsService.add({
-                    text: 'alert-web2board-no-board-serial',
-                    id: 'serialmonitor',
-                    type: 'warning',
-                    link: function () {
-                        var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
-                        tempA.setAttribute('target', '_blank');
-                        document.body.appendChild(tempA);
-                        tempA.click();
-                        document.body.removeChild(tempA);
-                    },
-                    linkText: $translate.instant('support-go-to')
-                });
             }
         }
 
@@ -366,6 +337,10 @@ angular.module('bitbloqApp')
                     console.log('upload ok', response);
                 }, function (error) {
                     console.log('upload error', error);
+                    if (error.error === 'no-board') {
+                        $scope.setTab(0);
+                        $scope.levelOne = 'boards';
+                    }
                 });
             }
 
@@ -510,12 +485,30 @@ angular.module('bitbloqApp')
         };
 
         $scope.serialMonitor = function () {
-            if (projectService.project.hardware.board) {
-                web2boardjs.getPorts().then(function (ports) {
+            if ($scope.currentProjectService.project.hardware.board) {
+                /*console.log(hardwareConstants);
+                console.log($scope.currentProjectService.getBoardMetaData());
+                /*web2boardJS.getPorts().then(function (ports) {
                     console.log('ports', ports);
                 }, function (err) {
                     console.log('err', err);
-                });
+                });*/
+                /*web2boardJS.openSerialPort({
+                    port: '/dev/tty.usbserial-A402PJHM',
+                    baudRate: 9600
+                }).then(function (ports) {
+                    console.log('ports', ports);
+                    setTimeout(function () {
+                        web2boardJS.closeSerialPort().then(function (res) {
+                            console.log('res', res);
+                        }, function (err) {
+                            console.log('errclos', err);
+                        });
+                    }, 10000);
+                }, function (err) {
+                    console.log('err', err);
+                });*/
+                commonModals.launchSerialWindow($scope.currentProjectService.project);
                 /*if ($scope.common.useChromeExtension()) {
                     commonModals.launchSerialWindow(projectService.getBoardMetaData());
                 } else {
@@ -596,7 +589,6 @@ angular.module('bitbloqApp')
                     linkText: $translate.instant('support-go-to')
                 });
             }
-
         };
 
         $scope.getCode = function () {
