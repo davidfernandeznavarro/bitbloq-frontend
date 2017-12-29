@@ -16,10 +16,15 @@ angular.module('bitbloqApp')
             getPorts: getPorts,
             openSerialPort: openSerialPort,
             closeSerialPort: closeSerialPort,
+            clearSerialPortData: clearSerialPortData,
             compilationInProcess: false,
             uploadInProcess: false,
             serialPortOpened: false,
-            web2boardVersion: ''
+            web2boardVersion: '',
+            serial: {
+                serialPortData: '',
+                scopeRefreshFunction: null
+            }
         };
         var _detectWeb2boardPromise,
             _web2boardV2ListeneresAdded = false;
@@ -336,11 +341,14 @@ angular.module('bitbloqApp')
         }
 
         function _openSerialPortWith(w2bVersion, params, promise) {
+            exports.serial.scopeRefreshFunction = params.scopeRefreshFunction;
             switch (w2bVersion) {
                 case 'web2boardJS':
                     web2boardJS.openSerialPort({
                         port: params.port,
-                        baudRate: params.baudRate
+                        baudRate: params.baudRate,
+                        closeSerialPortFunction: _finalizeClosingSerialPort,
+                        serial: exports.serial
                     }).then(function (result) {
                         _finalizeOpeneningSerialPort(null, result, promise);
                     }, function (error) {
@@ -372,6 +380,11 @@ angular.module('bitbloqApp')
 
         function _finalizeOpeneningSerialPort(error, result, promise) {
             if (error) {
+                alertsService.add({
+                    text: error.error,
+                    id: 'serialmonitor',
+                    type: 'error'
+                });
                 if (promise) {
                     promise.reject(error);
                 }
@@ -397,6 +410,7 @@ angular.module('bitbloqApp')
                     _closeSerialPortWith(version, defer);
                 });
             }
+            exports.serialPortOpened = false;
             return defer.promise;
         }
 
@@ -444,6 +458,10 @@ angular.module('bitbloqApp')
                     promise.resolve(result);
                 }
             }
+        }
+
+        function clearSerialPortData() {
+            exports.serial.serialPortData = '';
         }
 
         /**

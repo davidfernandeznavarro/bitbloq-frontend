@@ -22,7 +22,9 @@ angular.module('bitbloqApp')
         var socket,
             timeToWaitToOpenWeb2board = 3000,
             getVersionMaxTrys = 1,
-            _web2boardLaunched = false;
+            _web2boardLaunched = false,
+            _closeSerialPortFunction,
+            _serial;
 
         /**
          * [compile description]
@@ -49,6 +51,8 @@ angular.module('bitbloqApp')
         }
 
         function openSerialPort(params) {
+            _closeSerialPortFunction = params.closeSerialPortFunction;
+            _serial = params.serial;
             return _sendToWeb2boardJS('openserialport', params);
         }
 
@@ -103,8 +107,14 @@ angular.module('bitbloqApp')
         }
 
         function _closeSocket() {
-            socket.close();
+            if (socket && socket.connected) {
+                socket.close();
+            }
+
             socket = null;
+            if (_closeSerialPortFunction) {
+                _closeSerialPortFunction();
+            }
         }
 
         function _connectToSocket() {
@@ -117,9 +127,16 @@ angular.module('bitbloqApp')
                     });
                     socket.on('serialportdata', function (data) {
                         console.log('serialport data' + data);
+                        if (_serial) {
+                            _serial.serialPortData += data + '\n';
+                            _serial.scopeRefreshFunction();
+                        }
                     });
                     socket.on('serialportclosed', function () {
                         console.log('serialportclosed');
+                        if (_closeSerialPortFunction) {
+                            _closeSerialPortFunction();
+                        }
                     });
 
                     socket.on('disconnect', function (reason) {

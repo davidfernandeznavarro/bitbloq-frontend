@@ -14,7 +14,8 @@ angular.module('bitbloqApp')
         /*Private vars*/
         //var serialHub = web2boardV2.api.SerialMonitorHub,
         var textArea = $element.find('#serialData'),
-            textAreaMaxLength = 20000;
+            textAreaMaxLength = 20000,
+            autoScrollActivated = true;
         //its setted when the windows its open
         //$scope.board
 
@@ -154,10 +155,11 @@ angular.module('bitbloqApp')
             });
 
             $scope.selectedPort = port;
-
+            web2board.clearSerialPortData();
             web2board.openSerialPort({
                 port: $scope.selectedPort.comName,
-                baudRate: $scope.currentBaudrate
+                baudRate: $scope.currentBaudrate,
+                scopeRefreshFunction: refreshScope
             }).then(function (response) {
                 console.log('ok openSerialPort', response);
             }, function (error) {
@@ -165,11 +167,29 @@ angular.module('bitbloqApp')
             });
             // chromeAppApi.getSerialData($scope.selectedPort);
         };
+        function refreshScope() {
+            if (autoScrollActivated) {
+                scrollTextAreaToBottom();
+            }
+            utils.apply($scope);
+        }
+
+        function scrollHandler(evt) {
+            console.log(evt);
+            console.log(textArea[0].scrollTop, textArea[0].scrollHeight, textArea.height(), textArea[0].scrollHeight - textArea.height());
+            if ((textArea[0].scrollTop) < (textArea[0].scrollHeight - textArea.height() - 40)) {
+                autoScrollActivated = false;
+            } else {
+                autoScrollActivated = true;
+            }
+        }
 
 
         /*Init functions*/
-
+        textArea.on('scroll', scrollHandler);
         $scope.getPorts();
+
+
         /*if (common.useChromeExtension() || $scope.forceChromeExtension) {
             console.log($scope.board);
             $scope.showPorts = true;
@@ -217,6 +237,7 @@ angular.module('bitbloqApp')
         ;*/
         $scope.$on('$destroy', function () {
             console.log('$destroy');
+            textArea.off('scroll', scrollHandler);
             web2board.closeSerialPort();
         });
     });
