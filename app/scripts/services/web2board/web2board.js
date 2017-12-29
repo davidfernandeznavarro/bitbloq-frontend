@@ -276,11 +276,11 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardV2':
-                    /*if (!_web2boardV2ListeneresAdded) {
+                    if (!_web2boardV2ListeneresAdded) {
                         addWeb2boardV2Listeners();
                     }
                     //no response, the service manage the states and alerts
-                    web2boardV1.externalUpload(params.board, params.code);*/
+                    web2boardV1.serialMonitor({ mcu: 'bt328' });
                     break;
                 case 'web2boardOnline':
                     /*web2boardOnline.compile(params).then(function (result) {

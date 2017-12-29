@@ -22,7 +22,8 @@ angular.module('bitbloqApp')
         };
 
         var socket,
-            timeToWaitToOpenWeb2board = 3000,
+            _timeToWaitToOpenWeb2board = 3000,
+            _timeToWaitToWeb2boardMessages = 5000,
             getVersionMaxTrys = 1,
             _web2boardLaunched = false,
             _closeSerialPortFunction,
@@ -38,34 +39,43 @@ angular.module('bitbloqApp')
          * @return {promise}
          */
         function compile(params) {
-            return _sendToWeb2boardJS('compile', params);
+
+            return _sendToWeb2boardJS({ eventName: 'compile', data: params });
         }
 
         function upload(params) {
-            return _sendToWeb2boardJS('upload', params);
+            return _sendToWeb2boardJS({ eventName: 'upload', data: params });
         }
 
         function getPorts() {
-            return _sendToWeb2boardJS('getports');
+            return _sendToWeb2boardJS({ eventName: 'getports' });
         }
 
         function getVersion() {
-            return _sendToWeb2boardJS('version');
+            return _sendToWeb2boardJS({ eventName: 'version' });
         }
 
         function openSerialPort(params) {
             _ignoreSerialPortMessages = false;
             _closeSerialPortFunction = params.closeSerialPortFunction;
             _serial = params.serial;
-            return _sendToWeb2boardJS('openserialport', params);
+            return _sendToWeb2boardJS({
+                eventName: 'openserialport',
+                data: {
+                    baudRate: params.baudRate,
+                    port: params.port,
+                    forceReconnect: params.forceReconnect
+                },
+                timeoutTime: 7000
+            });
         }
 
         function closeSerialPort(params) {
-            return _sendToWeb2boardJS('closeserialport', params);
+            return _sendToWeb2boardJS({ eventName: 'closeserialport', data: params });
         }
 
         function sendToSerialPort(params) {
-            return _sendToWeb2boardJS('sendtoserialport', params);
+            return _sendToWeb2boardJS({ eventName: 'sendtoserialport', data: params });
         }
 
         function pauseSerialPort(params) {
@@ -77,17 +87,18 @@ angular.module('bitbloqApp')
             return defer.promise;
         }
 
-        function _sendToWeb2boardJS(eventName, data, avoidStartWeb2board) {
+        function _sendToWeb2boardJS(params) {
+            //eventName, data, avoidStartWeb2board, timeoutTime
             var defer = $q.defer();
-            if (avoidStartWeb2board) {
-                _sendToSocket(eventName, data).then(function (res) {
+            if (params.avoidStartWeb2board) {
+                _sendToSocket(params.eventName, params.data, params.timeoutTime).then(function (res) {
                     defer.resolve(res);
                 }, function (err) {
                     defer.reject(err);
                 });
             } else {
                 startWeb2board().then(function () {
-                    _sendToSocket(eventName, data).then(function (response) {
+                    _sendToSocket(params.eventName, params.data, params.timeoutTime).then(function (response) {
                         defer.resolve(response);
                     }, function (err) {
                         defer.reject(err);
@@ -98,15 +109,16 @@ angular.module('bitbloqApp')
             }
             return defer.promise;
         }
-        function _sendToSocket(eventName, data) {
+        function _sendToSocket(eventName, data, timeoutTime) {
             var defer = $q.defer();
             var timeout = setTimeout(function () {
+                _closeSocket();
                 defer.reject({
                     status: -1,
                     error: 'timeout in contact with web2board'
                 });
-                _closeSocket();
-            }, 5000);
+
+            }, timeoutTime || _timeToWaitToWeb2boardMessages);
 
             _connectToSocket().then(function () {
                 socket.emit(eventName, data, function (response) {
@@ -124,7 +136,7 @@ angular.module('bitbloqApp')
         }
 
         function _closeSocket() {
-            if (socket && socket.connected) {
+            if (socket && (socket.connected || socket.io.reconnecting)) {
                 socket.close();
             }
 
@@ -196,7 +208,10 @@ angular.module('bitbloqApp')
 
                 $timeout(function () {
                     //check that is open
-                    _sendToWeb2boardJS('version', null, true).then(function (result) {
+                    _sendToWeb2boardJS({
+                        eventName: 'version',
+                        avoidStartWeb2board: true
+                    }).then(function (result) {
                         _web2boardLaunched = true;
                         defer.resolve(result);
                     }, function (error) {
@@ -206,7 +221,7 @@ angular.module('bitbloqApp')
                             defer.reject(error);
                         }
                     });
-                }, timeToWaitToOpenWeb2board);
+                }, _timeToWaitToOpenWeb2board);
             } else {
                 defer.resolve();
             }
