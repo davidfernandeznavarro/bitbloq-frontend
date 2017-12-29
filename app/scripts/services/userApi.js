@@ -8,7 +8,7 @@
  * Service in the bitbloqApp.
  */
 angular.module('bitbloqApp')
-    .service('userApi', function($http, $cookieStore, $q, User, envData, _, utils) {
+    .service('userApi', function($http, $cookieStore, $q, User, envData, _, utils, $log) {
 
         var exports = {},
             userRoles = ['admin', 'user', 'guest'];
@@ -196,6 +196,15 @@ angular.module('bitbloqApp')
 
         exports.getAllUsers = function() {
             return $http.get(envData.config.serverUrl + 'user/');
+        };
+
+        exports.sendMailTutorUnder14User = function(tutor) {
+            $log.debug(tutor);
+            return $http({
+                method: 'PATCH',
+                url: envData.config.serverUrl + 'user/under14authorization/',
+                data: { tutor: tutor }
+            });
         };
 
         /*

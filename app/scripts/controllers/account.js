@@ -9,7 +9,7 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('AccountCtrl', function($scope, $rootScope, $timeout, $translate, $location, $q, $auth, User, envData, imageApi, userApi, _, alertsService, ngDialog, utils, common, commonModals, hardwareService) {
+    .controller('AccountCtrl', function($scope, $rootScope, $timeout, $translate, $location, $q, $auth, User, envData, imageApi, userApi, _, alertsService, ngDialog, utils, common, commonModals, hardwareService, $log) {
 
         //$scope.moment = moment;
         $scope.common.oldTempAvatar = {};
@@ -105,13 +105,23 @@ angular.module('bitbloqApp')
         $scope.contactTutor = function() {
             var dialog,
                 modalScope = $rootScope.$new(),
-                confirmAction = function(form) {
-                    $scope.common.user.tutor = {
-                        'firstName': form.tutorName,
-                        'lastName': form.tutorSurname,
-                        'email': form.tutorMail,
-                    }
-                    
+                confirmAction = function(user) {
+                    $log.debug('***$log', user.tutor);
+                    userApi.sendMailTutorUnder14User(user.tutor).then(function() {
+                        alertsService.add({
+                            text: 'email-recovery-password-ok',
+                            id: 'saved-password',
+                            type: 'ok',
+                            time: 5000
+                        });
+                        dialog.close();
+                    }, function() {
+                        alertsService.add({
+                            text: 'recovery-error-title',
+                            id: 'error-password',
+                            type: 'warning'
+                        });
+                    });
                 };
 
             _.extend(modalScope, {

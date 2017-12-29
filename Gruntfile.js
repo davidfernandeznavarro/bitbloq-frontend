@@ -9,6 +9,8 @@
 
 module.exports = function (grunt) {
 
+    var compression = require('compression');
+
     // Load grunt tasks automatically
     require('load-grunt-tasks')(grunt);
     // Load customs tasks
@@ -73,7 +75,8 @@ module.exports = function (grunt) {
                 port: 9000,
                 // Change this to '0.0.0.0' to access the server from outside.
                 hostname: '0.0.0.0',
-                livereload: 35729
+                livereload: 35729,
+                middleware: [compression()]
             },
             livereload: {
                 options: {
