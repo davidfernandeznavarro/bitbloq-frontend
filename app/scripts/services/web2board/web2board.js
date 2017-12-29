@@ -17,6 +17,7 @@ angular.module('bitbloqApp')
             openSerialPort: openSerialPort,
             closeSerialPort: closeSerialPort,
             clearSerialPortData: clearSerialPortData,
+            pauseSerialPort: pauseSerialPort,
             sendToSerialPort: sendToSerialPort,
             compilationInProcess: false,
             uploadInProcess: false,
@@ -530,6 +531,68 @@ angular.module('bitbloqApp')
 
         function clearSerialPortData() {
             exports.serial.serialPortData = '';
+        }
+
+        /**
+         * Pause Serial Port
+         * @param {*} params 
+         */
+
+        function pauseSerialPort(params) {
+            var defer = $q.defer();
+
+            if (params && params.sendToWith) {
+                pauseSerialPortWith(params.closeWith, defer);
+            } else {
+                _detectWeb2boardVersion().then(function (version) {
+                    pauseSerialPortWith(version, params, defer);
+                });
+            }
+            return defer.promise;
+        }
+
+        function pauseSerialPortWith(w2bVersion, params, promise) {
+            switch (w2bVersion) {
+                case 'web2boardJS':
+                    web2boardJS.pauseSerialPort(params).then(function (result) {
+                        _finalizePauseSerialPort(null, result, promise);
+                    }, function (error) {
+                        _finalizePauseSerialPort(error, null, promise);
+                    });
+                    break;
+                case 'web2boardV2':
+                    /*if (!_web2boardV2ListeneresAdded) {
+                        addWeb2boardV2Listeners();
+                    }
+                    //no response, the service manage the states and alerts
+                    web2boardV1.externalUpload(params.board, params.code);*/
+                    break;
+                case 'web2boardOnline':
+                    /*web2boardOnline.compile(params).then(function (result) {
+                        _finalizeCompiling(null, result, promise);
+                    }, function (error) {
+                        _finalizeCompiling(error, null, promise);
+                    });*/
+                    break;
+                default:
+                    $log.error('w2bVersion not defined');
+                    promise.reject({
+                        status: -1,
+                        error: 'w2bVersion-not-defined-pauseserialport'
+                    });
+            }
+        }
+
+        function _finalizePauseSerialPort(error, result, promise) {
+            if (error) {
+                if (promise) {
+                    promise.reject(error);
+                }
+            } else {
+                if (promise) {
+                    promise.resolve(result);
+                }
+            }
         }
 
         /**

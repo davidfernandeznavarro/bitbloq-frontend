@@ -17,6 +17,7 @@ angular.module('bitbloqApp')
             openSerialPort: openSerialPort,
             closeSerialPort: closeSerialPort,
             sendToSerialPort: sendToSerialPort,
+            pauseSerialPort: pauseSerialPort,
             startWeb2board: startWeb2board
         };
 
@@ -25,7 +26,8 @@ angular.module('bitbloqApp')
             getVersionMaxTrys = 1,
             _web2boardLaunched = false,
             _closeSerialPortFunction,
-            _serial;
+            _serial,
+            _ignoreSerialPortMessages = false;
 
         /**
          * [compile description]
@@ -52,6 +54,7 @@ angular.module('bitbloqApp')
         }
 
         function openSerialPort(params) {
+            _ignoreSerialPortMessages = false;
             _closeSerialPortFunction = params.closeSerialPortFunction;
             _serial = params.serial;
             return _sendToWeb2boardJS('openserialport', params);
@@ -63,6 +66,15 @@ angular.module('bitbloqApp')
 
         function sendToSerialPort(params) {
             return _sendToWeb2boardJS('sendtoserialport', params);
+        }
+
+        function pauseSerialPort(params) {
+            var defer = $q.defer();
+            _ignoreSerialPortMessages = params.pause;
+
+            defer.resolve();
+
+            return defer.promise;
         }
 
         function _sendToWeb2boardJS(eventName, data, avoidStartWeb2board) {
@@ -132,7 +144,7 @@ angular.module('bitbloqApp')
                     });
                     socket.on('serialportdata', function (data) {
                         console.log('serialport data' + data);
-                        if (_serial) {
+                        if (_serial && !_ignoreSerialPortMessages) {
                             _serial.serialPortData += data + '\n';
                             _serial.scopeRefreshFunction();
                         }

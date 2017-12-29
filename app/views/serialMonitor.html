@@ -20,7 +20,7 @@
     <!-- Submit Form -->
     <div>
         <button class="btn btn--tertiary btn--small" ng-click="onPause()">{{pauseText}}</button>
-        <button class="btn btn--tertiary btn--small" ng-click="onClear()">{{'serial-clear' | translate}}</button>
+        <button class="btn btn--tertiary btn--small" ng-click="web2board.clearSerialPortData()">{{'serial-clear' | translate}}</button>
         <common-dropdown id="serialmonitor--dropdown--baudrate" options="baudrateOptions" class="right" direction="up" heading-option="currentBaudRate"
             options-click="onBaudrateChanged"></common-dropdown>
     </div>

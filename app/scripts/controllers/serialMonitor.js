@@ -100,14 +100,27 @@ angular.module('bitbloqApp')
             $scope.pause = !$scope.pause;
             if ($scope.pause) {
                 //$scope.serial.dataReceived += '\n\nSerial Monitor paused\n\n';
-                $scope.serialPortData += '\n\n' + $translate.instant('serial-pause') + '\n\n';
-                scrollTextAreaToBottom();
+                web2board.pauseSerialPort({
+                    pause: true
+                }).then(function () {
+                    web2board.serial.serialPortData += '\n\n' + $translate.instant('plotter-pause') + '\n\n';
+                    scrollTextAreaToBottom();
+                    $scope.pauseText = $translate.instant('serial-play');
+                }, function () {
+                    $scope.pause = false;
+                    $scope.pauseText = $translate.instant('serial-pause');
+                });
+            } else {
+                web2board.pauseSerialPort({
+                    pause: false
+                }).then(function () {
+                    scrollTextAreaToBottom();
+                    $scope.pauseText = $translate.instant('serial-pause');
+                }, function () {
+                    $scope.pause = true;
+                    $scope.pauseText = $translate.instant('serial-play');
+                });
             }
-            $scope.pauseText = $scope.pause ? $translate.instant('serial-play') : $translate.instant('serial-pause');
-        };
-
-        $scope.onClear = function () {
-            $scope.serialPortData = '';
         };
 
         $scope.getPorts = function () {
