@@ -9,7 +9,7 @@
     </div>
     <div class="form-control">
         <span class="serial--send--content">
-            <input class="serial--send--input" type="text" data-ng-model="serial.input" placeholder="Send text to board" data-element="login-emailusername-intput"
+            <input class="serial--send--input" type="text" data-ng-model="inputText" placeholder="Send text to board" data-element="serialmonitor-input"
                 ng-keypress="onKeyPressedInInput($event)">
             <button class="btn btn--tertiary btn--small" ng-click="send()">{{'serial-send' | translate}}</button>
         </span>

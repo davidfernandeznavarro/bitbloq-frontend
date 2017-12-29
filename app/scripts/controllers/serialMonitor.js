@@ -52,6 +52,7 @@ angular.module('bitbloqApp')
         $scope.baudrateOptions = [300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200];
         $scope.currentBaudRate = 9600;
         $scope.serialPortData = '';
+        $scope.inputText = '';
         /*$scope.serial = {
             dataReceived: '',
             input: '',
@@ -73,7 +74,10 @@ angular.module('bitbloqApp')
             }
             $scope.serial.input = '';*/
 
-            web2board.sendToSerialPort();
+            web2board.sendToSerialPort({
+                data: $scope.inputText
+            });
+            $scope.inputText = '';
         };
 
         $scope.onKeyPressedInInput = function (event) {

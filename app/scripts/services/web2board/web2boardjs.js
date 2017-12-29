@@ -16,6 +16,7 @@ angular.module('bitbloqApp')
             getPorts: getPorts,
             openSerialPort: openSerialPort,
             closeSerialPort: closeSerialPort,
+            sendToSerialPort: sendToSerialPort,
             startWeb2board: startWeb2board
         };
 
@@ -58,6 +59,10 @@ angular.module('bitbloqApp')
 
         function closeSerialPort(params) {
             return _sendToWeb2boardJS('closeserialport', params);
+        }
+
+        function sendToSerialPort(params) {
+            return _sendToWeb2boardJS('sendtoserialport', params);
         }
 
         function _sendToWeb2boardJS(eventName, data, avoidStartWeb2board) {
