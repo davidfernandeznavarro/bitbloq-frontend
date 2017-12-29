@@ -348,7 +348,8 @@ angular.module('bitbloqApp')
                         port: params.port,
                         baudRate: params.baudRate,
                         closeSerialPortFunction: _finalizeClosingSerialPort,
-                        serial: exports.serial
+                        serial: exports.serial,
+                        forceReconnect: params.forceReconnect
                     }).then(function (result) {
                         _finalizeOpeneningSerialPort(null, result, promise);
                     }, function (error) {
@@ -396,6 +397,9 @@ angular.module('bitbloqApp')
                 }
             }
         }
+
+
+
         /**
          * Close Serial
          * @param {*} params 

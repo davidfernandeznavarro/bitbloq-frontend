@@ -14,7 +14,6 @@ angular.module('bitbloqApp')
         /*Private vars*/
         //var serialHub = web2boardV2.api.SerialMonitorHub,
         var textArea = $element.find('#serialData'),
-            textAreaMaxLength = 20000,
             autoScrollActivated = true;
         //its setted when the windows its open
         //$scope.board
@@ -51,7 +50,7 @@ angular.module('bitbloqApp')
         /*public vars*/
         $scope.web2board = web2board;
         $scope.baudrateOptions = [300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200];
-        $scope.currentBaudrate = 9600;
+        $scope.currentBaudRate = 9600;
         $scope.serialPortData = '';
         /*$scope.serial = {
             dataReceived: '',
@@ -85,12 +84,12 @@ angular.module('bitbloqApp')
 
         $scope.onBaudrateChanged = function (baudRate) {
             $scope.currentBaudRate = baudRate;
+            $scope.setPort($scope.selectedPort.portName, true);
             /*if (common.useChromeExtension() || $scope.forceChromeExtension) {
                 chromeAppApi.changeBaudrate(baudrate);
             } else {
                 serialHub.server.changeBaudrate($scope.port, baudrate);
             }*/
-            web2board.setSerialPortBaudRate(baudRate);
         };
 
         $scope.onPause = function () {
@@ -149,7 +148,7 @@ angular.module('bitbloqApp')
             });
         };
 
-        $scope.setPort = function (portName) {
+        $scope.setPort = function (portName, forceReconnect) {
             var port = _.find($scope.ports, {
                 portName: portName
             });
@@ -158,8 +157,9 @@ angular.module('bitbloqApp')
             web2board.clearSerialPortData();
             web2board.openSerialPort({
                 port: $scope.selectedPort.comName,
-                baudRate: $scope.currentBaudrate,
-                scopeRefreshFunction: refreshScope
+                baudRate: $scope.currentBaudRate,
+                scopeRefreshFunction: refreshScope,
+                forceReconnect: forceReconnect
             }).then(function (response) {
                 console.log('ok openSerialPort', response);
             }, function (error) {
@@ -174,9 +174,7 @@ angular.module('bitbloqApp')
             utils.apply($scope);
         }
 
-        function scrollHandler(evt) {
-            console.log(evt);
-            console.log(textArea[0].scrollTop, textArea[0].scrollHeight, textArea.height(), textArea[0].scrollHeight - textArea.height());
+        function scrollHandler() {
             if ((textArea[0].scrollTop) < (textArea[0].scrollHeight - textArea.height() - 40)) {
                 autoScrollActivated = false;
             } else {
