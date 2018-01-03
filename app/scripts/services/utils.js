@@ -656,6 +656,7 @@ angular.module('bitbloqApp')
                             newItem = _.cloneDeep(hardwareService.componentsMap[newProject.hardware.components[i].uuid || newProject.hardware.components[i].id]);
                             newItem.integratedComponent = newProject.hardware.components[i].integratedComponent;
                             newItem.oscillator = newProject.hardware.components[i].oscillator;
+                            newItem.i2cAddress = newProject.hardware.components[i].i2cAddress;
                             newItem.baudRate = newProject.hardware.components[i].baudRate;
                             newItem.coordinates = newProject.hardware.components[i].coordinates;
                             newItem.connected = newProject.hardware.components[i].connected;

@@ -10,23 +10,34 @@
             <img class="bitbloqconnect-icon handcursor" tabindex="1" ng-show="currentProject.useBitbloqConnect" src="/images/components/device.svg"
             />
             <a class="bitbloqconnect--badge" target="_blank" ng-href='{{envData.config.playStoreUrl}}'>
-                <img alt='Get it on Google Play' ng-src="{{'https://play.google.com/intl/en_us/badges/images/generic/' + langToBadge[translate.use()] + '_badge_web_generic.png'}}" />
+                <img alt='Get it on Google Play' ng-src="{{'https://play.google.com/intl/en_us/badges/images/generic/' + langToBadge[translate.use()] + '_badge_web_generic.png'}}"
+                />
             </a>
         </div>
         <div class="name--container">
             <div class="component-name__container" ng-class="{opaque:componentSelected, noborder:componentSelected.message}">
                 <span class="form--input form--input--reset">
                     <label for="componentName" ng-show="!componentSelected.message" class="component-name__label">{{'name' | translate}}</label>
-                    <input id="componentName" ng-show="!componentSelected.message" class="component-name__input" type="text" placeholder="{{'insert-name' | translate}}" data-ng-model="componentSelected.name" data-ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }" data-element="hwtab-componentName-input">
+                    <input id="componentName" ng-show="!componentSelected.message" class="component-name__input" type="text" placeholder="{{'insert-name' | translate}}"
+                        data-ng-model="componentSelected.name" data-ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }"
+                        data-element="hwtab-componentName-input">
                     <label ng-show="componentSelected.message" class="component-name__label">{{componentSelected.message | translate}}</label>
                     <span ng-if="componentSelected.oscillator !== undefined" class="input input--checkbox input--checkbox__oscillator form--input--reset">
                         <label for="sample--checkbox" class="component-name__label">{{'make-hardware-component-oscillator' | translate}}</label>
                         <input type="checkbox" id="oscillator--checkbox" class="oscillator--checkbox" name="oscillator--checkbox" data-ng-model="componentSelected.oscillator">
                     </span>
-                <span ng-if="componentSelected.baudRate" class="form--input--reset baudrate__container">
+                    <span ng-if="componentSelected.baudRate" class="form--input--reset baudrate__container">
                         <label for="componentBaudRate" class="component-name__label">{{'make-hardware-component-baudrate' | translate}}</label>
-                        <common-dropdown class="baudrate__dropdown form--input--reset" options="baudRates" options-click="setBaudRate" shown-option="componentSelected.baudRate" />
+                        <common-dropdown class="baudrate__dropdown form--input--reset" options="baudRates" options-click="setBaudRate" shown-option="componentSelected.baudRate"
+                        />
                     </span>
+                    <span ng-show="componentSelected.metadata.i2cAddress || (componentSelected.metadata.i2cAddress=== '')" class="form--input--reset baudrate__container">
+                        <label for="componenti2caddress" class="component-name__label">{{'make-hardware-component-i2c-address' | translate}}</label>
+                        <input id="componenti2caddress" class="component-name__input" type="text" placeholder="0x20" data-ng-model="componentSelected.metadata.i2cAddress"
+                            data-ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }" data-element="hwtab-componentName-i2c-address"
+                        />
+                    </span>
+                </span>
                 </span>
             </div>
         </div>
@@ -88,8 +99,10 @@
                 <use xlink:href="#info"></use>
             </svg>
             <span class="robot-info__text" ng-class="{'cursor-hand':(common.section !=='exercise' && common.section !=='task' )}">
-                <p class="robot-info__text--days" ng-class="{'cursor-hand':(common.section !=='exercise') && common.section !=='task'}">{{common.section ==='exercise'  ? groups.length > 0 ? 'robot-center-activate' : 'robot-activate-exercise': common.section ==='task' ? 'robot-center-activate' : 'robot-activate'| translate}}</p>
-                <p class="robot-info__text--activate" ng-class="{'cursor-hand':(common.section !=='exercise' && common.section !=='task')}">{{ common.section ==='exercise' ? groups.length > 0  ? 'robot-contact' : 'robot-center-assign': common.section ==='task' ? 'robot-center-task': 'robot-trial-introduce-compile' | translate}}</p>
+                <p class="robot-info__text--days" ng-class="{'cursor-hand':(common.section !=='exercise') && common.section !=='task'}">{{common.section ==='exercise' ? groups.length > 0 ? 'robot-center-activate' : 'robot-activate-exercise':
+                    common.section ==='task' ? 'robot-center-activate' : 'robot-activate'| translate}}</p>
+                <p class="robot-info__text--activate" ng-class="{'cursor-hand':(common.section !=='exercise' && common.section !=='task')}">{{ common.section ==='exercise' ? groups.length > 0 ? 'robot-contact' : 'robot-center-assign': common.section
+                    ==='task' ? 'robot-center-task': 'robot-trial-introduce-compile' | translate}}</p>
             </span>
         </div>
         <svg class="svg-icon robot-info__close" ng-click="closeActivationWarning()" ng-class="{'cursor-hand':(common.section !=='exercise' && common.section !=='task')}">

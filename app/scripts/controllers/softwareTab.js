@@ -571,6 +571,16 @@ angular.module('bitbloqApp')
                                     result = false;
                                 }
                                 break;
+                            case 'lcdWritePositionAdvanced':
+                            case 'lcdTurnOnOffAdvanced':
+                            case 'lcdWriteAdvanced':
+                            case 'lcdWritePositionAdvanced-v1':
+                            case 'lcdTurnOnOff':
+                            case 'lcdWrite':
+                            case 'lcdWritePosition':
+                            case 'lcdClear':
+                                result = existComponent(['lcd', 'lcd_generic'], connectedComponents);
+                                break;
                             default:
                                 i = 0;
                                 while (!result && (i < connectedComponents.length)) {
