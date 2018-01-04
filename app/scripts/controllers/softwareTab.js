@@ -430,8 +430,6 @@ angular.module('bitbloqApp')
                         result = existComponent(['bt', 'sp', 'device', 'mkb_bluetooth'], connectedComponents);
                     } else if (item.indexOf('phone') > -1) {
                         result = $scope.currentProject.useBitbloqConnect;
-                    } else if (item.includes('rgb')) {
-                        result = existComponent(['RGBled'], connectedComponents);
                     } else if (item.includes('oscillator')) {
                         i = 0;
                         while (!result && (i < connectedComponents.length)) {
@@ -580,6 +578,15 @@ angular.module('bitbloqApp')
                             case 'lcdWritePosition':
                             case 'lcdClear':
                                 result = existComponent(['lcd', 'lcd_generic'], connectedComponents);
+                                break;
+                            case 'rgbLed':
+                            case 'rgbLedOff':
+                            case 'rgbLedSimple':
+                            case 'rgbLedAdvanced':
+                                result = existComponent(['RGBled', 'neoRGBled'], connectedComponents);
+                                break;
+                            case 'rgbLedFade':
+                                result = existComponent(['RGBled'], connectedComponents);
                                 break;
                             default:
                                 i = 0;
@@ -1441,6 +1448,8 @@ angular.module('bitbloqApp')
             $window.removeEventListener('bloqs:dragend', onDragEnd);
             $window.removeEventListener('bloqs:startMove', onMoveBloq);
             bloqsTabsEvent();
-            translateChangeStartEvent();
+            if (translateChangeStartEvent) {
+                translateChangeStartEvent();
+            }
         });
     });

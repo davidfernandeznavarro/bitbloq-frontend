@@ -388,6 +388,9 @@ angular.module('bitbloqApp')
             option: 'RGBled',
             value: false
         }, {
+            option: 'neoRGBled',
+            value: false
+        }, {
             option: 'sound',
             value: false
         }, {
