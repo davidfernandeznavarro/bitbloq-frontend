@@ -961,11 +961,14 @@ module.exports = function (grunt) {
             fs.renameSync(configFiles[i].path + '/' + configFiles[i].name, configFiles[i].path + '/' + newName);
             replaceFileName(configFiles[i].name, newName, this.data.replaceConfigNames);
         }
-
+        var ignoredImages = ['zum-power.png', 'zum-bt-comm.png'];
         for (i = 0; i < imageFiles.length; i++) {
             newName = timestamp + '.' + imageFiles[i].name;
-            fs.renameSync(imageFiles[i].path + '/' + imageFiles[i].name, imageFiles[i].path + '/' + newName);
-            replaceFileName(imageFiles[i].name, newName, this.data.replaceImageNames);
+            console.log(imageFiles[i].name, ignoredImages.indexOf(imageFiles[i].name));
+            if (ignoredImages.indexOf(imageFiles[i].name) === -1) {
+                fs.renameSync(imageFiles[i].path + '/' + imageFiles[i].name, imageFiles[i].path + '/' + newName);
+                replaceFileName(imageFiles[i].name, newName, this.data.replaceImageNames);
+            }
         }
 
         for (i = 0; i < staticFiles.length; i++) {
