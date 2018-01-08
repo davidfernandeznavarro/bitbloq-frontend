@@ -36,3 +36,4 @@ sendToTranslate
 package-lock\.json
 makeConfig.js
 .vscode/terminals.json
+launch.json
