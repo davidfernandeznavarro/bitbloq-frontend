@@ -23,7 +23,7 @@ angular.module('bitbloqApp')
 
         var socket,
             _timeToWaitToOpenWeb2board = 3000,
-            _timeToWaitToWeb2boardMessages = 5000,
+            _timeToWaitToWeb2boardMessages = 7000,
             getVersionMaxTrys = 1,
             _web2boardLaunched = false,
             _closeSerialPortFunction,
@@ -40,15 +40,15 @@ angular.module('bitbloqApp')
          */
         function compile(params) {
 
-            return _sendToWeb2boardJS({ eventName: 'compile', data: params });
+            return _sendToWeb2boardJS({ eventName: 'compile', data: params, timeoutTime: 20000 });
         }
 
         function upload(params) {
-            return _sendToWeb2boardJS({ eventName: 'upload', data: params });
+            return _sendToWeb2boardJS({ eventName: 'upload', data: params, timeoutTime: 20000 });
         }
 
         function getPorts() {
-            return _sendToWeb2boardJS({ eventName: 'getports' });
+            return _sendToWeb2boardJS({ eventName: 'getports', timeoutTime: 10000 });
         }
 
         function getVersion() {
@@ -66,7 +66,7 @@ angular.module('bitbloqApp')
                     port: params.port,
                     forceReconnect: params.forceReconnect
                 },
-                timeoutTime: 7000
+                timeoutTime: 10000
             });
         }
 
@@ -150,32 +150,33 @@ angular.module('bitbloqApp')
             var defer = $q.defer();
             if (!socket) {
                 socket = io('http://localhost:9876');
-                socket.on('connect', function () {
-                    socket.on('message', function (msg) {
-                        console.log('msg', msg);
-                    });
-                    socket.on('serialportdata', function (data) {
-                        console.log('serialport data' + data);
-                        if (_serial && !_ignoreSerialPortMessages) {
-                            _serial.serialPortData += data + '\n';
-                            _serial.scopeRefreshFunction();
-                        }
-                    });
-                    socket.on('serialportclosed', function () {
-                        console.log('serialportclosed');
-                        if (_closeSerialPortFunction) {
-                            _closeSerialPortFunction();
-                        }
-                    });
+                socket.on('connect', function (something) {
+                    if (socket) {
+                        socket.on('message', function (msg) {
+                            console.log('msg', msg);
+                        });
+                        socket.on('serialportdata', function (data) {
+                            console.log('serialport data' + data);
+                            if (_serial && !_ignoreSerialPortMessages) {
+                                _serial.serialPortData += data + '\n';
+                                _serial.scopeRefreshFunction();
+                            }
+                        });
+                        socket.on('serialportclosed', function () {
+                            console.log('serialportclosed');
+                            if (_closeSerialPortFunction) {
+                                _closeSerialPortFunction();
+                            }
+                        });
 
-                    socket.on('disconnect', function (reason) {
-                        $log.log('disconnect on socket', reason);
-                        defer.reject();
-                        _closeSocket();
-                    });
-                    defer.resolve();
+                        socket.on('disconnect', function (reason) {
+                            $log.log('disconnect on socket', reason);
+                            defer.reject();
+                            _closeSocket();
+                        });
+                        defer.resolve();
+                    }
                 });
-
                 socket.on('error', function (error) {
                     $log.log('error on socket', error);
                     defer.reject();
@@ -186,6 +187,7 @@ angular.module('bitbloqApp')
                     defer.reject();
                     _closeSocket();
                 });
+
             } else {
                 defer.resolve();
             }

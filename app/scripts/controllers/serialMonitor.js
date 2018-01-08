@@ -144,7 +144,9 @@ angular.module('bitbloqApp')
             }).catch(function (error) {
                 console.log('error SerialMonitorCtrl', error);
             });*/
-            web2board.getPorts().then(function (response) {
+            web2board.getPorts({
+                getWith: 'web2boardV2'
+            }).then(function (response) {
                 var ports = response.data;
                 console.log('ports SerialMonitorCtrl', ports);
                 $scope.ports = ports;
