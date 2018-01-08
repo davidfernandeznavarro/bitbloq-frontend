@@ -9,7 +9,7 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('LoginCtrl', function($scope, User, envData, $log, userApi, _, $cookieStore, $auth, $location, $q, moment, alertsService, ngDialog, $routeParams, $translate, $rootScope, userRobotsApi, $localStorage, $timeout) {
+    .controller('LoginCtrl', function ($scope, User, envData, $log, userApi, _, $cookieStore, $auth, $location, $q, moment, alertsService, ngDialog, $routeParams, $translate, $rootScope, userRobotsApi, $localStorage, $timeout) {
 
         $scope.envData = envData;
         $scope.common.isLoading = false;
@@ -74,12 +74,12 @@ angular.module('bitbloqApp')
             email,
             facebookErrorToast;
 
-        $scope.authenticate = function(prov) {
+        $scope.authenticate = function (prov) {
             localStorage.removeItem('satellizer_token');
             $cookieStore.remove('token');
             $scope.isLessThan18 = false;
             $scope.userUnder14Years = false;
-            $auth.authenticate(prov).then(function(response) {
+            $auth.authenticate(prov).then(function (response) {
                 var options = {
                     provider: prov,
                     accessToken: response.access_token
@@ -88,7 +88,7 @@ angular.module('bitbloqApp')
                 $scope.common.isLoading = true;
                 $scope.providerOptions = options;
 
-                userApi.loginBySocialNetwork($scope.providerOptions).then(function(loginResponse) {
+                userApi.loginBySocialNetwork($scope.providerOptions).then(function (loginResponse) {
                     if (loginResponse.data.next === 'register') {
                         if (!loginResponse.data.user.social[prov].ageRange || loginResponse.data.user.social[prov].ageRange.max <= 18) {
                             $scope.isLessThan18 = true;
@@ -107,10 +107,10 @@ angular.module('bitbloqApp')
                     } else {
                         $cookieStore.put('token', loginResponse.data.token);
                         userApi.currentUser = User.get();
-                        userApi.currentUser.$promise.then(function(user) {
-                            userRobotsApi.getUserRobots(user._id).then(function(res) {
+                        userApi.currentUser.$promise.then(function (user) {
+                            userRobotsApi.getUserRobots(user._id).then(function (res) {
                                 user.thirdPartyRobots = res.data;
-                            }).finally(function() {
+                            }).finally(function () {
                                 $scope.common.setUser(user);
                                 $scope.common.isLoading = false;
                                 if ($scope.common.user.hasBeenAskedIfTeacher || $scope.common.user.newsletter) {
@@ -119,7 +119,7 @@ angular.module('bitbloqApp')
                                     teacherModal();
                                 }
                             });
-                        }).catch(function() {
+                        }).catch(function () {
                             $scope.common.isLoading = false;
                             alertsService.add({
                                 text: 'login-user-anon-error',
@@ -128,7 +128,7 @@ angular.module('bitbloqApp')
                             });
                         });
                     }
-                }).catch(function(err) {
+                }).catch(function (err) {
                     if (err.status === 503) {
                         facebookErrorToast = alertsService.add({
                             text: 'login-user-facebook-error',
@@ -151,7 +151,7 @@ angular.module('bitbloqApp')
             $location.path('/bitbloq-help');
         }
 
-        $scope.checkAge = function(form) {
+        $scope.checkAge = function (form) {
             if (form.birthday && form.birthday.day && form.birthday.month && form.birthday.year) {
                 var validBirthday = moment(form.birthday.day + ', ' + form.birthday.month + ', ' + form.birthday.year, 'DD, MM, YYYY')
                     .isValid();
@@ -164,7 +164,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.checkEmail = function() {
+        $scope.checkEmail = function () {
             var defered = $q.defer();
             if ($scope.showEmailForm) {
                 $scope.focus = false;
@@ -176,7 +176,7 @@ angular.module('bitbloqApp')
                     if ($scope.user.email && $scope.user.email !== '') {
                         $scope.email.empty = false;
                         $scope.email.searching = true;
-                        userApi.validateEmail($scope.user.email.toLowerCase()).then(function(res) {
+                        userApi.validateEmail($scope.user.email.toLowerCase()).then(function (res) {
                             if (res.status === 200) {
                                 $scope.email.searching = false;
                                 $scope.email.search = true;
@@ -201,12 +201,12 @@ angular.module('bitbloqApp')
             return defered.promise;
         };
 
-        $scope.checkSocialForm = function() {
+        $scope.checkSocialForm = function () {
             $scope.checkUserName();
             $scope.checkEmail();
         };
 
-        $scope.checkUserName = function() {
+        $scope.checkUserName = function () {
             var defered = $q.defer();
             $scope.focus = false;
             if ($scope.user.username !== userName) {
@@ -217,7 +217,7 @@ angular.module('bitbloqApp')
                     if (isUserName()) {
                         $scope.username.empty = false;
                         $scope.username.searching = true;
-                        userApi.validateUserName($scope.user.username.toLowerCase()).then(function(res) {
+                        userApi.validateUserName($scope.user.username.toLowerCase()).then(function (res) {
                             if (res.status === 200) {
                                 $scope.username.searching = false;
                                 $scope.username.search = true;
@@ -243,11 +243,11 @@ angular.module('bitbloqApp')
             return defered.promise;
         };
 
-        $scope.focusHandler = function(evt) {
+        $scope.focusHandler = function (evt) {
             $scope.focus = evt.currentTarget.name;
         };
 
-        $scope.loginSubmit = function(form) {
+        $scope.loginSubmit = function (form) {
             $scope.errors.login.emailUserName = false;
             $scope.errors.login.password = false;
             if (!form.emailusername.$invalid && !form.password.$invalid) {
@@ -264,7 +264,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.registerSubmit = function(form) {
+        $scope.registerSubmit = function (form) {
             $scope.isRegistering = true;
             form.username.submitted = true;
             form.password.submitted = true;
@@ -279,7 +279,7 @@ angular.module('bitbloqApp')
             $scope.register(form);
         };
 
-        $scope.register = function(form) {
+        $scope.register = function (form) {
             $scope.errors.register = {
                 email: false,
                 birthday: false,
@@ -302,12 +302,12 @@ angular.module('bitbloqApp')
                 $scope.user.username = $scope.user.username.toLowerCase();
                 $scope.user.hasBeenAskedIfTeacher = true;
                 $scope.user.language = $translate.use();
-                userApi.registerUser($scope.user, function(err) {
+                userApi.registerUser($scope.user, function (err) {
                     if (err) {
                         throw err;
                     }
                     login(true);
-                }, function(res) {
+                }, function (res) {
                     fireShakeEffect();
                     var errors = res.data.errors;
                     if (errors.email) {
@@ -394,7 +394,7 @@ angular.module('bitbloqApp')
             return validate;
         }
 
-        $scope.registerSocial = function(form) {
+        $scope.registerSocial = function (form) {
             $scope.common.isLoading = true;
             form.usernameSocial.submitted = true;
             form.readServiceTerm.submitted = true;
@@ -408,7 +408,7 @@ angular.module('bitbloqApp')
                 form.tutorEmail.submitted = true;
             }
 
-            $scope.checkUserName().then(function() {
+            $scope.checkUserName().then(function () {
                 form.birthday = $scope.socialYounger.birthday;
                 var thereAreErrors = _checkAndSetBirthday(form, !$scope.isLessThan18);
                 if (!$scope.username.invalid && !form.usernameSocial.$error.required && $scope.username.free && $scope.user.cookiePolicyAccepted) {
@@ -416,7 +416,7 @@ angular.module('bitbloqApp')
                         $scope.common.isLoading = false;
                         fireShakeEffect();
                     } else {
-                        $scope.checkEmail().then(function() {
+                        $scope.checkEmail().then(function () {
                             if (_validateRegister(form, 'social')) {
                                 if ($scope.userUnder14Years) {
                                     $scope.user.needValidation = true;
@@ -462,10 +462,10 @@ angular.module('bitbloqApp')
                     });
                 }
 
-                userApi.loginBySocialNetwork($scope.providerOptions).then(function(response) {
+                userApi.loginBySocialNetwork($scope.providerOptions).then(function (response) {
                     $cookieStore.put('token', response.data.token);
                     userApi.currentUser = User.get();
-                    userApi.currentUser.$promise.then(function(user) {
+                    userApi.currentUser.$promise.then(function (user) {
                         $scope.common.setUser(user);
                         if ($scope.common.user.hasBeenAskedIfTeacher || $scope.common.user.newsletter) {
                             _goToHome();
@@ -479,34 +479,34 @@ angular.module('bitbloqApp')
             }
         }
 
-        $scope.setForgotPassword = function() {
+        $scope.setForgotPassword = function () {
             var $loginContainer = angular.element('#loginContainer');
             _transitionForm($loginContainer);
             // change password lock punisher
             $scope.formForgotPass.init()
         };
 
-        $scope.setForgotPasswordFromRegister = function() {
+        $scope.setForgotPasswordFromRegister = function () {
             var $registerContainer = angular.element('#registerContainer');
             _transitionForm($registerContainer);
         };
 
-        $scope.setLoginFromForgotPassword = function() {
+        $scope.setLoginFromForgotPassword = function () {
             var $forgotPasswordContainer = angular.element('#isForgotPassword');
             _transitionForm($forgotPasswordContainer);
         };
 
-        $scope.setLoginFromRegister = function() {
+        $scope.setLoginFromRegister = function () {
             $scope.isLogin = true;
             var $registerContainer = angular.element('#registerContainer');
             _transitionForm($registerContainer);
         };
 
-        $scope.forgotPassword = function(formForgot) {
+        $scope.forgotPassword = function (formForgot) {
             $scope.recovery.emailError = false;
             if (_.isEmpty(formForgot.$error)) {
-                userApi.getUserId(formForgot.emailToSend.$modelValue).then(function() {
-                    userApi.forgottenPassword(formForgot.emailToSend.$modelValue).then(function() {
+                userApi.getUserId(formForgot.emailToSend.$modelValue).then(function () {
+                    userApi.forgottenPassword(formForgot.emailToSend.$modelValue).then(function () {
                         $scope.recovery.success = true;
                         $scope.recovery.error = false;
                         alertsService.add({
@@ -515,12 +515,12 @@ angular.module('bitbloqApp')
                             type: 'ok',
                             time: 5000
                         });
-                    }, function() {
+                    }, function () {
                         fireShakeEffect();
                         $scope.recovery.success = false;
                         $scope.recovery.error = true;
                     });
-                }, function() {
+                }, function () {
                     fireShakeEffect();
                     $scope.recovery.emailError = true;
                 });
@@ -530,7 +530,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.setRegister = function() {
+        $scope.setRegister = function () {
             $scope.isLogin = false;
             var $loginContainer = angular.element('#loginContainer');
             _transitionForm($loginContainer);
@@ -548,7 +548,7 @@ angular.module('bitbloqApp')
             }
         }
 
-        function _transitionForm(item) {
+        function _transitionForm() {//function _transitionForm(item) {
             // item.addClass('form--login__container--transition-down');
             // item.bind('webkitAnimationEnd', function() {
             //     $(this).addClass('hide-container');
@@ -566,7 +566,7 @@ angular.module('bitbloqApp')
         function fireShakeEffect() {
             $scope.isRegistering = false;
             angular.element('[data-effect="shake"]').addClass('shake');
-            setTimeout(function() {
+            setTimeout(function () {
                 angular.element('[data-effect="shake"]').removeClass('shake');
             }, 250);
         }
@@ -584,10 +584,10 @@ angular.module('bitbloqApp')
                 email: $scope.user.email || $scope.user.username,
                 password: $scope.user.password
             };
-            userApi.loginUser(options).then(function(user) {
-                userRobotsApi.getUserRobots(user._id).then(function(res) {
+            userApi.loginUser(options).then(function (user) {
+                userRobotsApi.getUserRobots(user._id).then(function (res) {
                     user.thirdPartyRobots = res.data;
-                }).finally(function() {
+                }).finally(function () {
                     $scope.isRegistering = false;
                     $scope.common.setUser(user);
                     if (user.hasBeenAskedIfTeacher || user.newsletter || register) {
@@ -597,7 +597,7 @@ angular.module('bitbloqApp')
                     }
                 });
 
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log('Error loggin in', error);
                 fireShakeEffect();
                 if (error) {
@@ -623,17 +623,17 @@ angular.module('bitbloqApp')
         }
 
         function teacherModal() {
-            var confirmAction = function() {
-                    $scope.common.user.hasBeenAskedIfTeacher = true;
-                    $scope.common.user.isTeacher = $scope.radioTeacher.model === 'teacher' ? true : false;
-                    userApi.update($scope.common.user).then(function() {
-                        $scope.common.setUser($scope.common.user);
-                        modalTeacher.close();
-                        _goToHome();
-                    }, function(err) {
-                        $log.log('Error', err);
-                    });
-                },
+            var confirmAction = function () {
+                $scope.common.user.hasBeenAskedIfTeacher = true;
+                $scope.common.user.isTeacher = $scope.radioTeacher.model === 'teacher' ? true : false;
+                userApi.update($scope.common.user).then(function () {
+                    $scope.common.setUser($scope.common.user);
+                    modalTeacher.close();
+                    _goToHome();
+                }, function (err) {
+                    $log.log('Error', err);
+                });
+            },
                 modalTeacher,
                 modalOptions = $scope;
             $scope.radioTeacher = {
@@ -660,7 +660,7 @@ angular.module('bitbloqApp')
 
         // AKA: The Punisher
         var maxPunisher = 15; //const, min, try num 5+
-        var punishments = [10,90,300]; // const, seg, try num 2,3,4
+        var punishments = [10, 90, 300]; // const, seg, try num 2,3,4
         var diff = null;
         var timer = 0;
 
@@ -670,9 +670,9 @@ angular.module('bitbloqApp')
         var punisherTimeoutFunc = null
         $timeout.cancel(punisherTimeoutFunc)
 
-        $scope.formForgotPass.init = function() {
+        $scope.formForgotPass.init = function () {
             if (punisherTimeoutFunc) {
-              $timeout.cancel(punisherTimeoutFunc)
+                $timeout.cancel(punisherTimeoutFunc)
             }
             if ($localStorage.formForgotPassWhen) {
                 diff = $scope.formForgotPass.diff()
@@ -687,10 +687,10 @@ angular.module('bitbloqApp')
             }
         }
 
-        $scope.formForgotPass.setLock = function() {
+        $scope.formForgotPass.setLock = function () {
             $localStorage.formForgotPassWhen = moment()
             if (typeof $localStorage.formForgotPassTimeouts === 'number' &&
-                        $localStorage.formForgotPassTimeouts > 0) {
+                $localStorage.formForgotPassTimeouts > 0) {
                 $localStorage.formForgotPassTimeouts++
                 if ($localStorage.formForgotPassTimeouts > 1) {
                     $scope.formForgotPass.lock = true
@@ -701,14 +701,14 @@ angular.module('bitbloqApp')
             }
         }
 
-        $scope.formForgotPass.diff = function() {
+        $scope.formForgotPass.diff = function () {
             var max = maxPunisher * 60
             diff = moment().diff($localStorage.formForgotPassWhen, 'seconds')
             // reduce punisher timeouts counter as maxPunisher-times
-            var diffPunisher = Math.floor(diff / (max/2))
+            var diffPunisher = Math.floor(diff / (max / 2))
             var timeouts = $localStorage.formForgotPassTimeouts
             if (timeouts && timeouts > 0) {
-                var index = [0, 1, 2, 3, 4, 'ALL'].find(function(i) {
+                var index = [0, 1, 2, 3, 4, 'ALL'].find(function (i) {
                     return i === 'ALL' || diffPunisher === i && timeouts > i
                 })
                 timeouts -= (index === 'ALL') ? timeouts : index
@@ -716,7 +716,7 @@ angular.module('bitbloqApp')
             }
 
             // lets return the timer
-            var punishTime = (timeouts >= 2 && timeouts <= 4) ? punishments[timeouts-2] : max
+            var punishTime = (timeouts >= 2 && timeouts <= 4) ? punishments[timeouts - 2] : max
             if (timeouts < 2 || punishTime < diff) {
                 return [false, null]
             } else {
@@ -726,7 +726,7 @@ angular.module('bitbloqApp')
             }
         }
 
-        $scope.formForgotPass.punisher = function() {
+        $scope.formForgotPass.punisher = function () {
             if (!timer || timer <= 0) {
                 $timeout.cancel(punisherTimeoutFunc)
                 $scope.formForgotPass.lock = false
@@ -739,7 +739,7 @@ angular.module('bitbloqApp')
             }
         }
 
-        $scope.formForgotPass.setTimer = function() {
+        $scope.formForgotPass.setTimer = function () {
             return moment('2015-01-01')
                 .startOf('night')
                 .second(timer)
@@ -747,19 +747,19 @@ angular.module('bitbloqApp')
         }
 
         $scope.resetPunishment = function () {
-          $localStorage.formForgotPassWhen = null;
-          $localStorage.formForgotPassTimeouts = null;
-          $scope.formForgotPass.lock = false;
-          $scope.formForgotPass.countdown = '00:00:00';
-          timer = 0;
+            $localStorage.formForgotPassWhen = null;
+            $localStorage.formForgotPassTimeouts = null;
+            $scope.formForgotPass.lock = false;
+            $scope.formForgotPass.countdown = '00:00:00';
+            timer = 0;
         }
 
         $scope.clearPunishment = function () {
             if (envData.config.env !== 'production') {
-              console.log('KONAMI CODE -> clearPunishment()');
-              $scope.resetPunishment()
-              $timeout.cancel(punisherTimeoutFunc);
-              $scope.resetPunishment()
+                console.log('KONAMI CODE -> clearPunishment()');
+                $scope.resetPunishment()
+                $timeout.cancel(punisherTimeoutFunc);
+                $scope.resetPunishment()
             }
         }
 
@@ -777,7 +777,7 @@ angular.module('bitbloqApp')
                 break;
         }
 
-        $scope.common.itsUserLoaded().then(function() {
+        $scope.common.itsUserLoaded().then(function () {
             if ($scope.common.user.hasBeenAskedIfTeacher || $scope.common.user.newsletter) {
                 _goToHome();
             } else {

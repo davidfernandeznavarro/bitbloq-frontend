@@ -8,7 +8,7 @@
  * Service in the bitbloqApp.
  */
 angular.module('bitbloqApp')
-    .service('web2boardOnline', function(compilerApi, chromeAppApi, alertsService, utils, $q, $translate, envData, $rootScope, web2board, $timeout, $location) {
+    .service('web2boardOnline', function (compilerApi, chromeAppApi, alertsService, utils, $q, $translate, envData, $rootScope, web2board, $timeout) {
         var exports = {
             compile: compile,
             upload: upload,
@@ -34,7 +34,7 @@ angular.module('bitbloqApp')
                         alertText = 'compiler-still-inprogress';
                         break;
                 }
-                $timeout(function() {
+                $timeout(function () {
                     if (!completed) {
                         alertCompile = alertsService.add({
                             text: alertText,
@@ -83,12 +83,12 @@ angular.module('bitbloqApp')
             if (!params.upload) {
                 compilerAlerts(compilerPromise);
                 if (envData.config.env !== 'production') {
-                  compilerPromise.then(function(res) {
-                    console.log(res.data.hex);
-                  })
+                    compilerPromise.then(function (res) {
+                        console.log(res.data.hex);
+                    })
                 }
             } else {
-                compilerPromise.finally(function() {
+                compilerPromise.finally(function () {
                     completed = true;
                 });
             }
@@ -99,29 +99,29 @@ angular.module('bitbloqApp')
         function compilerAlerts(compilerPromise) {
             alertCompile = null;
 
-            compilerPromise.then(function(response) {
-                    if (response.data.error) {
-                        alertsService.add({
-                            id: 'compile',
-                            type: 'warning',
-                            translatedText: utils.parseCompileError(response.data.error)
-                        });
-                    } else {
-                        alertsService.add({
-                            text: 'alert-web2board-compile-verified',
-                            id: 'compile',
-                            type: 'ok',
-                            time: 5000
-                        });
-                    }
-                }).catch(function(response) {
+            compilerPromise.then(function (response) {
+                if (response.data.error) {
                     alertsService.add({
                         id: 'compile',
-                        type: 'error',
-                        translatedText: response.data
+                        type: 'warning',
+                        translatedText: utils.parseCompileError(response.data.error)
                     });
-                })
-                .finally(function() {
+                } else {
+                    alertsService.add({
+                        text: 'alert-web2board-compile-verified',
+                        id: 'compile',
+                        type: 'ok',
+                        time: 5000
+                    });
+                }
+            }).catch(function (response) {
+                alertsService.add({
+                    id: 'compile',
+                    type: 'error',
+                    translatedText: response.data
+                });
+            })
+                .finally(function () {
                     web2board.setInProcess(false);
                     completed = true;
                     alertsService.close(alertCompile);
@@ -142,7 +142,7 @@ angular.module('bitbloqApp')
 
                 compileAndUploadDefer = $q.defer();
                 params.upload = true;
-                compile(utils.clone(params)).then(function(response) {
+                compile(utils.clone(params)).then(function (response) {
                     completed = true;
                     alertsService.closeByTag('compiler-timeout');
                     alertsService.closeByTag('upload');
@@ -158,14 +158,14 @@ angular.module('bitbloqApp')
                     } else {
                         params.hex = response.data.hex;
 
-                        upload(params).then(function(uploadResponse) {
+                        upload(params).then(function (uploadResponse) {
                             compileAndUploadDefer.resolve(uploadResponse);
-                        }).catch(function(uploadError) {
+                        }).catch(function (uploadError) {
                             compileAndUploadDefer.reject(uploadError);
                             web2board.setInProcess(false);
                         });
                     }
-                }).catch(function(error) {
+                }).catch(function (error) {
                     compileAndUploadDefer.reject(error);
                     web2board.setInProcess(false);
                 });
@@ -202,12 +202,12 @@ angular.module('bitbloqApp')
                 });
             }
 
-            chromeAppApi.isConnected().then(function() {
+            chromeAppApi.isConnected().then(function () {
                 web2board.setInProcess(true);
                 chromeAppApi.sendHex({
                     board: params.board.mcu,
                     file: params.hex
-                }).then(function(uploadHexResponse) {
+                }).then(function (uploadHexResponse) {
                     $rootScope.$emit('viewer-code:ready');
                     if (params.viewer) {
                         web2board.setInProcess(true);
@@ -228,16 +228,18 @@ angular.module('bitbloqApp')
                     }
 
                     uploadDefer.resolve(uploadHexResponse);
-                }).catch(function(error) {
+                }).catch(function (error) {
                     var text, link, linkText;
                     if (error.error.search('no Arduino') !== -1) {
                         text = 'alert-web2board-no-port-found';
-                        link = function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoardLanding');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); };
+                        link = function () {
+                            var tempA = document.createElement('a');
+                            tempA.setAttribute('href', '#/support/p/noBoardLanding');
+                            tempA.setAttribute('target', '_blank');
+                            document.body.appendChild(tempA);
+                            tempA.click();
+                            document.body.removeChild(tempA);
+                        };
                         linkText = $translate.instant('support-go-to');
                     } else {
                         text = getReadableErrorMessage(error);
@@ -252,7 +254,7 @@ document.body.removeChild(tempA); };
                     web2board.setInProcess(false);
                     uploadDefer.reject(error);
                 });
-            }).catch(function() {
+            }).catch(function () {
                 alertsService.closeByTag('upload');
                 alertsService.add({
                     text: $translate.instant('landing_howitworks_oval_2_chromeos'),
@@ -261,12 +263,12 @@ document.body.removeChild(tempA); };
                     time: 20000,
                     linkText: $translate.instant('from-here'),
                     link: chromeAppApi.installChromeApp,
-                    closeFunction: function() {
+                    closeFunction: function () {
                         uploadDefer.reject({
                             error: 'rejeted by user'
                         });
                     },
-                    linkParams: function(err) {
+                    linkParams: function (err) {
                         if (err) {
                             alertsService.add({
                                 text: $translate.instant('error-chromeapp-install') + ': ' + $translate.instant(err.error),
