@@ -110,10 +110,7 @@ angular.module('bitbloqApp')
                     web2boardV1.externalVerify(params.board, params.code);
                     break;
                 case 'web2boardOnline':
-                    web2boardOnline.compile({
-                        code: params.code,
-                        board: params.board.mcu
-                    }).then(function (result) {
+                    web2boardOnline.compile(params).then(function (result) {
                         _finalizeCompiling(null, result, promise);
                     }, function (error) {
                         _finalizeCompiling(error, null, promise);
@@ -206,11 +203,11 @@ angular.module('bitbloqApp')
                     web2boardV1.externalUpload(params.board, params.code);
                     break;
                 case 'web2boardOnline':
-                    /*web2boardOnline.compile(params).then(function (result) {
-                        _finalizeCompiling(null, result, promise);
+                    web2boardOnline.compileAndUpload(params).then(function (result) {
+                        _finalizeUploading(null, result, promise);
                     }, function (error) {
-                        _finalizeCompiling(error, null, promise);
-                    });*/
+                        _finalizeUploading(error, null, promise);
+                    });
                     break;
                 default:
                     $log.error('w2bVersion not defined');

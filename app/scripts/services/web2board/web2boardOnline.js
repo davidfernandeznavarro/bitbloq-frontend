@@ -64,7 +64,10 @@ angular.module('bitbloqApp')
             completed = false;
             alertServerTimeout();
 
-            var compilerPromise = compilerApi.compile(params);
+            var compilerPromise = compilerApi.compile({
+                board: params.board.mcu,
+                code: params.code
+            });
             if (!params.upload) {
                 compilerAlerts(compilerPromise);
                 if (envData.config.env !== 'production') {

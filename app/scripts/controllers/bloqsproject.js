@@ -47,35 +47,6 @@ angular.module('bitbloqApp')
 
         $scope.isWeb2BoardInProgress = web2boardV1.isInProcess;
 
-
-        /*function serialMonitorW2b1() {
-            if ($scope.isWeb2BoardInProgress()) {
-                return false;
-            }
-            if (projectService.project.hardware.board) {
-                web2boardV1.setInProcess(true);
-                serialMonitorAlert = alertsService.add({
-                    text: 'alert-web2board-openSerialMonitor',
-                    id: 'serialmonitor',
-                    type: 'loading'
-                });
-                var boardReference = projectService.getBoardMetaData();
-                web2boardV1.serialMonitor(boardReference);
-            } else {
-                $scope.currentTab = 0;
-                $scope.levelOne = 'boards';
-            }
-        }
-
-        function serialMonitorW2b2() {
-            if (projectService.project.hardware.board) {
-                web2boardV1.serialMonitor(projectService.getBoardMetaData());
-            } else {
-                $scope.currentTab = 0;
-                $scope.levelOne = 'boards';
-            }
-        }*/
-
         function plotterW2b1() {
             if ($scope.isWeb2BoardInProgress()) {
                 return false;
