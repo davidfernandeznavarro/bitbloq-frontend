@@ -661,6 +661,7 @@ angular.module('bitbloqApp')
                             newItem.baudRate = newProject.hardware.components[i].baudRate;
                             newItem.coordinates = newProject.hardware.components[i].coordinates;
                             newItem.connected = newProject.hardware.components[i].connected;
+                            newItem.metadata = newProject.hardware.components[i].metadata;
                             newItem.name = newProject.hardware.components[i].name;
                             newItem.pin = newProject.hardware.components[i].pin;
                             newItem.endpoints = newProject.hardware.components[i].endpoints;
