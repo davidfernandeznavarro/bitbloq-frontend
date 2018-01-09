@@ -9,7 +9,7 @@
  */
 angular.module('bitbloqApp')
     .service('web2board', function ($log, alertsService, web2boardV1, web2boardV2, web2boardJS, web2boardOnline, utils, $q,
-        common, $rootScope, $translate) {
+        common, $rootScope, $translate, chromeAppApi) {
         var exports = {
             compile: compile,
             upload: upload,
@@ -281,11 +281,6 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardV2':
-                    /*web2boardV1.getPortsCB({ mcu: 'bt328' }).then(function (result) {
-                        _finalizeGetPorts(null, { data: [{ comName: result }] }, promise);
-                    }, function (error) {
-                        _finalizeGetPorts(error, null, promise);
-                    });*/
                     web2boardV2.getPorts().then(function (ports) {
                         var portsWithFormat = [];
                         for (var i = 0; i < ports.length; i++) {
@@ -299,11 +294,11 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardOnline':
-                    /*web2boardOnline.compile(params).then(function (result) {
-                        _finalizeCompiling(null, result, promise);
+                    chromeAppApi.getPorts().then(function (result) {
+                        _finalizeGetPorts(null, { data: result.ports }, promise);
                     }, function (error) {
-                        _finalizeCompiling(error, null, promise);
-                    });*/
+                        _finalizeGetPorts(error, null, promise);
+                    });
                     break;
                 default:
                     $log.error('w2bVersion not defined');
@@ -388,11 +383,13 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardOnline':
-                    /*web2boardOnline.compile(params).then(function (result) {
-                        _finalizeCompiling(null, result, promise);
-                    }, function (error) {
-                        _finalizeCompiling(error, null, promise);
-                    });*/
+                    chromeAppApi.getSerialData({
+                        port: params.port,
+                        baudRate: params.baudRate,
+                        closeSerialPortFunction: _finalizeClosingSerialPort,
+                        serial: exports.serial,
+                        forceReconnect: params.forceReconnect
+                    });
                     break;
                 default:
                     $log.error('w2bVersion not defined');
@@ -459,11 +456,7 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardOnline':
-                    /*web2boardOnline.compile(params).then(function (result) {
-                        _finalizeCompiling(null, result, promise);
-                    }, function (error) {
-                        _finalizeCompiling(error, null, promise);
-                    });*/
+                    //chromeAppApi.stopSerialCommunication();
                     break;
                 default:
                     $log.error('w2bVersion not defined');
@@ -523,11 +516,7 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardOnline':
-                    /*web2boardOnline.compile(params).then(function (result) {
-                        _finalizeCompiling(null, result, promise);
-                    }, function (error) {
-                        _finalizeCompiling(error, null, promise);
-                    });*/
+                    //chromeAppApi.sendSerialData($scope.serial.input);
                     break;
                 default:
                     $log.error('w2bVersion not defined');

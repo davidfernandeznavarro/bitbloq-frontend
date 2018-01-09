@@ -8,13 +8,15 @@
  * Service in the bitbloqApp.
  */
 angular.module('bitbloqApp')
-    .service('chromeAppApi', function($window, $q, envData, alertsService, $rootScope, $translate, $log) {
+    .service('chromeAppApi', function ($window, $q, envData, alertsService, $rootScope, $translate, $log) {
         var exports = {};
 
         var openPort,
             isConnectedPromise,
             uploadPromise,
-            getPortsPromise;
+            getPortsPromise,
+            _serial,
+            _ignoreSerialPortMessages = false;
 
         console.debug('chromeAppId', envData.config.chromeAppId);
 
@@ -27,7 +29,7 @@ angular.module('bitbloqApp')
                     try {
                         console.log('create port');
 
-                        var timeoutId = setTimeout(function() {
+                        var timeoutId = setTimeout(function () {
                             timeoutId = null;
                             isConnectedPromise.reject({
                                 error: 'CONNECTION_TIMEOUT'
@@ -35,7 +37,7 @@ angular.module('bitbloqApp')
                         }, 5000);
 
                         openPort = chrome.runtime.connect(envData.config.chromeAppId);
-                        openPort.onDisconnect.addListener(function(d) {
+                        openPort.onDisconnect.addListener(function (d) {
                             //se desconecta todo el rato? usa 127.0.0.1 y no localhost
                             console.log('port disconnected', d);
 
@@ -49,12 +51,12 @@ angular.module('bitbloqApp')
                             openPort = null;
                         });
 
-                        openPort.onMessage.addListener(function(msg) {
+                        openPort.onMessage.addListener(function (msg) {
                             if (msg === 'connected') {
                                 console.log('chromeapp connected');
                                 clearTimeout(timeoutId);
                                 isConnectedPromise.resolve();
-                            } else if (typeof(msg) === 'object') {
+                            } else if (typeof (msg) === 'object') {
                                 var promise;
                                 switch (msg.type) {
                                     case 'upload':
@@ -96,17 +98,17 @@ angular.module('bitbloqApp')
             return isConnectedPromise.promise;
         }
 
-        exports.sendHex = function(message) {
+        exports.sendHex = function (message) {
             if (!uploadPromise || (uploadPromise.promise.$$state.status !== 0)) {
                 uploadPromise = $q.defer();
-                exports.isConnected().then(function() {
+                exports.isConnected().then(function () {
                     console.log('send hex');
                     message.type = 'upload';
                     if (message.board === 'bt328') {
                         message.board = 'bqZum';
                     }
                     openPort.postMessage(message);
-                }).catch(function(error) {
+                }).catch(function (error) {
                     uploadPromise.reject(error);
                 });
                 return uploadPromise.promise;
@@ -119,12 +121,12 @@ angular.module('bitbloqApp')
             }
         };
 
-        exports.isConnected = function() {
+        exports.isConnected = function () {
             return connect();
         };
 
-        exports.installChromeApp = function(callback) {
-            var timeout = setTimeout(function() {
+        exports.installChromeApp = function (callback) {
+            var timeout = setTimeout(function () {
                 callback({
                     error: 'CHROMEAPP_INSTALLATION_TIMEOUT'
                 });
@@ -134,14 +136,14 @@ angular.module('bitbloqApp')
                 id: 'chromeapp',
                 type: 'loading'
             });
-            chrome.webstore.install('https://chrome.google.com/webstore/detail/' + envData.config.chromeAppId, function(response) {
+            chrome.webstore.install('https://chrome.google.com/webstore/detail/' + envData.config.chromeAppId, function (response) {
                 console.log('response', response);
                 clearTimeout(timeout);
                 if (callback) {
                     callback();
                 }
 
-            }, function(error) {
+            }, function (error) {
                 console.log('install error');
                 console.log('error', error);
                 clearTimeout(timeout);
@@ -154,7 +156,7 @@ angular.module('bitbloqApp')
             });
         };
 
-        exports.stopSerialCommunication = function() {
+        exports.stopSerialCommunication = function () {
             if (openPort) {
                 var message = {};
                 message.type = 'serial-disconnect';
@@ -162,8 +164,14 @@ angular.module('bitbloqApp')
             }
         };
 
-        exports.getSerialData = function(port) {
-            exports.isConnected().then(function() {
+        exports.openSerialPort(params){
+            var defer = $q.defer();
+            exports.getSerialData(params.port);
+            return defer.promise;
+        }
+
+        exports.getSerialData = function (port) {
+            exports.isConnected().then(function () {
                 var message = {};
                 message.type = 'serial-connect';
                 message.port = port;
@@ -171,8 +179,8 @@ angular.module('bitbloqApp')
             });
         };
 
-        exports.sendSerialData = function(data) {
-            exports.isConnected().then(function() {
+        exports.sendSerialData = function (data) {
+            exports.isConnected().then(function () {
                 var message = {};
                 message.type = 'serial-connect-send';
                 message.data = data;
@@ -180,8 +188,8 @@ angular.module('bitbloqApp')
             });
         };
 
-        exports.changeBaudrate = function(baudrate) {
-            exports.isConnected().then(function() {
+        exports.changeBaudrate = function (baudrate) {
+            exports.isConnected().then(function () {
                 var message = {};
                 message.type = 'change-baudrate';
                 message.data = baudrate;
@@ -189,14 +197,14 @@ angular.module('bitbloqApp')
             });
         };
 
-        exports.getPorts = function() {
+        exports.getPorts = function () {
             if (!getPortsPromise || (getPortsPromise.promise.$$state.status !== 0)) {
                 getPortsPromise = $q.defer();
-                exports.isConnected().then(function() {
+                exports.isConnected().then(function () {
                     var message = {};
                     message.type = 'get-ports';
                     openPort.postMessage(message);
-                }).catch(function(error) {
+                }).catch(function (error) {
                     getPortsPromise.reject(error);
                 });
                 return getPortsPromise.promise;
