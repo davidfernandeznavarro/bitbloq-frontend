@@ -33,7 +33,7 @@ angular.module('bitbloqApp')
 
         //DEVELOP- REMOVE
         _detectWeb2boardPromise = $q.defer();
-        exports.web2boardVersion = 'web2boardV2';
+        exports.web2boardVersion = 'web2boardOnline';
         _detectWeb2boardPromise.resolve(exports.web2boardVersion);
 
         function _detectWeb2boardVersion() {
@@ -110,7 +110,10 @@ angular.module('bitbloqApp')
                     web2boardV1.externalVerify(params.board, params.code);
                     break;
                 case 'web2boardOnline':
-                    web2boardOnline.compile(params).then(function (result) {
+                    web2boardOnline.compile({
+                        code: params.code,
+                        board: params.board.mcu
+                    }).then(function (result) {
                         _finalizeCompiling(null, result, promise);
                     }, function (error) {
                         _finalizeCompiling(error, null, promise);
