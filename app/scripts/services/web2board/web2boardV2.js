@@ -562,9 +562,11 @@ angular.module('bitbloqApp')
 
                 api.SerialMonitorHub.server.findBoardPort(board.mcu)
                     .then(function (port) {
+                        inProgress = false;
                         alertsService.close(toast);
-                        generateSerialWindow(port);
+                        //generateSerialWindow(port);
                     }, function (error) {
+                        inProgress = false;
                         alertsService.add({
                             text: 'alert-web2board-no-port-found',
                             id: 'web2board',
@@ -580,13 +582,91 @@ angular.module('bitbloqApp')
                             linkText: $translate.instant('support-go-to')
                         });
                         console.error(error);
-                    })
-                    .finally(function () {
-                        inProgress = false;
                     });
             });
 
         };
+
+        web2board.getPorts = function (board, defer) {
+            defer = defer || $q.defer();
+            openCommunication(function () {
+                api.SerialMonitorHub.server.getAvailablePorts().then(function (ports) {
+                    console.log('ports', ports);
+                    defer.resolve(ports);
+                }, function (err) {
+                    defer.reject(err);
+                });
+            });
+            return defer.promise;
+        }
+
+        web2board.getPortsOLD = function (board, defer) {
+            defer = defer || $q.defer();
+            openCommunication(function () {
+                api.SerialMonitorHub.server.findBoardPort(board.mcu).then(function (data) {
+                    console.log('data', data);
+                    defer.resolve(data);
+                }, function (err) {
+                    defer.reject(err);
+                });
+            });
+            return defer.promise;
+        }
+        var _currentPort;
+        web2board.openSerialPort = function (params) {
+            var defer = $q.defer();
+            api.SerialMonitorHub.server.closeAllConnections().then(function () {
+                _listenSerialPort(params);
+                _currentPort = params.port;
+                api.SerialMonitorHub.server.subscribeToPort(params.port);
+                api.SerialMonitorHub.server.startConnection(params.port, params.baudRate).then(function () {
+                    //created, but seems that never is called
+                    defer.resolve();
+                }).catch(function (error) {
+                    //weird but seems that this means that is ok that error
+                    if (error.error.indexOf('already in use') > -1) {
+                        defer.resolve();
+                    } else {
+                        defer.reject(error);
+                    }
+                });
+            }, function (err) {
+                console.log('cant close connection', err);
+            });
+            return defer.promise;
+        };
+
+        web2board.closeSerialPort = function () {
+            return api.SerialMonitorHub.server.closeAllConnections();
+        };
+
+        web2board.sendToSerialPort = function (params) {
+            return api.SerialMonitorHub.server.write(_currentPort, params.data);
+        };
+        var _ignoreSerialPortMessages = false;
+
+        web2board.pauseSerialPort = function (params) {
+            var defer = $q.defer();
+            _ignoreSerialPortMessages = params.pause;
+
+            defer.resolve();
+
+            return defer.promise;
+        }
+
+        function _listenSerialPort(params) {
+            api.SerialMonitorHub.client.received = function (port, data) {
+                console.log('getting', data);
+                if (params && params.serial && !_ignoreSerialPortMessages) {
+                    if (data['py/bytes']) {
+                        params.serial.serialPortData += data['py/bytes'];
+                    } else {
+                        params.serial.serialPortData += data;
+                    }
+                    params.serial.scopeRefreshFunction();
+                }
+            };
+        }
 
         web2board.chartMonitor = function (board) {
             openSerialWindow('http://localhost:9000/#/chartMonitor', 'Chart monitor', board);
@@ -637,6 +717,7 @@ angular.module('bitbloqApp')
             });
         };
 
+
         return {
             connect: connect,
             verify: web2board.verify,
@@ -647,6 +728,11 @@ angular.module('bitbloqApp')
             version: web2board.version,
             uploadHex: web2board.uploadHex,
             showSettings: web2board.showSettings,
+            openSerialPort: web2board.openSerialPort,
+            closeSerialPort: web2board.closeSerialPort,
+            getPorts: web2board.getPorts,
+            sendToSerialPort: web2board.sendToSerialPort,
+            pauseSerialPort: web2board.pauseSerialPort,
             isInProcess: function () {
                 return inProgress;
             },

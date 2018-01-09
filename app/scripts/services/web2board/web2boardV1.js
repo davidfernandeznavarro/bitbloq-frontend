@@ -647,6 +647,23 @@ angular.module('bitbloqApp')
 
             return defer.promise;
         }
+        //TODO HERE
+        web2board.getPortsCB = function (board) {
+            var defer = $q.defer();
+            if (isWeb2boardV2Flag === null) {
+                firstFunctionCalled.name = 'getPorts';
+                firstFunctionCalled.args = [board, defer];
+                firstFunctionCalled.alertServiceTag = 'serialmonitor';
+            }
+
+            web2board._openCommunication(function () {
+                web2board.getPorts(board, defer).then(function (data) {
+                    console.log('data', data);
+                    defer.resolve(data);
+                });
+            });
+            return defer.promise;
+        }
 
         return web2board;
     });

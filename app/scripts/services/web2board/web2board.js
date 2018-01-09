@@ -31,6 +31,11 @@ angular.module('bitbloqApp')
         var _detectWeb2boardPromise,
             _web2boardV2ListeneresAdded = false;
 
+        //DEVELOP- REMOVE
+        _detectWeb2boardPromise = $q.defer();
+        exports.web2boardVersion = 'web2boardV2';
+        _detectWeb2boardPromise.resolve(exports.web2boardVersion);
+
         function _detectWeb2boardVersion() {
             if (!_detectWeb2boardPromise || _detectWeb2boardPromise.promise.$$state.status === 2) {
                 _detectWeb2boardPromise = $q.defer();
@@ -276,11 +281,22 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardV2':
-                    if (!_web2boardV2ListeneresAdded) {
-                        addWeb2boardV2Listeners();
-                    }
-                    //no response, the service manage the states and alerts
-                    web2boardV1.serialMonitor({ mcu: 'bt328' });
+                    /*web2boardV1.getPortsCB({ mcu: 'bt328' }).then(function (result) {
+                        _finalizeGetPorts(null, { data: [{ comName: result }] }, promise);
+                    }, function (error) {
+                        _finalizeGetPorts(error, null, promise);
+                    });*/
+                    web2boardV2.getPorts().then(function (ports) {
+                        var portsWithFormat = [];
+                        for (var i = 0; i < ports.length; i++) {
+                            portsWithFormat.push({
+                                comName: ports[i]
+                            });
+                        }
+                        _finalizeGetPorts(null, { data: portsWithFormat }, promise);
+                    }, function (error) {
+                        _finalizeGetPorts(error, null, promise);
+                    });
                     break;
                 case 'web2boardOnline':
                     /*web2boardOnline.compile(params).then(function (result) {
@@ -359,11 +375,17 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardV2':
-                    /*if (!_web2boardV2ListeneresAdded) {
-                        addWeb2boardV2Listeners();
-                    }
-                    //no response, the service manage the states and alerts
-                    web2boardV1.externalUpload(params.board, params.code);*/
+                    web2boardV2.openSerialPort({
+                        port: params.port,
+                        baudRate: params.baudRate,
+                        closeSerialPortFunction: _finalizeClosingSerialPort,
+                        serial: exports.serial,
+                        forceReconnect: params.forceReconnect
+                    }).then(function (result) {
+                        _finalizeOpeneningSerialPort(null, result, promise);
+                    }, function (error) {
+                        _finalizeOpeneningSerialPort(error, null, promise);
+                    });
                     break;
                 case 'web2boardOnline':
                     /*web2boardOnline.compile(params).then(function (result) {
@@ -430,11 +452,11 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardV2':
-                    /*if (!_web2boardV2ListeneresAdded) {
-                        addWeb2boardV2Listeners();
-                    }
-                    //no response, the service manage the states and alerts
-                    web2boardV1.externalUpload(params.board, params.code);*/
+                    web2boardV2.closeSerialPort().then(function (result) {
+                        _finalizeClosingSerialPort(null, result, promise);
+                    }, function (error) {
+                        _finalizeClosingSerialPort(error, null, promise);
+                    });
                     break;
                 case 'web2boardOnline':
                     /*web2boardOnline.compile(params).then(function (result) {
@@ -494,11 +516,11 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardV2':
-                    /*if (!_web2boardV2ListeneresAdded) {
-                        addWeb2boardV2Listeners();
-                    }
-                    //no response, the service manage the states and alerts
-                    web2boardV1.externalUpload(params.board, params.code);*/
+                    web2boardV2.sendToSerialPort(params).then(function (result) {
+                        _finalizeSendToSerialPort(null, result, promise);
+                    }, function (error) {
+                        _finalizeSendToSerialPort(error, null, promise);
+                    });
                     break;
                 case 'web2boardOnline':
                     /*web2boardOnline.compile(params).then(function (result) {
@@ -561,11 +583,11 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardV2':
-                    /*if (!_web2boardV2ListeneresAdded) {
-                        addWeb2boardV2Listeners();
-                    }
-                    //no response, the service manage the states and alerts
-                    web2boardV1.externalUpload(params.board, params.code);*/
+                    web2boardV2.pauseSerialPort(params).then(function (result) {
+                        _finalizePauseSerialPort(null, result, promise);
+                    }, function (error) {
+                        _finalizePauseSerialPort(error, null, promise);
+                    });
                     break;
                 case 'web2boardOnline':
                     /*web2boardOnline.compile(params).then(function (result) {

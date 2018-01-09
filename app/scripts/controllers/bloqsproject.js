@@ -48,7 +48,7 @@ angular.module('bitbloqApp')
         $scope.isWeb2BoardInProgress = web2boardV1.isInProcess;
 
 
-        function serialMonitorW2b1() {
+        /*function serialMonitorW2b1() {
             if ($scope.isWeb2BoardInProgress()) {
                 return false;
             }
@@ -74,7 +74,7 @@ angular.module('bitbloqApp')
                 $scope.currentTab = 0;
                 $scope.levelOne = 'boards';
             }
-        }
+        }*/
 
         function plotterW2b1() {
             if ($scope.isWeb2BoardInProgress()) {

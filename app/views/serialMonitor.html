@@ -1,5 +1,5 @@
 <div data-ng-controller="SerialMonitorCtrl" class="form serial--panel">
-    <div class="form-control ports" data-ng-show="web2board.web2boardVersion && web2board.web2boardVersion!== 'web2boardV2' ">
+    <div class="form-control ports">
         <common-dropdown options="portNames" class="ports--sort-dropdown" direction="down" shown-option="selectedPort.portName" options-click="setPort"></common-dropdown>
         <button class="btn refresh" data-ng-click="getPorts()">
             <svg class="svg-icon svg-icon--text">

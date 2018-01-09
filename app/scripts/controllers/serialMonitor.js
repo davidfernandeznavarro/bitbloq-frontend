@@ -47,7 +47,6 @@ angular.module('bitbloqApp')
         //     $scope.serial.dataReceived += message;
         // };
 
-        /*public vars*/
         $scope.web2board = web2board;
         $scope.baudrateOptions = [300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200];
         $scope.currentBaudRate = 9600;
@@ -99,7 +98,6 @@ angular.module('bitbloqApp')
         $scope.onPause = function () {
             $scope.pause = !$scope.pause;
             if ($scope.pause) {
-                //$scope.serial.dataReceived += '\n\nSerial Monitor paused\n\n';
                 web2board.pauseSerialPort({
                     pause: true
                 }).then(function () {
@@ -124,29 +122,7 @@ angular.module('bitbloqApp')
         };
 
         $scope.getPorts = function () {
-            /*chromeAppApi.getPorts().then(function (response) {
-                console.log('ports SerialMonitorCtrl', response);
-                $scope.ports = filterPortsByOS(response.ports);
-                hardwareService.itsHardwareLoaded().then(function () {
-                    utils.getPortsPrettyNames($scope.ports, hardwareService.hardware.boards);
-                    $scope.portNames = [];
-
-                    for (var i = 0; i < $scope.ports.length; i++) {
-                        $scope.portNames.push($scope.ports[i].portName);
-                    }
-
-                    var portWithUserSelectedBoard = utils.getPortByBoard($scope.ports, $scope.board);
-                    if (portWithUserSelectedBoard) {
-                        $scope.setPort(portWithUserSelectedBoard.portName);
-                    }
-                });
-
-            }).catch(function (error) {
-                console.log('error SerialMonitorCtrl', error);
-            });*/
-            web2board.getPorts({
-                getWith: 'web2boardV2'
-            }).then(function (response) {
+            web2board.getPorts().then(function (response) {
                 var ports = response.data;
                 console.log('ports SerialMonitorCtrl', ports);
                 $scope.ports = ports;
@@ -162,6 +138,8 @@ angular.module('bitbloqApp')
                     var portWithUserSelectedBoard = utils.getPortByBoard($scope.ports, hardwareService.boardsMap[$scope.currentProject.hardware.board]);
                     if (portWithUserSelectedBoard) {
                         $scope.setPort(portWithUserSelectedBoard.portName);
+                    } else if ($scope.portNames.length > 0) {
+                        $scope.setPort($scope.portNames[0]);
                     }
                 });
             });
