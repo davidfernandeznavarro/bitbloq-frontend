@@ -15,7 +15,6 @@ angular.module('bitbloqApp')
         var textArea = $element.find('#serialData'),
             autoScrollActivated = true;
 
-        /*Private functions*/
         function scrollTextAreaToBottom() {
             $timeout(function () {
                 textArea.scrollTop(textArea[0].scrollHeight - textArea.height());
@@ -53,11 +52,6 @@ angular.module('bitbloqApp')
         $scope.onBaudrateChanged = function (baudRate) {
             $scope.currentBaudRate = baudRate;
             $scope.setPort($scope.selectedPort.portName, true);
-            /*if (common.useChromeExtension() || $scope.forceChromeExtension) {
-                chromeAppApi.changeBaudrate(baudrate);
-            } else {
-                serialHub.server.changeBaudrate($scope.port, baudrate);
-            }*/
         };
 
         $scope.onPause = function () {
@@ -127,7 +121,6 @@ angular.module('bitbloqApp')
             }, function (error) {
                 console.log('error openSerialPort', error);
             });
-            // chromeAppApi.getSerialData($scope.selectedPort);
         };
         function refreshScope() {
             if (autoScrollActivated) {
@@ -144,44 +137,10 @@ angular.module('bitbloqApp')
             }
         }
 
-
-        /*Init functions*/
         textArea.on('scroll', scrollHandler);
         $scope.getPorts();
 
 
-        /*if (common.useChromeExtension() || $scope.forceChromeExtension) {
-            console.log($scope.board);
-            $scope.showPorts = true;
-            $scope.getPorts();
-        } else {
-           
-        }
-
-        var serialEvent = $rootScope.$on('serial', function (event, msg) {
-            if (!$scope.pause && angular.isString(msg)) {
-                $scope.serial.dataReceived += msg;
-                var dataLen = $scope.serial.dataReceived.length;
-                if (dataLen > textAreaMaxLength) {
-                    $scope.serial.dataReceived = $scope.serial.dataReceived.slice(dataLen - textAreaMaxLength);
-                }
-                scrollTextAreaToBottom();
-            }
-        });
-        $scope.$on('$destroy', function () {
-            if (common.useChromeExtension() || $scope.forceChromeExtension) {
-                chromeAppApi.stopSerialCommunication();
-                web2board.setInProcess(false);
-            } else {
-                serialHub.server.unsubscribeFromPort($scope.port)
-                    .then(function () {
-                        return serialHub.server.closeUnusedConnections();
-                    });
-            }
-            serialEvent();
-
-        })
-        ;*/
         $scope.$on('$destroy', function () {
             console.log('$destroy');
             textArea.off('scroll', scrollHandler);
