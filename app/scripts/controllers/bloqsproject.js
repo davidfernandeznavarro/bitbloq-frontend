@@ -454,42 +454,7 @@ angular.module('bitbloqApp')
 
         $scope.serialMonitor = function () {
             if ($scope.currentProjectService.project.hardware.board) {
-                /*console.log(hardwareConstants);
-                console.log($scope.currentProjectService.getBoardMetaData());
-                /*web2boardJS.getPorts().then(function (ports) {
-                    console.log('ports', ports);
-                }, function (err) {
-                    console.log('err', err);
-                });*/
-                /*web2boardJS.openSerialPort({
-                    port: '/dev/tty.usbserial-A402PJHM',
-                    baudRate: 9600
-                }).then(function (ports) {
-                    console.log('ports', ports);
-                    setTimeout(function () {
-                        web2boardJS.closeSerialPort().then(function (res) {
-                            console.log('res', res);
-                        }, function (err) {
-                            console.log('errclos', err);
-                        });
-                    }, 10000);
-                }, function (err) {
-                    console.log('err', err);
-                });*/
                 commonModals.launchSerialWindow($scope.currentProjectService.project);
-                /*if ($scope.common.useChromeExtension()) {
-                    commonModals.launchSerialWindow(projectService.getBoardMetaData());
-                } else {
-                    if (projectService.project.hardware.board === 'freakscar') {
-                        commonModals.launchSerialWindow(projectService.getBoardMetaData(), true);
-                    } else {
-                        if (web2boardV1.isWeb2boardV2()) {
-                            serialMonitorW2b2();
-                        } else {
-                            serialMonitorW2b1();
-                        }
-                    }
-                }*/
             } else {
                 $scope.currentTab = 0;
                 $scope.levelOne = 'boards';
@@ -529,34 +494,35 @@ angular.module('bitbloqApp')
         };
 
         $scope.showPlotter = function () {
-            if (projectService.project.hardware.board) {
-                if ($scope.common.useChromeExtension()) {
-                    commonModals.launchPlotterWindow(projectService.getBoardMetaData());
-                } else {
-                    if (web2boardV1.isWeb2boardV2()) {
-                        plotterW2b2();
-                    } else {
-                        plotterW2b1();
-                    }
-                }
-            } else {
-                $scope.currentTab = 0;
-                $scope.levelOne = 'boards';
-                alertsService.add({
-                    text: 'alert-web2board-no-board-serial',
-                    id: 'serialmonitor',
-                    type: 'warning',
-                    link: function () {
-                        var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
-                        tempA.setAttribute('target', '_blank');
-                        document.body.appendChild(tempA);
-                        tempA.click();
-                        document.body.removeChild(tempA);
-                    },
-                    linkText: $translate.instant('support-go-to')
-                });
-            }
+            commonModals.launchPlotterWindow($scope.currentProjectService.project);
+            /* if (projectService.project.hardware.board) {
+                 if ($scope.common.useChromeExtension()) {
+                     commonModals.launchPlotterWindow(projectService.getBoardMetaData());
+                 } else {
+                     if (web2boardV1.isWeb2boardV2()) {
+                         plotterW2b2();
+                     } else {
+                         plotterW2b1();
+                     }
+                 }
+             } else {
+                 $scope.currentTab = 0;
+                 $scope.levelOne = 'boards';
+                 alertsService.add({
+                     text: 'alert-web2board-no-board-serial',
+                     id: 'serialmonitor',
+                     type: 'warning',
+                     link: function () {
+                         var tempA = document.createElement('a');
+                         tempA.setAttribute('href', '#/support/p/noBoard');
+                         tempA.setAttribute('target', '_blank');
+                         document.body.appendChild(tempA);
+                         tempA.click();
+                         document.body.removeChild(tempA);
+                     },
+                     linkText: $translate.instant('support-go-to')
+                 });
+             }*/
         };
 
         $scope.getCode = function () {

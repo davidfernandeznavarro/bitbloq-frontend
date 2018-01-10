@@ -592,7 +592,7 @@ angular.module('bitbloqApp')
             return defered.promise;
         };
 
-        exports.launchPlotterWindow = function (board) {
+        exports.launchPlotterWindow = function (currentProject) {
             if (plotterMonitorPanel) {
                 plotterMonitorPanel.normalize();
                 plotterMonitorPanel.reposition('center');
@@ -600,7 +600,7 @@ angular.module('bitbloqApp')
             }
 
             var scope = $rootScope.$new();
-            scope.board = board;
+            scope.currentProject = currentProject;
             scope.setOnUploadFinished = function (callback) {
                 scope.uploadFinished = callback;
             };
@@ -677,10 +677,6 @@ angular.module('bitbloqApp')
             }
             var scope = $rootScope.$new();
             scope.currentProject = currentProject;
-            //scope.forceChromeExtension = useChromeExtension;
-            /*scope.setOnUploadFinished = function (callback) {
-                scope.uploadFinished = callback;
-            };*/
             serialMonitorPanel = $.jsPanel({
                 position: 'center',
                 size: {

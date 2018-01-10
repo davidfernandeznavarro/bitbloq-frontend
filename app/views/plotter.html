@@ -1,5 +1,5 @@
 <div class="form plotter--panel" data-ng-controller="PlotterCtrl">
-    <div class="form-control ports" data-ng-show="showPorts">
+    <div class="form-control ports">
         <common-dropdown class="ports--sort-dropdown" direction="down" options-click="setPort" options="portNames" shown-option="selectedPort.portName"></common-dropdown>
         <button class="btn refresh" data-ng-click="getPorts()">
             <svg class="svg-icon">
@@ -26,14 +26,15 @@
     </div>
 
     <div class="plotter">
-      <div class="plotter__graphic">
-        <nvd3 class="with-3d-shadow with-transitions" data="data" id="plotter" options="chartOptions"></nvd3>
-      </div>
+        <div class="plotter__graphic">
+            <nvd3 class="with-3d-shadow with-transitions" data="data" id="plotter" options="chartOptions"></nvd3>
+        </div>
         <!-- Submit Form -->
         <div class="chart-air">
             <button class="btn btn--tertiary btn--small" ng-click="onPause()">{{pauseText}}</button>
             <button class="btn btn--tertiary btn--small" ng-click="onClear()">{{'plotter-clear' | translate}}</button>
-            <common-dropdown class="projects--sort-dropdown right" direction="up" heading-option="serial.baudrate" options-click="onBaudrateChanged" options="baudrateOptions" style="width:150px"></common-dropdown>
+            <common-dropdown class="projects--sort-dropdown right" direction="up" heading-option="serial.baudrate" options-click="onBaudrateChanged"
+                options="baudrateOptions" style="width:150px"></common-dropdown>
         </div>
     </div>
 </div>
