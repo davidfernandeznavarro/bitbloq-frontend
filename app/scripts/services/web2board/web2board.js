@@ -373,7 +373,6 @@ angular.module('bitbloqApp')
                     web2boardV2.openSerialPort({
                         port: params.port,
                         baudRate: params.baudRate,
-                        closeSerialPortFunction: _finalizeClosingSerialPort,
                         serial: exports.serial,
                         forceReconnect: params.forceReconnect
                     }).then(function (result) {
@@ -383,12 +382,14 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardOnline':
-                    chromeAppApi.getSerialData({
+                    chromeAppApi.openSerialPort({
                         port: params.port,
                         baudRate: params.baudRate,
-                        closeSerialPortFunction: _finalizeClosingSerialPort,
-                        serial: exports.serial,
-                        forceReconnect: params.forceReconnect
+                        serial: exports.serial
+                    }).then(function (result) {
+                        _finalizeOpeneningSerialPort(null, result, promise);
+                    }, function (error) {
+                        _finalizeOpeneningSerialPort(error, null, promise);
                     });
                     break;
                 default:
@@ -456,7 +457,8 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardOnline':
-                    //chromeAppApi.stopSerialCommunication();
+                    chromeAppApi.stopSerialCommunication();
+                    _finalizeClosingSerialPort(null, null, promise);
                     break;
                 default:
                     $log.error('w2bVersion not defined');
@@ -516,7 +518,8 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardOnline':
-                    //chromeAppApi.sendSerialData($scope.serial.input);
+                    chromeAppApi.sendSerialData(params.data);
+                    _finalizeSendToSerialPort(null, null, promise);
                     break;
                 default:
                     $log.error('w2bVersion not defined');
@@ -579,11 +582,8 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardOnline':
-                    /*web2boardOnline.compile(params).then(function (result) {
-                        _finalizeCompiling(null, result, promise);
-                    }, function (error) {
-                        _finalizeCompiling(error, null, promise);
-                    });*/
+                    chromeAppApi.pauseSerialPort(params);
+                    _finalizePauseSerialPort(null, null, promise);
                     break;
                 default:
                     $log.error('w2bVersion not defined');

@@ -16,7 +16,8 @@ angular.module('bitbloqApp')
             uploadPromise,
             getPortsPromise,
             _serial,
-            _ignoreSerialPortMessages = false;
+            _ignoreSerialPortMessages = false,
+            _lastOpenPort;
 
         console.debug('chromeAppId', envData.config.chromeAppId);
 
@@ -79,19 +80,24 @@ angular.module('bitbloqApp')
                                 }
                             } else {
                                 $rootScope.$emit('serial', msg);
+                                if (_serial && !_ignoreSerialPortMessages) {
+                                    _serial.serialPortData += msg;
+                                    _serial.scopeRefreshFunction();
+                                }
                             }
                         });
-
                     } catch (exp) {
                         console.log('cant connect to plugin', exp);
                         isConnectedPromise.reject({
                             error: 'CANT_CONNECT_WITH_PLUGIN'
                         });
+                        _lastOpenPort = null;
                     }
                 } else {
                     isConnectedPromise.reject({
                         error: 'CHROME_NOT_DETECTED'
                     });
+                    _lastOpenPort = null;
                 }
             }
 
@@ -157,6 +163,7 @@ angular.module('bitbloqApp')
         };
 
         exports.stopSerialCommunication = function () {
+            _lastOpenPort = null;
             if (openPort) {
                 var message = {};
                 message.type = 'serial-disconnect';
@@ -164,18 +171,33 @@ angular.module('bitbloqApp')
             }
         };
 
-        exports.openSerialPort(params){
+        exports.openSerialPort = function (params) {
             var defer = $q.defer();
-            exports.getSerialData(params.port);
+            _serial = params.serial;
+            if (_lastOpenPort !== params.port) {
+                _lastOpenPort = params.port;
+                exports.getSerialData({ comName: params.port }, defer);
+            } else {
+                exports.changeBaudrate(params.baudRate, defer);
+            }
             return defer.promise;
-        }
+        };
 
-        exports.getSerialData = function (port) {
+        exports.getSerialData = function (port, promise) {
             exports.isConnected().then(function () {
                 var message = {};
                 message.type = 'serial-connect';
                 message.port = port;
                 openPort.postMessage(message);
+                if (promise) {
+                    promise.resolve();
+                }
+            }).catch(function (error) {
+                $log.log('error connecting to get serial data', error);
+                _lastOpenPort = null;
+                if (promise) {
+                    promise.reject(error);
+                }
             });
         };
 
@@ -188,12 +210,19 @@ angular.module('bitbloqApp')
             });
         };
 
-        exports.changeBaudrate = function (baudrate) {
+        exports.changeBaudrate = function (baudrate, promise) {
             exports.isConnected().then(function () {
                 var message = {};
                 message.type = 'change-baudrate';
                 message.data = baudrate;
                 openPort.postMessage(message);
+                if (promise) {
+                    promise.resolve();
+                }
+            }).catch(function (err) {
+                if (promise) {
+                    promise.reject(err);
+                }
             });
         };
 
@@ -212,6 +241,10 @@ angular.module('bitbloqApp')
                 return getPortsPromise.promise;
             }
         };
+
+        exports.pauseSerialPort = function (params) {
+            _ignoreSerialPortMessages = params.pause;
+        }
 
         return exports;
     });
