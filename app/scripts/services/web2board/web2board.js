@@ -33,7 +33,7 @@ angular.module('bitbloqApp')
 
         //DEVELOP- REMOVE
         _detectWeb2boardPromise = $q.defer();
-        exports.web2boardVersion = 'web2boardV2';
+        exports.web2boardVersion = 'web2boardOnline';
         _detectWeb2boardPromise.resolve(exports.web2boardVersion);
 
         function _detectWeb2boardVersion() {

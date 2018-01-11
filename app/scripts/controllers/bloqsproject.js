@@ -11,7 +11,7 @@
 angular.module('bitbloqApp')
     .controller('BloqsprojectCtrl', function ($rootScope, $route, $scope, $log, $timeout, $routeParams, $document, $window, $location,
         $q, web2boardV1, web2boardJS, alertsService, ngDialog, _, projectApi, bloqs, bloqsUtils, utils, userApi, hw2Bloqs, web2boardOnline, commonModals,
-        projectService, hardwareConstants, chromeAppApi, $translate, web2board) {
+        projectService, chromeAppApi, $translate, web2board) {
 
         /*************************************************
          Project save / edit
@@ -47,115 +47,59 @@ angular.module('bitbloqApp')
 
         $scope.isWeb2BoardInProgress = web2boardV1.isInProcess;
 
-        function plotterW2b1() {
-            if ($scope.isWeb2BoardInProgress()) {
-                return false;
-            }
-            if (projectService.project.hardware.board) {
-                web2boardV1.setInProcess(true);
-                serialMonitorAlert = alertsService.add({
-                    text: 'alert-web2board-openSerialMonitor',
-                    id: 'serialmonitor',
-                    type: 'loading'
-                });
-                //todo....
-                var boardReference = projectService.getBoardMetaData();
-                web2boardV1.plotter(boardReference);
-            } else {
-                $scope.currentTab = 0;
-                $scope.levelOne = 'boards';
-                alertsService.add({
-                    text: 'alert-web2board-no-board-serial',
-                    id: 'serialmonitor',
-                    type: 'warning',
-                    link: function () {
-                        var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
-                        tempA.setAttribute('target', '_blank');
-                        document.body.appendChild(tempA);
-                        tempA.click();
-                        document.body.removeChild(tempA);
-                    },
-                    linkText: $translate.instant('support-go-to')
-                });
 
-            }
-        }
 
-        function plotterW2b2() {
-            if (projectService.project.hardware.board) {
-                web2boardV1.plotter(projectService.getBoardMetaData());
-            } else {
-                $scope.currentTab = 0;
-                $scope.levelOne = 'boards';
-                alertsService.add({
-                    text: 'alert-web2board-no-board-serial',
-                    id: 'serialmonitor',
-                    type: 'warning',
-                    link: function () {
-                        var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
-                        tempA.setAttribute('target', '_blank');
-                        document.body.appendChild(tempA);
-                        tempA.click();
-                        document.body.removeChild(tempA);
-                    },
-                    linkText: $translate.instant('support-go-to')
-                });
-            }
-        }
+        /* $scope.getComponents = function (componentsArray) {
+             var components = {};
+ 
+             var serialPort = _.find(componentsArray, function (o) {
+                 return o.uuid === 'sp';
+             });
+ 
+             var bluetooth = _.find(componentsArray, function (o) {
+                 return o.uuid === 'bt';
+             });
+ 
+             var phoneElements = _.find(componentsArray, function (o) {
+                 return o.uuid === 'device';
+             });
+             if (serialPort) {
+                 components.sp = serialPort.name;
+             }
+ 
+             if (bluetooth) {
+                 components.bt = bluetooth.name;
+             }
+ 
+             if (phoneElements) {
+                 components.device = phoneElements.name;
+             }
+ 
+             _.forEach(componentsArray, function (value) {
+                 if (hardwareConstants.viewerSensors.indexOf(value.uuid) !== -1) {
+                     if (components[value.uuid]) {
+                         components[value.uuid].names.push(value.name);
+                     } else {
+                         components[value.uuid] = {};
+                         components[value.uuid].type = value.type;
+                         components[value.uuid].names = [value.name];
+                     }
+                 }
+             });
+             return components;
+         };*/
 
-       /* $scope.getComponents = function (componentsArray) {
-            var components = {};
-
-            var serialPort = _.find(componentsArray, function (o) {
-                return o.uuid === 'sp';
-            });
-
-            var bluetooth = _.find(componentsArray, function (o) {
-                return o.uuid === 'bt';
-            });
-
-            var phoneElements = _.find(componentsArray, function (o) {
-                return o.uuid === 'device';
-            });
-            if (serialPort) {
-                components.sp = serialPort.name;
-            }
-
-            if (bluetooth) {
-                components.bt = bluetooth.name;
-            }
-
-            if (phoneElements) {
-                components.device = phoneElements.name;
-            }
-
-            _.forEach(componentsArray, function (value) {
-                if (hardwareConstants.viewerSensors.indexOf(value.uuid) !== -1) {
-                    if (components[value.uuid]) {
-                        components[value.uuid].names.push(value.name);
-                    } else {
-                        components[value.uuid] = {};
-                        components[value.uuid].type = value.type;
-                        components[value.uuid].names = [value.name];
-                    }
-                }
-            });
-            return components;
-        };*/
-
-       /* $scope.getViewerCode = function (componentsArray, originalCode) {
-            var components = $scope.getComponents(componentsArray);
-            var code = originalCode;
-            var serialName;
-            var visorCode;
-            if (components.sp) {
-                serialName = components.sp;
-                visorCode = generateSensorsCode(components, serialName, '');
-                code = code.replace(/loop\(\){([^]*)}/, 'loop() {' + visorCode + '$1' + '}');
-            } else {
-                var serialCode = originalCode.split('/***   Included libraries  ***/');
+        /* $scope.getViewerCode = function (componentsArray, originalCode) {
+             var components = $scope.getComponents(componentsArray);
+             var code = originalCode;
+             var serialName;
+             var visorCode;
+             if (components.sp) {
+                 serialName = components.sp;
+                 visorCode = generateSensorsCode(components, serialName, '');
+                 code = code.replace(/loop\(\){([^]*)}/, 'loop() {' + visorCode + '$1' + '}');
+             } else {
+         //        var serialCode = originalCode.split('/***   Included libraries  ***///');
         //        serialCode[1] = '\n\r#include <SoftwareSerial.h>\n\r#include <BitbloqSoftwareSerial.h>' + serialCode[1];
         //        code = '/***   Included libraries  ***/' + serialCode[0] + serialCode[1];
         //        code = code.split('\n/***   Setup  ***/');

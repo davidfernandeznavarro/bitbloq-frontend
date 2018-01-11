@@ -9,7 +9,8 @@
  */
 
 angular.module('bitbloqApp')
-    .controller('MakeActionsCtrl', function ($rootScope, $scope, $log, $location, $window, $document, alertsService, bloqs, ngDialog, projectApi, exerciseApi, _, $route, commonModals, clipboard, projectService, $translate) {
+    .controller('MakeActionsCtrl', function ($rootScope, $scope, $log, $location, $window, $document, alertsService, bloqs, ngDialog, projectApi,
+        exerciseApi, _, $route, commonModals, clipboard, projectService, $translate, web2board) {
 
 
         $scope.defaultZoom = 1;
@@ -431,7 +432,19 @@ angular.module('bitbloqApp')
             if (!_existViewerBlock(code)) {
                 code = _getViewerCode($scope.currentProject.hardware.components, $scope.currentProjectService.getCode());
             }
-            web2board
+            web2board.upload({
+                board: $scope.currentProjectService.getBoardMetaData(),
+                code: code,
+            }).then(function (response) {
+                console.log('upload ok, show window', response);
+                $scope.commonModals.launchViewerWindow($scope.currentProjectService.project, _getComponents($scope.currentProject.hardware.components));
+            }, function (error) {
+                console.log('upload error', error);
+                if (error.error === 'no-board') {
+                    $scope.setTab(0);
+                    $scope.levelOne = 'boards';
+                }
+            });
             /*if ($scope.common.useChromeExtension()) {
                 $scope.currentProjectService.startAutosave(true);
                 show = true;

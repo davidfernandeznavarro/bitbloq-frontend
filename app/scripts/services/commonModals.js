@@ -630,7 +630,7 @@ angular.module('bitbloqApp')
             plotterMonitorPanel.scope = scope;
         };
 
-        exports.launchViewerWindow = function (board, components) {
+        exports.launchViewerWindow = function (currentProject, components) {
             if (viewerMonitorPanel) {
                 viewerMonitorPanel.normalize();
                 viewerMonitorPanel.reposition('center');
@@ -638,7 +638,7 @@ angular.module('bitbloqApp')
             }
 
             var scope = $rootScope.$new();
-            scope.board = board;
+            scope.currentProject = currentProject;
             scope.componentsJSON = components;
             scope.setOnUploadFinished = function (callback) {
                 scope.uploadFinished = callback;

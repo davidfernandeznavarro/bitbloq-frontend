@@ -9,7 +9,7 @@
  * Viewer controller
  */
 angular.module('bitbloqApp')
-    .controller('ViewerCtrl', function($element, web2boardV2, web2board, $timeout, $scope, common, $translate, chromeAppApi, utils, hardwareService, $rootScope, _) {
+    .controller('ViewerCtrl', function ($element, web2boardV2, web2board, $timeout, $scope, common, $translate, chromeAppApi, utils, hardwareService, $rootScope, _) {
 
         $scope.sensorsList = {};
 
@@ -60,19 +60,20 @@ angular.module('bitbloqApp')
             }
         };
 
-        var serialHub = web2boardV2.api.SerialMonitorHub,
-            dataParser = {
-                buf: '',
-                separator: '\r\n',
-                retrieve_messages: function(data) {
-                    data = this.buf + data;
-                    var split_data = data.split(this.separator);
-                    this.buf = split_data.pop();
-                    return split_data;
-                }
-            },
-            plotterLength = 30,
-            receivedDataCount = -1;
+        /* var serialHub = web2boardV2.api.SerialMonitorHub,
+             dataParser = {
+                 buf: '',
+                 separator: '\r\n',
+                 retrieve_messages: function (data) {
+                     data = this.buf + data;
+                     var split_data = data.split(this.separator);
+                     this.buf = split_data.pop();
+                     return split_data;
+                 }
+             },
+             plotterLength = 30,
+             receivedDataCount = -1;*/
+        var receivedDataCount = -1;
 
         //its setted when the windows its open
         //$scope.board
@@ -83,11 +84,11 @@ angular.module('bitbloqApp')
 
         /*Set up web2board api*/
         //when web2board tries to call a client function but it is not defined
-        web2boardV2.api.onClientFunctionNotFound = function(hub, func) {
-            console.error(hub, func);
-        };
+        /* web2boardV2.api.onClientFunctionNotFound = function(hub, func) {
+             console.error(hub, func);
+         };*/
 
-        serialHub.client.received = function(port, data) {
+        /*serialHub.client.received = function(port, data) {
             if (port === $scope.port && !$scope.pause && angular.isString(data)) {
                 var messages = dataParser.retrieve_messages(data);
                 messages.forEach(function(message) {
@@ -108,11 +109,11 @@ angular.module('bitbloqApp')
                 });
                 $scope.$apply();
             }
-        };
+        };*/
 
-        serialHub.client.written = function(message) {
+        /*serialHub.client.written = function(message) {
             $scope.serial.dataReceived += message;
-        };
+        };*/
 
         // function called when someone writes in serial (including ourselves)
         // serialHub.client.written = function (message) {
@@ -121,11 +122,11 @@ angular.module('bitbloqApp')
 
         /*public vars*/
         $scope.baudrateOptions = [300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200];
-        $scope.serial = {
+        /*$scope.serial = {
             dataReceived: '',
             input: '',
             baudrate: 9600
-        };
+        };*/
         $scope.portNames = [];
         $scope.ports = [];
 
@@ -144,13 +145,13 @@ angular.module('bitbloqApp')
                     left: 55
                 },
                 duration: 0,
-                x: function(d) {
+                x: function (d) {
                     return d.x;
                 },
-                y: function(d) {
+                y: function (d) {
                     return d.y;
                 },
-                tickFormat: function(t) {
+                tickFormat: function (t) {
                     return Math.round(t < 0 ? 0 : t);
                 },
                 showLegend: false,
@@ -169,13 +170,13 @@ angular.module('bitbloqApp')
                     left: 55
                 },
                 duration: 0,
-                x: function(d) {
+                x: function (d) {
                     return d.x;
                 },
-                y: function(d) {
+                y: function (d) {
                     return Math.floor(d.y * 1000) / 1000;
                 },
-                tickFormat: function(t) {
+                tickFormat: function (t) {
                     return Math.floor(t * 1000) / 1000;
                 },
                 showLegend: false,
@@ -185,40 +186,40 @@ angular.module('bitbloqApp')
 
         /*Public functions*/
 
-        $scope.onKeyPressedInInput = function(event) {
+        $scope.onKeyPressedInInput = function (event) {
             if (event.which === 13) {
                 $scope.send();
             }
         };
 
-        $scope.onBaudrateChanged = function(baudrate) {
-            $scope.serial.baudrate = baudrate;
-            if (common.useChromeExtension()) {
-                chromeAppApi.changeBaudrate(baudrate);
-            } else {
-                serialHub.server.changeBaudrate($scope.port, baudrate);
-            }
+        $scope.onBaudrateChanged = function (baudrate) {
+            /* $scope.serial.baudrate = baudrate;
+             if (common.useChromeExtension()) {
+                 chromeAppApi.changeBaudrate(baudrate);
+             } else {
+                 serialHub.server.changeBaudrate($scope.port, baudrate);
+             }*/
         };
 
-        $scope.onPause = function() {
-            $scope.pause = !$scope.pause;
-            $scope.pauseText = $scope.pause ? $translate.instant('plotter-play') : $translate.instant('plotter-pause');
-            _.forEach($scope.sensorsList, function(value, key) {
-                if (value === 'hts221') {
-                    $scope.pauseSensors[key + '-temperature'] = false;
-                    $scope.pauseTextSensor[key + '-temperature'] = $translate.instant('serial-pause');
-                    $scope.pauseSensors[key + '-humidity'] = false;
-                    $scope.pauseTextSensor[key + '-humidity'] = $translate.instant('serial-pause');
-                } else {
-                    $scope.pauseSensors[key] = false;
-                    $scope.pauseTextSensor[key] = $translate.instant('serial-pause');
-
-                }
-
-            });
+        $scope.onPause = function () {
+            /* $scope.pause = !$scope.pause;
+             $scope.pauseText = $scope.pause ? $translate.instant('plotter-play') : $translate.instant('plotter-pause');
+             _.forEach($scope.sensorsList, function (value, key) {
+                 if (value === 'hts221') {
+                     $scope.pauseSensors[key + '-temperature'] = false;
+                     $scope.pauseTextSensor[key + '-temperature'] = $translate.instant('serial-pause');
+                     $scope.pauseSensors[key + '-humidity'] = false;
+                     $scope.pauseTextSensor[key + '-humidity'] = $translate.instant('serial-pause');
+                 } else {
+                     $scope.pauseSensors[key] = false;
+                     $scope.pauseTextSensor[key] = $translate.instant('serial-pause');
+ 
+                 }
+ 
+             });*/
         };
 
-        $scope.onPauseSensor = function(sensorName) {
+        $scope.onPauseSensor = function (sensorName) {
             if (sensorName.indexOf('humidity') > -1) {
                 $scope.pauseSensors[sensorName] = !$scope.pauseSensors[sensorName];
                 $scope.pauseTextSensor[sensorName] = $scope.pauseSensors[sensorName] ? $translate.instant('plotter-play') : $translate.instant('plotter-pause');
@@ -230,11 +231,11 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.onClear = function() {
+        $scope.onClear = function () {
             initGraphData($scope.sensorsList);
         };
 
-        $scope.onClearSensor = function(sensorName) {
+        $scope.onClearSensor = function (sensorName) {
 
             if (sensorName.indexOf('humidity') > -1) {
                 $scope.data[sensorName] = [{
@@ -284,11 +285,11 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.getPorts = function() {
-            chromeAppApi.getPorts().then(function(response) {
+        $scope.getPorts = function () {
+            /*chromeAppApi.getPorts().then(function (response) {
                 console.log('ports SerialMonitorCtrl', response);
                 $scope.ports = filterPortsByOS(response.ports);
-                hardwareService.itsHardwareLoaded().then(function() {
+                hardwareService.itsHardwareLoaded().then(function () {
                     utils.getPortsPrettyNames($scope.ports, hardwareService.hardware.boards);
                     $scope.portNames = [];
 
@@ -302,36 +303,22 @@ angular.module('bitbloqApp')
                     }
                 });
 
-            }).catch(function(error) {
+            }).catch(function (error) {
                 console.log('error SerialMonitorCtrl', error);
-            });
+            });*/
         };
 
-        $scope.setPort = function(portName) {
-            var port = _.find($scope.ports, {
-                portName: portName
-            });
-
-            $scope.selectedPort = port;
-
-            chromeAppApi.getSerialData($scope.selectedPort);
+        $scope.setPort = function (portName) {
+            /* var port = _.find($scope.ports, {
+                 portName: portName
+             });
+ 
+             $scope.selectedPort = port;
+ 
+             chromeAppApi.getSerialData($scope.selectedPort);*/
         };
 
-        function filterPortsByOS(ports) {
-            var result = [];
-            if (common.os === 'Mac') {
-                for (var i = 0; i < ports.length; i++) {
-                    if (ports[i].comName.indexOf('/dev/cu') !== -1) {
-                        result.push(ports[i]);
-                    }
-                }
-            } else {
-                result = ports;
-            }
-            return result;
-        }
 
-        /*Init functions*/
         $scope.data = {};
         $scope.pauseSensors = {};
         $scope.pauseTextSensor = {};
@@ -339,7 +326,7 @@ angular.module('bitbloqApp')
         receivedDataCount = {};
 
         function initGraphData(sensorsList) {
-            _.forEach(sensorsList, function(value, key) {
+            _.forEach(sensorsList, function (value, key) {
 
                 if (value === 'hts221') {
                     $scope.sensorsData[key] = {
@@ -396,9 +383,9 @@ angular.module('bitbloqApp')
         }
 
         function initData() {
-            _.forEach($scope.componentsJSON, function(value, key) {
+            _.forEach($scope.componentsJSON, function (value, key) {
                 if (typeof value === 'object') {
-                    _.forEach(value.names, function(name) {
+                    _.forEach(value.names, function (name) {
                         $scope.sensorsList[name] = key;
                     });
                 }
@@ -406,37 +393,37 @@ angular.module('bitbloqApp')
 
             initGraphData($scope.sensorsList);
 
-            if (common.useChromeExtension()) {
-                console.log($scope.board);
-                $scope.showPorts = true;
-                $scope.getPorts();
-            } else {
-                serialHub.server.subscribeToPort($scope.port);
-
-                serialHub.server.startConnection($scope.port, $scope.serial.baudrate)
-                    .catch(function(error) {
-                        if (error.error.indexOf('already in use') > -1) {
-                            $scope.onBaudrateChanged($scope.serial.baudrate);
-                        } else {
-                            console.error(error);
-                        }
-                    });
-
-                $scope.setOnUploadFinished(function() {
-                    $scope.onBaudrateChanged($scope.serial.baudrate);
-                });
-            }
+            /* if (common.useChromeExtension()) {
+                 console.log($scope.board);
+                 $scope.showPorts = true;
+                 $scope.getPorts();
+             } else {
+                 serialHub.server.subscribeToPort($scope.port);
+ 
+                 serialHub.server.startConnection($scope.port, $scope.serial.baudrate)
+                     .catch(function (error) {
+                         if (error.error.indexOf('already in use') > -1) {
+                             $scope.onBaudrateChanged($scope.serial.baudrate);
+                         } else {
+                             console.error(error);
+                         }
+                     });
+ 
+                 $scope.setOnUploadFinished(function () {
+                     $scope.onBaudrateChanged($scope.serial.baudrate);
+                 });
+             }*/
 
         }
 
         initData();
 
-        $rootScope.$on('serial', function(event, msg) {
+        /*$rootScope.$on('serial', function (event, msg) {
             if (!$scope.pause && angular.isString(msg)) {
                 var messages = dataParser.retrieve_messages(msg);
-                messages.forEach(function(message) {
-                    if (message.match(/\[[A-Z]+[0-9]*(_([a-z])+)?:.*\]:[.\-0-9]+[\n\r\t\s]*/)) {
-                        var sensor = message.split(':');
+                messages.forEach(function (message) {
+                    if (message.match(/\[[A-Z]+[0-9]*(_([a-z])+)?:.*\]:[.\-0-9]+[\n\r\t\s]*///)) {
+        /*                var sensor = message.split(':');
                         var sensorName = sensor[1].substring(0, sensor[1].length - 1);
                         var sensorType = (sensor[0].split('['))[1];
                         var sensorValue = sensor[2].replace(/\s+/, '');
@@ -473,21 +460,21 @@ angular.module('bitbloqApp')
             } else {
                 window.dispatchEvent(new Event('resize'));
             }
-        });
+        });*/
 
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
             initGraphData($scope.sensorsList);
 
-            if (common.useChromeExtension()) {
+            /*if (common.useChromeExtension()) {
                 chromeAppApi.stopSerialCommunication();
                 web2board.setInProcess(false);
                 $scope.$apply();
             } else {
                 serialHub.server.unsubscribeFromPort($scope.port)
-                    .then(function() {
+                    .then(function () {
                         return serialHub.server.closeUnusedConnections();
                     });
-            }
+            }*/
 
         });
 

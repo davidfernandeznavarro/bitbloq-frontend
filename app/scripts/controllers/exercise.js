@@ -11,7 +11,7 @@
 angular.module('bitbloqApp')
     .controller('ExerciseCtrl', function ($rootScope, $route, $scope, $log, $timeout, $routeParams, $document, $window, $location,
         $q, web2board, alertsService, ngDialog, _, bloqs, bloqsUtils, utils, userApi, commonModals, hw2Bloqs, web2boardOnline,
-        exerciseService, hardwareConstants, chromeAppApi, centerModeApi, exerciseApi, hardwareService, $translate) {
+        exerciseService, chromeAppApi, centerModeApi, exerciseApi, hardwareService, $translate) {
 
         /*************************************************
          Exercise settings
@@ -800,12 +800,14 @@ angular.module('bitbloqApp')
                 text: 'alert-web2board-no-port-found',
                 id: 'upload',
                 type: 'warning',
-                link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                link: function () {
+                    var tempA = document.createElement('a');
+                    tempA.setAttribute('href', '#/support/p/noBoard');
+                    tempA.setAttribute('target', '_blank');
+                    document.body.appendChild(tempA);
+                    tempA.click();
+                    document.body.removeChild(tempA);
+                },
                 linkText: $translate.instant('support-go-to')
             });
         });
@@ -911,12 +913,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
 
@@ -933,12 +937,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
             }
@@ -965,12 +971,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
 
@@ -987,12 +995,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
             }
@@ -1215,12 +1225,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
             }
@@ -1236,12 +1248,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
             }
@@ -1269,12 +1283,14 @@ document.body.removeChild(tempA); },
                     text: 'alert-web2board-no-board-serial',
                     id: 'serialmonitor',
                     type: 'warning',
-                    link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
                     linkText: $translate.instant('support-go-to')
                 });
             }
