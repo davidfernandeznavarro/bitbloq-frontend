@@ -9,7 +9,8 @@
  */
 
 angular.module('bitbloqApp')
-    .controller('MakeActionsCtrl', function($rootScope, $scope, $log, $location, $window, $document, alertsService, bloqs, ngDialog, projectApi, exerciseApi, _, $route, commonModals, clipboard, projectService, $translate) {
+    .controller('MakeActionsCtrl', function ($rootScope, $scope, $log, $location, $window, $document, alertsService, bloqs, ngDialog, projectApi, exerciseApi, _, $route, commonModals, clipboard, projectService, $translate) {
+
 
         $scope.defaultZoom = 1;
         $scope.modal = {
@@ -22,10 +23,10 @@ angular.module('bitbloqApp')
 
         $scope.currentProject = $scope.currentProject || $scope.currentProject;
 
-        $scope.isEmptyProject = function() {
+        $scope.isEmptyProject = function () {
             return _.isEqual(projectService.project, projectService.getDefaultProject());
         };
-        $scope.uploadProjectSelected = function(fileList) {
+        $scope.uploadProjectSelected = function (fileList) {
 
             // Only allow uploading one file.
             if (fileList.length > 1) {
@@ -40,7 +41,7 @@ angular.module('bitbloqApp')
 
             var reader = new FileReader();
 
-            reader.onloadend = function(event) {
+            reader.onloadend = function (event) {
                 var target = event.target,
                     fileParsed;
                 // 2 == FileReader.DONE
@@ -86,7 +87,7 @@ angular.module('bitbloqApp')
             reader.readAsText(file);
         };
 
-        $scope.openProject = function() {
+        $scope.openProject = function () {
 
             var dialog, modalScope = $rootScope.$new();
             _.extend(modalScope, {
@@ -97,7 +98,7 @@ angular.module('bitbloqApp')
                 confirmButton: 'explore-open-project',
                 rejectButton: 'cancel',
                 selectedProject: {},
-                confirmAction: function() {
+                confirmAction: function () {
                     dialog.close();
                     if (modalScope.selectedProject.project.codeProject) {
                         $window.open('#/codeproject/' + modalScope.selectedProject.project._id);
@@ -112,9 +113,9 @@ angular.module('bitbloqApp')
                 sortProjects: sortProjects(modalScope)
             });
 
-            projectApi.getAllMyProjects().then(function(projects) {
+            projectApi.getAllMyProjects().then(function (projects) {
                 modalScope.projects = projects;
-            }, function() {
+            }, function () {
                 alertsService.add({
                     text: 'make-get-project-error',
                     id: 'make-get-project-error',
@@ -122,9 +123,9 @@ angular.module('bitbloqApp')
                 });
             });
 
-            projectApi.getMySharedProjects().then(function(sharedProjects) {
+            projectApi.getMySharedProjects().then(function (sharedProjects) {
                 modalScope.sharedProjects = sharedProjects;
-            }, function() {
+            }, function () {
                 alertsService.add({
                     text: 'make-get-shared-project-error',
                     id: 'make-get-shared-project-error',
@@ -139,17 +140,17 @@ angular.module('bitbloqApp')
             });
         };
 
-        $scope.openFileProject = function() {
+        $scope.openFileProject = function () {
             $('#uploadProject').trigger('click');
         };
 
-        $scope.downloadIno = function() {
+        $scope.downloadIno = function () {
             var code = $scope.common.section !== 'codeproject' ? $scope.getCode() : $scope.currentProject.code;
             $scope.currentProject.code = code;
             $scope.currentProjectService.download($scope.currentProject, 'arduino');
         };
 
-        $scope.removeProject = function(project, type) {
+        $scope.removeProject = function (project, type) {
             switch (type) {
                 case 'exercise':
                     var currentModal,
@@ -158,10 +159,10 @@ angular.module('bitbloqApp')
                     _.extend(modalOptions, {
                         title: $scope.common.translate('deleteExercise_modal_title') + ': ' + project.name,
                         confirmButton: 'button_delete',
-                        confirmAction: function() {
-                            exerciseApi.delete(project._id).then(function() {
+                        confirmAction: function () {
+                            exerciseApi.delete(project._id).then(function () {
                                 $log.log('we delete this project');
-                            }, function(error) {
+                            }, function (error) {
                                 $log.log('Delete error: ', error);
                                 alertsService.add({
                                     text: 'make-delete-project-error',
@@ -187,9 +188,9 @@ angular.module('bitbloqApp')
 
                     break;
                 case 'task':
-                    exerciseApi.deleteTask(project._id).then(function() {
+                    exerciseApi.deleteTask(project._id).then(function () {
                         $log.log('we delete this project');
-                    }, function(error) {
+                    }, function (error) {
                         $log.log('Delete error: ', error);
                         alertsService.add({
                             text: 'make-delete-project-error',
@@ -201,14 +202,14 @@ angular.module('bitbloqApp')
                     break;
                 default:
                     if (project._id) {
-                        projectApi.delete(project._id).then(function() {
+                        projectApi.delete(project._id).then(function () {
                             alertsService.add({
                                 text: 'projects_toast_send-to-trash',
                                 id: 'deleted-project',
                                 type: 'info',
                                 time: 7000
                             });
-                        }, function(error) {
+                        }, function (error) {
                             $log.log('Delete error: ', error);
                             alertsService.add({
                                 text: 'make-delete-project-error',
@@ -228,7 +229,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.copycode = function() {
+        $scope.copycode = function () {
             alertsService.add({
                 text: 'make-code-clipboard',
                 id: 'code-clipboard',
@@ -238,7 +239,7 @@ angular.module('bitbloqApp')
             clipboard.copyText($scope.getCode());
         };
 
-        $scope.dropdownHandler = function(menu) {
+        $scope.dropdownHandler = function (menu) {
             if ($scope.dropdown !== menu) {
                 $scope.dropdown = menu;
             } else {
@@ -246,7 +247,7 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.zoom = function(value) {
+        $scope.zoom = function (value) {
             var max = 2,
                 min = 0.7,
                 fieldContent = $('.bloq--extension__content'),
@@ -266,17 +267,17 @@ angular.module('bitbloqApp')
             }
         };
 
-        $scope.editExerciseGroups = function(exercise, groups, onlyEdit) {
-            $scope.currentProjectService.assignGroup(exercise, $scope.common.user._id, groups, null, onlyEdit).then(function(response) {
+        $scope.editExerciseGroups = function (exercise, groups, onlyEdit) {
+            $scope.currentProjectService.assignGroup(exercise, $scope.common.user._id, groups, null, onlyEdit).then(function (response) {
                 $scope.setGroups(response);
             });
         };
 
-        $scope.isThirdPartyRobot = function() {
+        $scope.isThirdPartyRobot = function () {
             return $scope.currentProject.hardware.showRobotImage ? true : false;
         };
 
-        $rootScope.$on('viewer-code:ready', function() {
+        $rootScope.$on('viewer-code:ready', function () {
             if (show) {
                 var componentsJSON = $scope.getComponents($scope.currentProject.hardware.components);
                 if ($scope.currentProject.hardware.board) {
@@ -290,22 +291,148 @@ angular.module('bitbloqApp')
                         text: 'alert-web2board-no-board-serial',
                         id: 'serialmonitor',
                         type: 'warning',
-                        link: function () { var tempA = document.createElement('a');
-tempA.setAttribute('href', '#/support/p/noBoard');
-tempA.setAttribute('target', '_blank');
-document.body.appendChild(tempA);
-tempA.click();
-document.body.removeChild(tempA); },
+                        link: function () {
+                            var tempA = document.createElement('a');
+                            tempA.setAttribute('href', '#/support/p/noBoard');
+                            tempA.setAttribute('target', '_blank');
+                            document.body.appendChild(tempA);
+                            tempA.click();
+                            document.body.removeChild(tempA);
+                        },
                         linkText: $translate.instant('support-go-to')
                     });
                 }
                 show = false;
             }
         });
-        var show;
 
-        $scope.showViewer = function() {
-            if ($scope.common.useChromeExtension()) {
+        var availableViewerSensors = [
+            'encoder',
+            'hts221',
+            'pot',
+            'ldrs',
+            'sound',
+            'us',
+            'irs',
+            'button'
+        ];
+
+        function _existViewerBlock(code) {
+            var serialBlock;
+            if (code.indexOf('/*sendViewerData*/') > -1) {
+                serialBlock = true;
+            } else {
+                serialBlock = false;
+            }
+
+            return serialBlock;
+        }
+
+        function _getComponents(componentsArray) {
+            var components = {};
+
+            var serialPort = _.find(componentsArray, function (o) {
+                return o.uuid === 'sp';
+            });
+
+            var bluetooth = _.find(componentsArray, function (o) {
+                return o.uuid === 'bt';
+            });
+
+            var phoneElements = _.find(componentsArray, function (o) {
+                return o.uuid === 'device';
+            });
+            if (serialPort) {
+                components.sp = serialPort.name;
+            }
+
+            if (bluetooth) {
+                components.bt = bluetooth.name;
+            }
+
+            if (phoneElements) {
+                components.device = phoneElements.name;
+            }
+
+            _.forEach(componentsArray, function (value) {
+                if (availableViewerSensors.indexOf(value.uuid) !== -1) {
+                    if (components[value.uuid]) {
+                        components[value.uuid].names.push(value.name);
+                    } else {
+                        components[value.uuid] = {};
+                        components[value.uuid].type = value.type;
+                        components[value.uuid].names = [value.name];
+                    }
+                }
+            });
+            return components;
+        };
+
+        function _generateSensorsCode(components, serialName, code) {
+            _.forEach(components, function (value, key) {
+                if (angular.isObject(value)) {
+                    if (value.type === 'analog') {
+                        _.forEach(value.names, function (name) {
+                            code = code.concat(serialName + '.println(String("[' + key.toUpperCase() + ':' + name + ']:") + String(String(analogRead(' + name + '))));\n\r');
+                            //  code = code + 'delay(500);\n\r';
+                        });
+                    } else {
+                        _.forEach(value.names, function (name) {
+                            if (key === 'us' || key === 'encoder') {
+                                code = code.concat(serialName + '.println(String("[' + key.toUpperCase() + ':' + name + ']:") + String(String(' + name + '.read())));\n\r');
+                                code = code + 'delay(50);\n\r';
+                            } else if (key === 'hts221') {
+                                code = code.concat(serialName + '.println(String("[' + key.toUpperCase() + '_temperature:' + name + ']:") + String(String(' + name + '.getTemperature())));\n\r');
+                                code = code + 'delay(50);\n\r';
+                                code = code.concat(serialName + '.println(String("[' + key.toUpperCase() + '_humidity:' + name + ']:") + String(String(' + name + '.getHumidity())));\n\r');
+                                code = code + 'delay(50);\n\r';
+                            } else {
+                                code = code.concat(serialName + '.println(String("[' + key.toUpperCase() + ':' + name + ']:") + String(String(digitalRead(' + name + '))));\n\r');
+                                //   code = code + 'delay(500);\n\r';
+                            }
+                        });
+                    }
+                }
+            });
+
+            return code;
+        }
+
+        function _getViewerCode(componentsArray, originalCode) {
+            var components = _getComponents(componentsArray);
+            var code = originalCode;
+            var serialName;
+            var visorCode;
+            if (components.sp) {
+                serialName = components.sp;
+                visorCode = _generateSensorsCode(components, serialName, '');
+                code = code.replace(/loop\(\){([^]*)}/, 'loop() {' + visorCode + '$1' + '}');
+            } else {
+                var serialCode = originalCode.split('/***   Included libraries  ***/');
+                serialCode[1] = '\n\r#include <SoftwareSerial.h>\n\r#include <BitbloqSoftwareSerial.h>' + serialCode[1];
+                code = '/***   Included libraries  ***/' + serialCode[0] + serialCode[1];
+                code = code.split('\n/***   Setup  ***/');
+                code = code[0].substring(0, code[0].length - 1) + 'bqSoftwareSerial puerto_serie_0(0, 1, 9600);' + '\n\r' + '\n/***   Setup  ***/' + code[1];
+                visorCode = _generateSensorsCode(components, 'puerto_serie_0', '');
+                code = code.replace(/loop\(\){([^]*)}/, 'loop() {' + visorCode + '$1' + '}');
+            }
+            return code;
+        }
+
+
+        var show;
+        $scope.showViewer = function () {
+            alertsService.add({
+                text: 'alert-viewer-reconfigure',
+                id: 'upload',
+                type: 'loading'
+            });
+            var code = $scope.currentProjectService.getCode();
+            if (!_existViewerBlock(code)) {
+                code = _getViewerCode($scope.currentProject.hardware.components, $scope.currentProjectService.getCode());
+            }
+            web2board
+            /*if ($scope.common.useChromeExtension()) {
                 $scope.currentProjectService.startAutosave(true);
                 show = true;
                 if (!$scope.currentProject.codeproject) {
@@ -320,7 +447,7 @@ document.body.removeChild(tempA); },
                     //parent: codeproject
                 }
             } else {
-                commonModals.requestChromeExtensionActivation('modal-need-chrome-extension-activation-viewer', function(err) {
+                commonModals.requestChromeExtensionActivation('modal-need-chrome-extension-activation-viewer', function (err) {
                     if (!err) {
                         $scope.currentProjectService.startAutosave(true);
                         show = true;
@@ -337,12 +464,12 @@ document.body.removeChild(tempA); },
                         }
                     }
                 });
-            }
+            }*/
 
         };
 
         function sortProjects(modalScope) {
-            return function(type) {
+            return function (type) {
                 $log.debug('sortProject', type);
                 switch (type) {
                     case 'explore-sortby-recent':
@@ -376,7 +503,7 @@ document.body.removeChild(tempA); },
 
         $document.on('click', clickDocumentHandler);
 
-        $scope.$on('$destroy', function() {
+        $scope.$on('$destroy', function () {
             $document.off('click', clickDocumentHandler);
         });
 

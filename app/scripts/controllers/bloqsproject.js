@@ -105,7 +105,7 @@ angular.module('bitbloqApp')
             }
         }
 
-        $scope.getComponents = function (componentsArray) {
+       /* $scope.getComponents = function (componentsArray) {
             var components = {};
 
             var serialPort = _.find(componentsArray, function (o) {
@@ -143,9 +143,9 @@ angular.module('bitbloqApp')
                 }
             });
             return components;
-        };
+        };*/
 
-        $scope.getViewerCode = function (componentsArray, originalCode) {
+       /* $scope.getViewerCode = function (componentsArray, originalCode) {
             var components = $scope.getComponents(componentsArray);
             var code = originalCode;
             var serialName;
@@ -156,15 +156,15 @@ angular.module('bitbloqApp')
                 code = code.replace(/loop\(\){([^]*)}/, 'loop() {' + visorCode + '$1' + '}');
             } else {
                 var serialCode = originalCode.split('/***   Included libraries  ***/');
-                serialCode[1] = '\n\r#include <SoftwareSerial.h>\n\r#include <BitbloqSoftwareSerial.h>' + serialCode[1];
-                code = '/***   Included libraries  ***/' + serialCode[0] + serialCode[1];
-                code = code.split('\n/***   Setup  ***/');
-                code = code[0].substring(0, code[0].length - 1) + 'bqSoftwareSerial puerto_serie_0(0, 1, 9600);' + '\n\r' + '\n/***   Setup  ***/' + code[1];
-                visorCode = generateSensorsCode(components, 'puerto_serie_0', '');
-                code = code.replace(/loop\(\){([^]*)}/, 'loop() {' + visorCode + '$1' + '}');
-            }
-            return code;
-        };
+        //        serialCode[1] = '\n\r#include <SoftwareSerial.h>\n\r#include <BitbloqSoftwareSerial.h>' + serialCode[1];
+        //        code = '/***   Included libraries  ***/' + serialCode[0] + serialCode[1];
+        //        code = code.split('\n/***   Setup  ***/');
+        //        code = code[0].substring(0, code[0].length - 1) + 'bqSoftwareSerial puerto_serie_0(0, 1, 9600);' + '\n\r' + '\n/***   Setup  ***/' + code[1];
+        //        visorCode = generateSensorsCode(components, 'puerto_serie_0', '');
+        //        code = code.replace(/loop\(\){([^]*)}/, 'loop() {' + visorCode + '$1' + '}');
+        //    }
+        //    return code;
+        //};
 
         function generateSerialViewerBloqCode(componentsArray, originalCode) {
             var components = $scope.getComponents(componentsArray);
@@ -210,16 +210,16 @@ angular.module('bitbloqApp')
             return finalCode;
         }
 
-        $scope.thereIsSerialBlock = function (code) {
-            var serialBlock;
-            if (code.indexOf('/*sendViewerData*/') > -1) {
-                serialBlock = true;
-            } else {
-                serialBlock = false;
-            }
+        //$scope.thereIsSerialBlock = function (code) {
+        //    var serialBlock;
+        //    if (code.indexOf('/*sendViewerData*/') > -1) {
+        //        serialBlock = true;
+        //    } else {
+        //        serialBlock = false;
+        //    }
 
-            return serialBlock;
-        };
+        //    return serialBlock;
+        //};
 
         $scope.thereIsTwitterBlock = function (code) {
             var twitterBlock;
@@ -231,7 +231,7 @@ angular.module('bitbloqApp')
             return twitterBlock;
         };
 
-        function generateSensorsCode(components, serialName, code) {
+        /*function generateSensorsCode(components, serialName, code) {
             _.forEach(components, function (value, key) {
                 if (angular.isObject(value)) {
                     if (value.type === 'analog') {
@@ -259,7 +259,7 @@ angular.module('bitbloqApp')
             });
 
             return code;
-        }
+        }*/
 
         $scope.isRobotActivated = projectService.isRobotActivated;
 
@@ -495,34 +495,6 @@ angular.module('bitbloqApp')
 
         $scope.showPlotter = function () {
             commonModals.launchPlotterWindow($scope.currentProjectService.project);
-            /* if (projectService.project.hardware.board) {
-                 if ($scope.common.useChromeExtension()) {
-                     commonModals.launchPlotterWindow(projectService.getBoardMetaData());
-                 } else {
-                     if (web2boardV1.isWeb2boardV2()) {
-                         plotterW2b2();
-                     } else {
-                         plotterW2b1();
-                     }
-                 }
-             } else {
-                 $scope.currentTab = 0;
-                 $scope.levelOne = 'boards';
-                 alertsService.add({
-                     text: 'alert-web2board-no-board-serial',
-                     id: 'serialmonitor',
-                     type: 'warning',
-                     link: function () {
-                         var tempA = document.createElement('a');
-                         tempA.setAttribute('href', '#/support/p/noBoard');
-                         tempA.setAttribute('target', '_blank');
-                         document.body.appendChild(tempA);
-                         tempA.click();
-                         document.body.removeChild(tempA);
-                     },
-                     linkText: $translate.instant('support-go-to')
-                 });
-             }*/
         };
 
         $scope.getCode = function () {
