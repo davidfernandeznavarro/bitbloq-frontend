@@ -16,11 +16,7 @@ angular.module('bitbloqApp')
 
 
         $scope.baudrateOptions = [300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200];
-        $scope.serial = {
-            dataReceived: '',
-            input: '',
-            baudrate: 9600
-        };
+        $scope.currentBaudRate = 9600;
         $scope.portNames = [];
         $scope.ports = [];
 
@@ -175,7 +171,6 @@ angular.module('bitbloqApp')
 
 
         $scope.$on('$destroy', function () {
-            console.log('$destroy');
             web2board.closeSerialPort();
         });
 
