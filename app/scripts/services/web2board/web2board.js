@@ -75,13 +75,13 @@ angular.module('bitbloqApp')
                     mcu: 'bt328'
                 };
             }
-            if (!params.viewer) {
-                alertsService.add({
-                    text: 'alert-web2board-compiling',
-                    id: 'compile',
-                    type: 'loading'
-                });
-            }
+
+            alertsService.add({
+                text: 'alert-web2board-compiling',
+                id: 'compile',
+                type: 'loading'
+            });
+
             if (params.compileWith) {
                 _compileWith(params.compileWith, params, defer);
             } else {

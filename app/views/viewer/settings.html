@@ -1,6 +1,6 @@
 <div class="viewerMonitor">
     <div class="form viewer__settings_content__item">
-        <div class="form-control ports" data-ng-show="showPorts">
+        <div class="form-control ports">
             <span class="ports--text">{{'port' | translate}}: </span>
             <common-dropdown class="sort-dropdown margin-left" direction="down" options-click="setPort" options="portNames" shown-option="selectedPort.portName"></common-dropdown>
             <button class="btn refresh" data-ng-click="getPorts()">
@@ -9,9 +9,10 @@
                 </svg>
             </button>
         </div>
-        <div ng-if="componentsJSON.sp" class="form-control ports">
+        <div class="form-control ports">
             <span class="ports--text">{{' make-hardware-component-baudrate' | translate}}: </span>
-            <common-dropdown class="sort-dropdown" direction="down" heading-option="serial.baudrate" options-click="onBaudrateChanged" options="baudrateOptions" style="width:150px"></common-dropdown>
+            <common-dropdown class="sort-dropdown" direction="down" heading-option="currentBaudRate" options-click="onBaudrateChanged"
+                options="baudrateOptions" style="width:150px"></common-dropdown>
         </div>
     </div>
 </div>

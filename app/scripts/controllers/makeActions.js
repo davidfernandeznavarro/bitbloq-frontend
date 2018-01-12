@@ -410,7 +410,7 @@ angular.module('bitbloqApp')
                 code = code.replace(/loop\(\){([^]*)}/, 'loop() {' + visorCode + '$1' + '}');
             } else {
                 var serialCode = originalCode.split('/***   Included libraries  ***/');
-                serialCode[1] = '\n\r#include <SoftwareSerial.h>\n\r#include <BitbloqSoftwareSerial.h>' + serialCode[1];
+                serialCode[1] = '\n\r#include <BitbloqSoftwareSerial.h>' + serialCode[1];
                 code = '/***   Included libraries  ***/' + serialCode[0] + serialCode[1];
                 code = code.split('\n/***   Setup  ***/');
                 code = code[0].substring(0, code[0].length - 1) + 'bqSoftwareSerial puerto_serie_0(0, 1, 9600);' + '\n\r' + '\n/***   Setup  ***/' + code[1];
@@ -425,17 +425,21 @@ angular.module('bitbloqApp')
         $scope.showViewer = function () {
             alertsService.add({
                 text: 'alert-viewer-reconfigure',
-                id: 'upload',
+                id: 'viewer',
                 type: 'loading'
             });
             var code = $scope.currentProjectService.getCode();
             if (!_existViewerBlock(code)) {
                 code = _getViewerCode($scope.currentProject.hardware.components, $scope.currentProjectService.getCode());
             }
+            //temp-remove it
+            //$scope.commonModals.launchViewerWindow($scope.currentProjectService.project, _getComponents($scope.currentProject.hardware.components));
+            //end temp and remember to enable next
             web2board.upload({
                 board: $scope.currentProjectService.getBoardMetaData(),
                 code: code,
             }).then(function (response) {
+                alertsService.closeByTag('viewer');
                 console.log('upload ok, show window', response);
                 $scope.commonModals.launchViewerWindow($scope.currentProjectService.project, _getComponents($scope.currentProject.hardware.components));
             }, function (error) {
@@ -444,7 +448,10 @@ angular.module('bitbloqApp')
                     $scope.setTab(0);
                     $scope.levelOne = 'boards';
                 }
+                alertsService.closeByTag('viewer');
             });
+
+
             /*if ($scope.common.useChromeExtension()) {
                 $scope.currentProjectService.startAutosave(true);
                 show = true;

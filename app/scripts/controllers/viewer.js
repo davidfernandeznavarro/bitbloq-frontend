@@ -120,8 +120,9 @@ angular.module('bitbloqApp')
         //     $scope.serial.dataReceived += message;
         // };
 
-        /*public vars*/
+
         $scope.baudrateOptions = [300, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, 115200];
+        $scope.currentBaudRate = 9600;
         /*$scope.serial = {
             dataReceived: '',
             input: '',
@@ -306,9 +307,31 @@ angular.module('bitbloqApp')
             }).catch(function (error) {
                 console.log('error SerialMonitorCtrl', error);
             });*/
+
+            web2board.getPorts().then(function (response) {
+                var ports = response.data;
+                console.log('ports SerialMonitorCtrl', ports);
+                $scope.ports = ports;
+
+                hardwareService.itsHardwareLoaded().then(function () {
+                    utils.getPortsPrettyNames($scope.ports, hardwareService.hardware.boards);
+                    $scope.portNames = [];
+
+                    for (var i = 0; i < $scope.ports.length; i++) {
+                        $scope.portNames.push($scope.ports[i].portName);
+                    }
+
+                    var portWithUserSelectedBoard = utils.getPortByBoard($scope.ports, hardwareService.boardsMap[$scope.currentProject.hardware.board]);
+                    if (portWithUserSelectedBoard) {
+                        $scope.setPort(portWithUserSelectedBoard.portName);
+                    } else if ($scope.portNames.length > 0) {
+                        $scope.setPort($scope.portNames[0]);
+                    }
+                });
+            });
         };
 
-        $scope.setPort = function (portName) {
+        $scope.setPort = function (portName, forceReconnect) {
             /* var port = _.find($scope.ports, {
                  portName: portName
              });
@@ -316,7 +339,27 @@ angular.module('bitbloqApp')
              $scope.selectedPort = port;
  
              chromeAppApi.getSerialData($scope.selectedPort);*/
+            var port = _.find($scope.ports, {
+                portName: portName
+            });
+
+            $scope.selectedPort = port;
+            web2board.clearSerialPortData();
+            web2board.openSerialPort({
+                port: $scope.selectedPort.comName,
+                baudRate: $scope.currentBaudRate,
+                scopeRefreshFunction: refreshScope,
+                forceReconnect: forceReconnect
+            }).then(function (response) {
+                console.log('ok openSerialPort', response);
+            }, function (error) {
+                console.log('error openSerialPort', error);
+            });
         };
+
+        function refreshScope() {
+            utils.apply($scope);
+        }
 
 
         $scope.data = {};
@@ -393,6 +436,7 @@ angular.module('bitbloqApp')
 
             initGraphData($scope.sensorsList);
 
+            $scope.getPorts();
             /* if (common.useChromeExtension()) {
                  console.log($scope.board);
                  $scope.showPorts = true;
@@ -416,6 +460,71 @@ angular.module('bitbloqApp')
 
         }
 
+        function _processSerialMonitorData(data) {
+            var newDataArray = data.split('\n');
+            //clear sets the value as '', so is added on each text
+            if (newDataArray[newDataArray.length - 1] === '') {
+                newDataArray.pop();
+            }
+            web2board.clearSerialPortData();
+            for (var i = 0; i < newDataArray.length; i++) {
+                if (newDataArray[i].match(/\[[A-Z]+[0-9]*(_([a-z])+)?:.*\]:[.\-0-9]+[\n\r\t\s]*/)) {
+                    var sensor = newDataArray[i].split(':');
+                    var sensorName = sensor[1].substring(0, sensor[1].length - 1);
+                    var sensorType = (sensor[0].split('['))[1];
+                    var sensorValue = sensor[2].replace(/\s+/, '');
+
+                    var number = parseFloat(sensorValue);
+                    if ((sensorType.toLowerCase()).indexOf('hts221') > -1) {
+                        var property = sensorType.split('_');
+                        $scope.sensorsData[sensorName][property[1]].value = sensorValue;
+                        if ((sensorType.toLowerCase()).indexOf('temperature') > -1) {
+                            sensorName = sensorName + '-temperature';
+                        } else if ((sensorType.toLowerCase()).indexOf('humidity') > -1) {
+                            sensorName = sensorName + '-humidity';
+                        }
+                    } else {
+                        $scope.sensors[sensorType.toLowerCase()].value = sensorValue;
+                        $scope.sensorsData[sensorName].value = number;
+                    }
+                    if (!$scope.pauseSensors[sensorName] && !$scope.pause && !isNaN(number)) {
+                        if (receivedDataCount[sensorName] === -1) {
+                            receivedDataCount[sensorName]++;
+                        } else {
+                            $scope.data[sensorName][0].values.push({
+                                x: receivedDataCount[sensorName]++,
+                                y: number
+                            });
+                        }
+                        /*if ($scope.data[sensorName][0].values.length > plotterLength) {
+                            $scope.data[sensorName][0].values.shift();
+                        }*/
+                    }
+                } else {
+                    console.log('bad format message');
+                }
+            }
+
+            /*for (var i = 0; i < newDataArray.length; i++) {
+                if ((newDataArray[i] !== '') &&
+                    !isNaN(newDataArray[i])) {
+                    $scope.data[0].values.push({
+                        x: receivedDataCount++,
+                        y: newDataArray[i]
+                    });
+                }
+            }*/
+            console.log('data', data);
+        }
+
+        $scope.$watch(function () {
+            return web2board.serial.serialPortData
+        }, function (newVal, oldVal) {
+            if (newVal !== oldVal && oldVal !== '') {
+                _processSerialMonitorData(newVal);
+            }
+        });
+
         initData();
 
         /*$rootScope.$on('serial', function (event, msg) {
@@ -427,7 +536,7 @@ angular.module('bitbloqApp')
                         var sensorName = sensor[1].substring(0, sensor[1].length - 1);
                         var sensorType = (sensor[0].split('['))[1];
                         var sensorValue = sensor[2].replace(/\s+/, '');
-
+        
                         var number = parseFloat(sensorValue);
                         if ((sensorType.toLowerCase()).indexOf('hts221') > -1) {
                             var property = sensorType.split('_');
@@ -464,7 +573,7 @@ angular.module('bitbloqApp')
 
         $scope.$on('$destroy', function () {
             initGraphData($scope.sensorsList);
-
+            web2board.closeSerialPort();
             /*if (common.useChromeExtension()) {
                 chromeAppApi.stopSerialCommunication();
                 web2board.setInProcess(false);
