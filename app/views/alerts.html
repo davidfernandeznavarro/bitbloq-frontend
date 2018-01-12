@@ -1,18 +1,18 @@
-<div class="alert text--strong" data-id="{{alert.id}}" ng-class="alert.domClass" ng-repeat="alert in alerts track by alert.uid" ng-style="{'margin-top': 55*$index+'px','z-index':alert.index}">
+<div class="alert text--strong" data-id="{{alert.id}}" ng-class="alert.domClass" ng-repeat="alert in alerts track by alert.uid"
+    ng-style="{'margin-top': 55*$index+'px','z-index':alert.index}">
     <svg class="svg-icon icon--preicon {{alert.type}}">
-        <use data-element="alert-svg-icon" data-type="{{alert.type}}" xlink:href="{{generateSvgUrl(alert.type)}}"/>
+        <use data-element="alert-svg-icon" data-type="{{alert.type}}" xlink:href="{{generateSvgUrl(alert.type)}}" />
     </svg>
     <div class="alert--content" data-element="alert-text-toast">
         <span class="alert--text" ng-bind-html="alert.translatedText" ng-if="alert.translatedText"></span>
-        <span class="alert--text" ng-if="!alert.translatedText">
-            {{alert.text | translate:alert }}
-        </span>
+        <span class="alert--text" ng-if="!alert.translatedText" ng-bind-html="sanitizeMe(alert.text)"></span>
         <button class="text--strong alert--action" ng-click="alert.linkAction(alert.linkParams)" ng-if="alert.linkText" data-element="alert-undo-button">{{alert.linkText | translate:alert }}</button>
         <svg class="svg-icon icon--postIcon" ng-if="alert.postIcon">
             <use ng-attr-xlink:href="{{'#'+alert.postIcon}}"></use>
         </svg>
     </div>
-    <div class="alert--close" ng-click="alert.close(alert.uid, $event); alert.closeFunction(closeParams)" ng-if="alert.type!=='loading'" data-element="alert-close-toast">
+    <div class="alert--close" ng-click="alert.close(alert.uid, $event); alert.closeFunction(closeParams)" ng-if="alert.type!=='loading'"
+        data-element="alert-close-toast">
         <svg class="svg-icon">
             <use xlink:href="#erase"></use>
         </svg>

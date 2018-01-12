@@ -8,7 +8,7 @@
  * # Alerts service
  */
 angular.module('bitbloqApp')
-    .service('alertsService', function($timeout, _, $rootScope) {
+    .service('alertsService', function ($timeout, _, $rootScope) {
         var exports = {},
             alerts = [],
             alertTimeout = [],
@@ -17,10 +17,10 @@ angular.module('bitbloqApp')
                 maxSimultaneousAlerts: 5
             };
 
-        var _removeAlert = function(propertyName, propertyValue) {
+        var _removeAlert = function (propertyName, propertyValue) {
             var removedAlert;
 
-            removedAlert = _.remove(alerts, function(al) {
+            removedAlert = _.remove(alerts, function (al) {
                 return al[propertyName] === propertyValue;
             });
 
@@ -33,7 +33,7 @@ angular.module('bitbloqApp')
 
         };
 
-        var _handlePreCloseAlert = function(uid, evt) {
+        var _handlePreCloseAlert = function (uid, evt) {
             if (evt) {
                 var $element = $(evt.currentTarget).parent();
                 $element.addClass('alert--removed');
@@ -44,13 +44,13 @@ angular.module('bitbloqApp')
             }
         };
 
-        exports.isVisible = function(propertyName, propertyValue) {
-            return !!_.find(alerts, function(item) {
+        exports.isVisible = function (propertyName, propertyValue) {
+            return !!_.find(alerts, function (item) {
                 return item[propertyName] === propertyValue;
             });
         };
 
-        exports.getInstance = function() {
+        exports.getInstance = function () {
             if (!alerts) {
                 alerts = [];
             }
@@ -74,7 +74,7 @@ angular.module('bitbloqApp')
          * @param {[type]} translatedText ??
          */
         //exports.add = function(text, id, type, time, value, preIcon, postIcon, linkText, link, linkParams, closeFunction, closeParams, translatedText) {
-        exports.add = function(params) {
+        exports.add = function (params) {
 
             i += 1;
 
@@ -122,7 +122,7 @@ angular.module('bitbloqApp')
             }
 
             if (alert.time !== 'infinite') {
-                alertTimeout[alert.uid] = $timeout(function() {
+                alertTimeout[alert.uid] = $timeout(function () {
                     _removeAlert('uid', alert.uid);
                     if (alert.closeFunction) {
                         alert.closeFunction(params.closeParams);
@@ -143,7 +143,7 @@ angular.module('bitbloqApp')
          * [close description]
          * @param  {[object]} evt  [event triggered when clicking the close button]
          */
-        exports.close = function(uid, evt) {
+        exports.close = function (uid, evt) {
             if (uid) {
                 _handlePreCloseAlert(uid, evt);
                 _removeAlert('uid', uid);
@@ -155,10 +155,12 @@ angular.module('bitbloqApp')
          * @param {string} tag [use tag as id to differentiate from uid]
          * @param  {[object]} evt  [event triggered when clicking the close button]
          */
-        exports.closeByTag = function(tag, evt) {
+        exports.closeByTag = function (tag, evt) {
             _handlePreCloseAlert(tag, evt);
             _removeAlert('id', tag);
         };
+
+
 
         return exports;
 

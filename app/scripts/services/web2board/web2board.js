@@ -33,7 +33,7 @@ angular.module('bitbloqApp')
 
         //DEVELOP- REMOVE
         _detectWeb2boardPromise = $q.defer();
-        exports.web2boardVersion = 'web2boardOnline';
+        exports.web2boardVersion = 'web2boardJS';
         _detectWeb2boardPromise.resolve(exports.web2boardVersion);
 
         function _detectWeb2boardVersion() {
@@ -222,7 +222,7 @@ angular.module('bitbloqApp')
             exports.uploadInProcess = false;
             if (error) {
                 var text, link, linkText;
-                if (error.error.search('no Arduino') !== -1) {
+                if (error.error.search && error.error.search('no Arduino') !== -1) {
                     text = 'alert-web2board-no-port-found';
                     link = function () {
                         utils.goToUsingLink('#/support/p/noBoard', '_blank');
@@ -641,13 +641,11 @@ angular.module('bitbloqApp')
 
         function parseUploadingError(errors) {
             var message = '';
-            if (errors.error.indexOf('timeout') >= 0) {
-                message = $translate.instant('modal-inform-error-textarea-placeholder') + ': ' + $translate.instant(JSON.stringify(errors.error));
+            if (errors.message) {
+                message = $translate.instant('modal-inform-error-textarea-placeholder') + ': ' + $translate.instant(JSON.stringify(errors.message));
             } else {
                 message = $translate.instant('modal-inform-error-textarea-placeholder') + ': ' + $translate.instant(JSON.stringify(errors.error));
             }
-            //stk500 timeout.
-
             return message;
         }
 

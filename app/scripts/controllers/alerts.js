@@ -8,9 +8,9 @@
  * Controller of the bitbloqApp
  */
 angular.module('bitbloqApp')
-    .controller('AlertsCtrl', function($scope, alertsService) {
+    .controller('AlertsCtrl', function ($scope, alertsService, $sce, $translate) {
         $scope.alerts = alertsService.getInstance();
-        $scope.generateSvgUrl = function(id) {
+        $scope.generateSvgUrl = function (id) {
             var svg;
             switch (id) {
                 case 'ok':
@@ -26,5 +26,9 @@ angular.module('bitbloqApp')
                     svg = id;
             }
             return 'images/sprite.svg#' + svg;
+        };
+
+        $scope.sanitizeMe = function (text) {
+            return $sce.trustAsHtml($translate.instant(text));
         };
     });
