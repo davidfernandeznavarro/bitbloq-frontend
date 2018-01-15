@@ -153,10 +153,10 @@ angular.module('bitbloqApp')
                 socket.on('connect', function (something) {
                     if (socket) {
                         socket.on('message', function (msg) {
-                            console.log('msg', msg);
+                            // console.log('msg', msg);
                         });
                         socket.on('serialportdata', function (data) {
-                            console.log('serialport data' + data);
+                            //console.log('serialport data' + data);
                             if (_serial && !_ignoreSerialPortMessages) {
                                 _serial.serialPortData += data + '\n';
                                 _serial.scopeRefreshFunction();
