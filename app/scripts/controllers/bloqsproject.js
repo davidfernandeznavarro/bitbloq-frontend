@@ -49,93 +49,6 @@ angular.module('bitbloqApp')
 
 
 
-        /* $scope.getComponents = function (componentsArray) {
-             var components = {};
- 
-             var serialPort = _.find(componentsArray, function (o) {
-                 return o.uuid === 'sp';
-             });
- 
-             var bluetooth = _.find(componentsArray, function (o) {
-                 return o.uuid === 'bt';
-             });
- 
-             var phoneElements = _.find(componentsArray, function (o) {
-                 return o.uuid === 'device';
-             });
-             if (serialPort) {
-                 components.sp = serialPort.name;
-             }
- 
-             if (bluetooth) {
-                 components.bt = bluetooth.name;
-             }
- 
-             if (phoneElements) {
-                 components.device = phoneElements.name;
-             }
- 
-             _.forEach(componentsArray, function (value) {
-                 if (hardwareConstants.viewerSensors.indexOf(value.uuid) !== -1) {
-                     if (components[value.uuid]) {
-                         components[value.uuid].names.push(value.name);
-                     } else {
-                         components[value.uuid] = {};
-                         components[value.uuid].type = value.type;
-                         components[value.uuid].names = [value.name];
-                     }
-                 }
-             });
-             return components;
-         };*/
-
-        /* $scope.getViewerCode = function (componentsArray, originalCode) {
-             var components = $scope.getComponents(componentsArray);
-             var code = originalCode;
-             var serialName;
-             var visorCode;
-             if (components.sp) {
-                 serialName = components.sp;
-                 visorCode = generateSensorsCode(components, serialName, '');
-                 code = code.replace(/loop\(\){([^]*)}/, 'loop() {' + visorCode + '$1' + '}');
-             } else {
-         //        var serialCode = originalCode.split('/***   Included libraries  ***///');
-        //        serialCode[1] = '\n\r#include <SoftwareSerial.h>\n\r#include <BitbloqSoftwareSerial.h>' + serialCode[1];
-        //        code = '/***   Included libraries  ***/' + serialCode[0] + serialCode[1];
-        //        code = code.split('\n/***   Setup  ***/');
-        //        code = code[0].substring(0, code[0].length - 1) + 'bqSoftwareSerial puerto_serie_0(0, 1, 9600);' + '\n\r' + '\n/***   Setup  ***/' + code[1];
-        //        visorCode = generateSensorsCode(components, 'puerto_serie_0', '');
-        //        code = code.replace(/loop\(\){([^]*)}/, 'loop() {' + visorCode + '$1' + '}');
-        //    }
-        //    return code;
-        //};
-
-        function generateSerialViewerBloqCode(componentsArray, originalCode) {
-            var components = $scope.getComponents(componentsArray);
-            var code = originalCode;
-            var serialName;
-            if (components.sp) {
-                code = code.substring(0, code.length - 1) + '\n\r';
-                serialName = components.sp;
-                code = generateViewerBloqCode(components, serialName, code);
-                code = code + '}';
-            } else {
-                var serialCode = originalCode.split('/***   Included libraries  ***/');
-                serialCode[1] = '\n\r#include <SoftwareSerial.h>\n\r#include <BitbloqSoftwareSerial.h>' + serialCode[1];
-                code = '/***   Included libraries  ***/' + serialCode[0] + serialCode[1];
-                code = code.split('\n/***   Setup  ***/');
-                code = code[0].substring(0, code[0].length - 1) + 'bqSoftwareSerial puerto_serie_0(0, 1, 9600);' + '\n\r' + '\n/***   Setup  ***/' + code[1];
-                code = generateViewerBloqCode(components, 'puerto_serie_0', code);
-            }
-            return code;
-        }
-
-        function generateViewerBloqCode(componentsArray, serialName, code) {
-            var sensorsCode = generateSensorsCode(componentsArray, serialName, '');
-            code = code.replace('/*sendViewerData*/', sensorsCode);
-            return code;
-        }
-
         function generateMobileTwitterCode(componentsArray, originalCode) {
             var components = $scope.getComponents(projectService.project.hardware.components);
 
@@ -154,17 +67,6 @@ angular.module('bitbloqApp')
             return finalCode;
         }
 
-        //$scope.thereIsSerialBlock = function (code) {
-        //    var serialBlock;
-        //    if (code.indexOf('/*sendViewerData*/') > -1) {
-        //        serialBlock = true;
-        //    } else {
-        //        serialBlock = false;
-        //    }
-
-        //    return serialBlock;
-        //};
-
         $scope.thereIsTwitterBlock = function (code) {
             var twitterBlock;
             if (code.indexOf('/*sendTwitterAppConfig*/') > -1) {
@@ -175,35 +77,6 @@ angular.module('bitbloqApp')
             return twitterBlock;
         };
 
-        /*function generateSensorsCode(components, serialName, code) {
-            _.forEach(components, function (value, key) {
-                if (angular.isObject(value)) {
-                    if (value.type === 'analog') {
-                        _.forEach(value.names, function (name) {
-                            code = code.concat(serialName + '.println(String("[' + key.toUpperCase() + ':' + name + ']:") + String(String(analogRead(' + name + '))));\n\r');
-                            //  code = code + 'delay(500);\n\r';
-                        });
-                    } else {
-                        _.forEach(value.names, function (name) {
-                            if (key === 'us' || key === 'encoder') {
-                                code = code.concat(serialName + '.println(String("[' + key.toUpperCase() + ':' + name + ']:") + String(String(' + name + '.read())));\n\r');
-                                code = code + 'delay(50);\n\r';
-                            } else if (key === 'hts221') {
-                                code = code.concat(serialName + '.println(String("[' + key.toUpperCase() + '_temperature:' + name + ']:") + String(String(' + name + '.getTemperature())));\n\r');
-                                code = code + 'delay(50);\n\r';
-                                code = code.concat(serialName + '.println(String("[' + key.toUpperCase() + '_humidity:' + name + ']:") + String(String(' + name + '.getHumidity())));\n\r');
-                                code = code + 'delay(50);\n\r';
-                            } else {
-                                code = code.concat(serialName + '.println(String("[' + key.toUpperCase() + ':' + name + ']:") + String(String(digitalRead(' + name + '))));\n\r');
-                                //   code = code + 'delay(500);\n\r';
-                            }
-                        });
-                    }
-                }
-            });
-
-            return code;
-        }*/
 
         $scope.isRobotActivated = projectService.isRobotActivated;
 

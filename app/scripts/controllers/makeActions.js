@@ -399,15 +399,17 @@ angular.module('bitbloqApp')
             return code;
         }
 
+
         function _getViewerCode(componentsArray, originalCode) {
-            var components = _getComponents(componentsArray);
-            var code = originalCode;
-            var serialName;
-            var visorCode;
+            var components = _getComponents(componentsArray),
+                code = originalCode,
+                serialName,
+                visorCode;
+
+
             if (components.sp) {
                 serialName = components.sp;
                 visorCode = _generateSensorsCode(components, serialName, '');
-                code = code.replace(/loop\(\){([^]*)}/, 'loop() {' + visorCode + '$1' + '}');
             } else {
                 var serialCode = originalCode.split('/***   Included libraries  ***/');
                 serialCode[1] = '\n\r#include <BitbloqSoftwareSerial.h>' + serialCode[1];
@@ -415,8 +417,13 @@ angular.module('bitbloqApp')
                 code = code.split('\n/***   Setup  ***/');
                 code = code[0].substring(0, code[0].length - 1) + 'bqSoftwareSerial puerto_serie_0(0, 1, 9600);' + '\n\r' + '\n/***   Setup  ***/' + code[1];
                 visorCode = _generateSensorsCode(components, 'puerto_serie_0', '');
-                code = code.replace(/loop\(\){([^]*)}/, 'loop() {' + visorCode + '$1' + '}');
             }
+            if (!_existViewerBlock(code)) {
+                code = code.replace(/loop\(\){([^]*)}/, 'loop() { $1 \n /*sendViewerData*/}');
+            }
+
+            code = code.replace('/*sendViewerData*/', visorCode + '\ndelay(200);\n');
+
             return code;
         }
 
@@ -429,12 +436,9 @@ angular.module('bitbloqApp')
                 type: 'loading'
             });
             var code = $scope.currentProjectService.getCode();
-            if (!_existViewerBlock(code)) {
-                code = _getViewerCode($scope.currentProject.hardware.components, $scope.currentProjectService.getCode());
-            }
-            //temp-remove it
-            //$scope.commonModals.launchViewerWindow($scope.currentProjectService.project, _getComponents($scope.currentProject.hardware.components));
-            //end temp and remember to enable next
+
+            code = _getViewerCode($scope.currentProject.hardware.components, $scope.currentProjectService.getCode());
+
             web2board.upload({
                 board: $scope.currentProjectService.getBoardMetaData(),
                 code: code,
@@ -450,42 +454,6 @@ angular.module('bitbloqApp')
                 }
                 alertsService.closeByTag('viewer');
             });
-
-
-            /*if ($scope.common.useChromeExtension()) {
-                $scope.currentProjectService.startAutosave(true);
-                show = true;
-                if (!$scope.currentProject.codeproject) {
-                    //parent: bloqsproject
-                    if ($scope.thereIsSerialBlock($scope.currentProjectService.getCode())) {
-                        $scope.upload();
-                    } else {
-                        var viewerCode = $scope.getViewerCode($scope.currentProject.hardware.components, $scope.currentProjectService.getCode());
-                        $scope.upload(viewerCode);
-                    }
-                } else {
-                    //parent: codeproject
-                }
-            } else {
-                commonModals.requestChromeExtensionActivation('modal-need-chrome-extension-activation-viewer', function (err) {
-                    if (!err) {
-                        $scope.currentProjectService.startAutosave(true);
-                        show = true;
-                        if (!$scope.currentProject.codeproject) {
-                            //parent: bloqsproject
-                            if ($scope.thereIsSerialBlock($scope.currentProjectService.getCode())) {
-                                $scope.upload();
-                            } else {
-                                var viewerCode = $scope.getViewerCode($scope.currentProject.hardware.components, $scope.currentProjectService.getCode());
-                                $scope.upload(viewerCode);
-                            }
-                        } else {
-                            //parent: codeproject
-                        }
-                    }
-                });
-            }*/
-
         };
 
         function sortProjects(modalScope) {
