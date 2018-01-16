@@ -278,35 +278,6 @@ angular.module('bitbloqApp')
             return $scope.currentProject.hardware.showRobotImage ? true : false;
         };
 
-        $rootScope.$on('viewer-code:ready', function () {
-            if (show) {
-                var componentsJSON = $scope.getComponents($scope.currentProject.hardware.components);
-                if ($scope.currentProject.hardware.board) {
-                    if ($scope.common.useChromeExtension()) {
-                        $scope.commonModals.launchViewerWindow($scope.currentProjectService.getBoardMetaData(), componentsJSON);
-                    }
-                } else {
-                    $scope.currentTab = 0;
-                    $scope.levelOne = 'boards';
-                    $scope.alertsService.add({
-                        text: 'alert-web2board-no-board-serial',
-                        id: 'serialmonitor',
-                        type: 'warning',
-                        link: function () {
-                            var tempA = document.createElement('a');
-                            tempA.setAttribute('href', '#/support/p/noBoard');
-                            tempA.setAttribute('target', '_blank');
-                            document.body.appendChild(tempA);
-                            tempA.click();
-                            document.body.removeChild(tempA);
-                        },
-                        linkText: $translate.instant('support-go-to')
-                    });
-                }
-                show = false;
-            }
-        });
-
         var availableViewerSensors = [
             'encoder',
             'hts221',
@@ -428,7 +399,6 @@ angular.module('bitbloqApp')
         }
 
 
-        var show;
         $scope.showViewer = function () {
             alertsService.add({
                 text: 'alert-viewer-reconfigure',

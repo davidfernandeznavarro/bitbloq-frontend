@@ -96,7 +96,8 @@ angular.module('bitbloqApp')
                     return Math.round(t < 0 ? 0 : t);
                 },
                 showLegend: false,
-                useInteractiveGuideline: true
+                useInteractiveGuideline: true,
+                forceY: [0, 0]
             }
         };
 
