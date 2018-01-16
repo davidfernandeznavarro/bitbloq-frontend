@@ -400,15 +400,13 @@ angular.module('bitbloqApp')
 
 
         $scope.showViewer = function () {
+            var code = $scope.currentProjectService.getCode();
+            code = _getViewerCode($scope.currentProject.hardware.components, $scope.currentProjectService.getCode());
             alertsService.add({
                 text: 'alert-viewer-reconfigure',
                 id: 'viewer',
                 type: 'loading'
             });
-            var code = $scope.currentProjectService.getCode();
-
-            code = _getViewerCode($scope.currentProject.hardware.components, $scope.currentProjectService.getCode());
-
             web2board.upload({
                 board: $scope.currentProjectService.getBoardMetaData(),
                 code: code,

@@ -9,7 +9,7 @@
  * Viewer controller
  */
 angular.module('bitbloqApp')
-    .controller('ViewerCtrl', function ($element, web2boardV2, web2board, $timeout, $scope, common, $translate, chromeAppApi, utils, hardwareService, $rootScope, _) {
+    .controller('ViewerCtrl', function ($element, web2board, $scope, common, $translate, utils, hardwareService, _, $log) {
 
         $scope.sensorsList = {};
 
@@ -386,7 +386,7 @@ angular.module('bitbloqApp')
                         }
                     }
                 } else {
-                    console.log('bad format message');
+                    $log.info('bad format message');
                 }
             }
         }
