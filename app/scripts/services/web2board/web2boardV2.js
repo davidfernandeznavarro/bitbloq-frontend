@@ -638,7 +638,7 @@ angular.module('bitbloqApp')
 
         function _listenSerialPort(params) {
             api.SerialMonitorHub.client.received = function (port, data) {
-                console.log('getting', data);
+                //console.log('getting', data);
                 if (params && params.serial && !_ignoreSerialPortMessages) {
                     if (data['py/bytes']) {
                         params.serial.serialPortData += data['py/bytes'];
