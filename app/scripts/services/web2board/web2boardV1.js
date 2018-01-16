@@ -9,7 +9,7 @@
  */
 angular.module('bitbloqApp')
     .factory('web2boardV1', function ($rootScope, $websocket, $log, $q, ngDialog, _, $timeout, common, envData, web2boardV2,
-        alertsService, $location, commonModals, projectService) {
+        alertsService, $location, commonModals, projectService, $translate) {
 
         /** Variables */
 
@@ -538,13 +538,19 @@ angular.module('bitbloqApp')
             return defer.promise;
         }
 
-
+        var _verifyPromise;
         web2board.externalVerify = function (boardReference, code) {
+            _verifyPromise = $q.defer();
+            web2boardV2.promises.verifyPromise = _verifyPromise;
+            if (_web2boardV2ListeneresAdded) {
+                addWeb2boardV2Listeners();
+            }
             if (web2board.isWeb2boardV2()) {
                 verifyW2b2(boardReference, code);
             } else {
                 verifyW2b1(boardReference, code);
             }
+            return _verifyPromise.promise;
         }
 
         function verifyW2b2(boardReference, code) {
@@ -562,13 +568,19 @@ angular.module('bitbloqApp')
             web2board.verify(code, boardReference);
         }
 
+        var _uploadPromise;
         web2board.externalUpload = function (boardReference, code) {
-            //uploadWithWeb2board(code) {
+            _uploadPromise = $q.defer();
+            web2boardV2.promises.uploadPromise = _uploadPromise;
+            if (_web2boardV2ListeneresAdded) {
+                addWeb2boardV2Listeners();
+            }
             if (web2board.isWeb2boardV2()) {
                 uploadW2b2(boardReference, code);
             } else {
                 uploadW2b1(boardReference, code);
             }
+            return _uploadPromise.promise;
         }
 
         function uploadW2b1(boardReference, code) {
@@ -663,6 +675,184 @@ angular.module('bitbloqApp')
                 });
             });
             return defer.promise;
+        }
+
+        /**
+         * 
+         * Web2boardV2Listeners
+         * 
+         */
+
+        var _web2boardV2Listeners,
+            _web2boardV2ListeneresAdded = false;
+
+        function addWeb2boardV2Listeners() {
+            _web2boardV2Listeners = {};
+            _web2boardV2Listeners.w2bDisconnectedEvent = $rootScope.$on('web2board:disconnected', function () {
+                if (_verifyPromise) {
+                    _verifyPromise.reject('disconnect');
+                }
+                if (_uploadPromise) {
+                    _uploadPromise.reject('disconnect');
+                }
+                web2board.setInProcess(false);
+                removeWeb2boardV2Listeners();
+            });
+
+            _web2boardV2Listeners.w2bVersionEvent = $rootScope.$on('web2board:wrong-version', function () {
+                web2board.setInProcess(false);
+            });
+
+            _web2boardV2Listeners.w2bNow2bEvent = $rootScope.$on('web2board:no-web2board', function () {
+                alertsService.closeByTag('compile');
+                alertsService.closeByTag('upload');
+                web2board.setInProcess(false);
+            });
+
+            _web2boardV2Listeners.w2bCompileErrorEvent = $rootScope.$on('web2board:compile-error', function (event, error) {
+                error = JSON.parse(error);
+                if (_verifyPromise) {
+                    _verifyPromise.reject(error.stdErr);
+                }
+                web2board.setInProcess(false);
+            });
+
+            _web2boardV2Listeners.w2bCompileVerifiedEvent = $rootScope.$on('web2board:compile-verified', function () {
+                if (_verifyPromise) {
+                    _verifyPromise.resolve();
+                }
+                web2board.setInProcess(false);
+            });
+
+            _web2boardV2Listeners.w2bBoardReadyEvent = $rootScope.$on('web2board:boardReady', function (evt, data) {
+                data = JSON.parse(data);
+                if (data.length > 0) {
+                    if (!alertsService.isVisible('uid', 'serialMonitorAlert')) {
+                        //cambiar uid por un id propio, serialMonitorAlert es el nombre que tenía la variable, mirar en el refactor del puerto serie
+                        alertsService.add({
+                            text: 'alert-web2board-boardReady',
+                            id: 'upload',
+                            type: 'ok',
+                            time: 5000,
+                            value: data[0]
+                        });
+                    }
+                } else {
+                    alertsService.add({
+                        text: 'alert-web2board-boardNotReady',
+                        id: 'upload',
+                        type: 'warning'
+                    });
+                }
+            });
+
+            _web2boardV2Listeners.w2bBoardNotReadyEvent = $rootScope.$on('web2board:boardNotReady', function () {
+                alertsService.add({
+                    text: 'alert-web2board-boardNotReady',
+                    id: 'upload',
+                    type: 'warning'
+                });
+                web2board.setInProcess(false);
+            });
+
+            _web2boardV2Listeners.w2bUploadingEvent = $rootScope.$on('web2board:uploading', function (evt, port) {
+                alertsService.add({
+                    text: 'alert-web2board-uploading',
+                    id: 'upload',
+                    type: 'loading',
+                    value: port
+                });
+                web2board.setInProcess(true);
+            });
+
+            _web2boardV2Listeners.w2bCodeUploadedEvent = $rootScope.$on('web2board:code-uploaded', function () {
+                alertsService.add({
+                    text: 'alert-web2board-code-uploaded',
+                    id: 'upload',
+                    type: 'ok',
+                    time: 5000
+                });
+                web2board.setInProcess(false);
+                if (_uploadPromise) {
+                    _uploadPromise.resolve();
+                }
+            });
+
+            _web2boardV2Listeners.w2bUploadErrorEvent = $rootScope.$on('web2board:upload-error', function (evt, data) {
+                data = JSON.parse(data);
+                var error = '';
+                if (!data.error) {
+                    error = data.stdErr;
+                    alertsService.add({
+                        text: 'alert-web2board-upload-error',
+                        id: 'upload',
+                        type: 'warning',
+                        value: data.stdErr
+                    });
+                } else if (data.error === 'no port') {
+                    alertsService.add({
+                        text: 'alert-web2board-upload-error',
+                        id: 'upload',
+                        type: 'warning'
+                    });
+                    error = 'no-port';
+                } else {
+                    alertsService.add({
+                        text: 'alert-web2board-upload-error',
+                        id: 'upload',
+                        type: 'warning',
+                        value: data.error
+                    });
+                    error = data.error;
+                }
+                web2board.setInProcess(false);
+                if (_uploadPromise) {
+                    _uploadPromise.reject();
+                }
+            });
+
+            _web2boardV2Listeners.w2bNoPortFoundEvent = $rootScope.$on('web2board:no-port-found', function () {
+                web2board.setInProcess(false);
+                alertsService.closeByTag('serialmonitor');
+                alertsService.add({
+                    text: 'alert-web2board-no-port-found',
+                    id: 'upload',
+                    type: 'warning',
+                    link: function () {
+                        var tempA = document.createElement('a');
+                        tempA.setAttribute('href', '#/support/p/noBoard');
+                        tempA.setAttribute('target', '_blank');
+                        document.body.appendChild(tempA);
+                        tempA.click();
+                        document.body.removeChild(tempA);
+                    },
+                    linkText: $translate.instant('support-go-to')
+                });
+            });
+
+            _web2boardV2Listeners.w2bSerialOpenedEvent = $rootScope.$on('web2board:serial-monitor-opened', function () {
+                alertsService.closeByTag('serialmonitor');
+                web2board.setInProcess(false);
+            });
+            _web2boardV2ListeneresAdded = true;
+        }
+
+        function removeWeb2boardV2Listeners() {
+            if (_web2boardV2Listeners && _web2boardV2ListeneresAdded) {
+                _web2boardV2Listeners.w2bDisconnectedEvent();
+                _web2boardV2Listeners.w2bVersionEvent();
+                _web2boardV2Listeners.w2bNow2bEvent();
+                _web2boardV2Listeners.w2bCompileErrorEvent();
+                _web2boardV2Listeners.w2bCompileVerifiedEvent();
+                _web2boardV2Listeners.w2bBoardReadyEvent();
+                _web2boardV2Listeners.w2bBoardNotReadyEvent();
+                _web2boardV2Listeners.w2bUploadingEvent();
+                _web2boardV2Listeners.w2bCodeUploadedEvent();
+                _web2boardV2Listeners.w2bUploadErrorEvent();
+                _web2boardV2Listeners.w2bNoPortFoundEvent();
+                _web2boardV2Listeners.w2bSerialOpenedEvent();
+                _web2boardV2ListeneresAdded = false;
+            }
         }
 
         return web2board;

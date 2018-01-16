@@ -28,12 +28,12 @@ angular.module('bitbloqApp')
                 scopeRefreshFunction: null
             }
         };
-        var _detectWeb2boardPromise,
-            _web2boardV2ListeneresAdded = false;
+        var _detectWeb2boardPromise;
+
 
         //DEVELOP- REMOVE
         _detectWeb2boardPromise = $q.defer();
-        exports.web2boardVersion = 'web2boardOnline';
+        exports.web2boardVersion = 'web2boardV2';
         _detectWeb2boardPromise.resolve(exports.web2boardVersion);
 
         function _detectWeb2boardVersion() {
@@ -103,11 +103,11 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardV2':
-                    if (!_web2boardV2ListeneresAdded) {
-                        addWeb2boardV2Listeners();
-                    }
-                    //no response, the service manage the states and alerts
-                    web2boardV1.externalVerify(params.board, params.code);
+                    web2boardV1.externalVerify(params.board, params.code).then(function (result) {
+                        _finalizeCompiling(null, result, promise);
+                    }, function (error) {
+                        _finalizeCompiling(error, null, promise);
+                    });
                     break;
                 case 'web2boardOnline':
                     web2boardOnline.compile(params).then(function (result) {
@@ -196,11 +196,12 @@ angular.module('bitbloqApp')
                     });
                     break;
                 case 'web2boardV2':
-                    if (!_web2boardV2ListeneresAdded) {
-                        addWeb2boardV2Listeners();
-                    }
                     //no response, the service manage the states and alerts
-                    web2boardV1.externalUpload(params.board, params.code);
+                    web2boardV1.externalUpload(params.board, params.code).then(function (result) {
+                        _finalizeUploading(null, result, promise);
+                    }, function (error) {
+                        _finalizeUploading({ error: error.title }, null, promise);
+                    });
                     break;
                 case 'web2boardOnline':
                     web2boardOnline.compileAndUpload(params).then(function (result) {
@@ -222,7 +223,7 @@ angular.module('bitbloqApp')
             exports.uploadInProcess = false;
             if (error) {
                 var text, link, linkText;
-                if (error.error.search && error.error.search('no Arduino') !== -1) {
+                if (error.error.search && (error.error.search('no Arduino') !== -1) || (error.error.search('BOARD_NOT_READY') !== -1)) {
                     text = 'alert-web2board-no-port-found';
                     link = function () {
                         utils.goToUsingLink('#/support/p/noBoard', '_blank');
@@ -647,163 +648,6 @@ angular.module('bitbloqApp')
                 message = $translate.instant('modal-inform-error-textarea-placeholder') + ': ' + $translate.instant(JSON.stringify(errors.error));
             }
             return message;
-        }
-
-        /**
-         * 
-         * Web2boardV2Listeners
-         * 
-         */
-
-        var _web2boardV2Listeners;
-
-        function addWeb2boardV2Listeners() {
-            _web2boardV2Listeners = {};
-            _web2boardV2Listeners.w2bDisconnectedEvent = $rootScope.$on('web2board:disconnected', function () {
-                web2boardV1.setInProcess(false);
-                removeWeb2boardV2Listeners();
-            });
-
-            _web2boardV2Listeners.w2bVersionEvent = $rootScope.$on('web2board:wrong-version', function () {
-                web2boardV1.setInProcess(false);
-            });
-
-            _web2boardV2Listeners.w2bNow2bEvent = $rootScope.$on('web2board:no-web2board', function () {
-                alertsService.closeByTag('compile');
-                alertsService.closeByTag('upload');
-                web2boardV1.setInProcess(false);
-            });
-
-            _web2boardV2Listeners.w2bCompileErrorEvent = $rootScope.$on('web2board:compile-error', function (event, error) {
-                error = JSON.parse(error);
-                _finalizeCompiling(error.stdErr)
-                web2boardV1.setInProcess(false);
-            });
-
-            _web2boardV2Listeners.w2bCompileVerifiedEvent = $rootScope.$on('web2board:compile-verified', function () {
-                _finalizeCompiling()
-                web2boardV1.setInProcess(false);
-            });
-
-            _web2boardV2Listeners.w2bBoardReadyEvent = $rootScope.$on('web2board:boardReady', function (evt, data) {
-                data = JSON.parse(data);
-                if (data.length > 0) {
-                    if (!alertsService.isVisible('uid', 'serialMonitorAlert')) {
-                        //cambiar uid por un id propio, serialMonitorAlert es el nombre que tenía la variable, mirar en el refactor del puerto serie
-                        alertsService.add({
-                            text: 'alert-web2board-boardReady',
-                            id: 'upload',
-                            type: 'ok',
-                            time: 5000,
-                            value: data[0]
-                        });
-                    }
-                } else {
-                    alertsService.add({
-                        text: 'alert-web2board-boardNotReady',
-                        id: 'upload',
-                        type: 'warning'
-                    });
-                }
-            });
-
-            _web2boardV2Listeners.w2bBoardNotReadyEvent = $rootScope.$on('web2board:boardNotReady', function () {
-                alertsService.add({
-                    text: 'alert-web2board-boardNotReady',
-                    id: 'upload',
-                    type: 'warning'
-                });
-                web2boardV1.setInProcess(false);
-            });
-
-            _web2boardV2Listeners.w2bUploadingEvent = $rootScope.$on('web2board:uploading', function (evt, port) {
-                alertsService.add({
-                    text: 'alert-web2board-uploading',
-                    id: 'upload',
-                    type: 'loading',
-                    value: port
-                });
-                web2boardV1.setInProcess(true);
-            });
-
-            _web2boardV2Listeners.w2bCodeUploadedEvent = $rootScope.$on('web2board:code-uploaded', function () {
-                alertsService.add({
-                    text: 'alert-web2board-code-uploaded',
-                    id: 'upload',
-                    type: 'ok',
-                    time: 5000
-                });
-                web2boardV1.setInProcess(false);
-            });
-
-            _web2boardV2Listeners.w2bUploadErrorEvent = $rootScope.$on('web2board:upload-error', function (evt, data) {
-                data = JSON.parse(data);
-                if (!data.error) {
-                    alertsService.add({
-                        text: 'alert-web2board-upload-error',
-                        id: 'upload',
-                        type: 'warning',
-                        value: data.stdErr
-                    });
-                } else if (data.error === 'no port') {
-                    alertsService.add({
-                        text: 'alert-web2board-upload-error',
-                        id: 'upload',
-                        type: 'warning'
-                    });
-                } else {
-                    alertsService.add({
-                        text: 'alert-web2board-upload-error',
-                        id: 'upload',
-                        type: 'warning',
-                        value: data.error
-                    });
-                }
-                web2boardV1.setInProcess(false);
-            });
-
-            _web2boardV2Listeners.w2bNoPortFoundEvent = $rootScope.$on('web2board:no-port-found', function () {
-                web2boardV1.setInProcess(false);
-                alertsService.closeByTag('serialmonitor');
-                alertsService.add({
-                    text: 'alert-web2board-no-port-found',
-                    id: 'upload',
-                    type: 'warning',
-                    link: function () {
-                        var tempA = document.createElement('a');
-                        tempA.setAttribute('href', '#/support/p/noBoard');
-                        tempA.setAttribute('target', '_blank');
-                        document.body.appendChild(tempA);
-                        tempA.click();
-                        document.body.removeChild(tempA);
-                    },
-                    linkText: $translate.instant('support-go-to')
-                });
-            });
-
-            _web2boardV2Listeners.w2bSerialOpenedEvent = $rootScope.$on('web2board:serial-monitor-opened', function () {
-                alertsService.closeByTag('serialmonitor');
-                web2boardV1.setInProcess(false);
-            });
-            _web2boardV2ListeneresAdded = true;
-        }
-
-        function removeWeb2boardV2Listeners() {
-            if (_web2boardV2Listeners && _web2boardV2ListeneresAdded) {
-                _web2boardV2Listeners.w2bDisconnectedEvent();
-                _web2boardV2Listeners.w2bVersionEvent();
-                _web2boardV2Listeners.w2bNow2bEvent();
-                _web2boardV2Listeners.w2bCompileErrorEvent();
-                _web2boardV2Listeners.w2bCompileVerifiedEvent();
-                _web2boardV2Listeners.w2bBoardReadyEvent();
-                _web2boardV2Listeners.w2bBoardNotReadyEvent();
-                _web2boardV2Listeners.w2bUploadingEvent();
-                _web2boardV2Listeners.w2bCodeUploadedEvent();
-                _web2boardV2Listeners.w2bUploadErrorEvent();
-                _web2boardV2Listeners.w2bNoPortFoundEvent();
-                _web2boardV2Listeners.w2bSerialOpenedEvent();
-                _web2boardV2ListeneresAdded = false;
-            }
         }
 
         return exports;

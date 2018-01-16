@@ -260,6 +260,9 @@ angular.module('bitbloqApp')
                 alertParams.text = 'alert-web2board-compile-error';
                 alertParams.value = error;
             }
+            if (promises.verifyPromise) {
+                promises.verifyPromise.reject(error);
+            }
 
             alertsService.add(alertParams);
         }
@@ -290,7 +293,10 @@ angular.module('bitbloqApp')
                     value: error
                 });
             }
-            console.error(error);
+            if (promises.uploadPromise) {
+                promises.uploadPromise.reject(error);
+            }
+            $log.info(error);
         }
 
         function webSocketWrapper(url) {
@@ -343,6 +349,9 @@ angular.module('bitbloqApp')
             });
             if (serialMonitorPanel) {
                 serialMonitorPanel.scope.uploadFinished();
+            }
+            if (promises.uploadPromise) {
+                promises.uploadPromise.resolve();
             }
         }
 
@@ -409,6 +418,9 @@ angular.module('bitbloqApp')
                             type: 'ok',
                             time: 5000
                         });
+                        if (promises.verifyPromise) {
+                            promises.verifyPromise.resolve();
+                        }
                     }, function (error) {
                         handleCompileError(error);
                     }).finally(removeInProgressFlag);
@@ -440,35 +452,6 @@ angular.module('bitbloqApp')
                 });
             }
         };
-
-        function generateSerialWindow(port) {
-            var scope = $rootScope.$new();
-            scope.setOnUploadFinished = function (callback) {
-                scope.uploadFinished = callback;
-            };
-            serialMonitorPanel = $.jsPanel({
-                position: 'center',
-                size: {
-                    width: 500,
-                    height: 500
-                },
-                onclosed: function () {
-                    scope.$destroy();
-                    serialMonitorPanel = null;
-                },
-                title: $translate.instant('serial'),
-                ajax: {
-                    url: 'views/serialMonitor.html',
-                    done: function () {
-                        if (port) {
-                            scope.port = port;
-                        }
-                        this.html($compile(this.html())(scope));
-                    }
-                }
-            });
-            serialMonitorPanel.scope = scope;
-        }
 
         function generatePlotterWindow(port) {
             var scope = $rootScope.$new();
@@ -561,10 +544,9 @@ angular.module('bitbloqApp')
                 });
 
                 api.SerialMonitorHub.server.findBoardPort(board.mcu)
-                    .then(function (port) {
+                    .then(function () {
                         inProgress = false;
                         alertsService.close(toast);
-                        //generateSerialWindow(port);
                     }, function (error) {
                         inProgress = false;
                         alertsService.add({
@@ -717,9 +699,14 @@ angular.module('bitbloqApp')
             });
         };
 
+        var promises = {
+            uploadPromise: null,
+            verifyPromise: null
+        };
 
         return {
             connect: connect,
+            promises: promises,
             verify: web2board.verify,
             upload: web2board.upload,
             serialMonitor: web2board.serialMonitor,
