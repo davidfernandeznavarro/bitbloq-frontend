@@ -32,9 +32,9 @@ angular.module('bitbloqApp')
 
 
         //DEVELOP- REMOVE
-        _detectWeb2boardPromise = $q.defer();
-        exports.web2boardVersion = 'web2boardV2';
-        _detectWeb2boardPromise.resolve(exports.web2boardVersion);
+        /* _detectWeb2boardPromise = $q.defer();
+         exports.web2boardVersion = 'web2boardV2';
+         _detectWeb2boardPromise.resolve(exports.web2boardVersion);*/
 
         function _detectWeb2boardVersion() {
             if (!_detectWeb2boardPromise || _detectWeb2boardPromise.promise.$$state.status === 2) {
@@ -223,7 +223,7 @@ angular.module('bitbloqApp')
             exports.uploadInProcess = false;
             if (error) {
                 var text, link, linkText;
-                if (error.error.search && (error.error.search('no Arduino') !== -1) || (error.error.search('BOARD_NOT_READY') !== -1)) {
+                if (error.error.search && ((error.error.search('no Arduino') !== -1) || (error.error.search('BOARD_NOT_READY') !== -1))) {
                     text = 'alert-web2board-no-port-found';
                     link = function () {
                         utils.goToUsingLink('#/support/p/noBoard', '_blank');
