@@ -476,7 +476,7 @@ module.exports = function(grunt) {
                 async.waterfall([
                     function(done) {
                         async.each(languages, function(item, done) {
-                                exportFromPoeditor(projectId, item.code, 'xls', 'untranslated', projectId + '_', folder, done);
+                                exportFromPoeditor(projectId, item.code, 'xliff', 'untranslated', projectId + '_', folder, done);
                             },
                             done);
                     },
