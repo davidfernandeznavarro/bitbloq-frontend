@@ -428,8 +428,8 @@ module.exports = function (grunt) {
                     src: '*.*'
                 }, {
                     expand: true,
-                    cwd: 'node_modules/socket.io-client',
-                    dest: 'dist/node_modules/socket.io-client/',
+                    cwd: 'node_modules/socket.io-client/dist/',
+                    dest: 'dist/node_modules/socket.io-client/dist/',
                     src: '*.*'
                 }]
             }
