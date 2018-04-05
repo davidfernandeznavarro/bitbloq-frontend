@@ -1335,6 +1335,62 @@
                 {
                     "name": "phoneReadLight"
                 }
+            ],
+            "zumjunior": [
+                {
+                    "name": "zumjuniorServoStart"
+                },
+                {
+                    "name": "zumjuniorServoStop"
+                },
+                {
+                    "name": "zumjuniorDoubleLed"
+                },
+                {
+                    "name": "zumjuniorMiniservo"
+                },
+                {
+                    "name": "zumjuniorButtonIf"
+                },
+                {
+                    "name": "zumjuniorButtonWhile"
+                },
+                {
+                    "name": "zumjuniorSliderIf"
+                },
+                {
+                    "name": "zumjuniorSliderWhile"
+                },
+                {
+                    "name": "zumjuniorDisplayNumber"
+                },
+                {
+                    "name": "zumjuniorDisplayNumbers"
+                },
+                {
+                    "name": "zumjuniorClearDisplay"
+                },
+                {
+                    "name": "zumjuniorSensorsIf"
+                },
+                {
+                    "name": "zumjuniorSensorsWhile"
+                },
+                {
+                    "name": "zumjuniorColorIf"
+                },
+                {
+                    "name": "zumjuniorColorWhile"
+                },
+                {
+                    "name": "zumjuniorTurnOnLed"
+                },
+                {
+                    "name": "zumjuniorTurnOffLed"
+                },
+                {
+                    "name": "zumjuniorPlayBuzz"
+                }
             ]
         },
         "robotsFirmwareVersion": {

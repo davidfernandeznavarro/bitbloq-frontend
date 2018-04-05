@@ -635,6 +635,17 @@ angular
                         y: 0.5
                     }
                 };
+            } else if (newComponent.manufacturer === 'bq-zumjunior') {
+                spaceInterPin = {
+                    ad: {
+                        x: 0.25,
+                        y: 1
+                    },
+                    i2c: {
+                        x: 0.25,
+                        y: 1
+                    }
+                };
             } else {
                 if (newComponent.pins.digital && newComponent.pins.analog) {
                     spaceInterPin = {

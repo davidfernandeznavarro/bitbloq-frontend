@@ -401,6 +401,48 @@ angular.module('bitbloqApp')
             return result;
         };
 
+        $scope.showZumjuniorComponents = function(bloqName) {
+            if (!$scope.currentProject.hardware.board ||
+                !$scope.currentProject.hardware.components) {
+                return false;
+            }
+
+            var connectedComponents = $scope.currentProject.hardware.components;
+
+            switch (bloqName) {
+                case 'zumjuniorServoStart':
+                case 'zumjuniorServoStop':
+                    return existComponent(['zumjunior_servo'], connectedComponents);
+                case 'zumjuniorDoubleLed':
+                    return existComponent(['zumjunior_double_led'], connectedComponents);
+                case 'zumjuniorMiniservo':
+                    return existComponent(['zumjunior_miniservo'], connectedComponents);
+                case 'zumjuniorButtonIf':
+                case 'zumjuniorButtonWhile':
+                    return existComponent(['zumjunior_button'], connectedComponents);
+                case 'zumjuniorSliderIf':
+                case 'zumjuniorSliderWhile':
+                    return existComponent(['zumjunior_slider'], connectedComponents);
+                case 'zumjuniorDisplayNumber':
+                case 'zumjuniorDisplayNumbers':
+                case 'zumjuniorClearDisplay':
+                    return existComponent(['zumjunior_7segment'], connectedComponents);
+                case 'zumjuniorSensorsIf':
+                case 'zumjuniorSensorsWhile':
+                case 'zumjuniorColorIf':
+                case 'zumjuniorColorWhile':
+                    return existComponent(['zumjunior_sensors'], connectedComponents);
+                case 'zumjuniorTurnOnLed':
+                case 'zumjuniorTurnOffLed':
+                    return existComponent(['zumjunior_integrated_led'], connectedComponents);
+                case 'zumjuniorPlayBuzz':
+                    return existComponent(['zumjunior_integrated_buzz'], connectedComponents);
+
+                default:
+                    return false;
+            }
+        };
+
         $scope.anyComponentBloq = function () {
             var result = false;
             if (currentProjectService.project && currentProjectService.project.hardware) {
@@ -994,6 +1036,26 @@ angular.module('bitbloqApp')
                 properties: {
                     basicBloqs: 'mbotV2',
                     advancedBloqs: 'advancedMbotV2'
+                }
+            },
+            zumjunior: {
+                id: 'allZumjuniorBloqs',
+                basicTab: 'zumjunior',
+                advancedTab: 'zumjuniorAdvanced',
+                counter: 0,
+                model: null,
+                showCondition: function () {
+                    return $scope.currentProject.hardware && ($scope.currentProject.hardware.board === 'zumjunior');
+                },
+                showBasicBloqsCondition: function(name) {
+                    return $scope.showZumjuniorComponents(name);
+                },
+                icon: '#robot',
+                literal: 'make-swtoolbox-zumjunior',
+                dataElement: 'toolbox-zumjunior',
+                properties: {
+                    basicBloqs: 'zumjunior',
+                    advancedBloqs: 'zumjuniorAdvanced'
                 }
             },
             rangerlandraider: {
