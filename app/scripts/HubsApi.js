@@ -205,7 +205,7 @@
                 return constructMessage('CodeHub', 'upload', arguments);
             },
 
-            compile : function (code){
+            compile : function (code, board){
 
                 return constructMessage('CodeHub', 'compile', arguments);
             },

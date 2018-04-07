@@ -26,13 +26,13 @@ angular.module('bitbloqApp')
 
         web2board.config = {
             wsHost: '127.0.0.1',
-            wsPort: 9876,
+            wsPort: 1234,
             serialPort: ''
         };
 
         /*Private functions*/
         function connect() {
-            return api.connect('ws://' + web2board.config.wsHost + ':' + web2board.config.wsPort + '/bitbloq');
+            return api.connect('wss://' + web2board.config.wsHost + ':' + web2board.config.wsPort + '/bitbloq');
         }
 
         function isWeb2boardUpToDate(version) {
@@ -127,7 +127,7 @@ angular.module('bitbloqApp')
         function startWeb2board() {
             console.log('starting Web2board...');
             var tempA = document.createElement('a');
-            tempA.setAttribute('href', 'web2board://');
+            tempA.setAttribute('href', 'qssweb2board://');
             document.body.appendChild(tempA);
             tempA.click();
             document.body.removeChild(tempA);
@@ -400,7 +400,7 @@ document.body.removeChild(tempA); },
             if (!inProgress) {
                 inProgress = true;
                 openCommunication(function () {
-                    return api.CodeHub.server.compile(code).then(function () {
+                    return api.CodeHub.server.compile(code, board.mcu).then(function () {
                         alertsService.add({
                             text: 'alert-web2board-compile-verified',
                             id: 'web2board',

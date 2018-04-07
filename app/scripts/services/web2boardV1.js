@@ -29,7 +29,7 @@ angular.module('bitbloqApp')
 
         web2board.config = {
             wsHost: '127.0.0.1',
-            wsPort: 9876,
+            wsPort: 1234,
             serialPort: ''
         };
 
@@ -150,7 +150,7 @@ angular.module('bitbloqApp')
         function startWeb2board() {
             console.log('starting Web2board...');
             var tempA = document.createElement('a');
-            tempA.setAttribute('href', 'web2board://');
+            tempA.setAttribute('href', 'qssweb2board://');
             document.body.appendChild(tempA);
             tempA.click();
             document.body.removeChild(tempA);
@@ -167,7 +167,7 @@ angular.module('bitbloqApp')
 
             if (!ws || ws.readyState !== 1) { // It's already connected
 
-                ws = $websocket('ws://' + web2board.config.wsHost + ':' + web2board.config.wsPort);
+                ws = $websocket('wss://' + web2board.config.wsHost + ':' + web2board.config.wsPort);
                 ws.onOpen(function(evt) {
                     if (ws.readyState === 1) {
                         $log.debug('web2board:connected');
@@ -427,6 +427,7 @@ angular.module('bitbloqApp')
             }
             //It is not mandatory to have a board connected to verify the code
             web2board._openCommunication(function() {
+              // TODO
                 return web2board._send('compile ' + code);
             });
         };
@@ -443,6 +444,7 @@ angular.module('bitbloqApp')
             }
             //It is not mandatory to have a board connected to verify the code
             web2board._openCommunication(function() {
+              // TODO
                 return web2board._setBoard(board.mcu).then(function() {
                     web2board._send('upload ' + code);
                 });
@@ -457,6 +459,7 @@ angular.module('bitbloqApp')
             }
             web2board._openCommunication(function() {
                 return web2board._setBoard(board.mcu).then(function() {
+                  // TODO
                     web2board._send('SerialMonitor ' + web2board.serialPort);
                 });
             });
@@ -470,6 +473,7 @@ angular.module('bitbloqApp')
             }
             web2board._openCommunication(function() {
                 return web2board._setBoard(board.mcu).then(function() {
+                  // TODO
                     web2board._send('SerialMonitor ' + web2board.serialPort);
                 });
             });
