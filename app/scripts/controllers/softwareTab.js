@@ -589,6 +589,21 @@ angular.module('bitbloqApp')
                             case 'mkbReadMagneticField':
                                 result = existComponent(['mkb_compass'], connectedComponents);
                                 break;
+
+                            case 'zumjuniorReadSlider':
+                                result = existComponent(['zumjunior_slider'], connectedComponents);
+                                break;
+                            case 'zumjuniorReadButton':
+                                result = existComponent(['zumjunior_button'], connectedComponents);
+                                break;
+                            case 'zumjuniorReadSensors':
+                            case 'zumjuniorReadColor':
+                                result = existComponent(['zumjunior_sensors'], connectedComponents);
+                                break;
+                            case 'zumjuniorTurnOnLedRGB':
+                                result = existComponent(['zumjunior_integrated_led'], connectedComponents);
+                                break;
+
                             case 'echidnaBuzzer':
                             case 'echidnaBuzzerWithoutPause':
                             case 'echidnaReadSensor':

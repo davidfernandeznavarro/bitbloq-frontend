@@ -471,6 +471,21 @@
                 },
                 {
                     "name": "echidnaReadAccelXY"
+                },
+                {
+                    "name": "zumjuniorReadSlider"
+                },
+                {
+                    "name": "zumjuniorReadButton"
+                },
+                {
+                    "name": "zumjuniorReadSensors"
+                },
+                {
+                    "name": "zumjuniorReadColor"
+                },
+                {
+                    "name": "zumjuniorTurnOnLedRGB"
                 }
             ],
             "controls": [
