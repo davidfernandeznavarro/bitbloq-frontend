@@ -32,6 +32,7 @@ angular.module('bitbloqApp')
 
         $scope.bloqsApi = bloqsApi;
         $scope.currentProject = $scope.currentProject || projectService.project;
+        $scope.TODO = "// TODO JSON Object\n\n{name: \"json_object\", task: \"todo\"}";
         $scope.lastPosition = 0;
         $scope.checkBasicTab = 0;
         $scope.checkAdvanceTab = 0;
