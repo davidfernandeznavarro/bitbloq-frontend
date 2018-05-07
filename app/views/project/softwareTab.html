@@ -67,6 +67,14 @@
     </div>
     <div class="software--tab" ng-init="softTab = 'bioblocks_edition'" ng-show="softTab==='bioblocks_edition'">
         <div id="bloqs--field" ng-class="{'theme-colors':currentProject.defaultTheme === 'infotab_option_colorTheme', 'theme-basic':currentProject.defaultTheme === 'infotab_option_grayTheme' || !currentProject.defaultTheme}" class="field" tabindex="0">
+            <!-- From here testing block -->
+            <!-- TODO: Collapse button does not work -->
+            <div class="bloq bloq--group bloq-vars">
+                <div class="field--header"><button class="btn btn--collapsefield"></button><h3 data-i18n="bloq-var-header">{{ 'bioblocks_editor_field_title' | translate }}</h3></div>
+                <div class="bloq bloq--group bloq-vars" style="height: 200px;">
+                </div>
+            </div>
+            <!-- End testing block -->
             <div data-ng-class="{'toolbox--main':true,'navbar--collapsed':collapsedHeader, 'toolbox--expand':selectedBloqsToolbox!==''}" data-ng-include="'views/project/bloqsToolbox.html'"></div>
         </div>
         <div id="empty"></div>

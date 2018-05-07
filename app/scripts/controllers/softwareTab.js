@@ -119,15 +119,15 @@ angular.module('bitbloqApp')
             currentProjectService.bloqs.setupBloq = bloqs.buildBloqWithContent($scope.currentProject.software.setup, currentProjectService.componentsArray, bloqsApi.schemas);
             currentProjectService.bloqs.loopBloq = bloqs.buildBloqWithContent($scope.currentProject.software.loop, currentProjectService.componentsArray, bloqsApi.schemas);
 
-            $scope.$field.append(currentProjectService.bloqs.varsBloq.$bloq, currentProjectService.bloqs.setupBloq.$bloq, currentProjectService.bloqs.loopBloq.$bloq);
+            $scope.$field.append(currentProjectService.bloqs.varsBloq.$bloq/*, currentProjectService.bloqs.setupBloq.$bloq, currentProjectService.bloqs.loopBloq.$bloq*/);
             currentProjectService.bloqs.varsBloq.enable(true);
             currentProjectService.bloqs.varsBloq.doConnectable();
 
-            currentProjectService.bloqs.setupBloq.enable(true);
-            currentProjectService.bloqs.setupBloq.doConnectable();
+            // currentProjectService.bloqs.setupBloq.enable(true);
+            // currentProjectService.bloqs.setupBloq.doConnectable();
 
-            currentProjectService.bloqs.loopBloq.enable(true);
-            currentProjectService.bloqs.loopBloq.doConnectable();
+            // currentProjectService.bloqs.loopBloq.enable(false);
+            // currentProjectService.bloqs.loopBloq.doConnectable();
 
             bloqs.updateDropdowns();
             bloqs.startBloqsUpdate(currentProjectService.componentsArray);
@@ -880,6 +880,7 @@ angular.module('bitbloqApp')
         function setScrollWidth() {
             $timeout(function () {
                 var groupBloqs = angular.element('.field--content');
+                console.log(groupBloqs);
                 var horizontalScrollBar = angular.element('#scrollbar--horizontal-small');
                 var horizontalScrollWidth = Math.max.apply(null, groupBloqs.map(function () {
                     return this.scrollWidth;
