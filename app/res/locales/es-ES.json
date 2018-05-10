@@ -1799,5 +1799,8 @@
     "bloq-zumjunior-play-ms": "ms",
 
     "under_construction": "Esta pestaña está en construcción",
-    "bioblocks_editor_field_title": "Tablero de edición de biobloques"
+    "bioblocks_editor_field_title": "Tablero de edición de biobloques",
+    "bioblocks_experiment_editor_field_title": "Tablero de edición de experimentos con biobloques",
+    "make-swtoolbox-standard": "Biobloques Estándar",
+    "make-swtoolbox-custom": "Biobloques Personalizados"
 }

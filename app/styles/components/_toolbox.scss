@@ -365,6 +365,22 @@ $hw_toolbox: 210px;
             color: #e30b9a;
         }
     }
+
+    .toolbox-standardBioblocks {
+        background-color: #2a5b30;
+
+        &.selected--tab .btn-text {
+            color: #2a5b30;
+        }
+    }
+    
+    .toolbox-customBioblocks {
+        background-color: #72751f;
+
+        &.selected--tab .btn-text {
+            color: #72751f;
+        }
+    }
 }
 
 .toolbox--bloqs--container {

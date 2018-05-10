@@ -1000,243 +1000,243 @@ angular.module('bitbloqApp')
          ***********************************/
 
         $scope.generalToolboxOptions = {
-            zowi: {
-                id: 'allZowiBloqs',
-                basicTab: 'zowi',
-                advancedTab: 'advancedZowi',
-                counter: 0,
-                model: null,
-                showCondition: function () {
-                    return $scope.currentProject.hardware && $scope.currentProject.hardware.robot === 'zowi';
-                },
-                icon: '#robot',
-                literal: 'make-swtoolbox-zowi',
-                dataElement: 'toolbox-zowi',
-                properties: {
-                    basicBloqs: 'zowi',
-                    advancedBloqs: 'advancedZowi'
-                }
-            },
-            evolution: {
-                id: 'allEvolutionBloqs',
-                basicTab: 'evolution',
-                advancedTab: 'advancedEvolution',
-                counter: 0,
-                model: null,
-                showCondition: function () {
-                    return $scope.currentProject.hardware && $scope.currentProject.hardware.robot === 'evolution';
-                },
-                icon: '#robot',
-                literal: 'make-swtoolbox-evolution',
-                dataElement: 'toolbox-evolution',
-                properties: {
-                    basicBloqs: 'evolution',
-                    advancedBloqs: 'advancedEvolution'
-                }
-            },
-            mbotV2: {
-                id: 'allMBotBloqs',
-                basicTab: 'mbotV2',
-                advancedTab: 'advancedMbotV2',
-                counter: 0,
-                model: null,
-                showCondition: function () {
-                    return $scope.currentProject.hardware && ($scope.currentProject.hardware.robot === 'mbot' || $scope.currentProject.hardware.showRobotImage === 'mbot');
-                },
-                icon: '#robot',
-                literal: 'make-swtoolbox-mbot',
-                dataElement: 'toolbox-mbot',
-                showBasicBloqsCondition: function (name) {
-                    return $scope.showMBotComponents(name);
-                },
-                backgroundImage: true,
-                properties: {
-                    basicBloqs: 'mbotV2',
-                    advancedBloqs: 'advancedMbotV2'
-                }
-            },
-            zumjunior: {
-                id: 'allZumjuniorBloqs',
-                basicTab: 'zumjunior',
-                advancedTab: 'zumjuniorAdvanced',
-                counter: 0,
-                model: null,
-                showCondition: function () {
-                    return $scope.currentProject.hardware && ($scope.currentProject.hardware.board === 'zumjunior');
-                },
-                showBasicBloqsCondition: function(name) {
-                    return $scope.showZumjuniorComponents(name);
-                },
-                icon: '#robot',
-                literal: 'make-swtoolbox-zumjunior',
-                dataElement: 'toolbox-zumjunior',
-                properties: {
-                    basicBloqs: 'zumjunior',
-                    advancedBloqs: 'zumjuniorAdvanced'
-                }
-            },
-            rangerlandraider: {
-                id: 'allRangerLandRaiderBloqs',
-                basicTab: 'rangerlandraider',
-                advancedTab: 'advancedRangerLandRaider',
-                counter: 0,
-                model: null,
-                showCondition: function () {
-                    return $scope.currentProject.hardware && ($scope.currentProject.hardware.robot === 'rangerlandraider' || $scope.currentProject.hardware.showRobotImage === 'rangerlandraider');
-                },
-                icon: '#robot',
-                literal: 'make-swtoolbox-rangerlandraider',
-                dataElement: 'toolbox-rangerlandraider',
-                showBasicBloqsCondition: function (name) {
-                    return $scope.showMBotComponents(name);
-                },
-                backgroundImage: true,
-                properties: {
-                    basicBloqs: 'rangerlandraider',
-                    advancedBloqs: 'advancedRangerlandraider'
-                }
-            },
-            rangerraptor: {
-                id: 'allRangerRaptorBloqs',
-                basicTab: 'rangerraptor',
-                advancedTab: 'advancedRangerRaptor',
-                counter: 0,
-                model: null,
-                showCondition: function () {
-                    return $scope.currentProject.hardware && ($scope.currentProject.hardware.robot === 'rangerraptor' || $scope.currentProject.hardware.showRobotImage === 'rangerraptor');
-                },
-                icon: '#robot',
-                literal: 'make-swtoolbox-rangerraptor',
-                dataElement: 'toolbox-rangerraptor',
-                showBasicBloqsCondition: function (name) {
-                    return $scope.showMBotComponents(name);
-                },
-                backgroundImage: true,
-                properties: {
-                    basicBloqs: 'rangerraptor',
-                    advancedBloqs: 'advancedRangerraptor'
-                }
-            },
-            rangernervousbird: {
-                id: 'allRangerNervousBirdBloqs',
-                basicTab: 'rangernervousbird',
-                advancedTab: 'advancedRangerNervousBird',
-                counter: 0,
-                model: null,
-                showCondition: function () {
-                    return $scope.currentProject.hardware && ($scope.currentProject.hardware.robot === 'rangernervousbird' || $scope.currentProject.hardware.showRobotImage === 'rangernervousbird');
-                },
-                icon: '#robot',
-                literal: 'make-swtoolbox-rangernervousbird',
-                dataElement: 'toolbox-rangernervousbird',
-                showBasicBloqsCondition: function (name) {
-                    return $scope.showMBotComponents(name);
-                },
-                backgroundImage: true,
-                properties: {
-                    basicBloqs: 'rangernervousbird',
-                    advancedBloqs: 'advancedRangernervousbird'
-                }
-            },
-            startertank: {
-                id: 'allStarterTankBloqs',
-                basicTab: 'startertank',
-                advancedTab: 'advancedStarterTank',
-                counter: 0,
-                model: null,
-                showCondition: function () {
-                    return $scope.currentProject.hardware && ($scope.currentProject.hardware.robot === 'startertank' || $scope.currentProject.hardware.showRobotImage === 'startertank');
-                },
-                icon: '#robot',
-                literal: 'make-swtoolbox-startertank',
-                dataElement: 'toolbox-startertank',
-                showBasicBloqsCondition: function (name) {
-                    return $scope.showMBotComponents(name);
-                },
-                backgroundImage: true,
-                properties: {
-                    basicBloqs: 'startertank',
-                    advancedBloqs: 'advancedStartertank'
-                }
-            },
-            starterthreewheels: {
-                id: 'allStarterThreeWheelsBloqs',
-                basicTab: 'starterthreewheels',
-                advancedTab: 'advancedstarterthreewheels',
-                counter: 0,
-                model: null,
-                showCondition: function () {
-                    return $scope.currentProject.hardware && ($scope.currentProject.hardware.robot === 'starterthreewheels' || $scope.currentProject.hardware.showRobotImage === 'starterthreewheels');
-                },
-                icon: '#robot',
-                literal: 'make-swtoolbox-starterthreewheels',
-                dataElement: 'toolbox-starterthreewheels',
-                showBasicBloqsCondition: function (name) {
-                    return $scope.showMBotComponents(name);
-                },
-                backgroundImage: true,
-                properties: {
-                    basicBloqs: 'starterthreewheels',
-                    advancedBloqs: 'advancedStarterthreewheels'
-                }
-            },
-            freakscar: {
-                id: 'allFreakscarBloqs',
-                basicTab: 'freakscar',
-                advancedTab: 'advancedFreakscar',
-                counter: 0,
-                model: null,
-                showCondition: function () {
-                    return $scope.currentProject.hardware && $scope.currentProject.hardware.board === 'freakscar';
-                },
-                icon: '#robot',
-                literal: 'make-swtoolbox-freakscar',
-                dataElement: 'toolbox-freakscar',
-                properties: {
-                    basicBloqs: 'freakscar',
-                    advancedBloqs: 'advancedFreakscar'
-                }
-            },
-            phone: {
-                id: 'allPhoneBloqs',
-                basicTab: 'phone',
-                counter: 0,
-                model: null,
-                showCondition: function () {
-                    return $scope.currentProject.useBitbloqConnect;
-                },
-                icon: '#mobile',
-                'literal': 'make-swtoolbox-bitbloqConnect',
-                dataElement: 'toolbox-phone',
-                properties: {
-                    basicBloqs: 'phone',
-                    advancedBloqs: 'advancedPhone'
-                }
-            },
-            components: {
-                id: 'allComponentsBloqs',
-                basicTab: 'components',
-                advancedTab: 'advancedComponents',
-                counter: 0,
-                model: null,
-                icon: '#component',
-                literal: 'components',
-                dataElement: 'toolbox-components',
-                showBasicBloqsCondition: function (name) {
-                    return $scope.showComponents(name);
-                },
-                showCondition: function () {
-                    if ($scope.currentProject.selectedBloqs && ($scope.common.userRole === 'student')) {
-                        return (($scope.currentProject.selectedBloqs.components.length > 0) || ($scope.currentProject.selectedBloqs.advancedComponents.length > 0));
-                    } else {
-                        return true;
-                    }
-                },
-                properties: {
-                    basicBloqs: 'components',
-                    advancedBloqs: 'advancedComponents'
-                }
-            },
+            // zowi: {
+            //     id: 'allZowiBloqs',
+            //     basicTab: 'zowi',
+            //     advancedTab: 'advancedZowi',
+            //     counter: 0,
+            //     model: null,
+            //     showCondition: function () {
+            //         return $scope.currentProject.hardware && $scope.currentProject.hardware.robot === 'zowi';
+            //     },
+            //     icon: '#robot',
+            //     literal: 'make-swtoolbox-zowi',
+            //     dataElement: 'toolbox-zowi',
+            //     properties: {
+            //         basicBloqs: 'zowi',
+            //         advancedBloqs: 'advancedZowi'
+            //     }
+            // },
+            // evolution: {
+            //     id: 'allEvolutionBloqs',
+            //     basicTab: 'evolution',
+            //     advancedTab: 'advancedEvolution',
+            //     counter: 0,
+            //     model: null,
+            //     showCondition: function () {
+            //         return $scope.currentProject.hardware && $scope.currentProject.hardware.robot === 'evolution';
+            //     },
+            //     icon: '#robot',
+            //     literal: 'make-swtoolbox-evolution',
+            //     dataElement: 'toolbox-evolution',
+            //     properties: {
+            //         basicBloqs: 'evolution',
+            //         advancedBloqs: 'advancedEvolution'
+            //     }
+            // },
+            // mbotV2: {
+            //     id: 'allMBotBloqs',
+            //     basicTab: 'mbotV2',
+            //     advancedTab: 'advancedMbotV2',
+            //     counter: 0,
+            //     model: null,
+            //     showCondition: function () {
+            //         return $scope.currentProject.hardware && ($scope.currentProject.hardware.robot === 'mbot' || $scope.currentProject.hardware.showRobotImage === 'mbot');
+            //     },
+            //     icon: '#robot',
+            //     literal: 'make-swtoolbox-mbot',
+            //     dataElement: 'toolbox-mbot',
+            //     showBasicBloqsCondition: function (name) {
+            //         return $scope.showMBotComponents(name);
+            //     },
+            //     backgroundImage: true,
+            //     properties: {
+            //         basicBloqs: 'mbotV2',
+            //         advancedBloqs: 'advancedMbotV2'
+            //     }
+            // },
+            // zumjunior: {
+            //     id: 'allZumjuniorBloqs',
+            //     basicTab: 'zumjunior',
+            //     advancedTab: 'zumjuniorAdvanced',
+            //     counter: 0,
+            //     model: null,
+            //     showCondition: function () {
+            //         return $scope.currentProject.hardware && ($scope.currentProject.hardware.board === 'zumjunior');
+            //     },
+            //     showBasicBloqsCondition: function(name) {
+            //         return $scope.showZumjuniorComponents(name);
+            //     },
+            //     icon: '#robot',
+            //     literal: 'make-swtoolbox-zumjunior',
+            //     dataElement: 'toolbox-zumjunior',
+            //     properties: {
+            //         basicBloqs: 'zumjunior',
+            //         advancedBloqs: 'zumjuniorAdvanced'
+            //     }
+            // },
+            // rangerlandraider: {
+            //     id: 'allRangerLandRaiderBloqs',
+            //     basicTab: 'rangerlandraider',
+            //     advancedTab: 'advancedRangerLandRaider',
+            //     counter: 0,
+            //     model: null,
+            //     showCondition: function () {
+            //         return $scope.currentProject.hardware && ($scope.currentProject.hardware.robot === 'rangerlandraider' || $scope.currentProject.hardware.showRobotImage === 'rangerlandraider');
+            //     },
+            //     icon: '#robot',
+            //     literal: 'make-swtoolbox-rangerlandraider',
+            //     dataElement: 'toolbox-rangerlandraider',
+            //     showBasicBloqsCondition: function (name) {
+            //         return $scope.showMBotComponents(name);
+            //     },
+            //     backgroundImage: true,
+            //     properties: {
+            //         basicBloqs: 'rangerlandraider',
+            //         advancedBloqs: 'advancedRangerlandraider'
+            //     }
+            // },
+            // rangerraptor: {
+            //     id: 'allRangerRaptorBloqs',
+            //     basicTab: 'rangerraptor',
+            //     advancedTab: 'advancedRangerRaptor',
+            //     counter: 0,
+            //     model: null,
+            //     showCondition: function () {
+            //         return $scope.currentProject.hardware && ($scope.currentProject.hardware.robot === 'rangerraptor' || $scope.currentProject.hardware.showRobotImage === 'rangerraptor');
+            //     },
+            //     icon: '#robot',
+            //     literal: 'make-swtoolbox-rangerraptor',
+            //     dataElement: 'toolbox-rangerraptor',
+            //     showBasicBloqsCondition: function (name) {
+            //         return $scope.showMBotComponents(name);
+            //     },
+            //     backgroundImage: true,
+            //     properties: {
+            //         basicBloqs: 'rangerraptor',
+            //         advancedBloqs: 'advancedRangerraptor'
+            //     }
+            // },
+            // rangernervousbird: {
+            //     id: 'allRangerNervousBirdBloqs',
+            //     basicTab: 'rangernervousbird',
+            //     advancedTab: 'advancedRangerNervousBird',
+            //     counter: 0,
+            //     model: null,
+            //     showCondition: function () {
+            //         return $scope.currentProject.hardware && ($scope.currentProject.hardware.robot === 'rangernervousbird' || $scope.currentProject.hardware.showRobotImage === 'rangernervousbird');
+            //     },
+            //     icon: '#robot',
+            //     literal: 'make-swtoolbox-rangernervousbird',
+            //     dataElement: 'toolbox-rangernervousbird',
+            //     showBasicBloqsCondition: function (name) {
+            //         return $scope.showMBotComponents(name);
+            //     },
+            //     backgroundImage: true,
+            //     properties: {
+            //         basicBloqs: 'rangernervousbird',
+            //         advancedBloqs: 'advancedRangernervousbird'
+            //     }
+            // },
+            // startertank: {
+            //     id: 'allStarterTankBloqs',
+            //     basicTab: 'startertank',
+            //     advancedTab: 'advancedStarterTank',
+            //     counter: 0,
+            //     model: null,
+            //     showCondition: function () {
+            //         return $scope.currentProject.hardware && ($scope.currentProject.hardware.robot === 'startertank' || $scope.currentProject.hardware.showRobotImage === 'startertank');
+            //     },
+            //     icon: '#robot',
+            //     literal: 'make-swtoolbox-startertank',
+            //     dataElement: 'toolbox-startertank',
+            //     showBasicBloqsCondition: function (name) {
+            //         return $scope.showMBotComponents(name);
+            //     },
+            //     backgroundImage: true,
+            //     properties: {
+            //         basicBloqs: 'startertank',
+            //         advancedBloqs: 'advancedStartertank'
+            //     }
+            // },
+            // starterthreewheels: {
+            //     id: 'allStarterThreeWheelsBloqs',
+            //     basicTab: 'starterthreewheels',
+            //     advancedTab: 'advancedstarterthreewheels',
+            //     counter: 0,
+            //     model: null,
+            //     showCondition: function () {
+            //         return $scope.currentProject.hardware && ($scope.currentProject.hardware.robot === 'starterthreewheels' || $scope.currentProject.hardware.showRobotImage === 'starterthreewheels');
+            //     },
+            //     icon: '#robot',
+            //     literal: 'make-swtoolbox-starterthreewheels',
+            //     dataElement: 'toolbox-starterthreewheels',
+            //     showBasicBloqsCondition: function (name) {
+            //         return $scope.showMBotComponents(name);
+            //     },
+            //     backgroundImage: true,
+            //     properties: {
+            //         basicBloqs: 'starterthreewheels',
+            //         advancedBloqs: 'advancedStarterthreewheels'
+            //     }
+            // },
+            // freakscar: {
+            //     id: 'allFreakscarBloqs',
+            //     basicTab: 'freakscar',
+            //     advancedTab: 'advancedFreakscar',
+            //     counter: 0,
+            //     model: null,
+            //     showCondition: function () {
+            //         return $scope.currentProject.hardware && $scope.currentProject.hardware.board === 'freakscar';
+            //     },
+            //     icon: '#robot',
+            //     literal: 'make-swtoolbox-freakscar',
+            //     dataElement: 'toolbox-freakscar',
+            //     properties: {
+            //         basicBloqs: 'freakscar',
+            //         advancedBloqs: 'advancedFreakscar'
+            //     }
+            // },
+            // phone: {
+            //     id: 'allPhoneBloqs',
+            //     basicTab: 'phone',
+            //     counter: 0,
+            //     model: null,
+            //     showCondition: function () {
+            //         return $scope.currentProject.useBitbloqConnect;
+            //     },
+            //     icon: '#mobile',
+            //     'literal': 'make-swtoolbox-bitbloqConnect',
+            //     dataElement: 'toolbox-phone',
+            //     properties: {
+            //         basicBloqs: 'phone',
+            //         advancedBloqs: 'advancedPhone'
+            //     }
+            // },
+            // components: {
+            //     id: 'allComponentsBloqs',
+            //     basicTab: 'components',
+            //     advancedTab: 'advancedComponents',
+            //     counter: 0,
+            //     model: null,
+            //     icon: '#component',
+            //     literal: 'components',
+            //     dataElement: 'toolbox-components',
+            //     showBasicBloqsCondition: function (name) {
+            //         return $scope.showComponents(name);
+            //     },
+            //     showCondition: function () {
+            //         if ($scope.currentProject.selectedBloqs && ($scope.common.userRole === 'student')) {
+            //             return (($scope.currentProject.selectedBloqs.components.length > 0) || ($scope.currentProject.selectedBloqs.advancedComponents.length > 0));
+            //         } else {
+            //             return true;
+            //         }
+            //     },
+            //     properties: {
+            //         basicBloqs: 'components',
+            //         advancedBloqs: 'advancedComponents'
+            //     }
+            // },
             functions: {
                 id: 'allFunctionsBloqs',
                 basicTab: 'functions',
@@ -1385,7 +1385,45 @@ angular.module('bitbloqApp')
                         return true;
                     }
                 }
-            }
+            },
+            standardBioblocks: {
+                id: 'standardBioblocks',
+                basicTab: 'standardBioblocks',
+                advancedTab: 'advanceStandardBioblocks',
+                counter: 0,
+                model: null,
+                literal: 'make-swtoolbox-standard',
+                properties: {
+                    basicBloqs: 'standardBioblocks',
+                    advancedBloqs: 'advanceStandardBioblocks'
+                },
+                showCondition: function() {
+                    if ($scope.currentProject.selectedBloqs && ($scope.common.userRole === 'student')) {
+                        return (($scope.currentProject.selectedBloqs.standardBioblocks.length > 0) || ($scope.currentProject.selectedBloqs.advanceStandardBioblocks.length > 0));
+                    } else {
+                        return true;
+                    }
+                }
+            },
+            customBioblocks: {
+                id: 'customBioblocks',
+                basicTab: 'customBioblocks',
+                advancedTab: 'advanceCustomBioblocks',
+                counter: 0,
+                model: null,
+                literal: 'make-swtoolbox-custom',
+                properties: {
+                    basicBloqs: 'customBioblocks',
+                    advancedBloqs: 'advanceCustomBioblocks'
+                },
+                showCondition: function() {
+                    if ($scope.currentProject.selectedBloqs && ($scope.common.userRole === 'student')) {
+                        return (($scope.currentProject.selectedBloqs.customBioblocks.length > 0) || ($scope.currentProject.selectedBloqs.advanceCustomBioblocks.length > 0));
+                    } else {
+                        return true;
+                    }
+                }
+            },
         };
 
         $scope.addChecks = function (type, value, bloqName) {

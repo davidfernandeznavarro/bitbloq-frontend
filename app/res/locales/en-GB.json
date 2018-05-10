@@ -1425,5 +1425,8 @@
     "zumjunior_button": "Double button",
 
     "under_construction": "This tab is under construction",
-    "bioblocks_editor_field_title": "Bioblocks edition board"
+    "bioblocks_editor_field_title": "Bioblocks edition board",
+    "bioblocks_experiment_editor_field_title": "Experiments edition board with Bioblocks",
+    "make-swtoolbox-standard": "Standard Bioblocks",
+    "make-swtoolbox-custom": "Custom Bioblocks"
 }
