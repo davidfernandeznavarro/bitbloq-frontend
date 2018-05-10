@@ -1,8 +1,11 @@
 <div class="bloqs-tab" data-ng-controller="SoftwareTabCtrl" data-ng-keyup="onFieldKeyUp($event)" data-ng-keydown="onFieldKeyDown($event)" ng-init="setScrollHeight()">
     <div class="tabs--title">
         <ul class="bloq--field--list text-strong">
-            <li data-element="bloqs-tab" ng-click="setSoftwareTab('bloqs')" ng-class="{'active':softTab==='bloqs'}">{{ 'bloqs' | translate }}</li>
+            <li data-element="experiment-tab" ng-click="setSoftwareTab('experiment')" ng-class="{'active':softTab==='experiment'}">{{ 'experiment' | translate }}</li>
+            <li data-element="bioblocks_edition-tab" ng-click="setSoftwareTab('bioblocks_edition')" ng-class="{'active':softTab==='bioblocks_edition'}">{{ 'bioblocks_edition' | translate }}</li>
             <li data-element="code-tab" ng-click="setSoftwareTab('code')" ng-class="{'active':softTab==='code'}">{{ 'code' | translate }}</li>
+            <li data-element="autoprotocols-tab" ng-click="setSoftwareTab('autoprotocols')" ng-class="{'active':softTab==='autoprotocols'}">{{ 'autoprotocols' | translate }}</li>
+            <li data-element="graph-tab" ng-click="setSoftwareTab('graph')" ng-class="{'active':softTab==='graph'}">{{ 'graph' | translate }}</li>
         </ul>
         <button ng-if="common.properties.robotsFirmwareVersion[currentProject.hardware.robot] || common.properties.boardsFirmwareVersion[currentProject.hardware.board]" class="btn btn--factory-firmware" ng-click="performFactoryReset()">
             <svg class="svg-icon">
@@ -62,8 +65,39 @@
     <div ng-show="showHorizontalScroll && softTab==='bloqs'" id="make--horizontal-scrollbar">
         <div id="scrollbar--horizontal-small"></div>
     </div>
-    <div class="software--tab" ng-init="softTab = 'bloqs'" ng-show="softTab==='bloqs'">
+    <div class="software--tab" ng-init="softTab = 'bioblocks_edition'" ng-show="softTab==='bioblocks_edition'">
         <div id="bloqs--field" ng-class="{'theme-colors':currentProject.defaultTheme === 'infotab_option_colorTheme', 'theme-basic':currentProject.defaultTheme === 'infotab_option_grayTheme' || !currentProject.defaultTheme}" class="field" tabindex="0">
+            <!-- From here testing block -->
+            <!-- TODO: Collapse button does not work -->
+            <div class="bloq bloq--group bloq-vars">
+                <div class="field--header"><button class="btn btn--collapsefield"></button><h3 data-i18n="bloq-var-header">{{ 'bioblocks_editor_field_title' | translate }}</h3></div>
+                <div class="bloq bloq--group bloq-vars" style="height: 200px;">
+                </div>
+            </div>
+            <!-- End testing block -->
+            <div data-ng-class="{'toolbox--main':true,'navbar--collapsed':collapsedHeader, 'toolbox--expand':selectedBloqsToolbox!==''}" data-ng-include="'views/project/bloqsToolbox.html'"></div>
+        </div>
+        <div id="empty"></div>
+        <div id="bloqs-context-menu">
+            <ul>
+                <li>
+                    <button data-ng-click="duplicateBloqFromContextMenu(contextMenuBloq)">{{ 'bloqstab-duplicate-bloq' | translate }}</button>
+                </li>
+                <li>
+                    <button data-ng-show="!contextMenuBloq.itsEnabled() && !contextMenuBloq.itsFree()" data-ng-click="enableBloqFromContextMenu(contextMenuBloq)">{{ 'bloqstab-enable-bloq' | translate }}</button>
+                </li>
+                <li>
+                    <button data-ng-show="contextMenuBloq.itsEnabled()" data-ng-click="disableBloqFromContextMenu(contextMenuBloq)">{{ 'bloqstab-disable-bloq' | translate }}</button>
+                </li>
+                <li class="dropdown__item--separator"></li>
+                <li>
+                    <button data-ng-click="removeBloqFromContextMenu(contextMenuBloq)">{{ 'bloqstab-remove-bloq' | translate }}</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="software--tab" ng-init="softTab = 'experiment'" ng-show="softTab==='experiment'">
+        <div id="bloqs--edition--field" ng-class="{'theme-colors':currentProject.defaultTheme === 'infotab_option_colorTheme', 'theme-basic':currentProject.defaultTheme === 'infotab_option_grayTheme' || !currentProject.defaultTheme}" class="field" tabindex="0">
             <div data-ng-class="{'toolbox--main':true,'navbar--collapsed':collapsedHeader, 'toolbox--expand':selectedBloqsToolbox!==''}" data-ng-include="'views/project/bloqsToolbox.html'"></div>
         </div>
         <div id="empty"></div>
@@ -94,6 +128,16 @@
         </button>
         <div class="console--main">
             <beauty-code class="console--content" data-code="currentProject.code"></beauty-code>
+        </div>
+    </div>
+    <div class="software--tab" ng-show="softTab==='autoprotocols'">
+        <div class="console--main">
+            <beauty-code class="console--content" data-code="TODO"></beauty-code>
+        </div>
+    </div>
+    <div class="software--tab" ng-show="softTab==='graph'">
+        <div class="alert">
+            {{ 'under_construction' | translate }}.
         </div>
     </div>
 </div>
