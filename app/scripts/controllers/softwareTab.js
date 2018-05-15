@@ -133,6 +133,8 @@ angular.module('bitbloqApp')
             bloqs.startBloqsUpdate(currentProjectService.componentsArray);
 
             $scope.$trashcan = $('#trashcan').last();
+
+            initBlockly();
         };
 
         $scope.initFreeBloqs = function () {
@@ -663,6 +665,15 @@ angular.module('bitbloqApp')
             }
             return result;
         };
+
+        function initBlockly() {
+            console.log("---");
+            $scope.blocklyDiv = $("#blocklyDiv")[0];
+            console.log($scope.blocklyDiv);
+            $scope.blocklyWorkspace = Blockly.inject($scope.blocklyDiv,{toolbox: document.getElementById('blockly--toolbox')});
+            console.log($scope.blocklyWorkspace);
+            console.log("---");
+        }
 
         function checkInputLength() {
             setScrollsDimension();
