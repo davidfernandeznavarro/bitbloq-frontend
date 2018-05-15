@@ -1247,9 +1247,9 @@ angular.module('bitbloqApp')
                 dataElement: 'toolbox-functions',
                 showCondition: function () {
                     if ($scope.currentProject.selectedBloqs && ($scope.common.userRole === 'student')) {
-                        return (($scope.currentProject.selectedBloqs.functions.length > 0) || ($scope.currentProject.selectedBloqs.advancedFunctions.length > 0));
+                        return ($scope.softTab !== 'experiment' && (($scope.currentProject.selectedBloqs.functions.length > 0) || ($scope.currentProject.selectedBloqs.advancedFunctions.length > 0)));
                     } else {
-                        return true;
+                        return $scope.softTab !== 'experiment';
                     }
                 },
                 properties: {
@@ -1270,9 +1270,9 @@ angular.module('bitbloqApp')
                 },
                 showCondition: function () {
                     if ($scope.currentProject.selectedBloqs && ($scope.common.userRole === 'student')) {
-                        return (($scope.currentProject.selectedBloqs.variables.length > 0) || ($scope.currentProject.selectedBloqs.advancedVariables.length > 0));
+                        return ($scope.softTab !== 'experiment' && (($scope.currentProject.selectedBloqs.variables.length > 0) || ($scope.currentProject.selectedBloqs.advancedVariables.length > 0)));
                     } else {
-                        return true;
+                        return $scope.softTab !== 'experiment';
                     }
                 }
             },
@@ -1287,9 +1287,9 @@ angular.module('bitbloqApp')
                 },
                 showCondition: function () {
                     if ($scope.currentProject.selectedBloqs && ($scope.common.userRole === 'student')) {
-                        return ($scope.currentProject.selectedBloqs.codes.length > 0);
+                        return ($scope.softTab !== 'experiment' && ($scope.currentProject.selectedBloqs.codes.length > 0));
                     } else {
-                        return true;
+                        return $scope.softTab !== 'experiment';
                     }
                 }
             },
@@ -1306,9 +1306,9 @@ angular.module('bitbloqApp')
                 },
                 showCondition: function () {
                     if ($scope.currentProject.selectedBloqs && ($scope.common.userRole === 'student')) {
-                        return (($scope.currentProject.selectedBloqs.mathematics.length > 0) || ($scope.currentProject.selectedBloqs.advancedMathematics.length > 0));
+                        return ($scope.softTab !== 'experiment' && (($scope.currentProject.selectedBloqs.mathematics.length > 0) || ($scope.currentProject.selectedBloqs.advancedMathematics.length > 0)));
                     } else {
-                        return true;
+                        return $scope.softTab !== 'experiment';
                     }
                 }
             },
@@ -1325,9 +1325,9 @@ angular.module('bitbloqApp')
                 },
                 showCondition: function () {
                     if ($scope.currentProject.selectedBloqs && ($scope.common.userRole === 'student')) {
-                        return (($scope.currentProject.selectedBloqs.texts.length > 0) || ($scope.currentProject.selectedBloqs.advancedTexts.length > 0));
+                        return ($scope.softTab !== 'experiment' && (($scope.currentProject.selectedBloqs.texts.length > 0) || ($scope.currentProject.selectedBloqs.advancedTexts.length > 0)));
                     } else {
-                        return true;
+                        return $scope.softTab !== 'experiment';
                     }
                 }
             },
@@ -1344,9 +1344,9 @@ angular.module('bitbloqApp')
                 },
                 showCondition: function () {
                     if ($scope.currentProject.selectedBloqs && ($scope.common.userRole === 'student')) {
-                        return (($scope.currentProject.selectedBloqs.controls.length > 0) || ($scope.currentProject.selectedBloqs.advancedControls.length > 0));
+                        return ($scope.softTab !== 'experiment' && (($scope.currentProject.selectedBloqs.controls.length > 0) || ($scope.currentProject.selectedBloqs.advancedControls.length > 0)));
                     } else {
-                        return true;
+                        return $scope.softTab !== 'experiment';
                     }
                 }
             },
@@ -1361,9 +1361,9 @@ angular.module('bitbloqApp')
                 },
                 showCondition: function () {
                     if ($scope.currentProject.selectedBloqs && ($scope.common.userRole === 'student')) {
-                        return ($scope.currentProject.selectedBloqs.logics.length > 0);
+                        return ($scope.softTab !== 'experiment' && ($scope.currentProject.selectedBloqs.logics.length > 0));
                     } else {
-                        return true;
+                        return $scope.softTab !== 'experiment';
                     }
                 }
             },
@@ -1380,9 +1380,9 @@ angular.module('bitbloqApp')
                 },
                 showCondition: function () {
                     if ($scope.currentProject.selectedBloqs && ($scope.common.userRole === 'student')) {
-                        return (($scope.currentProject.selectedBloqs.classes.length > 0) || ($scope.currentProject.selectedBloqs.advancedClasses.length > 0));
+                        return ($scope.softTab !== 'experiment' && (($scope.currentProject.selectedBloqs.classes.length > 0) || ($scope.currentProject.selectedBloqs.advancedClasses.length > 0)));
                     } else {
-                        return true;
+                        return $scope.softTab !== 'experiment';
                     }
                 }
             },

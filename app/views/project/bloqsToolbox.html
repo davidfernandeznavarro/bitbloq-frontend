@@ -46,7 +46,7 @@
     -->
     <div class="toolbox__menu" ng-show="selectedBloqsToolbox===''">
         <ul ng-click="selectedToolboxTab = 'basic'">
-            <li class="toolbox__item" ng-repeat="(key, item) in generalToolboxOptions" ng-show="item.showCondition?item.showCondition():true">
+            <li class="toolbox__item" ng-repeat="(key, item) in generalToolboxOptions" ng-show="(item.showCondition?item.showCondition():true)">
                 <button class="btn btn-text element-toolbox" ng-click="changeBloqsToolbox(key)">
                     {{item.literal | translate}}
                     <svg class="svg-icon svg-icon--right">
