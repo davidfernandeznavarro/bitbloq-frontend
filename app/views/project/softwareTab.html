@@ -97,7 +97,7 @@
         </div>
     </div>
     <div class="software--tab" ng-init="softTab = 'experiment'" ng-show="softTab==='experiment'">
-        <div class="bloq bloq--group bloq-vars" style="height: 90%;">
+        <div id="blocklyDiv" class="bloq bloq--group bloq-vars" style="height: 90%;">
             <div class="field--header"><h3 data-i18n="bloq-var-header">{{ 'bioblocks_experiment_editor_field_title' | translate }}</h3></div>
         </div>
         <div data-ng-class="{'toolbox--main':true,'navbar--collapsed':collapsedHeader, 'toolbox--expand':selectedBloqsToolbox!==''}" data-ng-include="'views/project/bloqsToolbox.html'"></div>
