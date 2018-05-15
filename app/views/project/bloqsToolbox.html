@@ -8,6 +8,26 @@
         <span>{{ 'tour-step-six-text' | translate }}</span>
     </div>
 </div>
+
+<xml id="blockly--toolbox" style="display: none;">
+    <block type="experiment"></block>
+    <block type="step"></block>
+    <block type="container"></block>
+    <block type="containerList"></block>
+    <block type="pipette"></block>
+    <block type="electrophoresis"></block>
+    <block type="incubate"></block>
+    <block type="centrifugation"></block>
+    <block type="thermocycling"></block>
+    <block type="measurement"></block>
+    <block type="sangerSequencing"></block>
+    <block type="oligosynthesize"></block>
+    <block type="colonyPicking"></block>
+    <block type="cellSpreading"></block>
+    <block type="flashFreeze"></block>
+    <block type="mix"></block>
+</xml>
+
 <aside id="toolbox" class="toolbox--right toolbox--software" ng-init="selectedToolboxTab = 'basic'" ng-class="{'toolbox--expand':selectedBloqsToolbox!=='', 'toolbox--checks':common.section==='exercise'}"
     data-element="toolbox">
     <h1 class="hidden">Components Toolbox</h1>
