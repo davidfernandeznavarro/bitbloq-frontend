@@ -27,6 +27,85 @@
     <block type="flashFreeze"></block>
     <block type="mix"></block>
 </xml>
+<xml id="myowntoolbox" style="display: none">
+      <category name="Input / Output">
+        <block type="source"></block>
+        <block type="destination"></block>
+      </category>
+      <category name="Number Inputs">
+        <block type="numbers_time_of_op">
+          <field name="VALUE">0</field>
+        </block>
+        <block type="numbers_speed">
+          <field name="VALUE">0</field>
+        </block>
+        <block type="numbers_cycles">
+          <field name="VALUE">0</field>
+        </block>
+        <block type="numbers_wavelength">
+          <field name="VALUE">0</field>
+        </block>
+        <block type="numbers_sequence">
+          <field name="VALUE">0</field>
+        </block>
+        <block type="numbers_co2">
+          <field name="VALUE">0</field>
+        </block>
+        <block type="numbers_speed">
+          <field name="VALUE">0</field>
+        </block>
+      </category>
+      <category name="String Inputs">
+        <block type="strings_ladder">
+          <field name="TEXT"> --- </field>
+        </block>
+        <block type="strings_dest">
+          <field name="TEXT"> --- </field>
+        </block>
+        <block type="strings_scale">
+          <field name="TEXT"> --- </field>
+        </block>
+        <block type="strings_purification">
+          <field name="TEXT"> --- </field>
+        </block>
+        <block type="strings_mcc">
+          <field name="TEXT"> --- </field>
+        </block>
+      </category>
+      <category name="Dropdown Menus">
+        <block type="drop_action">
+          <field name="NAME">OPTIONNAME</field>
+        </block>
+        <block type="drop_measure">
+          <field name="NAME">OPTIONNAME</field>
+        </block>
+        <block type="drop_type">
+          <field name="NAME">OPTIONNAME</field>
+        </block>
+        <block type="drop_temp">
+          <field name="NAME">OPTIONNAME</field>
+          <field name="NUMBER">0</field>
+        </block>
+        <block type="drop_duration">
+          <field name="NUMBER">0</field>
+          <field name="NAME">OPTIONNAME</field>
+        </block>
+      </category>
+      <category name="Extra">
+        <block type="new_op">
+          <field name="NAME"> --- </field>
+        </block>
+        <block type="new_op2">
+          <field name="NAME"> --- </field>
+        </block>
+        <block type="extra_settings">
+          <field name="NAME">TRUE</field>
+        </block>
+        <block type="extra_mix_check">
+          <field name="NAME">TRUE</field>
+        </block>
+      </category>
+    </xml>   
 
 <aside id="toolbox" class="toolbox--right toolbox--software" ng-init="selectedToolboxTab = 'basic'" ng-class="{'toolbox--expand':selectedBloqsToolbox!=='', 'toolbox--checks':common.section==='exercise'}"
     data-element="toolbox">

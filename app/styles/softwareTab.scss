@@ -90,6 +90,42 @@ $toolboxWidthClosed: 210px;
             border-bottom: 1px solid $grey-item-hover;
         }
     }
+    // BioBlocks CSS for the Workspace 
+    .blocklyDiv {
+        //20px margin
+        position:relative;
+        left:10px;
+        color: #020202;
+        font-family: sans-serif;
+        width: calc(100% - #{$toolboxWidthClosed} - 24px);
+        cursor: initial;
+        margin: 2 1em 1em;
+        border: 3px solid green;
+        border-radius: .4em;
+        table-layout: fixed;
+        .field--header {
+            overflow: hidden;
+            border-bottom: 1px solid $grey-item-hover;
+        }
+    }
+    .blocklyTitle {
+        //20px margin
+        color: #020202;
+        position:relative;
+        left:20px;
+        font-size:17px;
+        font-family: sans-serif;
+        width: calc(100% - #{$toolboxWidthClosed} - 24px);
+        cursor: initial;
+        margin: 2 1em 1em;
+        border-radius: .4em;
+        table-layout: fixed;
+        .field--header {
+            overflow: hidden;
+            border-bottom: 1px solid $grey-item-hover;
+        }
+    }
+    // END OF THE CUSTOM BLOCKLY CSS
     .software__edit-code {
         z-index: 1;
         line-height: initial;
