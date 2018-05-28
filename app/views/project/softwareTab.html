@@ -69,9 +69,6 @@
         <div id="bloqs--field" ng-class="{'theme-colors':currentProject.defaultTheme === 'infotab_option_colorTheme', 'theme-basic':currentProject.defaultTheme === 'infotab_option_grayTheme' || !currentProject.defaultTheme}" class="field" tabindex="0">
             <!-- From here testing block -->
             <!-- TODO: Collapse button does not work -->
-            <script>
-                window.alert("Welcome to the custom editor")
-            </script>
             <div class="bloq bloq--group bloq-vars">
                 <div class="field--header"><button class="btn btn--collapsefield"></button><h3 data-i18n="bloq-var-header">{{ 'bioblocks_editor_field_title' | translate }}</h3></div>
                 <!-- Scrip tags to load the code that is needed in blockly just in case it's erased from index.html 
@@ -82,9 +79,9 @@
                 <script src="bower_components/various-scripts/demos/testing/custom.js"></script> 
                             <script src="bower_components/google-blockly/blockly_compressed.js"></script>
                 <script src="bower_components/google-blockly/blocks_compressed.js"></script>
-                <script src="bower_components/google-blockly/msg/js/en.js"></script>
-                <table>-->
+                <script src="bower_components/google-blockly/msg/js/en.js"></script>-->
                 <script src="scripts/bioblocks/editor.js"></script>
+                <table>
                   <tr>
                     <td>
                       <h4 class="blocklyTitle"> Workspace</h4><br>
@@ -118,7 +115,7 @@
         </div>
     </div>
     <div class="software--tab" ng-init="softTab = 'experiment'" ng-show="softTab==='experiment'">
-        <div id="blocklyDiv2" class="bloq bloq--group bloq-vars" style="height: 90%;">
+        <div id="blocklyDivExperiment" class="bloq bloq--group bloq-vars" style="height: 90%;">
             <div class="field--header"><h3 data-i18n="bloq-var-header">{{ 'bioblocks_experiment_editor_field_title' | translate }}</h3></div>
         </div>
         <div data-ng-class="{'toolbox--main':true,'navbar--collapsed':collapsedHeader, 'toolbox--expand':selectedBloqsToolbox!==''}" data-ng-include="'views/project/bloqsToolbox.html'"></div>
@@ -157,7 +154,7 @@
     </div>
     <div class="software--tab" ng-show="softTab==='autoprotocols'">
         <div class="console--main">
-            <beauty-code class="console--content" data-code="TODO"></beauty-code>
+            <beauty-code class="console--content" data-code="experimentJSON"></beauty-code>
         </div>
     </div>
     <div class="software--tab" ng-show="softTab==='graph'">
