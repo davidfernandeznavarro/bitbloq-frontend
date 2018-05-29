@@ -136,6 +136,7 @@ angular.module('bitbloqApp')
 
 			initBlockly();
 			myBlockly();
+
 		};
 
 		$scope.initFreeBloqs = function () {
@@ -686,6 +687,9 @@ angular.module('bitbloqApp')
 			// console.log(Blockly.JavaScript.workspaceToCode($scope.blocklyWorkspaceExperiment));
 			// console.log(Blockly.JSON.workspaceToCode($scope.blocklyWorkspaceExperiment));
 			createExperimentJSON();
+			var xml = Blockly.Xml.workspaceToDom($scope.blocklyWorkspaceExperiment);
+			$scope.currentProject.experiment = Blockly.Xml.domToPrettyText(xml);
+			currentProjectService.startAutosave();
 		}
 
 		function createExperimentJSON(){
@@ -803,6 +807,10 @@ angular.module('bitbloqApp')
 			console.log($scope.blocklyWorkspace);
 			console.log("-INIT COMPLETED ;)-");
 			initBioblocksComponents();
+
+			var xml = Blockly.Xml.textToDom($scope.currentProject.experiment);
+			Blockly.Xml.domToWorkspace($scope.blocklyWorkspaceExperiment, xml);
+
 		}
 
 		function checkInputLength() {
@@ -2030,3 +2038,4 @@ angular.module('bitbloqApp')
 		};
 
 	}
+
