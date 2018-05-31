@@ -71,7 +71,7 @@
     "code": "Código Arduino",
     "experiment": "Experimento",
     "bioblocks_edition": "Edición de biobloques",
-    "autoprotocols": "Código Autoprotocols",
+    "autoprotocols": "Código JSON",
     "graph": "Gráfico",
     "tags": "Etiquetas",
     "add": "Añadir",

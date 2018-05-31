@@ -855,6 +855,10 @@ angular.module('bitbloqApp')
                 }
                 $scope.setCode($scope.getCode());
                 $rootScope.$emit('currenttab:bloqstab');
+                setTimeout(function() {
+                    $window.dispatchEvent(new Event('resize'));
+                    $rootScope.blocklyWorkspaceExperiment.render();
+                }, 1);
             }
 
             $scope.currentTab = index;

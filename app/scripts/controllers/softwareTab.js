@@ -136,6 +136,7 @@ angular.module('bitbloqApp')
 
 			initBlockly();
 			myBlockly();
+
 		};
 
 		$scope.initFreeBloqs = function () {
@@ -312,6 +313,10 @@ angular.module('bitbloqApp')
 			} else if (tab === 'bloqs') {
 				$rootScope.$emit('currenttab:bloqstab');
 			}
+			setTimeout(function() {
+				$window.dispatchEvent(new Event('resize'));
+				$rootScope.blocklyWorkspaceExperiment.render();
+			}, 1);
 		};
 
 		$scope.shouldShowNoComponentsText = function () {
@@ -681,15 +686,19 @@ angular.module('bitbloqApp')
 
 		$scope.experimentChange = function() {
 			// console.log("My workspace changed!");
-			// console.log($scope.blocklyWorkspaceExperiment);
-			// console.log($scope.blocklyWorkspaceExperiment.getAllBlocks());
-			// console.log(Blockly.JavaScript.workspaceToCode($scope.blocklyWorkspaceExperiment));
-			// console.log(Blockly.JSON.workspaceToCode($scope.blocklyWorkspaceExperiment));
+			// console.log($rootScope.blocklyWorkspaceExperiment);
+			// console.log($rootScope.blocklyWorkspaceExperiment.getAllBlocks());
+			// console.log(Blockly.JavaScript.workspaceToCode($rootScope.blocklyWorkspaceExperiment));
+			// console.log(Blockly.JSON.workspaceToCode($rootScope.blocklyWorkspaceExperiment));
 			createExperimentJSON();
+			$scope.arduinoCode = arduinoTranslation($scope.experimentJSON);
+			var xml = Blockly.Xml.workspaceToDom($rootScope.blocklyWorkspaceExperiment);
+			$scope.currentProject.experiment = Blockly.Xml.domToPrettyText(xml);
+			currentProjectService.startAutosave();
 		}
 
 		function createExperimentJSON(){
-				var totalBlocks = $scope.blocklyWorkspaceExperiment.getAllBlocks();/*  This function performs an array which is used to store all the blocks in the workspace */
+				var totalBlocks = $rootScope.blocklyWorkspaceExperiment.getAllBlocks();/*  This function performs an array which is used to store all the blocks in the workspace */
 				
 				var maximumTimeOfOperation = 0;
 				var totalOperationBlocks = 0;
@@ -798,11 +807,15 @@ angular.module('bitbloqApp')
 			$scope.blocklyDivExperiment = $("#blocklyDivExperiment")[0];
 			console.log($scope.blocklyDiv);
 			$scope.blocklyWorkspace = Blockly.inject($scope.blocklyDiv,{toolbox: document.getElementById('myowntoolbox')},options);
-			$scope.blocklyWorkspaceExperiment = Blockly.inject($scope.blocklyDivExperiment,{toolbox: document.getElementById('blockly--toolbox')},options);
-			$scope.blocklyWorkspaceExperiment.addChangeListener($scope.experimentChange);
+			$rootScope.blocklyWorkspaceExperiment = Blockly.inject($scope.blocklyDivExperiment,{toolbox: document.getElementById('blockly--toolbox')},options);
+			$rootScope.blocklyWorkspaceExperiment.addChangeListener($scope.experimentChange);
 			console.log($scope.blocklyWorkspace);
 			console.log("-INIT COMPLETED ;)-");
 			initBioblocksComponents();
+
+			var xml = Blockly.Xml.textToDom($scope.currentProject.experiment);
+			Blockly.Xml.domToWorkspace($rootScope.blocklyWorkspaceExperiment, xml);
+
 		}
 
 		function checkInputLength() {
@@ -1711,6 +1724,12 @@ angular.module('bitbloqApp')
 		});
 	});
 
+	function arduinoTranslation (json){
+    
+	    return "// Undefined operation";
+	    
+	}
+
 	function regularJSONTranslation_(block) {
 		var currentExecutingBlock=block
 		var JSONcode = "";
@@ -2030,3 +2049,4 @@ angular.module('bitbloqApp')
 		};
 
 	}
+
