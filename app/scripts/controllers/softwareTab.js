@@ -1726,13 +1726,47 @@ angular.module('bitbloqApp')
 
 	function arduinoTranslation (json){
     
-	    return "// Undefined operation";
+        var experiment = JSON.parse(json);
+    	var code_definition="";
+		var code_setup="void setup(){\n";
+		var code_loop="void loop(){\n";
+		var code_auxFunctions="";
+	    
+	    if(!("instructions" in experiment)) {
+	    	return;
+	    }
+
+		for (var i in experiment.instructions){
+			console.log(experiment.instructions[i]);
+			console.log(experiment.instructions[i].op);
+			if(experiment.instructions[i].op==="spin"){
+				code_definition = code_definition + "#include<Servo.h>//Library to control the ESC\n\nServo ESC; //Create an object of the class servo\n\nint sens = 75; // this value indicates the limit reading between dark and light,\n// it has to be tested as it may change acording on the\n// distance the thacometer is placed\nint nPalas = 1; // the number of blades of the propeller\nint ts = 500; // the time it takes each reading. Sampling time.\nint rpmRef = 0;// Reference for speed in RPM\nint rpmRead;\n\nfloat Kp = 10.0;\nfloat Ki = 0.2;\nfloat E = 0.0;\n";
+				code_setup = code_setup + "  ESC.attach(9);//Attach the ESC to digital pin 9\n\n  //Activate the ESC\n  ESC.writeMicroseconds(1000); //1000 = 1ms\n  //Change the 1000 before to 2000 if\n  //your ESC activates with a pulse of 2ms\n\n  delay(5000); //Wait 5 seconds to start the ESC\n\n  Serial.begin(9600);//Start serial comunication\n  Serial.println(\"Ready\");\n}\n\n";
+				code_loop = code_loop + "\n  rpmRead = readRPM();\n\n  if (Serial.available() >= 1)\n  {\n    rpmRef = Serial.parseInt(); //Leer un entero por serial\n  }\n  controlPI();\n  Serial.print(\"RPM read: \");\n  Serial.print(rpmRead);\n  Serial.print(\"RPM ref: \");\n  Serial.println(rpmRef);\n}\n";
+				code_auxFunctions = code_auxFunctions + "\nvoid controlPI() {\n  int u = 0;\n  int e = rpmRef - rpmRead;\n\n  E += Ki * e;\n  u = Kp * e + 1000 + Ki * e;\n\n  if (u > 2000) {\n    u = 2000;\n    E -= Ki * e;\n  }\n  if (u < 1000) {\n    u = 1000;\n    E -= Ki * e;\n  }\n\n  ESC.writeMicroseconds(u); //Send control action\n}\n\nint readRPM() {\n  int counter = 0;\n  long start = millis();\n  int val;\n  int stat = LOW;\n  int stat2;\n  int rpm;\n\n  while (( millis() - start ) < ts) {\n    val = analogRead(0);\n    if (val < sens) {\n      stat = LOW;\n    }\n    else {\n      stat = HIGH;\n    }\n    if (stat2 != stat) { //counts when the state change, thats from (dark to light) or\n      //from (light to dark), remmember that IR light is invisible for us.\n      counter++;\n      stat2 = stat;\n    }\n  }\n\n  rpm = ((int)counter / nPalas) / 2.0 * 60000.0 / (ts);\n\n  return rpm;\n}";
+			}
+			
+			else if (experiment.instructions[i].op==="gel_separate"){
+				var duration = experiment.instructions[i].duration;
+				code_definition = code_definition + "\nint pinPowerSource = 3;\nint minutes = "+duration+"; // time in minutes will last the electrophoresis\nboolean stateON = false; //This var will change to true when the electrophoresis start\nunsigned long start;\nunsigned long electrophoresis__MS; // Duration of the electrophoresis in miliseconds\n";
+				code_setup = code_setup + "\n  pinMode(pinPowerSource, OUTPUT);\n  digitalWrite(pinPowerSource, LOW);\n  Serial.begin(9600);\n  electrophoresis__MS = minutes * 60 * 1000;\n  Serial.println(\"Introduce 1 to start electrophoresis.\");\n}\n";
+				code_loop = code_loop + "  if ( (Serial.available() >= 1) && (stateON == false) )\n  {\n    if (Serial.parseInt() == 1)\n    {\n      stateON = true;\n      start = millis();\n      digitalWrite(pinPowerSource, HIGH);\n      Serial.print(\"Electrophoresis is started it will last \");\n      Serial.print(minutes);\n      Serial.println(\" minutes.\")\n    }\n  }\n  if (stateON == true) {\n    if ( (millis() - start) > electrophoresis__MS) {\n      stateON = false;\n      digitalWrite(pinPowerSource, LOW);\n      Serial.println(\"Electrophoresis is finished.\");\n      Serial.println(\"Introduce 1 to start electrophoresis.\");\n    }\n    if ( ((millis() - start) % (60 * 10000))==0 ) {\n      Serial.print( (int) minutes - (millis() - start)/(60*1000) );\n      Serial.println(\" minutes remaining\");\n    }\n  }\n}\n";
+				//Electrophoresis has no aux functions
+			}
+			else code_definition = "// There is at least one undefined operation in your experiment.\n // Current operations available to be shown in arduino code: Centrifuge and Electrophoresis"
+				
+	    }
+	    
+		var final_code = code_definition + "\n" + code_setup + "\n" + code_loop + "\n" + code_auxFunctions;
+		return final_code;
 	    
 	}
 
 	function regularJSONTranslation_(block) {
 		var currentExecutingBlock=block
+		console.log(currentExecutingBlock);
 		var JSONcode = "";
+		var blockSource;
 
 		//Loop to get the real number of container blocks connected to the centrifugation, because is the centrifugation that extract the info of each container block.
 		var numberOfBlocks = 1;
@@ -1860,6 +1894,7 @@ angular.module('bitbloqApp')
 		/*This function is called by de runJS function which really calls the Blockly.JavaScript.workspaceToCode() function.*/
 		Blockly.JavaScript['cellSpreading'] = function(block) {
 			var JSONcode = "";
+			var blockSource;
 			
 			JSONcode =JSONcode+ '             {\n                "op": "spread",\n';     //initialize the code for incubate function
 			
@@ -1882,6 +1917,7 @@ angular.module('bitbloqApp')
 		/*This function is called by de runJS function which really calls the Blockly.JavaScript.workspaceToCode() function.*/
 		Blockly.JavaScript['colonyPicking'] = function(block) {
 			var JSONcode = "";
+			var blockSource;
 			
 			JSONcode = JSONcode + '             {\n                "op": "autopick",\n';     //initialize the code for incubate function
 			
@@ -1904,6 +1940,7 @@ angular.module('bitbloqApp')
 		/*This function is called by de runJS function which really calls the Blockly.JavaScript.workspaceToCode() function.*/
 		Blockly.JavaScript['pipette'] = function(block) {
 			var JSONcode = "";
+			var blockSource;
 			
 			var type_pipette = block.getFieldValue('pipetteTypeName');
 			switch (type_pipette){//This function is to get the real name of the different kinds of pipetting.
