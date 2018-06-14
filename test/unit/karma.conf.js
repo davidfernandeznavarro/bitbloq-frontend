@@ -77,6 +77,9 @@ module.exports = function(config) {
             '../bower_components/autogrow/autogrow.js',
             '../bower_components/q/q.js',
             '../bower_components/bloqs/dist/bloqs.min.js',
+            '../bower_components/blockly/blockly_compressed.js',
+            '../bower_components/blockly/blocks_compressed.js',
+            '../bower_components/blockly/msg/js/en.js',
             '../bower_components/angular-mocks/angular-mocks.js',
             // endbower
             '../app/scripts/**/*.js',

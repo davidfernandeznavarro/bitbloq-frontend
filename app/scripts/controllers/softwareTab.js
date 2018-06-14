@@ -134,8 +134,10 @@ angular.module('bitbloqApp')
 
 			$scope.$trashcan = $('#trashcan').last();
 
-			initBlockly();
+			console.log("Starting the bioblocks load");
 			myBlockly();
+			console.log("Starting the editor load");
+			initBlockly();
 
 		};
 
@@ -672,17 +674,7 @@ angular.module('bitbloqApp')
 			return result;
 		};
 
-		function initBlockly() {
-			/*** Comented to allow loading the blocks of the bioblock editor 
-			console.log("---");
-			$scope.blocklyDiv = $("#blocklyDiv")[0];
-			console.log($scope.blocklyDiv);
-			$scope.blocklyWorkspace = Blockly.inject($scope.blocklyDiv,{toolbox: document.getElementById('blockly--toolbox')});
-			console.log($scope.blocklyWorkspace);
-			console.log("---");
-			***/
 
-		}
 
 		$scope.experimentChange = function() {
 			// console.log("My workspace changed!");
@@ -783,10 +775,26 @@ angular.module('bitbloqApp')
 			$scope.experimentJSON = $scope.experimentJSON + '        }\n    ]\n}';
 		}
 
+		function initBlockly() {
+			/*** Comented to allow loading the blocks of the bioblock editor 
+			console.log("---");
+			$scope.blocklyDiv = $("#blocklyDiv")[0];
+			console.log($scope.blocklyDiv);
+			$scope.blocklyWorkspace = Blockly.inject($scope.blocklyDiv,{toolbox: document.getElementById('blockly--toolbox')});
+			console.log($scope.blocklyWorkspace);
+			console.log("---");
+			***/
+			//$window.alert(BlockFactory.mainWorkspace);
+			//js_init2();
+			console.log("Starting the editor load");
+			MyController.js_init();
+			console.log("end of the editor load");
+		}
+
 		function myBlockly() {
 			// Loads the BioBlock workspace into it's div.
 			// var myowntoolbox = '<xml id="toolbox" style="display: none"><category name="Input / Output"><block type="source"></block><block type="destination"></block></category><category name="Number Inputs"><block type="numbers_time_of_op"><field name="VALUE">0</field></block><block type="numbers_speed"><field name="VALUE">0</field></block><block type="numbers_cycles">          <field name="VALUE">0</field>        </block>        <block type="numbers_wavelength">          <field name="VALUE">0</field>        </block>        <block type="numbers_sequence">          <field name="VALUE">0</field>        </block>        <block type="numbers_co2">          <field name="VALUE">0</field>        </block>        <block type="numbers_speed">          <field name="VALUE">0</field>        </block>      </category>      <category name="String Inputs">        <block type="strings_ladder">          <field name="TEXT"> --- </field>        </block>        <block type="strings_dest">          <field name="TEXT"> --- </field>        </block>        <block type="strings_scale">          <field name="TEXT"> --- </field>        </block>        <block type="strings_purification">          <field name="TEXT"> --- </field>        </block>        <block type="strings_mcc">          <field name="TEXT"> --- </field>        </block>      </category>      <category name="Dropdown Menus">        <block type="drop_action">          <field name="NAME">OPTIONNAME</field>        </block>        <block type="drop_measure">          <field name="NAME">OPTIONNAME</field>        </block>        <block type="drop_type">          <field name="NAME">OPTIONNAME</field>        </block>        <block type="drop_temp">          <field name="NAME">OPTIONNAME</field>          <field name="NUMBER">0</field>        </block>        <block type="drop_duration">          <field name="NUMBER">0</field>          <field name="NAME">OPTIONNAME</field>        </block>      </category>      <category name="Extra">        <block type="new_op">          <field name="NAME"> --- </field>        </block>        <block type="new_op2">          <field name="NAME"> --- </field>        </block>        <block type="extra_settings">          <field name="NAME">TRUE</field>        </block>        <block type="extra_mix_check">          <field name="NAME">TRUE</field>        </block>      </category>    </xml>   ';
-			var options = { 
+			var bioptions = { 
 				toolbox : toolbox, 
 				collapse : true, 
 				comments : true, 
@@ -806,16 +814,15 @@ angular.module('bitbloqApp')
 			$scope.blocklyDiv = $("#blocklyDiv")[0];
 			$scope.blocklyDivExperiment = $("#blocklyDivExperiment")[0];
 			console.log($scope.blocklyDiv);
-			$scope.blocklyWorkspace = Blockly.inject($scope.blocklyDiv,{toolbox: document.getElementById('myowntoolbox')},options);
-			$rootScope.blocklyWorkspaceExperiment = Blockly.inject($scope.blocklyDivExperiment,{toolbox: document.getElementById('blockly--toolbox')},options);
+			$rootScope.blocklyWorkspaceExperiment = Blockly.inject($scope.blocklyDivExperiment,{toolbox: document.getElementById('blockly--toolbox')},bioptions);
 			$rootScope.blocklyWorkspaceExperiment.addChangeListener($scope.experimentChange);
-			console.log($scope.blocklyWorkspace);
-			console.log("-INIT COMPLETED ;)-");
 			initBioblocksComponents();
 
-			var xml = Blockly.Xml.textToDom($scope.currentProject.experiment);
-			Blockly.Xml.domToWorkspace($rootScope.blocklyWorkspaceExperiment, xml);
-
+			if ($scope.currentProject.experiment!=null){
+				var xml = Blockly.Xml.textToDom($scope.currentProject.experiment);
+				Blockly.Xml.domToWorkspace($rootScope.blocklyWorkspaceExperiment, xml);
+			}
+			console.log("-INIT COMPLETED ;)-");
 		}
 
 		function checkInputLength() {
@@ -2084,6 +2091,8 @@ angular.module('bitbloqApp')
 			
 			return JSONcode;
 		};
+
+		//CODE IMPORTED FROM THE
 
 	}
 

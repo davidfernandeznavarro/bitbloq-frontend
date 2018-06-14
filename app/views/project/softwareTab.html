@@ -71,17 +71,18 @@
             <!-- TODO: Collapse button does not work -->
             <div class="bloq bloq--group bloq-vars">
                 <div class="field--header"><button class="btn btn--collapsefield"></button><h3 data-i18n="bloq-var-header">{{ 'bioblocks_editor_field_title' | translate }}</h3></div>
-                <!-- Scrip tags to load the code that is needed in blockly just in case it's erased from index.html 
-                <script src="bower_components/various-scripts/demos/testing/custom_code/definitions.js"></script>
-                <script src="bower_components/various-scripts/demos/testing/blocks.js"></script>
-                <script src="bower_components/various-scripts/demos/testing/factory_utils.js"></script>
-                <script src="bower_components/various-scripts/demos/testing/factory.js"></script>
-                <script src="bower_components/various-scripts/demos/testing/custom.js"></script> 
-                            <script src="bower_components/google-blockly/blockly_compressed.js"></script>
-                <script src="bower_components/google-blockly/blocks_compressed.js"></script>
-                <script src="bower_components/google-blockly/msg/js/en.js"></script>-->
-                <script src="scripts/bioblocks/editor.js"></script>
-                <table>
+                <!-- Scrip tags to load the code that is needed in blockly just in case it's erased from index.html -->
+                <script type="text/javascript">window.alert("HELP");</script>
+                <script src="bower_components/closure-library/closure/goog/base.js"></script>
+                <script src="bower_components/blockly/blockly_compressed.js"></script>
+                <script src="bower_components/blockly/blocks_compressed.js"></script>
+                <script src="bower_components/blockly/msg/js/en.js"></script>
+                <script src="bower_components/blockly/demos/blockfactory/blocks.js"></script>
+                <script src="bower_components/blockly/demos/blockfactory/factory_utils.js"></script>
+                <script src="bower_components/blockly/demos/blockfactory/factory.js"></script>
+                <script src="bower_components/bioblocks-editor/data/editor_blocks.js"></script>
+                <script src="bower_components/bioblocks-editor/editor.js"></script>
+                <table hidden>
                   <tr>
                     <td>
                       <h4 class="blocklyTitle"> Workspace</h4><br>
@@ -89,6 +90,67 @@
                     </td>
                   </tr>
                 </table>
+                <table hidden>
+                    <tr><td width=100>
+                    <h4>Preview:
+                      <select id="direction">
+                        <option value="ltr">LTR</option>
+                        <option value="rtl">RTL</option>
+                      </select>
+                    </h4>
+                    </td>
+                    <td width=200>
+                    <h4>Block Definition:
+                      <select id="format">
+                        <option value="JSON">JSON</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="Manual-JSON">Manual JSON&hellip;</option>
+                        <script>
+                          if (document.location.href.indexOf('file://') == 0) {
+                            document.write(
+                                '<option value="Manual-JS">Manual JavaScript&hellip;</option>');
+                          }
+                        </script>
+                      </select>
+                    </h4>
+                    <td width=200>
+                      <h4>Generator stub:
+                        <select id="language">
+                          <option value="JavaScript">JavaScript</option>
+                          <option value="Python">Python</option>
+                          <option value="PHP">PHP</option>
+                          <option value="Lua">Lua</option>
+                          <option value="Dart">Dart</option>
+                        </select>
+                      </h4>
+                    </td><td width=310>   
+                      <BUTTON style="width:300px" id="custom_button_load">Load code from the workspace to the code-box</BUTTON>
+                      <br>
+                      <BUTTON style="width:300px" id="custom_button_view">Load code from the code-box to the mirror</BUTTON>
+                      </td>
+                      <td>
+                      <BUTTON style="width:100px" id="custom_saveblock">Save Block</BUTTON>
+                      <br>
+                      <BUTTON style="width:100px" id="custom_deleteblock">Delete Block</BUTTON>
+                      </td></tr>
+                  </table>
+                  <table>
+                    <tr style="vertical-align:text-top">
+                      <td>
+                        <h3 hidden>BioBlock Editor</h3>
+                        <div id="editblockDiv" style="height: 510px; width: 500px;"></div>
+                      </td>
+                      <td>
+                        <h3 hidden>Block Preview & Code</h3>
+                        <div id="preview" style="height: 250px; width: 334px;"></div><br>
+                        <textarea id="languageTA" style="border:solid 1px lightgrey; color: #3F3F3F; height: 236px; width: 329px;resize:none">Initial empty space: waiting for some code</textarea>
+                      </td>
+                      <td>
+                        <h3 hidden>BioBlock View</h3>
+                        <div id="bioblocksDiv" style="height: 510px; width: 500px;"></div>  
+                      </td>
+                    </tr>
+                  </table>
                 <div class="bloq bloq--group bloq-vars" style="height: 200px;">
                 </div>
             </div> 

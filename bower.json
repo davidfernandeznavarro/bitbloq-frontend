@@ -65,7 +65,9 @@
     "angular-color-picker": "^1.0.11",
     "ng-csv": "^0.3.6",
     "bloqs": "^0.29.2",
-    "blockly": "https://github.com/google/blockly.git"
+    "blockly": "https://github.com/google/blockly.git",
+    "closure-library": "https://github.com/google/closure-library.git",
+    "bioblocks-editor": "https://github.com/liaupm/bioblocks-editor.git#master"
   },
   "devDependencies": {
     "angular-mocks": "~1.3.x"
