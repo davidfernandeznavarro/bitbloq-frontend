@@ -72,11 +72,7 @@
             <div class="bloq bloq--group bloq-vars">
                 <div class="field--header"><button class="btn btn--collapsefield"></button><h3 data-i18n="bloq-var-header">{{ 'bioblocks_editor_field_title' | translate }}</h3></div>
                 <!-- Scrip tags to load the code that is needed in blockly just in case it's erased from index.html -->
-                <script type="text/javascript">window.alert("HELP");</script>
                 <script src="bower_components/closure-library/closure/goog/base.js"></script>
-                <script src="bower_components/blockly/blockly_compressed.js"></script>
-                <script src="bower_components/blockly/blocks_compressed.js"></script>
-                <script src="bower_components/blockly/msg/js/en.js"></script>
                 <script src="bower_components/blockly/demos/blockfactory/blocks.js"></script>
                 <script src="bower_components/blockly/demos/blockfactory/factory_utils.js"></script>
                 <script src="bower_components/blockly/demos/blockfactory/factory.js"></script>
@@ -86,12 +82,12 @@
                   <tr>
                     <td>
                       <h4 class="blocklyTitle"> Workspace</h4><br>
-                      <div class="blocklyDiv" id="blocklyDiv" style="height: 200px; width: 1000px;"></div>
+                      <!--<div class="blocklyDiv" id="blocklyDiv" style="height: 200px; width: 1000px;"></div>-->
                     </td>
                   </tr>
                 </table>
-                <table hidden>
-                    <tr><td width=100>
+                <table>
+                    <tr width=950 height=30><td hidden width=100 >
                     <h4>Preview:
                       <select id="direction">
                         <option value="ltr">LTR</option>
@@ -99,7 +95,7 @@
                       </select>
                     </h4>
                     </td>
-                    <td width=200>
+                    <td hidden width=200>
                     <h4>Block Definition:
                       <select id="format">
                         <option value="JSON">JSON</option>
@@ -113,7 +109,7 @@
                         </script>
                       </select>
                     </h4>
-                    <td width=200>
+                    <td hidden width=200>
                       <h4>Generator stub:
                         <select id="language">
                           <option value="JavaScript">JavaScript</option>
@@ -123,27 +119,28 @@
                           <option value="Dart">Dart</option>
                         </select>
                       </h4>
-                    </td><td width=310>   
-                      <BUTTON style="width:300px" id="custom_button_load">Load code from the workspace to the code-box</BUTTON>
-                      <br>
-                      <BUTTON style="width:300px" id="custom_button_view">Load code from the code-box to the mirror</BUTTON>
-                      </td>
-                      <td>
-                      <BUTTON style="width:100px" id="custom_saveblock">Save Block</BUTTON>
-                      <br>
-                      <BUTTON style="width:100px" id="custom_deleteblock">Delete Block</BUTTON>
+                    </td><td hidden width=310>   
+                        <BUTTON style="width:300px" id="custom_button_load">Load code from the workspace to the code-box</BUTTON>
+                        <br>
+                        <BUTTON style="width:300px" id="custom_button_view">Load code from the code-box to the mirror</BUTTON>
+                        </td>
+                        <td height=30>
+                        <BUTTON style="width:150px" id="custom_saveblock">Save Block</BUTTON>
+                        <BUTTON style="width:150px" id="custom_deleteblock">Delete Block</BUTTON>
+                        <BUTTON style="width:150px" id="custom_downloadblock">Download this block</BUTTON>
+                        <BUTTON style="width:150px" id="custom_downloadblocks">Download all blocks</BUTTON>
                       </td></tr>
                   </table>
                   <table>
                     <tr style="vertical-align:text-top">
-                      <td>
+                      <td width=750>
                         <h3 hidden>BioBlock Editor</h3>
-                        <div id="editblockDiv" style="height: 510px; width: 500px;"></div>
+                        <div id="editblockDiv" style="height: 500px; width: 700px;"></div>
                       </td>
                       <td>
                         <h3 hidden>Block Preview & Code</h3>
-                        <div id="preview" style="height: 250px; width: 334px;"></div><br>
-                        <textarea id="languageTA" style="border:solid 1px lightgrey; color: #3F3F3F; height: 236px; width: 329px;resize:none">Initial empty space: waiting for some code</textarea>
+                        <div id="preview" style="height: 250px; width: 634px;"></div><br>
+                        <textarea id="languageTA" style="border:solid 1px lightgrey; color: #3F3F3F; height: 236px; width: 629px;resize:none">Initial empty space: waiting for some code</textarea>
                       </td>
                       <td>
                         <h3 hidden>BioBlock View</h3>
