@@ -97,10 +97,11 @@ $toolboxWidthClosed: 210px;
         left:10px;
         color: #020202;
         font-family: sans-serif;
-        width: calc(100% - #{$toolboxWidthClosed} - 24px);
+        font-weight:bold;
+        width: calc(100% - 3%);
         cursor: initial;
         margin: 2 1em 1em;
-        border: 3px solid green;
+        border: 3px solid white;
         border-radius: .4em;
         table-layout: fixed;
         .field--header {
